@@ -1,0 +1,316 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Create_child	20170211/process_pool_tcp_server.c	/^int Create_child(pcdata p,int count)$/;"	kind:function	signature:(pcdata p,int count)
+Create_child	ftp/common_function.c	/^int Create_child(pcdata p,int count)\/\/创建子进程$/;"	kind:function	signature:(pcdata p,int count)
+Create_child	ftp/myhead.h	/^int Create_child(pcdata p,int count);$/;"	kind:prototype	signature:(pcdata p,int count)
+Create_child	ftp/server/common_function.c	/^int Create_child(pcdata p,int count)\/\/创建子进程$/;"	kind:function	signature:(pcdata p,int count)
+Create_child	ftp/server/myhead.h	/^int Create_child(pcdata p,int count);$/;"	kind:prototype	signature:(pcdata p,int count)
+FILENAME	20170211/myhead.h	36;"	kind:macro
+Handle_connect_need	20170211/process_pool_tcp_server.c	/^int Handle_connect_need(int sfdread)$/;"	kind:function	signature:(int sfdread)
+Handle_connect_need	ftp/common_function.c	/^int Handle_connect_need(int sfdread)\/\/处理连接请求$/;"	kind:function	signature:(int sfdread)
+Handle_connect_need	ftp/myhead.h	/^int Handle_connect_need(int sfdread);$/;"	kind:prototype	signature:(int sfdread)
+Handle_connect_need	ftp/server/common_function.c	/^int Handle_connect_need(int sfdread)\/\/处理连接请求$/;"	kind:function	signature:(int sfdread)
+Handle_connect_need	ftp/server/myhead.h	/^int Handle_connect_need(int sfdread);$/;"	kind:prototype	signature:(int sfdread)
+Judgefiletype	ftp/common_function.c	/^int Judgefiletype(mode_t st_mode,char *ch)\/\/判断文件类型，以字符形式返回$/;"	kind:function	signature:(mode_t st_mode,char *ch)
+Judgefiletype	ftp/myhead.h	/^int Judgefiletype(mode_t st_mode,char *ch);$/;"	kind:prototype	signature:(mode_t st_mode,char *ch)
+Judgefiletype	ftp/server/common_function.c	/^int Judgefiletype(mode_t st_mode,char *ch)\/\/判断文件类型，以字符形式返回$/;"	kind:function	signature:(mode_t st_mode,char *ch)
+Judgefiletype	ftp/server/myhead.h	/^int Judgefiletype(mode_t st_mode,char *ch);$/;"	kind:prototype	signature:(mode_t st_mode,char *ch)
+Judgemode	ftp/common_function.c	/^int Judgemode(mode_t st_mode,char mode[])\/\/判断文件的权限，以字符串形式返回$/;"	kind:function	signature:(mode_t st_mode,char mode[])
+Judgemode	ftp/myhead.h	/^int Judgemode(mode_t st_mode,char mode[]);$/;"	kind:prototype	signature:(mode_t st_mode,char mode[])
+Judgemode	ftp/server/common_function.c	/^int Judgemode(mode_t st_mode,char mode[])\/\/判断文件的权限，以字符串形式返回$/;"	kind:function	signature:(mode_t st_mode,char mode[])
+Judgemode	ftp/server/myhead.h	/^int Judgemode(mode_t st_mode,char mode[]);$/;"	kind:prototype	signature:(mode_t st_mode,char mode[])
+MAXSIZE	20170127/shm_relation.c	10;"	kind:macro	file:
+MAXSIZE	20170127/shm_unrelation_read.c	8;"	kind:macro	file:
+MAXSIZE	20170127/shm_unrelation_write.c	8;"	kind:macro	file:
+PERM	20170127/shm_relation.c	9;"	kind:macro	file:
+Recv_file	ftp/common_function.c	/^int Recv_file(int sfd,int order,char *buf)\/\/接收文件$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Recv_file	ftp/myhead.h	/^int Recv_file(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Recv_file	ftp/server/common_function.c	/^int Recv_file(int sfd,int order,char *buf)\/\/接收文件$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Recv_file	ftp/server/myhead.h	/^int Recv_file(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Recv_n	ftp/common_function.c	/^int Recv_n(int sfd,char *databag,int databag_len)\/\/接收数据$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Recv_n	ftp/myhead.h	/^int Recv_n(int sfd,char *databag,int databag_len);$/;"	kind:prototype	signature:(int sfd,char *databag,int databag_len)
+Recv_n	ftp/server/common_function.c	/^int Recv_n(int sfd,char *databag,int databag_len)\/\/接收数据$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Recv_n	ftp/server/myhead.h	/^int Recv_n(int sfd,char *databag,int databag_len);$/;"	kind:prototype	signature:(int sfd,char *databag,int databag_len)
+Recv_sfd	20170211/process_pool_tcp_server.c	/^int Recv_sfd(int sfdread,int *sfd)$/;"	kind:function	signature:(int sfdread,int *sfd)
+Recv_sfd	ftp/common_function.c	/^int Recv_sfd(int sfdread,int *sfd)\/\/接收描述符$/;"	kind:function	signature:(int sfdread,int *sfd)
+Recv_sfd	ftp/myhead.h	/^int Recv_sfd(int sfdread,int *sfd);$/;"	kind:prototype	signature:(int sfdread,int *sfd)
+Recv_sfd	ftp/server/common_function.c	/^int Recv_sfd(int sfdread,int *sfd)\/\/接收描述符$/;"	kind:function	signature:(int sfdread,int *sfd)
+Recv_sfd	ftp/server/myhead.h	/^int Recv_sfd(int sfdread,int *sfd);$/;"	kind:prototype	signature:(int sfdread,int *sfd)
+Remove_dir	ftp/common_function.c	/^int Remove_dir(char *pathname)\/\/递归删除文件夹或者文件$/;"	kind:function	signature:(char *pathname)
+Remove_dir	ftp/myhead.h	/^int Remove_dir(char *pathname);$/;"	kind:prototype	signature:(char *pathname)
+Remove_dir	ftp/server/common_function.c	/^int Remove_dir(char *pathname)\/\/递归删除文件夹或者文件$/;"	kind:function	signature:(char *pathname)
+Remove_dir	ftp/server/myhead.h	/^int Remove_dir(char *pathname);$/;"	kind:prototype	signature:(char *pathname)
+Send_dir	ftp/common_function.c	/^int Send_dir(int sfd,int order,char *buf)\/\/发送文件目录遍历信息$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Send_dir	ftp/myhead.h	/^int Send_dir(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Send_dir	ftp/server/common_function.c	/^int Send_dir(int sfd,int order,char *buf)\/\/发送文件目录遍历信息$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Send_dir	ftp/server/myhead.h	/^int Send_dir(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Send_file	20170211/process_pool_tcp_server.c	/^int Send_file(int sfd)\/\/sfd 为与客户端连接的套接字描述 符$/;"	kind:function	signature:(int sfd)
+Send_file	ftp/common_function.c	/^int Send_file(int sfd,int order,char *buf)\/\/发送文件$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Send_file	ftp/myhead.h	/^int Send_file(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Send_file	ftp/server/common_function.c	/^int Send_file(int sfd,int order,char *buf)\/\/发送文件$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Send_file	ftp/server/myhead.h	/^int Send_file(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Send_n	20170211/process_pool_tcp_server.c	/^int Send_n(int sfd,char *databag,int databag_len)    $/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Send_n	ftp/common_function.c	/^int Send_n(int sfd,char *databag,int databag_len) \/\/发送数据$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Send_n	ftp/myhead.h	/^int Send_n(int sfd,char *databag,int databag_len);$/;"	kind:prototype	signature:(int sfd,char *databag,int databag_len)
+Send_n	ftp/server/common_function.c	/^int Send_n(int sfd,char *databag,int databag_len) \/\/发送数据$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Send_n	ftp/server/myhead.h	/^int Send_n(int sfd,char *databag,int databag_len);$/;"	kind:prototype	signature:(int sfd,char *databag,int databag_len)
+Send_order_or_information	ftp/common_function.c	/^int Send_order_or_information(int sfd,int order,char *buf_par)\/\/发送消息$/;"	kind:function	signature:(int sfd,int order,char *buf_par)
+Send_order_or_information	ftp/myhead.h	/^int Send_order_or_information(int sfd,int order,char *buf_par);$/;"	kind:prototype	signature:(int sfd,int order,char *buf_par)
+Send_order_or_information	ftp/server/common_function.c	/^int Send_order_or_information(int sfd,int order,char *buf_par)\/\/发送消息$/;"	kind:function	signature:(int sfd,int order,char *buf_par)
+Send_order_or_information	ftp/server/myhead.h	/^int Send_order_or_information(int sfd,int order,char *buf_par);$/;"	kind:prototype	signature:(int sfd,int order,char *buf_par)
+Send_sfd	20170211/process_pool_tcp_server.c	/^int Send_sfd(int sfdwrite,int sfd)$/;"	kind:function	signature:(int sfdwrite,int sfd)
+Send_sfd	ftp/common_function.c	/^int Send_sfd(int sfdwrite,int sfd)\/\/发送描述符$/;"	kind:function	signature:(int sfdwrite,int sfd)
+Send_sfd	ftp/myhead.h	/^int Send_sfd(int sfdwrite,int sfd);$/;"	kind:prototype	signature:(int sfdwrite,int sfd)
+Send_sfd	ftp/server/common_function.c	/^int Send_sfd(int sfdwrite,int sfd)\/\/发送描述符$/;"	kind:function	signature:(int sfdwrite,int sfd)
+Send_sfd	ftp/server/myhead.h	/^int Send_sfd(int sfdwrite,int sfd);$/;"	kind:prototype	signature:(int sfdwrite,int sfd)
+Send_stop	ftp/common_function.c	/^int Send_stop(int sfd)$/;"	kind:function	signature:(int sfd)
+Send_stop	ftp/myhead.h	/^int Send_stop(int sfd);$/;"	kind:prototype	signature:(int sfd)
+Send_stop	ftp/server/common_function.c	/^int Send_stop(int sfd)$/;"	kind:function	signature:(int sfd)
+Send_stop	ftp/server/myhead.h	/^int Send_stop(int sfd);$/;"	kind:prototype	signature:(int sfd)
+Sighandler	20170211/process_pool_tcp_server.c	/^void Sighandler(int sig_num)$/;"	kind:function	signature:(int sig_num)
+Sighandler	ftp/common_function.c	/^void Sighandler(int sig_num)\/\/终止所有进程$/;"	kind:function	signature:(int sig_num)
+Sighandler	ftp/myhead.h	/^void Sighandler(int sig_num);$/;"	kind:prototype	signature:(int sig_num)
+Sighandler	ftp/server/common_function.c	/^void Sighandler(int sig_num)\/\/终止所有进程$/;"	kind:function	signature:(int sig_num)
+Sighandler	ftp/server/myhead.h	/^void Sighandler(int sig_num);$/;"	kind:prototype	signature:(int sig_num)
+SignHandler	20170206/signal_test.c	/^void SignHandler(int iSignNo) $/;"	kind:function	signature:(int iSignNo)
+SignHandler	20170206/sigprocmask.c	/^void SignHandler(int iSignNo) $/;"	kind:function	signature:(int iSignNo)
+add	20170410/overload.c	/^int add(int x,int *y,int *z)$/;"	kind:function	signature:(int x,int *y,int *z)
+add	20170410/overload.c	/^int add(int x,int y)$/;"	kind:function	signature:(int x,int y)
+array	20170205/sem_relation.c	/^	unsigned short*array; $/;"	kind:member	union:semun	file:	access:public
+buf	20170127/shm_unrelation_read.c	/^	char buf[MAXSIZE];$/;"	kind:member	struct:text	file:	access:public
+buf	20170127/shm_unrelation_write.c	/^	char buf[MAXSIZE];$/;"	kind:member	struct:text	file:	access:public
+buf	20170205/sem_relation.c	/^	struct semid_ds *buf; $/;"	kind:member	union:semun	typeref:struct:semun::semid_ds	file:	access:public
+buf	20170211/myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+buf	ftp/myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+buf	ftp/server/myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+busy	20170211/myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+busy	ftp/myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+busy	ftp/server/myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+cdata	20170211/myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+cdata	ftp/myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+cdata	ftp/server/myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+chang_nonblock	20170210/epoll/tcp_server.c	/^int  chang_nonblock(int fd)\/\/将描述符改为非阻塞$/;"	kind:function	signature:(int fd)
+change_nonbloc	20170210/change_nonblock.c	/^void change_nonbloc(int fd)$/;"	kind:function	signature:(int fd)
+childdata	20170211/myhead.h	/^typedef struct childdata$/;"	kind:struct
+childdata	ftp/myhead.h	/^typedef struct childdata$/;"	kind:struct
+childdata	ftp/server/myhead.h	/^typedef struct childdata$/;"	kind:struct
+childdata::busy	20170211/myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+childdata::busy	ftp/myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+childdata::busy	ftp/server/myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+childdata::fdwrite	20170211/myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+childdata::fdwrite	ftp/myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+childdata::fdwrite	ftp/server/myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+childdata::pid	20170211/myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+childdata::pid	ftp/myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+childdata::pid	ftp/server/myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+cleanup	20170207/pthread_attr.c	/^void cleanup(void *arg)$/;"	kind:function	signature:(void *arg)
+cleanup	20170207/pthread_cleanup.c	/^void cleanup(void *parg)$/;"	kind:function	signature:(void *parg)
+cleanup	20170207/pthread_cleanup_cancel.c	/^void cleanup(void *parg)$/;"	kind:function	signature:(void *parg)
+cleanup	20170208/pthread_cond.c	/^void cleanup(void *p)$/;"	kind:function	signature:(void *p)
+cond	20170208/pthread_cond.c	/^pthread_cond_t cond=PTHREAD_COND_INITIALIZER;$/;"	kind:variable
+cond	20170208/pthread_cond_singnal_cancel.c	/^pthread_cond_t cond;$/;"	kind:variable
+data	20170211/myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+data	ftp/myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+data	ftp/server/myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+databag	20170211/myhead.h	/^typedef struct databag$/;"	kind:struct
+databag	ftp/myhead.h	/^typedef struct databag$/;"	kind:struct
+databag	ftp/server/myhead.h	/^typedef struct databag$/;"	kind:struct
+databag::buf	20170211/myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+databag::buf	ftp/myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+databag::buf	ftp/server/myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+databag::len	20170211/myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+databag::len	ftp/myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+databag::len	ftp/server/myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+databag::order	ftp/myhead.h	/^	int order;$/;"	kind:member	struct:databag	access:public
+databag::order	ftp/server/myhead.h	/^	int order;$/;"	kind:member	struct:databag	access:public
+del	20170205/sem_unrealtion_producter.c	/^void del() $/;"	kind:function
+del	20170205/sem_unrealtion_producter.c	/^void del(); \/\/delete semaphore $/;"	kind:prototype	file:
+fdwrite	20170211/myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+fdwrite	ftp/myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+fdwrite	ftp/server/myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+g_iSeq	20170206/signal_test.c	/^int g_iSeq =0;$/;"	kind:variable
+g_iSeq	20170206/sigprocmask.c	/^int g_iSeq =0;$/;"	kind:variable
+i	20170206/setitimer.c	/^int i=0;$/;"	kind:variable
+i	20170206/setitimer_prof.c	/^int i;$/;"	kind:variable
+i	20170206/setitimer_real.c	/^int i;$/;"	kind:variable
+i	20170206/setitimer_virtual.c	/^int i=0;$/;"	kind:variable
+i	20170206/sigaciton_NODEFER.c	/^int i=0;$/;"	kind:variable
+i	20170206/sigaciton_RESEtHAND.c	/^int i=0;$/;"	kind:variable
+i	20170206/sigaciton_mask.c	/^int i=0;$/;"	kind:variable
+i	20170206/sigaciton_pending.c	/^int i=0;$/;"	kind:variable
+init	20170205/sem_unrealtion_customer.c	/^void init() $/;"	kind:function
+init	20170205/sem_unrealtion_customer.c	/^void init(); $/;"	kind:prototype	file:
+init	20170205/sem_unrealtion_producter.c	/^void init() $/;"	kind:function
+init	20170205/sem_unrealtion_producter.c	/^void init(); \/\/initlization semaphore $/;"	kind:prototype	file:
+len	20170211/myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+len	ftp/myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+len	ftp/server/myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+main	20170121/chmod.c	/^int main(int argc,char *argv[])$/;"	kind:function	signature:(int argc,char *argv[])
+main	20170121/finddir.c	/^int main(int argc,char* argv[])$/;"	kind:function	signature:(int argc,char* argv[])
+main	20170121/main.c	/^int main(int argc,char* argv[])$/;"	kind:function	signature:(int argc,char* argv[])
+main	20170121/opendir.c	/^int main(int argc,char *argv[])$/;"	kind:function	signature:(int argc,char *argv[])
+main	20170121/print_space.c	/^int main()$/;"	kind:function
+main	20170125/daemon.c	/^int  main()$/;"	kind:function
+main	20170125/execl.c	/^int  main()$/;"	kind:function
+main	20170125/fork.c	/^int main()$/;"	kind:function
+main	20170125/getpgid_setpgid.c	/^int main()$/;"	kind:function
+main	20170125/getpid_getppid.c	/^int main()$/;"	kind:function
+main	20170125/getsid_setsid.c	/^int main()$/;"	kind:function
+main	20170125/getuid_gid_euid_egid.c	/^int main()$/;"	kind:function
+main	20170125/inherit.c	/^int main() $/;"	kind:function
+main	20170125/orphan.c	/^int main()$/;"	kind:function
+main	20170125/popen.c	/^int main()$/;"	kind:function
+main	20170125/system.c	/^int  main()$/;"	kind:function
+main	20170125/wait_WIFEXITED_WEXITSTATUS.c	/^int  main()$/;"	kind:function
+main	20170125/zombie.c	/^void main()$/;"	kind:function
+main	20170127/delfifo.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170127/fifo_read.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170127/fifo_write.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170127/mkfifo.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170127/pipe.c	/^int  main()$/;"	kind:function
+main	20170127/shm_relation.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170127/shm_unrelation_read.c	/^int  main()$/;"	kind:function
+main	20170127/shm_unrelation_write.c	/^int  main()$/;"	kind:function
+main	20170205/sem_relation.c	/^int main() $/;"	kind:function
+main	20170205/sem_unrealtion_customer.c	/^int main(int argc,char*argv[]) $/;"	kind:function	signature:(int argc,char*argv[])
+main	20170205/sem_unrealtion_producter.c	/^int main(int argc,char*argv[]) $/;"	kind:function	signature:(int argc,char*argv[])
+main	20170205/singal.c	/^int  main()$/;"	kind:function
+main	20170206/kill.c	/^int main(int argc, char*argv[])$/;"	kind:function	signature:(int argc, char*argv[])
+main	20170206/setitimer.c	/^int main()$/;"	kind:function
+main	20170206/setitimer_prof.c	/^int main()$/;"	kind:function
+main	20170206/setitimer_real.c	/^int main()$/;"	kind:function
+main	20170206/setitimer_virtual.c	/^int main()$/;"	kind:function
+main	20170206/sigaciton_INFO.c	/^int main()$/;"	kind:function
+main	20170206/sigaciton_NODEFER.c	/^int main()$/;"	kind:function
+main	20170206/sigaciton_RESEtHAND.c	/^int main()$/;"	kind:function
+main	20170206/sigaciton_RESart.c	/^int main()$/;"	kind:function
+main	20170206/sigaciton_as_signal.c	/^int main()$/;"	kind:function
+main	20170206/sigaciton_mask.c	/^int main()$/;"	kind:function
+main	20170206/sigaciton_pending.c	/^int main()$/;"	kind:function
+main	20170206/signal_read.c	/^int main()$/;"	kind:function
+main	20170206/signal_test.c	/^int main() $/;"	kind:function
+main	20170206/sigprocmask.c	/^int main() $/;"	kind:function
+main	20170206/sleep.c	/^int main()$/;"	kind:function
+main	20170206/sleep_alarm.c	/^int main()$/;"	kind:function
+main	20170207/pthread_attr.c	/^int  main()$/;"	kind:function
+main	20170207/pthread_cleanup.c	/^int main()$/;"	kind:function
+main	20170207/pthread_cleanup_cancel.c	/^int main()$/;"	kind:function
+main	20170207/pthread_creat_exit_join.c	/^int main()$/;"	kind:function
+main	20170207/pthread_have_cancelpoint.c	/^int main()$/;"	kind:function
+main	20170207/pthread_mutex_doublelock_test.c	/^int main()$/;"	kind:function
+main	20170207/pthread_mutex_lock_cancel.c	/^int main()$/;"	kind:function
+main	20170207/pthread_mutex_lock_unlock.c	/^int main()$/;"	kind:function
+main	20170207/pthread_no_cancelpoint.c	/^int main()$/;"	kind:function
+main	20170207/pthread_no_mutex.c	/^int main()$/;"	kind:function
+main	20170208/pthread_cond.c	/^int main()$/;"	kind:function
+main	20170208/pthread_cond_singnal_cancel.c	/^int main()$/;"	kind:function
+main	20170209/ntoh_hton_aton_ntoa_addr_pton_ntop_gethost_byname_byaddr.c	/^int  main(int argc,char*argv[])$/;"	kind:function	signature:(int argc,char*argv[])
+main	20170209/tcp_net/tcp_client.c	/^int main(int argc,char *argv[])$/;"	kind:function	signature:(int argc,char *argv[])
+main	20170209/tcp_net/tcp_server.c	/^int main(int argc ,char*argv[])$/;"	kind:function	signature:(int argc ,char*argv[])
+main	20170210/change_nonblock.c	/^int main()$/;"	kind:function
+main	20170210/epoll/tcp_client.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170210/epoll/tcp_server.c	/^int main(int argc ,char *argv[])$/;"	kind:function	signature:(int argc ,char *argv[])
+main	20170210/main.c	/^int  main()$/;"	kind:function
+main	20170210/socket/tcp_client.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170210/socket/tcp_server.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170210/socket/udp_client.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170210/socket/udp_server.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170210/transmit_fd.c	/^int main(int argc,char *argv[])$/;"	kind:function	signature:(int argc,char *argv[])
+main	20170210/udp_net/udp_client.c	/^int main(int argc,char *argv[])$/;"	kind:function	signature:(int argc,char *argv[])
+main	20170210/udp_net/udp_server.c	/^int main(int argc ,char*argv[])$/;"	kind:function	signature:(int argc ,char*argv[])
+main	20170210/writev_readv.c	/^int main(int argc,char *argv[])$/;"	kind:function	signature:(int argc,char *argv[])
+main	20170211/process_pool_tcp_client.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170211/process_pool_tcp_server.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	20170410/overload.c	/^int  main()$/;"	kind:function
+main	ftp/ftp_client.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	ftp/ftp_server.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	ftp/server/ftp_server.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+mutex	20170207/pthread_mutex_doublelock_test.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+mutex	20170207/pthread_mutex_lock_cancel.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+mutex	20170207/pthread_mutex_lock_unlock.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+mutex	20170207/pthread_no_mutex.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+mutex	20170208/pthread_cond.c	/^pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;$/;"	kind:variable
+mutex	20170208/pthread_cond_singnal_cancel.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+order	ftp/myhead.h	/^	int order;$/;"	kind:member	struct:databag	access:public
+order	ftp/server/myhead.h	/^	int order;$/;"	kind:member	struct:databag	access:public
+pcdata	20170211/myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+pcdata	ftp/myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+pcdata	ftp/server/myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+pdata	20170211/myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+pdata	ftp/myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+pdata	ftp/server/myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+pid	20170211/myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+pid	ftp/myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+pid	ftp/server/myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+printdir	20170121/finddir.c	/^void printdir(char *path,int width)$/;"	kind:function	signature:(char *path,int width)
+recv_fd	20170210/transmit_fd.c	/^void recv_fd(int sfd_read,int *fd)$/;"	kind:function	signature:(int sfd_read,int *fd)
+recv_n	20170211/process_pool_tcp_client.c	/^int recv_n(int sfd,char *databag,int databag_len)$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+sem_id	20170205/sem_unrealtion_customer.c	/^int sem_id;$/;"	kind:variable
+sem_id	20170205/sem_unrealtion_producter.c	/^int sem_id; $/;"	kind:variable
+semun	20170205/sem_relation.c	/^union semun \/\/必须重写这个共用体 $/;"	kind:union	file:
+semun::array	20170205/sem_relation.c	/^	unsigned short*array; $/;"	kind:member	union:semun	file:	access:public
+semun::buf	20170205/sem_relation.c	/^	struct semid_ds *buf; $/;"	kind:member	union:semun	typeref:struct:semun::semid_ds	file:	access:public
+semun::val	20170205/sem_relation.c	/^	int val; $/;"	kind:member	union:semun	file:	access:public
+send_fd	20170210/transmit_fd.c	/^void  send_fd(int sfd_write,int fd)$/;"	kind:function	signature:(int sfd_write,int fd)
+sighandlenew	20170206/sigaciton_INFO.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	20170206/sigaciton_NODEFER.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	20170206/sigaciton_RESEtHAND.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	20170206/sigaciton_RESart.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	20170206/sigaciton_mask.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	20170206/sigaciton_pending.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandler	20170206/setitimer.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	20170206/setitimer_prof.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	20170206/setitimer_real.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	20170206/setitimer_virtual.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	20170206/signal_read.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	20170206/sleep.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandold	20170206/sigaciton_as_signal.c	/^void sighandold(int signum)$/;"	kind:function	signature:(int signum)
+signalhandler	20170209/tcp_net/tcp_net_socket.c	/^void signalhandler(void) \/\/用于信号处理，让服务端在按下Ctrl+c或Ctrl+\\的时候不会退出 {$/;"	kind:function	signature:(void)
+signalhandler	20170209/tcp_net/tcp_net_socket.h	/^extern void signalhandler(void);$/;"	kind:prototype	signature:(void)
+signalhandler	20170210/udp_net/udp_net_socket.c	/^void signalhandler(void) \/\/用于信号处理，让服务端在按下Ctrl+c或Ctrl+\\的时候不会退出 {$/;"	kind:function	signature:(void)
+signalhandler	20170210/udp_net/udp_net_socket.h	/^extern void signalhandler(void);$/;"	kind:prototype	signature:(void)
+singal_handler	20170205/singal.c	/^void singal_handler(int signum)$/;"	kind:function	signature:(int signum)
+singal_handler	20170205/singal.c	/^void singal_handler(int signum);$/;"	kind:prototype	file:	signature:(int signum)
+tcp_client_connect	20170209/tcp_net/tcp_net_socket.c	/^int tcp_client_connect(const char *ip,int port)$/;"	kind:function	signature:(const char *ip,int port)
+tcp_client_connect	20170209/tcp_net/tcp_net_socket.h	/^extern int tcp_client_connect(const char*ip,int  port); $/;"	kind:prototype	signature:(const char*ip,int port)
+tcp_server_accept	20170209/tcp_net/tcp_net_socket.c	/^int tcp_server_accept(int sfd)$/;"	kind:function	signature:(int sfd)
+tcp_server_accept	20170209/tcp_net/tcp_net_socket.h	/^extern int tcp_server_accept(int sfd); $/;"	kind:prototype	signature:(int sfd)
+tcp_server_init	20170209/tcp_net/tcp_net_socket.c	/^int tcp_server_init(const char *ip,int port,int listenpotr_count)$/;"	kind:function	signature:(const char *ip,int port,int listenpotr_count)
+tcp_server_init	20170209/tcp_net/tcp_net_socket.h	/^extern int tcp_server_init(const char*ip,int port,int listenport_count); $/;"	kind:prototype	signature:(const char*ip,int port,int listenport_count)
+text	20170127/shm_unrelation_read.c	/^typedef struct text $/;"	kind:struct	file:
+text	20170127/shm_unrelation_read.c	/^}text;$/;"	kind:typedef	typeref:struct:text	file:
+text	20170127/shm_unrelation_write.c	/^typedef struct text $/;"	kind:struct	file:
+text	20170127/shm_unrelation_write.c	/^}text;$/;"	kind:typedef	typeref:struct:text	file:
+text::buf	20170127/shm_unrelation_read.c	/^	char buf[MAXSIZE];$/;"	kind:member	struct:text	file:	access:public
+text::buf	20170127/shm_unrelation_write.c	/^	char buf[MAXSIZE];$/;"	kind:member	struct:text	file:	access:public
+text::usable	20170127/shm_unrelation_write.c	/^	int usable;$/;"	kind:member	struct:text	file:	access:public
+text::useful	20170127/shm_unrelation_read.c	/^	int useful;$/;"	kind:member	struct:text	file:	access:public
+thread_func1	20170207/pthread_mutex_doublelock_test.c	/^void *thread_func1(void *p)$/;"	kind:function	signature:(void *p)
+thread_func1	20170207/pthread_mutex_lock_cancel.c	/^void *thread_func1(void *p)$/;"	kind:function	signature:(void *p)
+thread_func1	20170207/pthread_mutex_lock_unlock.c	/^void *thread_func1(void *p)$/;"	kind:function	signature:(void *p)
+thread_func1	20170207/pthread_no_mutex.c	/^void *thread_func1(void *p)$/;"	kind:function	signature:(void *p)
+thread_func2	20170207/pthread_mutex_doublelock_test.c	/^void *thread_func2(void *p)$/;"	kind:function	signature:(void *p)
+thread_func2	20170207/pthread_mutex_lock_cancel.c	/^void *thread_func2(void *p)$/;"	kind:function	signature:(void *p)
+thread_func2	20170207/pthread_mutex_lock_unlock.c	/^void *thread_func2(void *p)$/;"	kind:function	signature:(void *p)
+thread_func2	20170207/pthread_no_mutex.c	/^void *thread_func2(void *p)$/;"	kind:function	signature:(void *p)
+threadcleanup	20170208/pthread_cond_singnal_cancel.c	/^void threadcleanup(void *p)$/;"	kind:function	signature:(void *p)
+threadfun	20170207/pthread_creat_exit_join.c	/^void *threadfun(void *p)$/;"	kind:function	signature:(void *p)
+threadfunc	20170208/pthread_cond_singnal_cancel.c	/^void * threadfunc(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	20170207/pthread_attr.c	/^void *threadfunction(void*arg)$/;"	kind:function	signature:(void*arg)
+threadfunction	20170207/pthread_cleanup.c	/^void *threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	20170207/pthread_cleanup_cancel.c	/^void *threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	20170207/pthread_have_cancelpoint.c	/^void * threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	20170207/pthread_no_cancelpoint.c	/^void * threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	20170208/pthread_cond.c	/^void *threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+time1	20170206/setitimer.c	/^time_t time1=0,time2=0;$/;"	kind:variable
+time2	20170206/setitimer.c	/^time_t time1=0,time2=0;$/;"	kind:variable
+udp_server_init	20170210/udp_net/udp_net_socket.c	/^int udp_server_init(const char *ip,int port)$/;"	kind:function	signature:(const char *ip,int port)
+udp_server_init	20170210/udp_net/udp_net_socket.h	/^extern int udp_server_init(const char*ip,int port);$/;"	kind:prototype	signature:(const char*ip,int port)
+unlock	20170207/pthread_mutex_lock_cancel.c	/^void unlock(void *p)$/;"	kind:function	signature:(void *p)
+usable	20170127/shm_unrelation_write.c	/^	int usable;$/;"	kind:member	struct:text	file:	access:public
+useful	20170127/shm_unrelation_read.c	/^	int useful;$/;"	kind:member	struct:text	file:	access:public
+val	20170205/sem_relation.c	/^	int val; $/;"	kind:member	union:semun	file:	access:public

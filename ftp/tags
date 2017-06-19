@@ -1,0 +1,105 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Create_child	common_function.c	/^int Create_child(pcdata p,int count)\/\/创建子进程$/;"	kind:function	signature:(pcdata p,int count)
+Create_child	myhead.h	/^int Create_child(pcdata p,int count);$/;"	kind:prototype	signature:(pcdata p,int count)
+Create_child	server/common_function.c	/^int Create_child(pcdata p,int count)\/\/创建子进程$/;"	kind:function	signature:(pcdata p,int count)
+Create_child	server/myhead.h	/^int Create_child(pcdata p,int count);$/;"	kind:prototype	signature:(pcdata p,int count)
+Handle_connect_need	common_function.c	/^int Handle_connect_need(int sfdread)\/\/处理连接请求$/;"	kind:function	signature:(int sfdread)
+Handle_connect_need	myhead.h	/^int Handle_connect_need(int sfdread);$/;"	kind:prototype	signature:(int sfdread)
+Handle_connect_need	server/common_function.c	/^int Handle_connect_need(int sfdread)\/\/处理连接请求$/;"	kind:function	signature:(int sfdread)
+Handle_connect_need	server/myhead.h	/^int Handle_connect_need(int sfdread);$/;"	kind:prototype	signature:(int sfdread)
+Judgefiletype	common_function.c	/^int Judgefiletype(mode_t st_mode,char *ch)\/\/判断文件类型，以字符形式返回$/;"	kind:function	signature:(mode_t st_mode,char *ch)
+Judgefiletype	myhead.h	/^int Judgefiletype(mode_t st_mode,char *ch);$/;"	kind:prototype	signature:(mode_t st_mode,char *ch)
+Judgefiletype	server/common_function.c	/^int Judgefiletype(mode_t st_mode,char *ch)\/\/判断文件类型，以字符形式返回$/;"	kind:function	signature:(mode_t st_mode,char *ch)
+Judgefiletype	server/myhead.h	/^int Judgefiletype(mode_t st_mode,char *ch);$/;"	kind:prototype	signature:(mode_t st_mode,char *ch)
+Judgemode	common_function.c	/^int Judgemode(mode_t st_mode,char mode[])\/\/判断文件的权限，以字符串形式返回$/;"	kind:function	signature:(mode_t st_mode,char mode[])
+Judgemode	myhead.h	/^int Judgemode(mode_t st_mode,char mode[]);$/;"	kind:prototype	signature:(mode_t st_mode,char mode[])
+Judgemode	server/common_function.c	/^int Judgemode(mode_t st_mode,char mode[])\/\/判断文件的权限，以字符串形式返回$/;"	kind:function	signature:(mode_t st_mode,char mode[])
+Judgemode	server/myhead.h	/^int Judgemode(mode_t st_mode,char mode[]);$/;"	kind:prototype	signature:(mode_t st_mode,char mode[])
+Recv_file	common_function.c	/^int Recv_file(int sfd,int order,char *buf)\/\/接收文件$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Recv_file	myhead.h	/^int Recv_file(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Recv_file	server/common_function.c	/^int Recv_file(int sfd,int order,char *buf)\/\/接收文件$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Recv_file	server/myhead.h	/^int Recv_file(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Recv_n	common_function.c	/^int Recv_n(int sfd,char *databag,int databag_len)\/\/接收数据$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Recv_n	myhead.h	/^int Recv_n(int sfd,char *databag,int databag_len);$/;"	kind:prototype	signature:(int sfd,char *databag,int databag_len)
+Recv_n	server/common_function.c	/^int Recv_n(int sfd,char *databag,int databag_len)\/\/接收数据$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Recv_n	server/myhead.h	/^int Recv_n(int sfd,char *databag,int databag_len);$/;"	kind:prototype	signature:(int sfd,char *databag,int databag_len)
+Recv_sfd	common_function.c	/^int Recv_sfd(int sfdread,int *sfd)\/\/接收描述符$/;"	kind:function	signature:(int sfdread,int *sfd)
+Recv_sfd	myhead.h	/^int Recv_sfd(int sfdread,int *sfd);$/;"	kind:prototype	signature:(int sfdread,int *sfd)
+Recv_sfd	server/common_function.c	/^int Recv_sfd(int sfdread,int *sfd)\/\/接收描述符$/;"	kind:function	signature:(int sfdread,int *sfd)
+Recv_sfd	server/myhead.h	/^int Recv_sfd(int sfdread,int *sfd);$/;"	kind:prototype	signature:(int sfdread,int *sfd)
+Remove_dir	common_function.c	/^int Remove_dir(char *pathname)\/\/递归删除文件夹或者文件$/;"	kind:function	signature:(char *pathname)
+Remove_dir	myhead.h	/^int Remove_dir(char *pathname);$/;"	kind:prototype	signature:(char *pathname)
+Remove_dir	server/common_function.c	/^int Remove_dir(char *pathname)\/\/递归删除文件夹或者文件$/;"	kind:function	signature:(char *pathname)
+Remove_dir	server/myhead.h	/^int Remove_dir(char *pathname);$/;"	kind:prototype	signature:(char *pathname)
+Send_dir	common_function.c	/^int Send_dir(int sfd,int order,char *buf)\/\/发送文件目录遍历信息$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Send_dir	myhead.h	/^int Send_dir(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Send_dir	server/common_function.c	/^int Send_dir(int sfd,int order,char *buf)\/\/发送文件目录遍历信息$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Send_dir	server/myhead.h	/^int Send_dir(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Send_file	common_function.c	/^int Send_file(int sfd,int order,char *buf)\/\/发送文件$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Send_file	myhead.h	/^int Send_file(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Send_file	server/common_function.c	/^int Send_file(int sfd,int order,char *buf)\/\/发送文件$/;"	kind:function	signature:(int sfd,int order,char *buf)
+Send_file	server/myhead.h	/^int Send_file(int sfd,int order,char *buf);$/;"	kind:prototype	signature:(int sfd,int order,char *buf)
+Send_n	common_function.c	/^int Send_n(int sfd,char *databag,int databag_len) \/\/发送数据$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Send_n	myhead.h	/^int Send_n(int sfd,char *databag,int databag_len);$/;"	kind:prototype	signature:(int sfd,char *databag,int databag_len)
+Send_n	server/common_function.c	/^int Send_n(int sfd,char *databag,int databag_len) \/\/发送数据$/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Send_n	server/myhead.h	/^int Send_n(int sfd,char *databag,int databag_len);$/;"	kind:prototype	signature:(int sfd,char *databag,int databag_len)
+Send_order_or_information	common_function.c	/^int Send_order_or_information(int sfd,int order,char *buf_par)\/\/发送消息$/;"	kind:function	signature:(int sfd,int order,char *buf_par)
+Send_order_or_information	myhead.h	/^int Send_order_or_information(int sfd,int order,char *buf_par);$/;"	kind:prototype	signature:(int sfd,int order,char *buf_par)
+Send_order_or_information	server/common_function.c	/^int Send_order_or_information(int sfd,int order,char *buf_par)\/\/发送消息$/;"	kind:function	signature:(int sfd,int order,char *buf_par)
+Send_order_or_information	server/myhead.h	/^int Send_order_or_information(int sfd,int order,char *buf_par);$/;"	kind:prototype	signature:(int sfd,int order,char *buf_par)
+Send_sfd	common_function.c	/^int Send_sfd(int sfdwrite,int sfd)\/\/发送描述符$/;"	kind:function	signature:(int sfdwrite,int sfd)
+Send_sfd	myhead.h	/^int Send_sfd(int sfdwrite,int sfd);$/;"	kind:prototype	signature:(int sfdwrite,int sfd)
+Send_sfd	server/common_function.c	/^int Send_sfd(int sfdwrite,int sfd)\/\/发送描述符$/;"	kind:function	signature:(int sfdwrite,int sfd)
+Send_sfd	server/myhead.h	/^int Send_sfd(int sfdwrite,int sfd);$/;"	kind:prototype	signature:(int sfdwrite,int sfd)
+Send_stop	common_function.c	/^int Send_stop(int sfd)$/;"	kind:function	signature:(int sfd)
+Send_stop	myhead.h	/^int Send_stop(int sfd);$/;"	kind:prototype	signature:(int sfd)
+Send_stop	server/common_function.c	/^int Send_stop(int sfd)$/;"	kind:function	signature:(int sfd)
+Send_stop	server/myhead.h	/^int Send_stop(int sfd);$/;"	kind:prototype	signature:(int sfd)
+Sighandler	common_function.c	/^void Sighandler(int sig_num)\/\/终止所有进程$/;"	kind:function	signature:(int sig_num)
+Sighandler	myhead.h	/^void Sighandler(int sig_num);$/;"	kind:prototype	signature:(int sig_num)
+Sighandler	server/common_function.c	/^void Sighandler(int sig_num)\/\/终止所有进程$/;"	kind:function	signature:(int sig_num)
+Sighandler	server/myhead.h	/^void Sighandler(int sig_num);$/;"	kind:prototype	signature:(int sig_num)
+buf	myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+buf	server/myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+busy	myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+busy	server/myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+cdata	myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+cdata	server/myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+childdata	myhead.h	/^typedef struct childdata$/;"	kind:struct
+childdata	server/myhead.h	/^typedef struct childdata$/;"	kind:struct
+childdata::busy	myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+childdata::busy	server/myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+childdata::fdwrite	myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+childdata::fdwrite	server/myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+childdata::pid	myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+childdata::pid	server/myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+data	myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+data	server/myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+databag	myhead.h	/^typedef struct databag$/;"	kind:struct
+databag	server/myhead.h	/^typedef struct databag$/;"	kind:struct
+databag::buf	myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+databag::buf	server/myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+databag::len	myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+databag::len	server/myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+databag::order	myhead.h	/^	int order;$/;"	kind:member	struct:databag	access:public
+databag::order	server/myhead.h	/^	int order;$/;"	kind:member	struct:databag	access:public
+fdwrite	myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+fdwrite	server/myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+len	myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+len	server/myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+main	ftp_client.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	ftp_server.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	server/ftp_server.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+order	myhead.h	/^	int order;$/;"	kind:member	struct:databag	access:public
+order	server/myhead.h	/^	int order;$/;"	kind:member	struct:databag	access:public
+pcdata	myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+pcdata	server/myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+pdata	myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+pdata	server/myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+pid	myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+pid	server/myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public

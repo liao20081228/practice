@@ -1,0 +1,26 @@
+function bind();
+{
+	placeholds; //name space
+	is_bind_experssion();
+	is_placeholds();
+}
+bind 可以绑定函数名，函数指针，仿函数，成员函数指针，数据成员指针，但是绑定成员函数的时候，第一个为隐藏的this指针，需要对成员函数取地址，并且要传入一个对象，引用，或指针
+function mem_fn(); 将成员函数包装为函数对象，当容器元素是类时，可以通过该函数对象来调用每个对象的同一方法
+bad_fucntion_call用一个空的function 对象调用，返回错误
+
+
+reference_wrapper cref/ref();当要绑定的函数的形参是引用或者不可复制时，需要将实参转为引用后再绑定，bind默认值传递
+
+返回值为bool的一元或二元函数对象就叫一元或二元谓词
+unary_negate not1(); 逆转一元函数对象,普通函数或函数指针要用ptr_fun转为函数对象，自定义仿函数需要继承自unary_function或binary_function
+binary_negate not2(); 逆转二元函数对象,
+unary_function binary_function 一元或二元函数对象的基类 带参数位置信息
+
+binder1st bind1st();
+binder2nd bind2nd();
+
+pointer_to_unary_function / pointer_to_binary_funciton ptr_fun();
+mem_fun_t/mem_fun1_t/const_mem_fun_t/const_mem_fun1_t  mem_fun();
+mem_fun_ref_t/mem_fun1_ref_t/const_mem_fun_ref_t/const_mem_fun1_ref_t  mem_fun_ref();
+
+

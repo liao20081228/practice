@@ -1,0 +1,39 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+cleanup	pthread_attr.c	/^void cleanup(void *arg)$/;"	kind:function	signature:(void *arg)
+cleanup	pthread_cleanup.c	/^void cleanup(void *parg)$/;"	kind:function	signature:(void *parg)
+cleanup	pthread_cleanup_cancel.c	/^void cleanup(void *parg)$/;"	kind:function	signature:(void *parg)
+main	pthread.c	/^int  main()$/;"	kind:function
+main	pthread_attr.c	/^int  main()$/;"	kind:function
+main	pthread_cleanup.c	/^int main()$/;"	kind:function
+main	pthread_cleanup_cancel.c	/^int main()$/;"	kind:function
+main	pthread_creat_exit_join.c	/^int main()$/;"	kind:function
+main	pthread_have_cancelpoint.c	/^int main()$/;"	kind:function
+main	pthread_mutex_doublelock_test.c	/^int main()$/;"	kind:function
+main	pthread_mutex_lock_cancel.c	/^int main()$/;"	kind:function
+main	pthread_mutex_lock_unlock.c	/^int main()$/;"	kind:function
+main	pthread_no_cancelpoint.c	/^int main()$/;"	kind:function
+main	pthread_no_mutex.c	/^int main()$/;"	kind:function
+mutex	pthread_mutex_doublelock_test.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+mutex	pthread_mutex_lock_cancel.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+mutex	pthread_mutex_lock_unlock.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+mutex	pthread_no_mutex.c	/^pthread_mutex_t mutex;$/;"	kind:variable
+thread_func1	pthread_mutex_doublelock_test.c	/^void *thread_func1(void *p)$/;"	kind:function	signature:(void *p)
+thread_func1	pthread_mutex_lock_cancel.c	/^void *thread_func1(void *p)$/;"	kind:function	signature:(void *p)
+thread_func1	pthread_mutex_lock_unlock.c	/^void *thread_func1(void *p)$/;"	kind:function	signature:(void *p)
+thread_func1	pthread_no_mutex.c	/^void *thread_func1(void *p)$/;"	kind:function	signature:(void *p)
+thread_func2	pthread_mutex_doublelock_test.c	/^void *thread_func2(void *p)$/;"	kind:function	signature:(void *p)
+thread_func2	pthread_mutex_lock_cancel.c	/^void *thread_func2(void *p)$/;"	kind:function	signature:(void *p)
+thread_func2	pthread_mutex_lock_unlock.c	/^void *thread_func2(void *p)$/;"	kind:function	signature:(void *p)
+thread_func2	pthread_no_mutex.c	/^void *thread_func2(void *p)$/;"	kind:function	signature:(void *p)
+threadfun	pthread_creat_exit_join.c	/^void *threadfun(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	pthread_attr.c	/^void *threadfunction(void*arg)$/;"	kind:function	signature:(void*arg)
+threadfunction	pthread_cleanup.c	/^void *threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	pthread_cleanup_cancel.c	/^void *threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	pthread_have_cancelpoint.c	/^void * threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+threadfunction	pthread_no_cancelpoint.c	/^void * threadfunction(void *p)$/;"	kind:function	signature:(void *p)
+unlock	pthread_mutex_lock_cancel.c	/^void unlock(void *p)$/;"	kind:function	signature:(void *p)

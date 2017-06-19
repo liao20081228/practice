@@ -1,0 +1,55 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+SignHandler	signal_test.c	/^void SignHandler(int iSignNo) $/;"	kind:function	signature:(int iSignNo)
+SignHandler	sigprocmask.c	/^void SignHandler(int iSignNo) $/;"	kind:function	signature:(int iSignNo)
+g_iSeq	signal_test.c	/^int g_iSeq =0;$/;"	kind:variable
+g_iSeq	sigprocmask.c	/^int g_iSeq =0;$/;"	kind:variable
+i	setitimer.c	/^int i=0;$/;"	kind:variable
+i	setitimer_prof.c	/^int i;$/;"	kind:variable
+i	setitimer_real.c	/^int i;$/;"	kind:variable
+i	setitimer_virtual.c	/^int i=0;$/;"	kind:variable
+i	sigaciton_NODEFER.c	/^int i=0;$/;"	kind:variable
+i	sigaciton_RESEtHAND.c	/^int i=0;$/;"	kind:variable
+i	sigaciton_mask.c	/^int i=0;$/;"	kind:variable
+i	sigaciton_pending.c	/^int i=0;$/;"	kind:variable
+m	sigaciton.c	/^int m=0,n=0;$/;"	kind:variable
+main	kill.c	/^int main(int argc, char*argv[])$/;"	kind:function	signature:(int argc, char*argv[])
+main	setitimer.c	/^int main()$/;"	kind:function
+main	setitimer_prof.c	/^int main()$/;"	kind:function
+main	setitimer_real.c	/^int main()$/;"	kind:function
+main	setitimer_virtual.c	/^int main()$/;"	kind:function
+main	sigaciton.c	/^int  main()$/;"	kind:function
+main	sigaciton_INFO.c	/^int main()$/;"	kind:function
+main	sigaciton_NODEFER.c	/^int main()$/;"	kind:function
+main	sigaciton_RESEtHAND.c	/^int main()$/;"	kind:function
+main	sigaciton_RESart.c	/^int main()$/;"	kind:function
+main	sigaciton_as_signal.c	/^int main()$/;"	kind:function
+main	sigaciton_mask.c	/^int main()$/;"	kind:function
+main	sigaciton_pending.c	/^int main()$/;"	kind:function
+main	signal_read.c	/^int main()$/;"	kind:function
+main	signal_test.c	/^int main() $/;"	kind:function
+main	sigprocmask.c	/^int main() $/;"	kind:function
+main	sleep.c	/^int main()$/;"	kind:function
+main	sleep_alarm.c	/^int main()$/;"	kind:function
+n	sigaciton.c	/^int m=0,n=0;$/;"	kind:variable
+sighandle_sigaction	sigaciton.c	/^void sighandle_sigaction(int signum,siginfo_t *psiginfo,void *preserved)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserved)
+sighandle_signal	sigaciton.c	/^void sighandle_signal(int signum)$/;"	kind:function	signature:(int signum)
+sighandlenew	sigaciton_INFO.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	sigaciton_NODEFER.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	sigaciton_RESEtHAND.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	sigaciton_RESart.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	sigaciton_mask.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandlenew	sigaciton_pending.c	/^void sighandlenew(int signum,siginfo_t *psiginfo,void *preserve)$/;"	kind:function	signature:(int signum,siginfo_t *psiginfo,void *preserve)
+sighandler	setitimer.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	setitimer_prof.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	setitimer_real.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	setitimer_virtual.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	signal_read.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandler	sleep.c	/^void sighandler(int signum)$/;"	kind:function	signature:(int signum)
+sighandold	sigaciton_as_signal.c	/^void sighandold(int signum)$/;"	kind:function	signature:(int signum)
+time1	setitimer.c	/^time_t time1=0,time2=0;$/;"	kind:variable
+time2	setitimer.c	/^time_t time1=0,time2=0;$/;"	kind:variable

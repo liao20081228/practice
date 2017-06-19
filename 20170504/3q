@@ -1,0 +1,44 @@
+/*************************************************************************
+    > File Name: singleton_manul.cc
+    > Author: liao20081228
+    > Mail: liao20081228@126.com 
+    > Created Time: 2017年05月15日 星期一 10时10分23秒
+ ************************************************************************/
+#include<myhead>/*myhead is a headfile defined in in the directory:/usr/include,which include all headfile we need*/
+class singleton
+{
+	private:
+		static singleton *_p;
+	protected:
+		singleton()
+		{
+
+		}
+		~singleton()
+		{
+
+		}
+	public:
+		static singleton * getinstance()
+		{
+			if(_p==nullptr)
+				_p=new singleton;
+			return _p;
+		}
+		static void destroy()
+		{
+			if(_p!=nullptr)
+				delete _p;
+		}
+
+};
+singleton * singleton::_p=nullptr;
+
+int  main()
+{
+	singleton *p1=singleton::getinstance();
+	singleton *p2=singleton ::getinstance();
+	cout<<p1<<endl<<p2<<endl;
+	singleton::destroy();
+	return 0;
+}

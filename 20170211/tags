@@ -1,0 +1,31 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Create_child	process_pool_tcp_server.c	/^int Create_child(pcdata p,int count)$/;"	kind:function	signature:(pcdata p,int count)
+FILENAME	myhead.h	36;"	kind:macro
+Handle_connect_need	process_pool_tcp_server.c	/^int Handle_connect_need(int sfdread)$/;"	kind:function	signature:(int sfdread)
+Recv_sfd	process_pool_tcp_server.c	/^int Recv_sfd(int sfdread,int *sfd)$/;"	kind:function	signature:(int sfdread,int *sfd)
+Send_file	process_pool_tcp_server.c	/^int Send_file(int sfd)\/\/sfd 为与客户端连接的套接字描述 符$/;"	kind:function	signature:(int sfd)
+Send_n	process_pool_tcp_server.c	/^int Send_n(int sfd,char *databag,int databag_len)    $/;"	kind:function	signature:(int sfd,char *databag,int databag_len)
+Send_sfd	process_pool_tcp_server.c	/^int Send_sfd(int sfdwrite,int sfd)$/;"	kind:function	signature:(int sfdwrite,int sfd)
+buf	myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+busy	myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+cdata	myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+childdata	myhead.h	/^typedef struct childdata$/;"	kind:struct
+childdata::busy	myhead.h	/^	short int busy;\/\/子进程是否忙碌$/;"	kind:member	struct:childdata	access:public
+childdata::fdwrite	myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+childdata::pid	myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
+data	myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+databag	myhead.h	/^typedef struct databag$/;"	kind:struct
+databag::buf	myhead.h	/^	char buf[1000];\/\/数据缓冲区$/;"	kind:member	struct:databag	access:public
+databag::len	myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+fdwrite	myhead.h	/^	int fdwrite;\/\/sockpair 的写端$/;"	kind:member	struct:childdata	access:public
+len	myhead.h	/^	int len;\/\/每次发送数据的真实长度$/;"	kind:member	struct:databag	access:public
+main	process_pool_tcp_client.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+main	process_pool_tcp_server.c	/^int  main(int argc, char *argv[])$/;"	kind:function	signature:(int argc, char *argv[])
+pcdata	myhead.h	/^}cdata,*pcdata;$/;"	kind:typedef	typeref:struct:childdata
+pdata	myhead.h	/^}data,*pdata;$/;"	kind:typedef	typeref:struct:databag
+pid	myhead.h	/^	pid_t pid;\/\/子进程的pid；$/;"	kind:member	struct:childdata	access:public
