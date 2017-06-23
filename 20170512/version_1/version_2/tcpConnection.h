@@ -22,7 +22,7 @@ namespace MyNamespace
 			int SendFile(const char* FileName) const;
 			int RecvFile(void) const;
 
-			int ShutDown(void) const;
+			int ShutDown(void);
 		private:
 			CAcceptor __cm_cAcceptor;
 			CSocketFd __cm_cNewSocketFd;
@@ -75,7 +75,7 @@ namespace MyNamespace
 	}
 
 	int 
-	CTcpConnection::ShutDown(void) const
+	CTcpConnection::ShutDown(void) 
 	{
 		if(!__cm_bIsShuntDown)
 		{
