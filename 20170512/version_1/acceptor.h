@@ -8,82 +8,88 @@
 #define MY_ACCEPTOR_H
 #include"inetAddress.h"
 #include"socketFd.h"
+#include"utility.h"
 namespace MyNamespace
 {
 	class CAcceptor
 	{
 		public:
-			CAcceptor(IN CSocketFd cListenSocketFd, IN CSocketAddress cAddress); /* 接受一个CSocketFd对象*/
-			CAcceptor(IN int nListenSocketFd, IN CSocketAddress cAddress);/*  接收一个原始套接字*/
+			CAcceptor(IN const CSocketFd& cListenSocketFd, IN const CSocketAddress& cAddress); /* 接受一个CSocketFd对象*/
+			CAcceptor(IN int nListenSocketFd, IN const CSocketAddress& cAddress);/*  接收一个原始套接字*/
 			
-			CSocketFd AcceptConnect(void); /* 接收连接*/ 
+			int  AcceptConnect(void); /* 接收连接*/ 
 		
 		private:
-			void __BindSocketAddress(void); /* 绑定*/
-			void __ListenSocket(void); /*监听*/
+			int __BindSocketAddress(void) const; /* 绑定*/
+			int __ListenSocket(void) const; /*监听*/
 		private:
-			CSocketFd __cm_cListenSocketFd;
+			int __cm_nListenSocketFd;
 			CSocketAddress __cm_cAddress;
 	};
 
 	inline
-	CAcceptor::CAcceptor(IN CSocketFd cListenSocketFd, IN CSocketAddress cAddress)
-		: __cm_cListenSocketFd(cListenSocketFd)
+	CAcceptor::CAcceptor(IN const CSocketFd& cListenSocketFd, IN const CSocketAddress& cAddress)
+		: __cm_nListenSocketFd(cListenSocketFd.GetSocketFd())
 		, __cm_cAddress(cAddress)
-
 	{
-		cout << __cm_cListenSocketFd.GetSocketFd() << endl;
-		cout <<__cm_cAddress.GetIp()<<endl;
-		cout << __cm_cAddress.GetPort() << endl;
 		
 	}
 
 	inline
-	CAcceptor::CAcceptor(IN int nListenSocketFd, IN CSocketAddress cAddress)
-		: __cm_cListenSocketFd(nListenSocketFd)
+	CAcceptor::CAcceptor(IN int nListenSocketFd, IN const CSocketAddress& cAddress)
+		: __cm_nListenSocketFd(nListenSocketFd)
 		, __cm_cAddress(cAddress)
 	{
 	}
 
-	inline CSocketFd
+	int
 	CAcceptor::AcceptConnect(void)
 	{
-		/*__cm_cListenSocketFd.SetReuseAddress();*/
-		/*__cm_cListenSocketFd.SetReusePort();*/
-		__BindSocketAddress();
-		__ListenSocket();
-		int nRet = ::accept(__cm_cListenSocketFd.GetSocketFd(),nullptr,nullptr);
+		if (SetReusePort(__cm_nListenSocketFd) == -1)
+		{
+			return -1;
+		}
+		if (SetReuseAddress(__cm_nListenSocketFd) == -1)
+		{
+			return -1;
+		}
+		if (__BindSocketAddress() == -1)
+		{
+			return -1;
+		}
+		if (__ListenSocket() == -1)
+		{
+			return -1;
+		}
+		int nRet = ::accept(__cm_nListenSocketFd,nullptr,nullptr);
 		if (nRet == -1)
 		{
 			::perror("accept failed");
-			__cm_cListenSocketFd.~CSocketFd();
-			::exit(-1);
+			return -1;
 		}
-		return CSocketFd(nRet);
+		return nRet;
 	}
 
-	void 
-	CAcceptor::__BindSocketAddress(void)
+	int 
+	CAcceptor::__BindSocketAddress(void) const
 	{
-		cout << __cm_cListenSocketFd.GetSocketFd() << endl;
-		
-		if(-1 == ::bind(__cm_cListenSocketFd.GetSocketFd(), __cm_cAddress.GetSockaddr(), static_cast<socklen_t>(sizeof(sockaddr))))
+		if(-1 == ::bind(__cm_nListenSocketFd, __cm_cAddress.GetSockaddr(), static_cast<socklen_t>(sizeof(sockaddr))))
 		{
 			::perror("bind failed");
-			__cm_cListenSocketFd.~CSocketFd();
-			::exit(-1);
+			return -1;
 		}
+		return 0;
 	}
 
-	void
-	CAcceptor::__ListenSocket(void)
+	int
+	CAcceptor::__ListenSocket(void) const
 	{
-		if(-1 == ::listen(__cm_cListenSocketFd.GetSocketFd(), 10))
+		if(-1 == ::listen(__cm_nListenSocketFd, 10))
 		{
 			::perror("listen failed");
-			__cm_cListenSocketFd.~CSocketFd();
-			::exit(-1);
+			return -1;
 		}
+		return 0;
 	}
 }
 #endif /* end of include guard: MY_ACCEPTOR_H */

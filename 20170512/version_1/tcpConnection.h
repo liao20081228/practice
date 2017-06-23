@@ -13,9 +13,9 @@ namespace MyNamespace
 	class CTcpConnection
 	{
 		public:
-			CTcpConnection(IN CSocketFd cSocketFd, IN CSocketAddress cSocketAddress);
-			int Send(IN const char* buf) const;
-			int Recv(OUT char* buf, IN int nLength) const ;
+			CTcpConnection(IN const CSocketFd& cSocketFd, IN const CSocketAddress& cSocketAddress);
+			int SendMessege(IN const char* buf) const;
+			int RecvMessege(OUT char* buf) const ;
 
 			int SendFile(const char* FileName) const;
 			int RecvFile(void) const ;
@@ -25,26 +25,27 @@ namespace MyNamespace
 			CSocketIO __cm_cSocketIO;
 	};
 
-	inline
-	CTcpConnection::CTcpConnection(IN CSocketFd cSocketFd, IN CSocketAddress cSocketAddress)
+	CTcpConnection::CTcpConnection(IN const CSocketFd& cSocketFd, IN const CSocketAddress& cSocketAddress)
 		: __cm_cAcceptor(cSocketFd, cSocketAddress)
 		, __cm_cNewSocketFd(__cm_cAcceptor.AcceptConnect()) 
 		, __cm_cSocketIO(__cm_cNewSocketFd)
 	{
-		cout << cSocketFd.GetSocketFd() << endl;
-		cout << __cm_cNewSocketFd.GetSocketFd()<<endl;
+		if (__cm_cNewSocketFd.GetSocketFd() == -1)
+		{
+			exit(-1);
+		}
 	}
 	
 	int 
-	CTcpConnection::Send(IN const char* buf) const
+	CTcpConnection::SendMessege(IN const char* buf) const
 	{
-		return __cm_cSocketIO.Send(buf, std::strlen(buf));
+		return __cm_cSocketIO.SendMessage(buf);
 	}
 
 	int 
-	CTcpConnection::Recv(IN char* buf, IN int nLength) const 
+	CTcpConnection::RecvMessege(IN char* buf) const 
 	{
-		return __cm_cSocketIO.Recv(buf, nLength);
+		return __cm_cSocketIO.RecvMessage(buf);
 	}
 	
 	int

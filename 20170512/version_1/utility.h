@@ -7,67 +7,85 @@
 #ifndef MY_UTILITY_H
 #define MY_UTILITY_H
 #include"inetAddress.h"
-#include"socketFd.h"
-#include"acceptor.h"
 namespace MyNamespace
 {
 	using ::socklen_t;
-	CSocketAddress gGetLocalAddress(IN int nSocketFd)
+	int
+	gGetLocalAddress(IN int nSocketFd,IN CSocketAddress& cSocketAddress)
 	{
-		sockaddr sLocalAddress;
-		socklen_t nLen = sizeof(sockaddr);
-		std::memset(&sLocalAddress,0, sizeof(sockaddr));
-		if (::getsockname(nSocketFd, &sLocalAddress, &nLen) == -1)
+		std::memset(&cSocketAddress, 0, sizeof(cSocketAddress));
+		sockaddr_in sLocalAddress;
+		::bzero(&sLocalAddress, sizeof(sLocalAddress));
+		socklen_t nLen = sizeof(sockaddr_in);
+		if (::getsockname(nSocketFd, reinterpret_cast<sockaddr*>(&sLocalAddress), &nLen) == -1)
 		{
 			::perror("getsockname failed");
-			::close(nSocketFd);
-			::exit(-1);
+			return -1;
 		}
-		return CSocketAddress(sLocalAddress);
+		cSocketAddress.SetFamily(sLocalAddress.sin_family);
+		cSocketAddress.SetPort(::ntohs(sLocalAddress.sin_port));
+		cSocketAddress.SetIP(::inet_ntoa(sLocalAddress.sin_addr));
+		return 0;
 	}
 
-	CSocketAddress gGetLocalAddress(IN CSocketFd cSocketFd)
+	int
+	gGetPeerAddress(IN int nSocketFd,IN CSocketAddress& cSocketAddress)
 	{
-		sockaddr sLocalAddress;
-		socklen_t nLen = sizeof(sockaddr);
-		std::memset(&sLocalAddress,0, sizeof(sockaddr));
-		if (::getsockname(cSocketFd.GetSocketFd(), &sLocalAddress, &nLen) == -1)
+		std::memset(&cSocketAddress, 0, sizeof(cSocketAddress));
+		sockaddr_in sLocalAddress;
+		::bzero(&sLocalAddress, sizeof(sLocalAddress));
+		socklen_t nLen = sizeof(sockaddr_in);
+		if (::getpeername(nSocketFd, reinterpret_cast<sockaddr*>(&sLocalAddress), &nLen) == -1)
 		{
 			::perror("getsockname failed");
-			cSocketFd.~CSocketFd();
-			::exit(-1);
+			return -1;
 		}
-		return CSocketAddress(sLocalAddress);
+		cSocketAddress.SetFamily(sLocalAddress.sin_family);
+		cSocketAddress.SetPort(::ntohs(sLocalAddress.sin_port));
+		cSocketAddress.SetIP(::inet_ntoa(sLocalAddress.sin_addr));
+		return 0;
+	}
+
+	
+	int
+	SetNonBlock(IN int nSocketFd)
+	{
+		int nflags;
+		if((nflags = ::fcntl(nSocketFd, F_GETFL)) == -1)
+		{
+			::perror("fcntl get file open mode failed");
+			return -1;
+		}
+		if(-1 == ::fcntl(nSocketFd, F_SETFL, nflags | O_NONBLOCK))
+		{
+			::perror("fcntl set file open mode failed");
+			return -1;
+		}
+		return 0;
+	}
+
+	int 
+	SetReuseAddress(IN int nSocketFd, IN int nflags = 1)
+	{
+		int flags = (nflags ? 1 : 0);
+		if( -1 == ::setsockopt(nSocketFd, SOL_SOCKET, SO_REUSEADDR, static_cast<void*>(&flags), static_cast<socklen_t>(sizeof(int))))
+		{
+			perror("setsockopt reuseaddr failed");
+			return -1;
+		}
+		return 0;
 	}
 	
-	CSocketAddress gGetPeerAddress(IN int nSocketFd)
+	int  
+	SetReusePort(IN int nSocketFd, IN int nflags = 1)
 	{
-		sockaddr sPeerAddress;
-		socklen_t nLen = sizeof(sockaddr);
-		std::memset(&sPeerAddress,0, sizeof(sockaddr));
-		if (::getpeername(nSocketFd, &sPeerAddress, &nLen) == -1)
+		int flags = (nflags ? 1 : 0);
+		if( -1 == ::setsockopt(nSocketFd, SOL_SOCKET, SO_REUSEPORT, static_cast<void*>(&flags), static_cast<socklen_t>(sizeof(int))))
 		{
-			::perror("getpeername failed");
-			::close(nSocketFd);
-			::exit(-1);
+			perror("setsockopt reuseport failed");
+			return -1;
 		}
-		return CSocketAddress(sPeerAddress);
+		return 0;
 	}
-
-	CSocketAddress gGetPeerAddress(IN CSocketFd cSocketFd)
-	{
-		sockaddr sPeerAddress;
-		socklen_t nLen = sizeof(sockaddr);
-		std::memset(&sPeerAddress,0, sizeof(sockaddr));
-		if (::getpeername(cSocketFd.GetSocketFd(), &sPeerAddress, &nLen) == -1)
-		{
-			::perror("getpeername failed");
-			cSocketFd.~CSocketFd();
-			::exit(-1);
-		}
-		return CSocketAddress(sPeerAddress);
-	}
-
-
 }
 #endif /* end of include guard: MY_UTILITY_H */

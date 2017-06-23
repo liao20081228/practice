@@ -17,7 +17,7 @@ namespace MyNamespace
 	{
 		public:
 			CSocketAddress(IN unsigned short int usnPort); /* 以默认地址建立sockaddr结构体*/
-			explicit CSocketAddress(IN unsigned short int usnPort, IN const char* cchIp);/* 以c风格字符串ip建立sockaddr结构体*/
+			explicit CSocketAddress(IN unsigned short int usnPort, IN const char* cpchIp);/* 以c风格字符串ip建立sockaddr结构体*/
 			explicit CSocketAddress(IN unsigned short int usnPort, IN const string& cstrIP); /* 以string型IP建立sockaddr结构体*/
 			explicit CSocketAddress(IN const sockaddr& csSockaddr);/* 以 sockaddr 建立此类*/
 			explicit CSocketAddress(IN const sockaddr_in& csSockaddr_in);/*  以sockaddr_in建立此类*/
@@ -27,6 +27,10 @@ namespace MyNamespace
 			const char* GetIp_c(void) const;/* 获取c字符串的ip*/
 			const sockaddr* GetSockaddr(void) const; /* 获取sockaddr类型的地址*/
 			const sockaddr_in* GetSockaddr_in(void) const;/* 获取sockaddr_in的地址*/
+			void SetFamily(IN unsigned short int usnFamily = AF_INET);
+			void SetPort(IN unsigned short int usnPort);
+			void SetIP(const char* cpchIp);
+			void SetIP(const string& cstrIP);
 		private:
 			sockaddr_in __cm_sAddress;
 	};
@@ -43,17 +47,17 @@ namespace MyNamespace
 	
 	
 	/* explicit*/
-	CSocketAddress::CSocketAddress(IN unsigned short int usnPort, IN const char* cchpIp)
+	CSocketAddress::CSocketAddress(IN unsigned short int usnPort, IN const char* cpchIp)
 	{
 		std::memset(&__cm_sAddress, 0, sizeof(__cm_sAddress));
 		__cm_sAddress.sin_family = AF_INET;
 		__cm_sAddress.sin_port = ::htons(usnPort);
-		if(::inet_aton(cchpIp, &__cm_sAddress.sin_addr) != 1)
+		if(::inet_aton(cpchIp, &__cm_sAddress.sin_addr) != 1)
 		{
 			cout << "inet_aton failed" << endl;
 			exit(-1);
 		}
-		//或者用__cm_sAddress.sin_addr.s_addr = ::inet_addr(cchIp);//由于-1==255.255.255.255所以有bug
+		//或者用__cm_sAddress.sin_addr.s_addr = ::inet_addr(cpchIp);//由于-1==255.255.255.255所以有bug
 	}
 
 
@@ -118,12 +122,37 @@ namespace MyNamespace
 		return (sockaddr*)&__cm_sAddress;
 	}
 
-	
 
 	inline const sockaddr_in* 
 	CSocketAddress::GetSockaddr_in(void) const
 	{
 		return &__cm_sAddress;
+	}
+	
+	
+	inline void
+	CSocketAddress::SetFamily(IN unsigned short int usnFamily)
+	{
+		__cm_sAddress.sin_family =  usnFamily;
+	}
+
+	inline void 
+	CSocketAddress::SetPort(IN unsigned short int usnPort)
+	{
+		__cm_sAddress.sin_port =  ::htons(usnPort);
+	}
+	
+	inline void 
+	CSocketAddress::SetIP(const char* cpchIp)
+	{
+		::inet_aton(cpchIp, &__cm_sAddress.sin_addr);
+	}
+	
+	
+	inline void 
+	CSocketAddress::SetIP(const string& cstrIP)
+	{
+		::inet_aton(cstrIP.c_str(), &__cm_sAddress.sin_addr);
 	}
 }
 #endif /* end of include guard: MY_INET_ADDRESS_H */

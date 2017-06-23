@@ -11,13 +11,14 @@ using namespace MyNamespace;
 int main(void)
 {
 	CSocketFd cSocketFd;
-	CSocketAddress cSocketAddress(8888, "192.168.220.123");
-
+	CSocketAddress cSocketAddress(8888, "127.0.0.123");
 	::connect(cSocketFd.GetSocketFd(), cSocketAddress.GetSockaddr(), sizeof(sockaddr));
-	CSocketIO cSocketIO(cSocketFd);
-	char buf[1024];
-	cSocketIO.Recv(buf,1024);
-	std::strcpy(buf,"i am client!");
-	cSocketIO.Send(buf,strlen(buf));
+	CSocketIO client(cSocketFd);
+	char *pubf = new char[10000000];
+	client.RecvMessage(pubf);
+	cout << pubf << endl;
+	client.SendMessage("i am client");
+	client.RecvFile();
+	client.SendFile("./acceptor.h");
 	return 0;
 }

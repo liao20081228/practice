@@ -18,22 +18,28 @@ namespace MyNamespace
 	class CSocketIO
 	{
 		public:
-			CSocketIO(IN CSocketFd cSocketFd);
+			CSocketIO(IN const CSocketFd& cSocketFd);
 			CSocketIO(IN int nSocketFd);
 
-			int Send(IN  const char* pchData, IN int nDataLength) const;
-			int Recv(OUT char* pchData, IN int nDataLength) const;
 			int SendFile(IN const char* pchFileName) const;
 			int RecvFile(void) const ;
+			
+			int SendMessage(IN const char* pchBuf) const;
+			int RecvMessage(OUT char* pchBuf) const;
+		
+		private:
+			int SendnBytes(IN  const char* pchData, IN int nDataLength) const;
+			int RecvnBytes(OUT char* pchData, IN int nDataLength) const;
 		private:
 			int  __cm_nSocketFd;
 	};
 
 	inline
-	CSocketIO::CSocketIO(IN CSocketFd cSocketFd)
+	CSocketIO::CSocketIO(IN const CSocketFd& cSocketFd)
 		:__cm_nSocketFd(cSocketFd.GetSocketFd())
 	{
 	}
+
 	inline
 	CSocketIO::CSocketIO(IN int nSocketFd)
 		:__cm_nSocketFd(nSocketFd)
@@ -41,7 +47,7 @@ namespace MyNamespace
 	}
 
 	int
-	CSocketIO::Recv(OUT char* pchData, IN int nDataLength) const
+	CSocketIO::RecvnBytes(OUT char* pchData, IN int nDataLength) const
 	{
 		int nTotal = 0,
 			nPosition = 0;
@@ -61,13 +67,14 @@ namespace MyNamespace
 			{
 				break;
 			}
+			nTotal += nPosition;
 		}
 		return 0;
 	}
 
 
 	int 
-	CSocketIO::Send(IN const char* pchData, IN int nDataLength) const
+	CSocketIO::SendnBytes(IN const char* pchData, IN int nDataLength) const
 	{
 		int nTotal = 0,
 			nPosition = 0;
@@ -118,13 +125,13 @@ namespace MyNamespace
 		::bzero(&sDataBag, sizeof(sDataBag));
 		sDataBag.Length = std::strlen(pchFileName);  /* 首先发送文件名*/
 		std::strcpy(sDataBag.buf, pchFileName);
-		Send(reinterpret_cast<char*>(&sDataBag), sDataBag.Length + sizeof(int));
+		SendnBytes(reinterpret_cast<char*>(&sDataBag), sDataBag.Length + sizeof(int));
 		while(::bzero(&sDataBag, sizeof(sDataBag)), (sDataBag.Length = ::read(nFd, sDataBag.buf, sizeof(sDataBag.buf))) > 0)
 		{
-			Send(reinterpret_cast<char*>(&sDataBag), sDataBag.Length + sizeof(int));
+			SendnBytes(reinterpret_cast<char*>(&sDataBag), sDataBag.Length + sizeof(int));
 		}
 		sDataBag.Length = 0; /* 发送一个结束标志*/
-		Send(reinterpret_cast<char*>(&sDataBag), sDataBag.Length + sizeof(int));
+		SendnBytes(reinterpret_cast<char*>(&sDataBag), sDataBag.Length + sizeof(int));
 		::close(nFd);
 		return 0;
 	}
@@ -134,11 +141,11 @@ namespace MyNamespace
 	{
 		SDataBag sDataBag;
 		::bzero(&sDataBag, sizeof(SDataBag));
-		Recv(reinterpret_cast<char*>(&sDataBag.Length), sizeof(int)); /* 先接收数据长度*/
+		RecvnBytes(reinterpret_cast<char*>(&sDataBag.Length), sizeof(int)); /* 先接收数据长度*/
 		if (sDataBag.Length > 0) /* 如果长度大于0*/
 		{
-			Recv(sDataBag.buf,sDataBag.Length); /* 接收文件名*/
-			int nFd = ::open(sDataBag.buf,O_WRONLY|O_CREAT|O_TRUNC,0755);
+			RecvnBytes(sDataBag.buf,sDataBag.Length); /* 接收文件名*/
+			int nFd = ::open(sDataBag.buf,O_WRONLY|O_CREAT|O_TRUNC,0655);
 			if (nFd == -1)
 			{
 				::perror("open failed");
@@ -147,10 +154,10 @@ namespace MyNamespace
 			while (1)
 			{
 				::bzero(&sDataBag, sizeof(SDataBag));
-				Recv(reinterpret_cast<char*>(&sDataBag.Length), sizeof(int));/* 接收长度*/
+				RecvnBytes(reinterpret_cast<char*>(&sDataBag.Length), sizeof(int));/* 接收长度*/
 				if(sDataBag.Length > 0)
 				{
-					Recv(sDataBag.buf,sDataBag.Length);/* 接收数据，写入数据*/
+					RecvnBytes(sDataBag.buf,sDataBag.Length);/* 接收数据，写入数据*/
 					::write(nFd,sDataBag.buf,sDataBag.Length);
 				}
 				else
@@ -160,6 +167,52 @@ namespace MyNamespace
 			}
 			::close(nFd);
 		}
+		return 0;
+	}
+
+	int
+	CSocketIO::SendMessage(IN const char* pchBuf) const
+	{
+		int nLength = std::strlen(pchBuf);
+		if (nLength == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			SDataBag sDataBag;
+			istringstream iss(pchBuf, std::ios::in | std::ios::binary);
+			while (::bzero(static_cast<void*>(&sDataBag), sizeof(SDataBag)), !(iss.eof()))
+			{
+				iss.read(sDataBag.buf, sizeof(sDataBag.buf));
+				sDataBag.Length = std::strlen(sDataBag.buf);
+				SendnBytes(reinterpret_cast<char*>(&sDataBag), sizeof(sDataBag.Length) + sDataBag.Length);
+			}
+			::bzero(static_cast<void*>(&sDataBag), sizeof(sDataBag));
+			sDataBag.Length = 0;
+			SendnBytes(reinterpret_cast<char*>(&sDataBag), sizeof(sDataBag.Length) + sDataBag.Length);
+		}
+		return 0;
+	}
+
+	int
+	CSocketIO::RecvMessage(IN char* pchBuf) const
+	{
+		SDataBag sDataBag;
+		ostringstream oss(std::ios::in | std::ios::binary); 
+		while(std::memset(&sDataBag, 0, sizeof(sDataBag)), !RecvnBytes(reinterpret_cast<char*>(&sDataBag.Length), sizeof(sDataBag.Length)))
+		{
+			if (sDataBag.Length == 0)
+			{
+				break;
+			}
+			else
+			{
+				RecvnBytes(sDataBag.buf, sDataBag.Length);
+				oss.write(sDataBag.buf,sDataBag.Length);
+			}
+		}
+		std::strcpy(pchBuf, oss.str().c_str());
 		return 0;
 	}
 }
