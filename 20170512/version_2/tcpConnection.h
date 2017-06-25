@@ -16,10 +16,10 @@ namespace MyNamespace
 			CTcpConnection(IN const CSocketFd& cSocketFd, IN const CSocketAddress& cSocketAddress);
 			~CTcpConnection(void);
 			
-			int SendMessege(IN const char* buf) const;
-			int RecvMessege(OUT char* buf) const ;
+			int SendMessege(IN const string& strBuf) const;
+			int RecvMessege(OUT string& strBuf) const ;
 
-			int SendFile(const char* FileName) const;
+			int SendFile(const string& strFileName) const;
 			int RecvFile(void) const;
 
 			int ShutDown(void);
@@ -51,21 +51,21 @@ namespace MyNamespace
 		}
 	}
 	int 
-	CTcpConnection::SendMessege(IN const char* buf) const
+	CTcpConnection::SendMessege(IN const string& strBuf) const
 	{
-		return __cm_cSocketIO.SendMessage(buf);
+		return __cm_cSocketIO.SendMessage(strBuf);
 	}
 
 	int 
-	CTcpConnection::RecvMessege(IN char* buf) const 
+	CTcpConnection::RecvMessege(IN string& strBuf) const 
 	{
-		return __cm_cSocketIO.RecvMessage(buf);
+		return __cm_cSocketIO.RecvMessage(strBuf);
 	}
 	
 	int
-	CTcpConnection::SendFile(IN const char* FileName) const 
+	CTcpConnection::SendFile(IN const string& strFileName) const 
 	{
-		return __cm_cSocketIO.SendFile(FileName);
+		return __cm_cSocketIO.SendFile(strFileName);
 	}
 
 	int

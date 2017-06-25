@@ -14,9 +14,9 @@ int main(void)
 	CSocketAddress cSocketAddress(8888, "127.0.0.123");
 	::connect(cSocketFd.GetSocketFd(), cSocketAddress.GetSockaddr(), sizeof(sockaddr));
 	CSocketIO client(cSocketFd);
-	char *pubf = new char[10000000];
-	client.RecvMessage(pubf);
-	cout << pubf << endl;
+	string strBuf;
+	client.RecvMessage(strBuf);
+	cout << strBuf << endl;
 	client.SendMessage("i am client");
 	client.RecvFile();
 	client.SendFile("./acceptor.h");
