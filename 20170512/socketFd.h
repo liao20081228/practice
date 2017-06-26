@@ -17,7 +17,7 @@ namespace MyNamespace
 			~CSocketFd(void);/* 关闭fd*/
 			
 			int GetSocketFd(void) const;/* 获取fd*/
-			int ShutDown(IN int nHow = SHUT_WR) const; /* 以某种方式关闭fd*/
+			void ShutDown(IN int nHow = SHUT_WR) const; /* 以某种方式关闭fd*/
 			
 		private:
 			int __cm_nSocketFd;
@@ -58,15 +58,14 @@ namespace MyNamespace
 	}
 
 	
-	int
+	void
 	CSocketFd::ShutDown(IN int nHow /* =SHUT_WR */) const
 	{
 		if(-1 == ::shutdown(__cm_nSocketFd,nHow))
 		{
 			::perror("shutdown SocketFd failed");
-			return -1;
+			::exit(-1);
 		}
-		return 0;
 	}
 }
 #endif /* end of include guard: MY_SOCKET_H */

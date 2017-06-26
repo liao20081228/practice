@@ -18,7 +18,7 @@ namespace MyNamespace
 			CAcceptor(IN int nListenSocketFd, IN const CSocketAddress& cAddress);/*  接收一个原始套接字*/
 			
 			int  AcceptConnect(void); /* 接收连接*/ 
-		
+			int  GetSocketFd(void) const;
 		private:
 			int __BindSocketAddress(void) const; /* 绑定*/
 			int __ListenSocket(void) const; /*监听*/
@@ -45,11 +45,11 @@ namespace MyNamespace
 	int
 	CAcceptor::AcceptConnect(void)
 	{
-		if (SetReusePort(__cm_nListenSocketFd) == -1)
+		if (gSetReusePort(__cm_nListenSocketFd) == -1)
 		{
 			return -1;
 		}
-		if (SetReuseAddress(__cm_nListenSocketFd) == -1)
+		if (gSetReuseAddress(__cm_nListenSocketFd) == -1)
 		{
 			return -1;
 		}
@@ -90,6 +90,12 @@ namespace MyNamespace
 			return -1;
 		}
 		return 0;
+	}
+
+	inline int
+	CAcceptor::GetSocketFd(void) const
+	{
+		return __cm_nListenSocketFd;
 	}
 }
 #endif /* end of include guard: MY_ACCEPTOR_H */

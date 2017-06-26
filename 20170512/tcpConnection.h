@@ -8,6 +8,7 @@
 #define MY_TCP_CONNECTION_H
 #include"acceptor.h"
 #include"socketIO.h"
+#include"utility.h"
 namespace MyNamespace
 {
 	class CTcpConnection
@@ -16,13 +17,13 @@ namespace MyNamespace
 			CTcpConnection(IN const CSocketFd& cSocketFd, IN const CSocketAddress& cSocketAddress);
 			~CTcpConnection(void);
 			
-			int SendMessege(IN const char* buf) const;
-			int RecvMessege(OUT char* buf) const ;
+			int SendMessege(IN const string& strBuf) const;
+			int RecvMessege(OUT string& strBuf) const ;
 
-			int SendFile(const char* FileName) const;
+			int SendFile(const string& strFileName) const;
 			int RecvFile(void) const;
 
-			int ShutDown(void) const;
+			int ShutDown(void);
 		private:
 			CAcceptor __cm_cAcceptor;
 			CSocketFd __cm_cNewSocketFd;
@@ -51,21 +52,21 @@ namespace MyNamespace
 		}
 	}
 	int 
-	CTcpConnection::SendMessege(IN const char* buf) const
+	CTcpConnection::SendMessege(IN const string& strBuf) const
 	{
-		return __cm_cSocketIO.SendMessage(buf);
+		return __cm_cSocketIO.SendMessage(strBuf);
 	}
 
 	int 
-	CTcpConnection::RecvMessege(IN char* buf) const 
+	CTcpConnection::RecvMessege(IN string& strBuf) const 
 	{
-		return __cm_cSocketIO.RecvMessage(buf);
+		return __cm_cSocketIO.RecvMessage(strBuf);
 	}
 	
 	int
-	CTcpConnection::SendFile(IN const char* FileName) const 
+	CTcpConnection::SendFile(IN const string& strFileName) const 
 	{
-		return __cm_cSocketIO.SendFile(FileName);
+		return __cm_cSocketIO.SendFile(strFileName);
 	}
 
 	int
@@ -75,7 +76,7 @@ namespace MyNamespace
 	}
 
 	int 
-	CTcpConnection::ShutDown(void) const
+	CTcpConnection::ShutDown(void) 
 	{
 		if(!__cm_bIsShuntDown)
 		{

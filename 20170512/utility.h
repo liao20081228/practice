@@ -48,7 +48,7 @@ namespace MyNamespace
 
 	
 	int
-	SetNonBlock(IN int nSocketFd)
+	gSetNonBlock(IN int nSocketFd)
 	{
 		int nflags;
 		if((nflags = ::fcntl(nSocketFd, F_GETFL)) == -1)
@@ -65,7 +65,7 @@ namespace MyNamespace
 	}
 
 	int 
-	SetReuseAddress(IN int nSocketFd, IN int nflags = 1)
+	gSetReuseAddress(IN int nSocketFd, IN int nflags = 1)
 	{
 		int flags = (nflags ? 1 : 0);
 		if( -1 == ::setsockopt(nSocketFd, SOL_SOCKET, SO_REUSEADDR, static_cast<void*>(&flags), static_cast<socklen_t>(sizeof(int))))
@@ -77,7 +77,7 @@ namespace MyNamespace
 	}
 	
 	int  
-	SetReusePort(IN int nSocketFd, IN int nflags = 1)
+	gSetReusePort(IN int nSocketFd, IN int nflags = 1)
 	{
 		int flags = (nflags ? 1 : 0);
 		if( -1 == ::setsockopt(nSocketFd, SOL_SOCKET, SO_REUSEPORT, static_cast<void*>(&flags), static_cast<socklen_t>(sizeof(int))))
