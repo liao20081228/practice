@@ -16,9 +16,9 @@ namespace MyNamespace
 			CEpoll(IN CAcceptor& rcAcceptor);
 			~CEpoll(void);
 			
-			int  Loop(void); /* epoll循环监听*/
-			int  UnLoop(void); /* 停止epoll循环*/
-			int DoPendingFunctor(void);
+			void Loop(void); /* epoll循环监听*/
+			void UnLoop(void); /* 停止epoll循环*/
+			/*void DoPendingFunctor(void);*/
 		public:
 			//用于设置三个私有成员
 			void SetConnectCallBack(IN std::function<void(const CTcpConnection&)> cOnConnectCallback);
@@ -30,16 +30,16 @@ namespace MyNamespace
 			std::function<void(const CTcpConnection&)> __cm_cOnMessageCallBack;/* 收到消息时的处理*/
 			std::function<void(const CTcpConnection&)> __cm_cOnCloseCallBack;/* 连接关闭时的处理*/
 		private:
-			int WaitEpoll(void);
-			int HandleConnection(void);
-			int HandleMessage(IN int nNewSocketFd);
-			int ControlEpoll( IN int nOperation, IN int nFd, IN unsigned int events);
+			void WaitEpoll(void);
+			void HandleConnection(void);
+			void HandleMessage(IN int nNewSocketFd);
+			void ControlEpoll( IN int nOperation, IN int nFd, IN unsigned int events);
 		private:
 			CAcceptor& __cm_rcAcceptor;
 			int __cm_nEpollFd; /*  epoll fd */
 			int __cm_nListenFd; /*原始sfd*/
 			bool __cm_bIsLooping; /* 循环标志位*/
-			map<int,CTcpConnection> __cm_maConnectMap;
+			map<int,const CTcpConnection&> __cm_maConnectMap;
 			vector<epoll_event> __cm_veEventList;
 	};
 
@@ -53,13 +53,10 @@ namespace MyNamespace
 	{
 		if (__cm_nEpollFd == -1)
 		{
-			::perror("epoll_create1 failed");
+			cout << "epoll_create1 failed" << endl;
 			std::exit(-1);
 		}
-		if(ControlEpoll(EPOLL_CTL_ADD, __cm_nListenFd, EPOLLIN) == -1)
-		{
-			std::exit(-1);
-		}
+		ControlEpoll(EPOLL_CTL_ADD, __cm_nListenFd, EPOLLIN);
 	}
 	
 	inline
@@ -69,28 +66,23 @@ namespace MyNamespace
 	}
 
 
-	int
+	void
 	CEpoll::Loop(void)
 	{
 		__cm_bIsLooping = true;
 		while (__cm_bIsLooping)
 		{
-			if(WaitEpoll() != 0)
-			{
-				return -1;
-			}
+			WaitEpoll();
 		}
-		return 0;
 	}
 
-	int
+	void
 	CEpoll::UnLoop(void)
 	{
 		if (__cm_bIsLooping)
 		{
 			__cm_bIsLooping = false;
 		}
-		return 0;
 	}
 
 	inline void
@@ -111,7 +103,7 @@ namespace MyNamespace
 		__cm_cOnCloseCallBack = cOnCloseCallBack;
 	}
 
-	int
+	void
 	CEpoll::ControlEpoll( IN int nOperation, IN int nFd, IN unsigned int events)
 	{
 		epoll_event event;
@@ -121,12 +113,11 @@ namespace MyNamespace
 		if (::epoll_ctl(__cm_nEpollFd, nOperation, nFd, &event) == -1)
 		{
 			std::perror("epoll_ctl");
-			return -1;
+			std::exit(-1);
 		}
-		return 0;
 	}
 	
-	int
+	void
 	CEpoll::WaitEpoll(void)
 	{
 		int nReady = 0;
@@ -139,7 +130,7 @@ namespace MyNamespace
 		if (nReady == -1)
 		{
 			std::perror("epoll_wait failed");
-			return -1;
+			std::exit(-1);
 		}
 		else if (nReady == 0)
 		{
@@ -150,41 +141,57 @@ namespace MyNamespace
 			if (nReady == static_cast<int>(__cm_veEventList.size()))
 			{
 				__cm_veEventList.resize(__cm_veEventList.size()*2);
-				for (int i = 0; i < nReady; ++i) 
+			}
+			for (int i = 0; i < nReady; ++i) 
+			{
+				if (__cm_veEventList[i].data.fd == __cm_nListenFd)
 				{
-					if (__cm_veEventList[i].data.fd == __cm_nListenFd)
-					{
-						return HandleConnection();
-					}
-					else if (__cm_veEventList[i].events & EPOLLIN) 
-					{
-						return HandleMessage(__cm_veEventList[i].data.fd);
-					}
+					HandleConnection();
+				}
+				else if (__cm_veEventList[i].events & EPOLLIN) 
+				{
+					HandleMessage(__cm_veEventList[i].data.fd);
 				}
 			}
+			
 		}
-		return 0;
 	}
 	
-	int
+	void
 	CEpoll::HandleConnection(void)
 	{
 		int nNewSocketFd = __cm_rcAcceptor.AcceptConnect();
-		if (nNewSocketFd != 0)
+		if (nNewSocketFd < 0)
 		{
-			return -1;
+			cout << "建立连接出错" << endl;
+			std::exit(-1);
 		}
-		if (ControlEpoll(EPOLL_CTL_ADD, nNewSocketFd, EPOLLIN) != 0)
-		{
-			return -1;
-		}
-		return 0;
+		ControlEpoll(EPOLL_CTL_ADD, nNewSocketFd, EPOLLIN);
+		CTcpConnection* pcConnet = new CTcpConnection(nNewSocketFd);
+		pcConnet->SetConnectCallBack(__cm_cOnConnectCallback);
+		pcConnet->SetMessageCallBack(__cm_cOnMessageCallBack);
+		pcConnet->SetCloseCallBack(__cm_cOnCloseCallBack);
+		//assert(__cm_maConnectMap.insert(std::pair<int, const CTcpConnection&>(nNewSocketFd, *pcConnet)).second == true);
+		assert(__cm_maConnectMap.emplace(nNewSocketFd, *pcConnet).second == true);
+		pcConnet->HandleConnectCallBack();
 	}
 
-	int
+	void
 	CEpoll::HandleMessage(IN int nNewSocketFd)
 	{
-		
+		bool bIsClosed = gIsConnectionClosed(nNewSocketFd);
+		map<int, const CTcpConnection&>::iterator it = __cm_maConnectMap.find(nNewSocketFd);
+		assert(it != __cm_maConnectMap.end());
+		if (bIsClosed)
+		{
+			(it->second).HandleCloseCallBack();
+			ControlEpoll(EPOLL_CTL_DEL, nNewSocketFd, EPOLLIN);
+			__cm_maConnectMap.erase(it);
+		}
+		else
+		{
+			(it->second).HandleMessageCallBack();
+		}
 	}
 
 } /* MyNamespace */ 

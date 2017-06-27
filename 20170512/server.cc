@@ -4,19 +4,27 @@
     > Mail: liao20081228@126.com 
     > Created Time: 2017年06月18日 星期日 19时49分31秒
  ************************************************************************/
-#include"tcpConnection.h"
+#include"tcpserver.h"
+void OnConnect(const MyNamespace::CTcpConnection& crcTcpConnection)
+{
+	cout << crcTcpConnection.ToString() << endl;
+	crcTcpConnection.SendMessege("welcom to server!");
+}
+void OnMessage(const MyNamespace::CTcpConnection& crcTcpConnection)
+{
+	string str;
+	crcTcpConnection.RecvMessege(str);
+	cout << str << endl;
+}
+void OnClose(const MyNamespace::CTcpConnection& crcTcpConnection)
+{
+	cout << "close " << crcTcpConnection.ToString() << endl;
+}
 int main(void)
 {
-	MyNamespace::CSocketFd cSocket;
-	MyNamespace::CSocketAddress cSocketAddress(8888, "127.0.0.123");
-	MyNamespace::CTcpConnection server(cSocket, cSocketAddress);
-	string strBuf;
-	strBuf.assign(10000,'c');
-	server.SendMessege(strBuf);
-	strBuf.clear();
-	server.RecvMessege(strBuf);
-	cout << strBuf << endl;
-	server.SendFile("./tcpConnection.h");
-	server.RecvFile();
-	return 0;
+	MyNamespace::CTcpServer server("127.0.0.123",8888);
+	server.SetConnectCallBack(OnConnect);
+	server.SetMessageCallBack(OnMessage);
+	server.SetCloseCallBack(OnClose);
+	server.Start();
 }

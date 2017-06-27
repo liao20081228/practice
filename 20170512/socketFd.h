@@ -28,8 +28,8 @@ namespace MyNamespace
 	{
 		if(__cm_nSocketFd == -1)
 		{
-			::perror("SocketFd Created failed");
-			::exit(-1);
+			std::perror("SocketFd Created failed");
+			std::exit(-1);
 		}
 	}
 

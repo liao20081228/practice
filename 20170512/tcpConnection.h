@@ -11,34 +11,61 @@
 #include"utility.h"
 namespace MyNamespace
 {
-	class CTcpConnection
+
+	class CTcpConnection;
+	class CTcpConnection /*: public std::enable_shared_from_this<CTcpConnection>*/
 	{
 		public:
-			CTcpConnection(IN const CSocketFd& cSocketFd, IN const CSocketAddress& cSocketAddress);
+			CTcpConnection(IN int nNewSocketFd);
 			~CTcpConnection(void);
 			
-			int SendMessege(IN const string& strBuf) const;
-			int RecvMessege(OUT string& strBuf) const ;
+			void SendMessege(IN const string& strBuf) const;
+			void  RecvMessege(OUT string& strBuf) const;
 
-			int SendFile(const string& strFileName) const;
-			int RecvFile(void) const;
+			void SendFile(const string& strFileName) const;
+			void RecvFile(void) const;
+
+			string ToString(void) const;
 
 			int ShutDown(void);
+		public:
+			/*void SetConnectCallBack(std::function<void(const shared_ptr<CTcpConnection>&)> cOnConnectCallBack);*/
+			/*void SetMessageCallBack(std::function<void(const shared_ptr<CTcpConnection>&)> cOnMessageCallBack);*/
+			/*void SetCloseCallBack(std::function<void(const shared_ptr<CTcpConnection>&)> cOnCloseCallBack);*/
+			void SetConnectCallBack(std::function<void(const CTcpConnection&)> cOnConnectCallBack);
+			void SetMessageCallBack(std::function<void(const CTcpConnection&)> cOnMessageCallBack);
+			void SetCloseCallBack(std::function<void(const CTcpConnection&)> cOnCloseCallBack);
+			void HandleConnectCallBack(void) const; 
+			void HandleMessageCallBack(void) const;
+			void HandleCloseCallBack(void) const;
+
 		private:
-			CAcceptor __cm_cAcceptor;
+			//每个连接在连接，收到消息，断开时的处理方法
+			/*std::function<void(const shared_ptr<CTcpConnection>&)> __cm_cOnConnectCallBack;*/
+			/*std::function<void(const shared_ptr<CTcpConnection>&)> __cm_cOnMessageCallBack;*/
+			/*std::function<void(const shared_ptr<CTcpConnection>&)> __cm_cOnCloseCallBack;*/
+			
+			std::function<void(const CTcpConnection&)> __cm_cOnConnectCallBack;
+			std::function<void(const CTcpConnection&)> __cm_cOnMessageCallBack;
+			std::function<void(const CTcpConnection&)> __cm_cOnCloseCallBack;
+		private:
 			CSocketFd __cm_cNewSocketFd;
 			CSocketIO __cm_cSocketIO;
+			CSocketAddress __cm_cLocalSocketAddress,
+						   __cm_cPeerSocketAddress;
 			bool __cm_bIsShuntDown;
 	};
 
-	CTcpConnection::CTcpConnection(IN const CSocketFd& cSocketFd, IN const CSocketAddress& cSocketAddress)
-		: __cm_cAcceptor(cSocketFd, cSocketAddress)
-		, __cm_cNewSocketFd(__cm_cAcceptor.AcceptConnect()) 
-		, __cm_cSocketIO(__cm_cNewSocketFd)
+	CTcpConnection::CTcpConnection(IN int nNewSocketFd)
+		: __cm_cNewSocketFd(nNewSocketFd) 
+		, __cm_cSocketIO(__cm_cNewSocketFd.GetSocketFd())
+		, __cm_cLocalSocketAddress(gGetLocalAddress(__cm_cNewSocketFd.GetSocketFd()))
+		, __cm_cPeerSocketAddress(gGetPeerAddress(__cm_cNewSocketFd.GetSocketFd()))
 		, __cm_bIsShuntDown(false)
 	{
 		if (__cm_cNewSocketFd.GetSocketFd() == -1)
 		{
+			cout << "传入新建连接的套接字错误" << endl;
 			exit(-1);
 		}
 	}
@@ -51,28 +78,38 @@ namespace MyNamespace
 			ShutDown();
 		}
 	}
-	int 
+	void 
 	CTcpConnection::SendMessege(IN const string& strBuf) const
 	{
-		return __cm_cSocketIO.SendMessage(strBuf);
+		 __cm_cSocketIO.SendMessage(strBuf);
 	}
 
-	int 
+	void 
 	CTcpConnection::RecvMessege(IN string& strBuf) const 
 	{
-		return __cm_cSocketIO.RecvMessage(strBuf);
+		 __cm_cSocketIO.RecvMessage(strBuf);
 	}
 	
-	int
+	void
 	CTcpConnection::SendFile(IN const string& strFileName) const 
 	{
-		return __cm_cSocketIO.SendFile(strFileName);
+		__cm_cSocketIO.SendFile(strFileName);
 	}
 
-	int
+	void
 	CTcpConnection::RecvFile(void) const 
 	{
-		return __cm_cSocketIO.RecvFile();
+		 __cm_cSocketIO.RecvFile();
+	}
+
+	string
+	CTcpConnection::ToString(void) const
+	{
+		char buf[200]={'\0'};
+		std::sprintf(buf, "server ip:%s,server port%d; client ip:%s,client port:%d" ,
+			   	 __cm_cLocalSocketAddress.GetIp_c(), __cm_cLocalSocketAddress.GetPort(),
+				 __cm_cPeerSocketAddress.GetIp_c(), __cm_cPeerSocketAddress.GetPort());
+		return string(buf);
 	}
 
 	int 
@@ -84,6 +121,51 @@ namespace MyNamespace
 		}
 		__cm_bIsShuntDown = true;
 		return 0;
+	}
+
+	inline void 
+	CTcpConnection::SetConnectCallBack(std::function<void(const CTcpConnection&)> cOnConnectCallBack)
+	{
+		__cm_cOnConnectCallBack = cOnConnectCallBack;
+	}
+
+	inline void 
+	CTcpConnection::SetMessageCallBack(std::function<void(const CTcpConnection&)> cOnMessageCallBack)
+	{
+		__cm_cOnMessageCallBack = cOnMessageCallBack;
+	}
+	
+	inline void 
+	CTcpConnection::SetCloseCallBack(std::function<void(const CTcpConnection&)> cOnCloseCallBack)
+	{
+		__cm_cOnCloseCallBack = cOnCloseCallBack;
+	}
+
+	void
+	CTcpConnection::HandleConnectCallBack(void) const
+	{
+		if (__cm_cOnConnectCallBack)
+		{
+			__cm_cOnConnectCallBack(*this);
+		}
+	}
+
+	void
+	CTcpConnection::HandleMessageCallBack(void) const
+	{
+		if (__cm_cOnMessageCallBack)
+		{
+			__cm_cOnMessageCallBack(*this);
+		}
+	}
+
+	void
+	CTcpConnection::HandleCloseCallBack(void) const
+	{
+		if (__cm_cOnCloseCallBack)
+		{
+			__cm_cOnCloseCallBack(*this);
+		}
 	}
 }
 

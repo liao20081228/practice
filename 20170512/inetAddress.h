@@ -139,7 +139,7 @@ namespace MyNamespace
 	inline void 
 	CSocketAddress::SetPort(IN unsigned short int usnPort)
 	{
-		__cm_sAddress.sin_port =  ::htons(usnPort);
+		__cm_sAddress.sin_port = ::htons(usnPort);
 	}
 	
 	inline void 
