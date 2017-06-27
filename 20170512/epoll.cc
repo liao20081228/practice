@@ -16,22 +16,23 @@ namespace MyNamespace
 			CEpoll(IN CAcceptor& rcAcceptor);
 			~CEpoll(void);
 			
-			void Loop(void); /* epoll循环监听*/
-			void UnLoop(void); /* 停止epoll循环*/
-			void DoPendingFunctor(void);
+			int  Loop(void); /* epoll循环监听*/
+			int  UnLoop(void); /* 停止epoll循环*/
+			int DoPendingFunctor(void);
 		public:
+			//用于设置三个私有成员
 			void SetConnectCallBack(IN std::function<void(const CTcpConnection&)> cOnConnectCallback);
 			void SetMessageCallBack(IN std::function<void(const CTcpConnection&)> cOnMessageCallBack);
 			void SetCloseCallBack(IN  std::function<void(const CTcpConnection&)> cOnCloseCallBack);
 		private:
-			std::function<void(const CTcpConnection&)> __cm_cOnConnectCallback;
-			std::function<void(const CTcpConnection&)> __cm_cOnMessageCallBack;
-			std::function<void(const CTcpConnection&)> __cm_cOnCloseCallBack;
-			
+			//传递给Tcpconnection类,那个类中也有三个相应的方法来设置三个私有成员，以达到定制化的操作
+			std::function<void(const CTcpConnection&)> __cm_cOnConnectCallback;/* 连接建时的处理*/
+			std::function<void(const CTcpConnection&)> __cm_cOnMessageCallBack;/* 收到消息时的处理*/
+			std::function<void(const CTcpConnection&)> __cm_cOnCloseCallBack;/* 连接关闭时的处理*/
 		private:
-			void WaitEpoll(void);
-			void HandleConnect(void);
-			void HandleMessage(int nSocketFd);
+			int WaitEpoll(void);
+			int HandleConnection(void);
+			int HandleMessage(IN int nNewSocketFd);
 			int ControlEpoll( IN int nOperation, IN int nFd, IN unsigned int events);
 		private:
 			CAcceptor& __cm_rcAcceptor;
@@ -48,53 +49,63 @@ namespace MyNamespace
 		, __cm_nEpollFd(::epoll_create1(0))
 		, __cm_nListenFd(__cm_rcAcceptor.GetSocketFd())
 		, __cm_bIsLooping(false)
+		, __cm_veEventList(1024)
 	{
 		if (__cm_nEpollFd == -1)
 		{
 			::perror("epoll_create1 failed");
-			::exit(-1);
+			std::exit(-1);
 		}
-		ControlEpoll(EPOLL_CTL_ADD, __cm_nListenFd, EPOLLIN);
+		if(ControlEpoll(EPOLL_CTL_ADD, __cm_nListenFd, EPOLLIN) == -1)
+		{
+			std::exit(-1);
+		}
 	}
-
+	
+	inline
 	CEpoll::~CEpoll(void)
 	{
 		::close(__cm_nEpollFd);
 	}
 
 
-	void
+	int
 	CEpoll::Loop(void)
 	{
 		__cm_bIsLooping = true;
 		while (__cm_bIsLooping)
 		{
-			WaitEpoll();
+			if(WaitEpoll() != 0)
+			{
+				return -1;
+			}
 		}
+		return 0;
 	}
 
-	void
+	int
 	CEpoll::UnLoop(void)
 	{
 		if (__cm_bIsLooping)
 		{
 			__cm_bIsLooping = false;
 		}
+		return 0;
 	}
 
-	void
+	inline void
 	CEpoll::SetConnectCallBack(std::function<void(const CTcpConnection&)> cOnConnectCallback)
 	{
 		__cm_cOnConnectCallback = cOnConnectCallback;
 	}
 	
-	void
+	inline void
 	CEpoll::SetMessageCallBack(std::function<void(const CTcpConnection&)> cOnMessageCallBack)
 	{
 		__cm_cOnMessageCallBack = cOnMessageCallBack;
 	}
 	
-	void
+	inline void
 	CEpoll::SetCloseCallBack(std::function<void(const CTcpConnection&)> cOnCloseCallBack)
 	{
 		__cm_cOnCloseCallBack = cOnCloseCallBack;
@@ -114,5 +125,67 @@ namespace MyNamespace
 		}
 		return 0;
 	}
+	
+	int
+	CEpoll::WaitEpoll(void)
+	{
+		int nReady = 0;
+		do
+		{
+			nReady = ::epoll_wait(__cm_nEpollFd, &(*__cm_veEventList.begin()), __cm_veEventList.size(), 5000);
+			
+		}while (nReady == -1 && errno == EINTR);
+
+		if (nReady == -1)
+		{
+			std::perror("epoll_wait failed");
+			return -1;
+		}
+		else if (nReady == 0)
+		{
+			cout << "eppol_wait time out" << endl;
+		}
+		else 
+		{
+			if (nReady == static_cast<int>(__cm_veEventList.size()))
+			{
+				__cm_veEventList.resize(__cm_veEventList.size()*2);
+				for (int i = 0; i < nReady; ++i) 
+				{
+					if (__cm_veEventList[i].data.fd == __cm_nListenFd)
+					{
+						return HandleConnection();
+					}
+					else if (__cm_veEventList[i].events & EPOLLIN) 
+					{
+						return HandleMessage(__cm_veEventList[i].data.fd);
+					}
+				}
+			}
+		}
+		return 0;
+	}
+	
+	int
+	CEpoll::HandleConnection(void)
+	{
+		int nNewSocketFd = __cm_rcAcceptor.AcceptConnect();
+		if (nNewSocketFd != 0)
+		{
+			return -1;
+		}
+		if (ControlEpoll(EPOLL_CTL_ADD, nNewSocketFd, EPOLLIN) != 0)
+		{
+			return -1;
+		}
+		return 0;
+	}
+
+	int
+	CEpoll::HandleMessage(IN int nNewSocketFd)
+	{
+		
+	}
+
 } /* MyNamespace */ 
 #endif /* end of include guard: MY_EPPLL_H */
