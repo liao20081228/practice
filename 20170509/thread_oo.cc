@@ -12,6 +12,7 @@ namespace MyNameSpace
 		public:
 			IThread(void);
 			virtual ~IThread(void);
+
 			IThread(IN const IThread& lref) = delete; //禁止拷贝
 			IThread& operator = (IN const IThread& lref) = delete; //禁止赋值
 			

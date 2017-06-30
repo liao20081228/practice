@@ -15,6 +15,7 @@ class ISubject
 	public:
 		ISubject(IN int state = -1); //构造函数
 		virtual ~ISubject(void); //析构函数
+		
 		void Attach(IN IObsever* pIObsever); //添加观察者
 		void Detach(IN IObsever* pIObsever); //删除观察者
 		void Notify(void); //通知状态发生改变

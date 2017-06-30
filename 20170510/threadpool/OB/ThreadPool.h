@@ -23,8 +23,6 @@ namespace MyNamespace
 			void Stop(void);  /* 停止线程池*/
 			
 			void AddTask(IN const CTask* pcCTask); /* 向任务池中添加任务*/
-		public:
-			friend class CRun;
 		private:
 			const CTask* GetTask(void);  /* 从任务池中取得任务*/
 		
