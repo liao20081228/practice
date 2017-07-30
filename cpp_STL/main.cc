@@ -1,18 +1,13 @@
 /*************************************************************************
-    > File Name: socketFd.h
+    > File Name: main.cc
     > Author: liao20081228
     > Mail: liao20081228@126.com 
-    > Created Time: 2017年06月30日 星期五 11时36分50秒
+    > Created Time: 2017年05月10日 星期三 19时57分49秒
  ************************************************************************/
-#ifndef MY_SOCKET_FD_H
-#define MY_SOCKET_FD_H
-
 #include<myhead>/*myhead is a headfile defined in in the directory:/usr/include,which include all headfile we need*/
-namespace NetworkLibrary
+int  main()
 {
-	class CsocketFd
-	{
-
-	}
+	int *p=new int[0];
+	cout<<p<<endl;
+	return 0;
 }
-#endif /* end of include guard: MY_SOCKET_FD_H */
