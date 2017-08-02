@@ -58,6 +58,8 @@ OpenSSL_Cipher(IN const char* pcchCipherName, IN ENGINE* impl,IN const unsigned 
 	           IN int nLenOfInput, IN OUT unsigned char* puchOutput,
 			   IN int* pnLenOfOutput, IN int nIsEncry = true)
 {
+	::bzero(puchOutput, *pnLenOfOutput);
+	*pnLenOfOutput =0;
 	int nRetVal = 0,                         // the return Value of this function
 		nTempLen = 0,                        // last block with padding
 		nRet = 0;                            // return value of system calling 
@@ -149,6 +151,9 @@ OpenSSL_Digest(IN const char* pcchDigestName, IN ENGINE *impl, IN const unsigned
 	           IN int nLenOfInput, IN OUT unsigned char* puchOutput,
 			   IN OUT int* pnLenOfOutput)
 {
+	::bzero(puchOutput, *pnLenOfOutput);
+	*pnLenOfOutput = 0;
+	
 	int nRetVal = 0,                         // the return Value of this function
 		nRet = 0;                            // return value of system calling 
 	char pchErrorInfo[1024] = {'\0'};        //Error Information
@@ -239,6 +244,8 @@ OpenSSL_HMAC(IN const char* pcsDigestName, IN ENGINE *pstEngine, IN const unsign
 			 IN OUT unsigned char* puchOutput, IN OUT unsigned int* punLenOfOutput)
 
 {
+	::bzero(puchOutput, *punLenOfOutput);
+	*punLenOfOutput = 0;
 	int nRetVal = 0,                        //return value of this function
 		nERR = 0;                             // return value of error
 	char pchErrorInfo[1024] = {'\0'};
@@ -326,7 +333,7 @@ void Output_HEX(IN const unsigned char* pcuchdata, IN unsigned int nLenOfData, c
 	{
 		if (pcuchdata[i] < 16)
 		{
-			::dprintf(nFd, "0");
+			::dprintf(nFd, "%x", 0);
 			::dprintf(nFd, "%x", pcuchdata[i]);
 		}
 		else
@@ -341,32 +348,97 @@ void Output_HEX(IN const unsigned char* pcuchdata, IN unsigned int nLenOfData, c
 	}
 }
 
-int main()
+
+/*!@function
+********************************************************************************
+Function Name  : OpenSSL_BASE64_encode
+Function       : encode or decode data with base64
+Parameters     : IN pcuchInput: input data
+				 IN nLenOfInput: input data length
+				 IN OUT puchOutput: output data
+				 IN OUT pnLenOfOutput: output data length
+Return Value   : void
+Throw exception: no
+--------------------------------------------------------------------------------
+Note           : no
+Typical usage  : no 
+--------------------------------------------------------------------------------
+Date:          : 2017/07/31
+Version:       : 0.0
+Author         : liaoweizhi
+Department     : 技术研发总部
+Email          : liaowz@koal.com
+Modifier       : no
+Department     : no
+Email          : no
+Changes        : create
+*******************************************************************************/
+
+void 
+OpenSSL_BASE64_encode(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
+					  IN OUT unsigned char* puchOutput, IN OUT int* pnLenOfOutput)
 {
-	/*::OpenSSL_add_all_algorithms();*/
-	char pchCipherName[] = "aes-128-cbc";
-	unsigned char puchKey[EVP_MAX_KEY_LENGTH] = "asdasdasdasdfasdfsaf";
-	unsigned char puchIV[] = "asdasdasdadasdasd";
-	unsigned char puchPlainText[1024] ="i love you see is the weorad asdad";
-	std::memset((char*)puchPlainText,'a', sizeof(puchPlainText));
-	unsigned char puchCipherText[102400] ="";
-	int nOutLen = 0,
-		nOutLen2 = 0;
-	OpenSSL_Cipher(pchCipherName, nullptr, puchKey, puchIV, 
-					puchPlainText, std::strlen(reinterpret_cast<char*>(puchPlainText)),
-					puchCipherText,&nOutLen,1);
+	::bzero(puchOutput, *pnLenOfOutput);
+	*pnLenOfOutput = 0;
 
-	cout << (char*)puchCipherText << endl;
-	cout << nOutLen  << endl;
+	int nTempLen = 0;
+	EVP_ENCODE_CTX ctx;
+	::EVP_EncodeInit(&ctx);
 	
-	OpenSSL_Cipher(pchCipherName, nullptr, puchKey, puchIV, 
-					puchCipherText, nOutLen,
-					puchPlainText, &nOutLen2, 0);
+	::EVP_EncodeUpdate(&ctx, puchOutput, pnLenOfOutput, pcuchInput, nLenOfInput);
 
+	::EVP_EncodeFinal(&ctx, puchOutput + *pnLenOfOutput, &nTempLen);
 
-	cout << (char*)puchPlainText << endl;
-	cout << nOutLen2  << endl;
+	*pnLenOfOutput += nTempLen;
+}
 
+/*!@function
+********************************************************************************
+Function Name  : OPenssl_BASE64_decode
+Function       : encode or decode data with base64
+Parameters     : IN pcuchInput: input data
+				 IN nLenOfInput: input data length
+				 IN OUT puchOutput: output data
+				 IN OUT pnLenOfOutput: output data length
+Return Value   : 0 sucess and no zero is error
+Throw exception: no
+--------------------------------------------------------------------------------
+Note           : no
+Typical usage  : no 
+--------------------------------------------------------------------------------
+Date:          : 2017/07/31
+Version:       : 0.0
+Author         : liaoweizhi
+Department     : 技术研发总部
+Email          : liaowz@koal.com
+Modifier       : no
+Department     : no
+Email          : no
+Changes        : create
+*******************************************************************************/
+
+int
+OpenSSL_BASE64_decode(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
+					  IN OUT unsigned char* puchOutput, IN OUT int* pnLenOfOutput)
+{
+	::bzero(puchOutput, *pnLenOfOutput);
+	*pnLenOfOutput = 0;
+
+	int nTempLen = 0;
+	EVP_ENCODE_CTX ctx;
+	::EVP_DecodeInit(&ctx);
+	
+	if(-1 == ::EVP_DecodeUpdate(&ctx, puchOutput, pnLenOfOutput, pcuchInput, nLenOfInput))
+	{
+		cout << "EVP_DecodeUpdate failed" << endl;
+		return -1;
+	}
+	if ( -1 ==::EVP_DecodeFinal(&ctx, puchOutput + *pnLenOfOutput, &nTempLen) )
+	{
+		cout << "EVP_DecodeFinal failed" << endl;
+		return -1;
+	}
+	*pnLenOfOutput += nTempLen;
 	return 0;
 }
 
