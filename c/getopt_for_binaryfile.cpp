@@ -7,6 +7,15 @@
 /*myhead_cpp.h is a headfile in “/usr/local/include”,include all headfiles*/
 #include"openssl_evp_c.h"
 #include<getopt.h>
+#include<iostream>
+#include<cstdio>
+#include<cstdlib>
+#include<cstring>
+#include<assert.h>
+using std::cout;
+using std::cin;
+using std::endl;
+
 void 
 ShowHelpInfo(void)
 {
@@ -71,10 +80,10 @@ WriteAccordingFormat(IN int nFdOut, IN const char*format, IN const unsigned char
 }
 
 int 
-ReadCommandArgument(IN int argc, IN char* argv[], IN OUT char* pchMode, 
-					IN OUT char* pchAlgorithom, IN OUT char* pchKey, 
-					IN OUT char* pchInitVec, IN OUT char* pchInputFile, 
-					IN OUT char* pchOutputFile, IN OUT char* pchFormat)
+ReadCommandArgument(IN int argc, IN char* argv[],  OUT char* pchMode, 
+					OUT char* pchAlgorithom,  OUT char* pchKey, 
+					OUT char* pchInitVec,  OUT char* pchInputFile, 
+					OUT char* pchOutputFile, OUT char* pchFormat)
 {
 	char chOption = '\0';
 	int nLongOptionIndex = 0;
@@ -124,6 +133,7 @@ int
 HandleCommandArgument(IN int argc, IN char* argv[])
 {
 	::OpenSSL_add_all_algorithms();
+	::ERR_load_crypto_strings();
 	char pchMode[10] = {'\0'};
 	char pchAlgorithom[20] = {'\0'};
 	char pchKey[EVP_MAX_KEY_LENGTH + 1] = {'\0'};
@@ -162,7 +172,6 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 	unsigned char puchOutput[10240 * 2];
 	int nLenOfIn  = 0;
 	int nLenOfOut = 0;
-	int nBlockSize = 0;
 
 
 	if (0 == std::strcmp(pchMode, "encrypt") || 0 == std::strcmp(pchMode, "decrypt"))
@@ -172,8 +181,7 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 		{
 			IsEncry = 0;
 		}
-		const EVP_CIPHER* psCipher = ::EVP_get_cipherbyname(pchAlgorithom);
-		if (std::strlen(pchKey) != 0 && std::strlen(pchInitVec) != 0 && nullptr !=psCipher)
+		if (std::strlen(pchKey) != 0 && std::strlen(pchInitVec) != 0)
 		{
 			::close(nFdIn);
 			if( nFdOut != STDOUT_FILENO)
@@ -182,11 +190,9 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			}
 			return -1;
 		}
-
-		nBlockSize = ::EVP_CIPHER_block_size(psCipher);
 		
 		while ((::bzero(puchInput,sizeof(puchInput)), ::bzero(puchOutput,sizeof(puchOutput)),
-				nLenOfIn = ::read(nFdIn, puchInput, nBlockSize * 5)) > 0)
+				nLenOfIn = ::read(nFdIn, puchInput, 10240)) > 0)
 		{
 			if (0 != ::OpenSSL_Cipher(pchAlgorithom, nullptr, reinterpret_cast<unsigned char*>(pchKey), 
 							reinterpret_cast<unsigned char*>(pchInitVec), puchInput, nLenOfIn, 
@@ -225,7 +231,6 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			return -1;
 		}
 
-		nBlockSize = ::EVP_MD_block_size(psMD);
 		int nLenOfIn  = 0;
 		int nLenOfOut = 0;
 		
@@ -244,7 +249,7 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			}
 			return -1;
 		}
-		while ((::bzero(puchInput,sizeof(puchInput)), nLenOfIn = ::read(nFdIn, puchInput, nBlockSize * 5)) > 0)
+		while ((::bzero(puchInput,sizeof(puchInput)), nLenOfIn = ::read(nFdIn, puchInput, 10240)) > 0)
 		{
 			
 			if (::EVP_DigestUpdate(&ctx, puchInput, nLenOfIn) != 1)
@@ -301,7 +306,6 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			return -1;
 		}
 		
-		nBlockSize = EVP_MD_block_size(psMD);
 		HMAC_CTX ctx;
 		::HMAC_CTX_init(&ctx);
 	
@@ -318,7 +322,7 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			}
 			return -1;
 		}
-		while((::bzero(puchInput,sizeof(puchInput)), nLenOfIn = ::read(nFdIn, puchInput, nBlockSize * 5)) > 0)
+		while((::bzero(puchInput,sizeof(puchInput)), nLenOfIn = ::read(nFdIn, puchInput, 10240)) > 0)
 		{
 			if (!::HMAC_Update(&ctx, puchInput, nLenOfIn))
 			{
@@ -363,6 +367,8 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 	{
 		::close(nFdOut);
 	}
+	::EVP_cleanup();
+	::ERR_free_strings();
 	return 0;
 }
 
