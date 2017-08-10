@@ -17,6 +17,7 @@
 using std::cout;
 using std::cin;
 using std::endl;
+<<<<<<< HEAD:openssl/getopt_for_binaryfile.cpp
 namespace Openssl_evp
 {
 
@@ -93,6 +94,11 @@ Openssl_evp::CReadCommandArgument::ReadArgument(void)
 
 void
 Openssl_evp::CReadCommandArgument::ShowHelpInfo(void) const
+=======
+
+void 
+ShowHelpInfo(void)
+>>>>>>> e42ce5cc1a8f887ce9d88dbd868e3ae44670f91a:openssl/c/getopt_for_binaryfile.cpp
 {
 	cout << "help info" << endl
 		<< "-m/--mode 计算模式，包括 encrypt | decrypt | digest | hmac 这四种"<< endl
@@ -196,6 +202,57 @@ WriteAccordingFormat(IN int nFdOut, IN const char*format, IN const unsigned char
 	return 0;
 }
 
+<<<<<<< HEAD:openssl/getopt_for_binaryfile.cpp
+=======
+int 
+ReadCommandArgument(IN int argc, IN char* argv[],  OUT char* pchMode, 
+					OUT char* pchAlgorithom,  OUT char* pchKey, 
+					OUT char* pchInitVec,  OUT char* pchInputFile, 
+					OUT char* pchOutputFile, OUT char* pchFormat)
+{
+	char chOption = '\0';
+	int nLongOptionIndex = 0;
+	int IsHelp = 0;
+	static struct option long_options[] = /* 长选项定义*/
+	{
+		{"mode",       1,    0,   'm'},
+		{"algorithom", 1,    0,   'a'},
+		{"key",        1,    0,   'k'},
+		{"iv",         1,    0,   'v'},
+		{"input",      1,    0,   'i'},
+		{"output",     2,    0,   'o'},
+		{"format",     1,    0,   'f'},
+		{"help",       0 ,   0,   'h'},
+		{0, 0, 0, 0}
+	};
+
+	while ((chOption = ::getopt_long(argc, argv, "m:a:k:v:i:o::f:h", long_options, &nLongOptionIndex)) != -1)
+	{
+		switch (chOption)
+		{
+			case 'm' : std::strcpy(pchMode, optarg); break;
+			case 'a' : std::strcpy(pchAlgorithom, optarg); break;
+			case 'k' : std::strcpy(pchKey, optarg); break;
+			case 'v' : std::strcpy(pchInitVec, optarg); break;
+			case 'i' : std::strcpy(pchInputFile, optarg); break;
+			case 'o' : std::strcpy(pchOutputFile, optarg); break;
+			case 'f' : std::strcpy(pchFormat, optarg); break;
+			case 'h' : ShowHelpInfo(); IsHelp = 1; std::exit(-1);
+			default  : cout << "Unknown option:" << chOption << endl; ShowHelpInfo(); return -1;
+		}
+	}
+	if (IsHelp == 0)
+	{
+		assert(std::strlen(pchMode) && std::strlen(pchAlgorithom) 
+				&& std::strlen(pchInputFile) && std::strlen(pchFormat));
+		assert(std::strcmp(pchMode, "encrypt") == 0 || std::strcmp(pchMode, "decrypt") == 0 
+				|| std::strcmp(pchMode, "digest") == 0 || std::strcmp(pchMode, "hmac") == 0); 
+		assert(std::strcmp(pchFormat, "BINARY") == 0 || std::strcmp(pchFormat, "HEX") == 0 
+				|| std::strcmp(pchFormat, "BASE64") == 0);
+	}
+	return 0;
+}
+>>>>>>> e42ce5cc1a8f887ce9d88dbd868e3ae44670f91a:openssl/c/getopt_for_binaryfile.cpp
 
 
 int

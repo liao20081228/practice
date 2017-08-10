@@ -1,25 +1,11 @@
-/*!@file
-********************************************************************************
-Module Name    : OpenSSL_evp
-File Name      : OpenSSL_evp_cpp.cpp
-Related Files  : no
-File Function  : 加密，解密，摘要，签名，认证，写信，读写
-Author         : liaoweizhi
-Department     : 技术研发总部
-Email          : liaowz@koal.com
-Version        : 0.0
---------------------------------------------------------------------------------
-Note           : 采用c的方式
---------------------------------------------------------------------------------
-Date:          : 2017/07/30
-Version:       : 0.0
-Modifier       : no
-Department     : no
-Email          : no
-Changes        : create
+/*****************************************************************************80
+    > File Name: openssl_evp_cpp.cpp
+    > Author: liao20081228
+    > Mail: liao20081228@126.com 
+    > Created Time: 2017年08月01日 星期二 15时04分46秒
 *******************************************************************************/
-
 /*myhead_cpp.h is a headfile in “/usr/local/include”,include all headfiles*/
+<<<<<<< HEAD:openssl/openssl_evp_cpp.h
 #ifndef __MY_OPENSSL_EVP_CPP_H
 #define __MY_OPENSSL_EVP_CPP_H
 
@@ -332,6 +318,46 @@ Openssl_evp::CLoadConf::~CLoadConf(void)
 
 //class CCipher
 inline
+=======
+#include"openssl_evp_cpp.h"
+
+Openssl_evp::CLoadConf* Openssl_evp::CLoadConf::__cm_pCLoadConf = Getinstance();
+pthread_once_t Openssl_evp::CLoadConf::__cm_sOnce = PTHREAD_ONCE_INIT;
+
+	/* static */ Openssl_evp::CLoadConf* 
+Openssl_evp::CLoadConf::Getinstance(void)
+{
+	::pthread_once(&__cm_sOnce, Init);
+	return __cm_pCLoadConf;
+}
+
+/* static */ void 
+Openssl_evp::CLoadConf::Init(void)
+{
+	if(nullptr == __cm_pCLoadConf)
+	{
+		__cm_pCLoadConf = new CLoadConf;
+		::OpenSSL_add_all_algorithms();
+		::ERR_load_crypto_strings();
+		std::atexit(Destroy);
+	}
+}
+
+/* static */ void 
+Openssl_evp::CLoadConf::Destroy(void)
+{
+	if(nullptr != __cm_pCLoadConf)
+	{
+		::EVP_cleanup();
+		::ERR_free_strings();
+		delete __cm_pCLoadConf;
+	}
+}
+
+
+
+
+>>>>>>> e42ce5cc1a8f887ce9d88dbd868e3ae44670f91a:openssl/cpp/openssl_evp_cpp.cpp
 Openssl_evp::CCipher::CCipher(IN const char* pcchCipherName, IN const unsigned char* pcuchKey, 
 							  IN const unsigned char* pcuchInitVec, IN int nIsEncry /* =1 */
 				                                    , IN ENGINE* psImpl /*=nullptr*/)
@@ -340,8 +366,22 @@ Openssl_evp::CCipher::CCipher(IN const char* pcchCipherName, IN const unsigned c
 	, __cm_pcuchInitVec(pcuchInitVec)
 	, __cm_nIsEncry(nIsEncry)
 {
+<<<<<<< HEAD:openssl/openssl_evp_cpp.h
 	GetEVP_CIPHER(pcchCipherName);//获取算法名字
 	Init();
+=======
+	::EVP_CIPHER_CTX_init(&__cm_sCtx);
+	if (g_IsLoa)
+	{
+		/*function_body*/
+	}
+	__cm_psCipher = ::EVP_get_cipherbyname(pcchCipherName);
+	if (nullptr == __cm_psCipher)
+	{
+		throw(std::invalid_argument("不支持此算法"));
+	}
+
+>>>>>>> e42ce5cc1a8f887ce9d88dbd868e3ae44670f91a:openssl/cpp/openssl_evp_cpp.cpp
 }
 
 inline
