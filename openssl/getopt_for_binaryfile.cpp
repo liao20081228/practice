@@ -5,10 +5,94 @@
   > Created Time: 2017年08月02日 星期三 10时15分18秒
  *******************************************************************************/
 /*myhead_cpp.h is a headfile in “/usr/local/include”,include all headfiles*/
-#include"openssl_evp_c.h"
+#ifndef __MY_EVP_HANDL_COMMAND_ARG_H
+#define __MY_EVP_HANDL_COMMAND_ARG_H
+#include"openssl_evp_cpp.h"
 #include<getopt.h>
-void 
-ShowHelpInfo(void)
+#include<iostream>
+#include<cstdio>
+#include<cstdlib>
+#include<cstring>
+#include<assert.h>
+using std::cout;
+using std::cin;
+using std::endl;
+namespace Openssl_evp
+{
+
+class CReadCommandArgument
+{
+	public:
+		CReadCommandArgument(IN int argc, IN char* argv[]);
+		vector<string*> GetArg(void) const;
+	public:
+		void ReadArgument(void);
+	private:
+		void ShowHelpInfo(void) const;
+
+	private:
+		int __cm_nArgc;
+		char** __cm_ppArgv;
+		string __cm_strMode,
+			   __cm_strAlgorithm,
+			   __cm_strKey,
+			   __cm_strInitVec,
+			   __cm_strInputFile,
+			   __cm_strOutputFile,
+			   __cm_strFormat;
+		bool   __cm_bIsHelp;
+		struct option long_options[9] = /* 长选项定义*/
+		{
+			{"mode",       1,    0,   'm'},
+			{"algorithom", 1,    0,   'a'},
+			{"key",        1,    0,   'k'},
+			{"iv",         1,    0,   'v'},
+			{"input",      1,    0,   'i'},
+			{"output",     2,    0,   'o'},
+			{"format",     1,    0,   'f'},
+			{"help",       0 ,   0,   'h'},
+			{0, 0, 0, 0}
+		};
+};
+
+inline
+Openssl_evp::CReadCommandArgument::CReadCommandArgument(IN int argc, IN char* argv[])
+	: __cm_nArgc(argc)
+	, __cm_ppArgv(argv)
+{
+	__cm_strMode.clear();
+	__cm_strAlgorithm.clear();
+	__cm_strKey.clear();
+	__cm_strInitVec.clear();
+	__cm_strInputFile.clear();
+	__cm_strOutputFile.clear(),
+	__cm_strFormat.clear();
+}
+
+void
+Openssl_evp::CReadCommandArgument::ReadArgument(void)
+{
+	char chOption = '\0';
+	int nLongOptionIndex = 0;
+	while ((chOption = ::getopt_long(__cm_nArgc, __cm_ppArgv, "m:a:k:v:i:o::f:h", long_options, &nLongOptionIndex)) != -1)
+	{
+		switch (chOption)
+		{
+			case 'm' : __cm_strMode.append(optarg);break;
+			case 'a' : __cm_strAlgorithm.append(optarg); break;
+			case 'k' : __cm_strKey.append(optarg); break;
+			case 'v' : __cm_strInitVec.append(optarg); break;
+			case 'i' : __cm_strInputFile.append(optarg);break;
+			case 'o' : __cm_strOutputFile.append(optarg);break;
+			case 'f' : __cm_strFormat.append(optarg);break;
+			case 'h' : ShowHelpInfo(); __cm_bIsHelp = true; break;
+			default  : cout << "Unknown option:" << chOption << endl; ShowHelpInfo(); break;
+		}
+	}
+}
+
+void
+Openssl_evp::CReadCommandArgument::ShowHelpInfo(void) const
 {
 	cout << "help info" << endl
 		<< "-m/--mode 计算模式，包括 encrypt | decrypt | digest | hmac 这四种"<< endl
@@ -29,6 +113,48 @@ ShowHelpInfo(void)
 		<< "使用示例3：HMAC计算(使用一个5字节的KEY)" << endl
 		<< "xxxxx -m hmac -a SHA1 -i in.txt -k 0000000000 -o hmac.hex -f BINARY" << endl;
 }
+
+
+vector<string*> 
+Openssl_evp::CReadCommandArgument::GetArg(void) const
+{
+	vector<std::string *> VecArg{&__cm_strMode, &__cm_strAlgorithm};
+	return VecArg;
+}
+
+
+
+
+	if (IsHelp == 0)
+	{
+		assert(std::strlen(pchMode) && std::strlen(pchAlgorithom) 
+				&& std::strlen(pchInputFile) && std::strlen(pchFormat));
+		assert(std::strcmp(pchMode, "encrypt") == 0 || std::strcmp(pchMode, "decrypt") == 0 
+				|| std::strcmp(pchMode, "digest") == 0 || std::strcmp(pchMode, "hmac") == 0); 
+		assert(std::strcmp(pchFormat, "BINARY") == 0 || std::strcmp(pchFormat, "HEX") == 0 
+				|| std::strcmp(pchFormat, "BASE64") == 0);
+	}
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+#endif /* end of include guard: __MY_EVP_HANDL_COMMAND_ARG_H */
+
 
 int 
 WriteAccordingFormat(IN int nFdOut, IN const char*format, IN const unsigned char* pchdata, IN int nLen)
@@ -70,60 +196,13 @@ WriteAccordingFormat(IN int nFdOut, IN const char*format, IN const unsigned char
 	return 0;
 }
 
-int 
-ReadCommandArgument(IN int argc, IN char* argv[], IN OUT char* pchMode, 
-					IN OUT char* pchAlgorithom, IN OUT char* pchKey, 
-					IN OUT char* pchInitVec, IN OUT char* pchInputFile, 
-					IN OUT char* pchOutputFile, IN OUT char* pchFormat)
-{
-	char chOption = '\0';
-	int nLongOptionIndex = 0;
-	int IsHelp = 0;
-	static struct option long_options[] = /* 长选项定义*/
-	{
-		{"mode",       1,    0,   'm'},
-		{"algorithom", 1,    0,   'a'},
-		{"key",        1,    0,   'k'},
-		{"iv",         1,    0,   'v'},
-		{"input",      1,    0,   'i'},
-		{"output",     2,    0,   'o'},
-		{"format",     1,    0,   'f'},
-		{"help",       0 ,   0,   'h'},
-		{0, 0, 0, 0}
-	};
-
-	while ((chOption = ::getopt_long(argc, argv, "m:a:k:v:i:o::f:h", long_options, &nLongOptionIndex)) != -1)
-	{
-		switch (chOption)
-		{
-			case 'm' : std::strcpy(pchMode, optarg); break;
-			case 'a' : std::strcpy(pchAlgorithom, optarg); break;
-			case 'k' : std::strcpy(pchKey, optarg); break;
-			case 'v' : std::strcpy(pchInitVec, optarg); break;
-			case 'i' : std::strcpy(pchInputFile, optarg); break;
-			case 'o' : std::strcpy(pchOutputFile, optarg); break;
-			case 'f' : std::strcpy(pchFormat, optarg); break;
-			case 'h' : ShowHelpInfo(); IsHelp = 1; std::exit(-1);
-			default  : cout << "Unknown option:" << chOption << endl; ShowHelpInfo(); return -1;
-		}
-	}
-	if (IsHelp == 0)
-	{
-		assert(std::strlen(pchMode) && std::strlen(pchAlgorithom) 
-				&& std::strlen(pchInputFile) && std::strlen(pchFormat));
-		assert(std::strcmp(pchMode, "encrypt") == 0 || std::strcmp(pchMode, "decrypt") == 0 
-				|| std::strcmp(pchMode, "digest") == 0 || std::strcmp(pchMode, "hmac") == 0); 
-		assert(std::strcmp(pchFormat, "BINARY") == 0 || std::strcmp(pchFormat, "HEX") == 0 
-				|| std::strcmp(pchFormat, "BASE64") == 0);
-	}
-	return 0;
-}
 
 
 int
 HandleCommandArgument(IN int argc, IN char* argv[])
 {
 	::OpenSSL_add_all_algorithms();
+	::ERR_load_crypto_strings();
 	char pchMode[10] = {'\0'};
 	char pchAlgorithom[20] = {'\0'};
 	char pchKey[EVP_MAX_KEY_LENGTH + 1] = {'\0'};
@@ -162,7 +241,6 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 	unsigned char puchOutput[10240 * 2];
 	int nLenOfIn  = 0;
 	int nLenOfOut = 0;
-	int nBlockSize = 0;
 
 
 	if (0 == std::strcmp(pchMode, "encrypt") || 0 == std::strcmp(pchMode, "decrypt"))
@@ -172,8 +250,7 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 		{
 			IsEncry = 0;
 		}
-		const EVP_CIPHER* psCipher = ::EVP_get_cipherbyname(pchAlgorithom);
-		if (std::strlen(pchKey) != 0 && std::strlen(pchInitVec) != 0 && nullptr !=psCipher)
+		if (std::strlen(pchKey) != 0 && std::strlen(pchInitVec) != 0)
 		{
 			::close(nFdIn);
 			if( nFdOut != STDOUT_FILENO)
@@ -182,11 +259,9 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			}
 			return -1;
 		}
-
-		nBlockSize = ::EVP_CIPHER_block_size(psCipher);
 		
 		while ((::bzero(puchInput,sizeof(puchInput)), ::bzero(puchOutput,sizeof(puchOutput)),
-				nLenOfIn = ::read(nFdIn, puchInput, nBlockSize * 5)) > 0)
+				nLenOfIn = ::read(nFdIn, puchInput, 10240)) > 0)
 		{
 			if (0 != ::OpenSSL_Cipher(pchAlgorithom, nullptr, reinterpret_cast<unsigned char*>(pchKey), 
 							reinterpret_cast<unsigned char*>(pchInitVec), puchInput, nLenOfIn, 
@@ -225,7 +300,6 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			return -1;
 		}
 
-		nBlockSize = ::EVP_MD_block_size(psMD);
 		int nLenOfIn  = 0;
 		int nLenOfOut = 0;
 		
@@ -244,7 +318,7 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			}
 			return -1;
 		}
-		while ((::bzero(puchInput,sizeof(puchInput)), nLenOfIn = ::read(nFdIn, puchInput, nBlockSize * 5)) > 0)
+		while ((::bzero(puchInput,sizeof(puchInput)), nLenOfIn = ::read(nFdIn, puchInput, 10240)) > 0)
 		{
 			
 			if (::EVP_DigestUpdate(&ctx, puchInput, nLenOfIn) != 1)
@@ -301,7 +375,6 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			return -1;
 		}
 		
-		nBlockSize = EVP_MD_block_size(psMD);
 		HMAC_CTX ctx;
 		::HMAC_CTX_init(&ctx);
 	
@@ -318,7 +391,7 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 			}
 			return -1;
 		}
-		while((::bzero(puchInput,sizeof(puchInput)), nLenOfIn = ::read(nFdIn, puchInput, nBlockSize * 5)) > 0)
+		while((::bzero(puchInput,sizeof(puchInput)), nLenOfIn = ::read(nFdIn, puchInput, 10240)) > 0)
 		{
 			if (!::HMAC_Update(&ctx, puchInput, nLenOfIn))
 			{
@@ -363,6 +436,8 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 	{
 		::close(nFdOut);
 	}
+	::EVP_cleanup();
+	::ERR_free_strings();
 	return 0;
 }
 
