@@ -29,7 +29,7 @@ int main(void)
 	int outLen2 = 0;
 try{
 	Openssl_evp::CCipher cipher(name1, (unsigned char*)key1, (unsigned char*)iv1);
-	Openssl_evp::CDigest digest(name3);
+	Openssl_evp::CDigestAndHmac digest(name3);
 	
 	while((::bzero(bufferIn,1024), inLen = ::read(nFdIn1, bufferIn, 1024)) > 0)
 	{
