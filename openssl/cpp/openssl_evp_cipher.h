@@ -214,8 +214,7 @@ Openssl_evp::CCipher::Encry(IN const vector<unsigned char>& vecInput, IN bool bI
 	{
 		throw std::logic_error("加密还未完成");
 	}
-	vector<unsigned char> vecTemp(vecInput);
-	vecTemp.clear();
+	vector<unsigned char> vecTemp(vecInput.size(),0);
 	Cipher(vecInput.data(), vecInput.size(), vecTemp.data(), bIsStart, IsEnd);
 	return vecTemp;
 }
@@ -286,8 +285,7 @@ Openssl_evp::CCipher::Decry(IN const vector<unsigned char>& vecInput, IN bool bI
 	{
 		throw std::logic_error("加密还未完成");
 	}
-	vector<unsigned char> vecTemp(vecInput);
-	vecTemp.clear();
+	vector<unsigned char> vecTemp(vecInput.size(), 0);
 	Cipher(vecInput.data(), vecInput.size(), vecTemp.data(), bIsStart, IsEnd);
 	return vecTemp;
 }

@@ -217,8 +217,7 @@ Openssl_evp::CDigest::Digest(IN const vector<unsigned char>& vecInput, bool bIsS
 
 	if (vecInput.size() == 0 && bIsEnd == true)
 	{
-		vector<unsigned char> vecTemp(__cm_psMD->md_size);
-		vecTemp.clear();
+		vector<unsigned char> vecTemp(__cm_psMD->md_size,0);
 		MDFinal(vecTemp.data());
 		return vecTemp;
 	}
@@ -229,8 +228,7 @@ Openssl_evp::CDigest::Digest(IN const vector<unsigned char>& vecInput, bool bIsS
 	MDUpdate(vecInput.data(), vecInput.size());
 	if(bIsEnd == true)
 	{
-		vector<unsigned char> vecTemp(__cm_psMD->md_size);
-		vecTemp.clear();
+		vector<unsigned char> vecTemp(__cm_psMD->md_size,0);
 		MDFinal(vecTemp.data());
 		return vecTemp;
 	}

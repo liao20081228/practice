@@ -230,8 +230,8 @@ Openssl_evp::CHmac::HMAC(IN const vector<unsigned char>& vecInput,
 
 	if (vecInput.size() == 0 && bIsEnd == true)
 	{
-		vector<unsigned char> vecTemp(__cm_psMD->md_size);
-		vecTemp.clear();
+		vector<unsigned char> vecTemp(__cm_psMD->md_size , 0);
+		HMACFinal(vecTemp.data());
 		return   vecTemp;
 	}
 	else if (vecInput.size() == 0 &&bIsEnd == false)
@@ -243,8 +243,8 @@ Openssl_evp::CHmac::HMAC(IN const vector<unsigned char>& vecInput,
 	
 	if(bIsEnd == true)
 	{
-		vector<unsigned char> vecTemp(__cm_psMD->md_size);
-		vecTemp.clear();
+		vector<unsigned char> vecTemp(__cm_psMD->md_size , 0);
+		HMACFinal(vecTemp.data());
 		return   vecTemp;
 	}
 	return vector<unsigned char>();

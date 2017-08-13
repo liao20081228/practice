@@ -6,65 +6,24 @@
 *******************************************************************************/
 /*myhead_cpp.h is a headfile in “/usr/local/include”,include all headfiles*/
 
-#include"openssl_evp_digest.h"
+#include"openssl_evp_base64.h"
 
 int main()
 {
+	Openssl_evp::vector<unsigned char> in = {'a','b'};
+	Openssl_evp::CBase64 base64;
+	Openssl_evp::vector<unsigned char> out = base64.Encode(in,true,true);
+	for(unsigned char e : out)
 	{
-		unsigned char input[10240];
-		unsigned char output[100]= {0};
-		Openssl_evp::CDigest digest1("md5");
+		std::cout<<(char)e;
+	}
+	
+	in.clear();
+	std::cout<<std::endl;
 
-		int nfd = ::open("./cpp_zh_cn.docset.zip", O_RDONLY);
-		
-		int inlen = ::read(nfd, input, 10240); 
-		if (inlen < 10240)
-		{
-			digest1.Digest(input, inlen, output, true, true);
-			for ( int i = 0 ;i<16;++i )
-			{
-				if(output[i]<16)
-				{
-					printf("0");
-					printf("%x",output[i]);
-				}
-				else
-				{
-					printf("%x",output[i]);
-				}
-			}
-		}
-		else
-		{
-
-			digest1.Digest(input, inlen, output, true, false);
-		}
-
-		while ((std::memset(input,0,10240), inlen =::read(nfd, input, 10240)) > 0)
-		{
-			if ( inlen < 10240 )
-			{
-			digest1.Digest(input, inlen, output, false, true);
-			for ( int i = 0 ;i<16;++i )
-			{
-				if(output[i]<16)
-				{
-					printf("0");
-					printf("%x",output[i]);
-				}
-				else
-				{
-					printf("%x",output[i]);
-				}
-			}
-
-			}
-			else
-			{
-				digest1.Digest(input, inlen, output, false, false);
-			}
-		}
-		close(nfd);
+	in = base64.Decode(out,true,true);
+	for(unsigned char e : in)
+	{
+		std::cout<<(char)e;
 	}
 }
-

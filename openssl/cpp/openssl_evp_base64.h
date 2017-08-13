@@ -82,7 +82,7 @@ class CBase64
 					IN bool bIsStart, IN bool bIsEnd);
 
 		int Decode(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-				OUT unsigned char* puchOutput, IN int nLenOfOutput,
+					OUT unsigned char* puchOutput, IN int nLenOfOutput,
 					IN bool  bIsStart, IN bool bIsEnd);
 
 		vector<unsigned char> Encode(IN const vector<unsigned char>& vecInput,
@@ -103,7 +103,6 @@ class CBase64
 		int  Decode_Final(OUT unsigned char* puchOutput);
 	private:
 		EVP_ENCODE_CTX __cm_sCtx;
-		bool		   __cm_bIsEncode = true;
 		bool		   __cm_bIsChangeable = true;
 		bool		   __cm_bIsNeedInit;
 		bool		   __cm_bIsFinalable;
@@ -117,8 +116,7 @@ class CBase64
 
 inline 
 Openssl_evp::CBase64::CBase64(void)
-	: __cm_bIsEncode(true)
-	, __cm_bIsChangeable(true)
+	: __cm_bIsChangeable(true)
 	, __cm_bIsNeedInit(false)
 	, __cm_bIsFinalable(false)
 {
@@ -136,87 +134,181 @@ Openssl_evp::CBase64::Encode(IN const unsigned char* pcuchInput, IN int nLenOfIn
 					OUT unsigned char* puchOutput,IN int nLenOfOutput, 
 					IN bool bIsStart, IN bool bIsEnd)
 {
-	if (nLenOfOutput < nLenOfInput * 4 / 3 + 3)
+	//判断缓冲区大小
+	if( nLenOfInput % 3 == 0 && nLenOfOutput < nLenOfInput / 3 * 4)
 	{
 		throw std::invalid_argument("输出缓冲区太小");
 	}
-
+	else if (nLenOfInput % 3 != 0 && nLenOfInput < nLenOfInput / 3 *4 + 4)
+	{
+		throw std::invalid_argument("输出缓冲区太小");
+	}
+	//判断是否可开始新的任务
+	if (bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据还未处理完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		Encode_Init();
+	}
+	
 	int nLength = 0;
 	if (nLenOfInput == 0 && bIsEnd == true)
 	{
-		nLength += Encode_Final(puchOutput);
-		Encode_Init();
-		__cm_bIsChangeable = true;
-		return nLength;
+		return  Encode_Final(puchOutput);
 	}
 	else if (nLenOfInput ==0 && bIsEnd == false)
 	{
 		throw std::runtime_error("没有传入数据");
 	}
-
-	if (__cm_bIsEncode == false && __cm_bIsChangeable == true)
-	{
-		Encode_Init();
-		__cm_bIsEncode = true;
-	}
-	else if( __cm_bIsEncode == false && __cm_bIsChangeable == false )
-	{
-		throw std::logic_error("上次解码还未完成");
-	}
-	__cm_bIsChangeable = false;
+	
 	nLength = Encode_Update(pcuchInput, nLenOfInput, puchOutput);
+	
 	if (bIsEnd == true)
 	{
 		nLength += Encode_Final(puchOutput);
-		Encode_Init();
-		__cm_bIsChangeable = true;
 	}
 	return nLength;
 }
 
-
-int 
-Openssl_evp::CBase64::Decode(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-					OUT unsigned char* puchOutput, IN int nLenOfOutput,IN bool bIsEnd)
-
+	
+	
+Openssl_evp::vector<unsigned char> 
+Openssl_evp::CBase64::Encode(IN const vector<unsigned char>& vecInput,
+									 IN bool bIsStart, IN bool bIsEnd)
 {
-	if (nLenOfOutput < nLenOfInput * 3 / 4 )
+	//判断是否可开始新的任务
+	if (bIsStart == true && __cm_bIsChangeable == false)
 	{
-		throw std::invalid_argument("输出缓冲区太小");
+		throw std::logic_error("上一次数据还未处理完成");
 	}
-
-	int nLength = 0;
-	if (nLenOfInput == 0 && bIsEnd == true)
+	else if (bIsStart == true && __cm_bIsChangeable == true)
 	{
-		nLength += Decode_Final(puchOutput);
-		Decode_Init();
-		__cm_bIsChangeable = true;
-		return nLength;
+		Encode_Init();
 	}
-	else if (nLenOfInput == 0 && bIsEnd == false)
+	vector<unsigned char> vecTemp(vecInput.size() / 3 * 4 , 0);
+	if (vecInput.size() % 3 != 0)
+	{
+		 vecTemp.resize(vecInput.size() / 3 * 4 + 4 , 0);
+	}
+	if (vecInput.size() == 0 && bIsEnd == true)
+	{
+		Encode_Final(vecTemp.data());
+		return vecTemp;
+	}
+	else if (vecTemp.size() == 0 && bIsEnd == false)
 	{
 		throw std::runtime_error("没有传入数据");
 	}
-	if (__cm_bIsEncode == true && __cm_bIsChangeable == true)
+	
+	Encode_Update(vecInput.data(), vecInput.size(), vecTemp.data());
+	
+	if (bIsEnd == true)
+	{
+		Encode_Final(vecTemp.data());
+		return vecTemp;
+	}
+	return vecTemp;
+
+
+}
+
+Openssl_evp::vector<unsigned char> 
+Openssl_evp::CBase64::Decode(IN const vector<unsigned char>& vecInput,
+									 IN bool bIsStart, IN bool bIsEnd)
+{
+	//判断是否可开始新的任务
+	if (bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据还未处理完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
 	{
 		Decode_Init();
-		__cm_bIsEncode = true;
 	}
-	else if( __cm_bIsEncode == false && __cm_bIsChangeable == false )
+	
+	vector<unsigned char> vecTemp(vecInput.size() / 4 * 3,  0);
+	if (vecInput[vecInput.size() - 1] == '=' )
 	{
-		throw std::logic_error("上次编码还未完成");
+		vecTemp.resize(vecInput.size() / 4 * 3 - 1 );
 	}
+	if (vecInput[vecInput.size() - 2] == '=')
+	{
+		vecTemp.resize(vecInput.size() / 4 * 3 - 2 );
+	}
+	
+	if (vecInput.size() == 0 && bIsEnd == true)
+	{
+		Decode_Final(vecTemp.data());
+		return vecTemp;
+	}
+	else if (vecTemp.size() == 0 && bIsEnd == false)
+	{
+		throw std::runtime_error("没有传入数据");
+	}
+	
+	Decode_Update(vecInput.data(), vecInput.size(), vecTemp.data());
+	
+	if (bIsEnd == true)
+	{
+		Decode_Final(vecTemp.data());
+		return vecTemp;
+	}
+	return vecTemp;
 
-	__cm_bIsChangeable = false;
-	nLength = Decode_Update(pcuchInput, nLenOfInput, puchOutput);
+
+}
+
+	
+	
+	
+	
+	
+	
+int 
+Openssl_evp::CBase64::Decode(IN const unsigned char* pcuchInput, IN int nLenOfInput,
+					OUT unsigned char* puchOutput,IN int nLenOfOutput, 
+					IN bool bIsStart, IN bool bIsEnd)
+{
+	//判断缓冲区大小
+	if( nLenOfInput % 3 == 0 && nLenOfOutput < nLenOfInput / 3 * 4)
+	{
+		throw std::invalid_argument("输出缓冲区太小");
+	}
+	else if (nLenOfInput % 3 != 0 && nLenOfInput < nLenOfInput / 3 *4 + 3)
+	{
+		throw std::invalid_argument("输出缓冲区太小");
+	}
+	//判断是否可开始新的任务
+	if (bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据还未处理完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		Decode_Init();
+	}
+	
+	int nLength = 0;
+	if (nLenOfInput == 0 && bIsEnd == true)
+	{
+		return  Decode_Final(puchOutput);
+	}
+	else if (nLenOfInput ==0 && bIsEnd == false)
+	{
+		throw std::runtime_error("没有传入数据");
+	}
+	
+	nLength = Encode_Update(pcuchInput, nLenOfInput, puchOutput);
+	
 	if (bIsEnd == true)
 	{
 		nLength += Decode_Final(puchOutput);
-		Decode_Init();
-		__cm_bIsChangeable = true;
 	}
 	return nLength;
 }
+
 
 
 
@@ -231,7 +323,9 @@ Openssl_evp::CBase64::Encode_Update(IN const unsigned char* pcuchInput, IN int n
 							OUT unsigned char* puchOutput)
 {
 	int nLength = 0;
+	__cm_bIsChangeable = false;
 	::EVP_EncodeUpdate(&__cm_sCtx, puchOutput, &nLength, pcuchInput, nLenOfInput);
+	__cm_bIsFinalable = true;
 	return nLength;
 }
 
@@ -239,13 +333,23 @@ int
 Openssl_evp::CBase64::Encode_Final(OUT  unsigned char* puchOutput)
 {
 	int nLength = 0;
-	::EVP_EncodeFinal(&__cm_sCtx, puchOutput, &nLength);
-	return nLength;
+	if (__cm_bIsFinalable == true)
+	{
+		::EVP_EncodeFinal(&__cm_sCtx, puchOutput, &nLength);
+		__cm_bIsFinalable = false;
+		__cm_bIsChangeable = true;
+		return nLength;
+	}
+	else 
+	{
+		throw std::logic_error("未调用update，不能使用final");
+	}
 }
 
 void Openssl_evp::CBase64::Decode_Init(void)
 {
 	::EVP_DecodeInit(&__cm_sCtx);
+	__cm_bIsNeedInit = false;
 }
 
 int
@@ -253,7 +357,9 @@ Openssl_evp::CBase64::Decode_Update(IN const unsigned char* pcuchInput, IN int n
 							OUT unsigned char* puchOutput)
 {
 	int nLength = 0;
+	__cm_bIsChangeable = false;
 	::EVP_DecodeUpdate(&__cm_sCtx, puchOutput, &nLength, pcuchInput, nLenOfInput);
+	__cm_bIsFinalable = true;
 	return nLength;
 }
 
@@ -261,7 +367,18 @@ int
 Openssl_evp::CBase64::Decode_Final(OUT  unsigned char* puchOutput)
 {
 	int nLength = 0;
-	::EVP_DecodeFinal(&__cm_sCtx, puchOutput, &nLength);
-	return nLength;
+	if (__cm_bIsFinalable == true)
+	{
+		::EVP_DecodeFinal(&__cm_sCtx, puchOutput, &nLength);
+		__cm_bIsFinalable = false;
+		__cm_bIsChangeable = true;
+		return nLength;
+	}
+	else 
+	{
+		throw std::logic_error("未调用update，不能使用final");
+	}
 }
 
+
+#endif
