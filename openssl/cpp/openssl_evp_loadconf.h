@@ -64,9 +64,8 @@ class CLoadConf
 		static CLoadConf *__cm_pCLoadConf; //静态指针
 		static pthread_once_t __cm_sOnce;  //线程相关变量
 };
-}
-#endif /* end of include guard: __MY_OPENSSL_EVP_LOADCONF_H */
 
+}
 
 //class CLoadConf,单例饿汉式，线程安全
 Openssl_evp::CLoadConf* Openssl_evp::CLoadConf::__cm_pCLoadConf = Getinstance();
@@ -115,3 +114,4 @@ Openssl_evp::CLoadConf::~CLoadConf(void)
 {
 }
 
+#endif /* end of include guard: __MY_OPENSSL_EVP_LOADCONF_H */

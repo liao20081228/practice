@@ -6,31 +6,65 @@
 *******************************************************************************/
 /*myhead_cpp.h is a headfile in “/usr/local/include”,include all headfiles*/
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include"openssl_evp_digest.h"
 
-#include"openssl_evp_cipher.h"
-#include"doctest.h"
-
-TEST_SUITE_BEGIN("基础单元测试");
-
-TEST_CASE("CCipher类测试")
+int main()
 {
-	char ciphername1[20] = "aes-128-cbc";
-	char ciphername2[20] = "des-cbc";
-	char ciphername3[20] = "md5";
-	unsigned char key1[16]= {0};
-	unsigned char key2[16]= {1};
-	unsigned char key3[16]= {2};
-	unsigned char iv1[16]= {0};
-	unsigned char iv2[16]= {1};
-	unsigned char iv3[16]= {2};
-	std::memset(key1, 0, 16);
-	std::memset(key2, 1, 16);
-	std::memset(key3, 2, 16);
-	std::memset(iv1, 0, 16);
-	std::memset(iv2, 1, 16);
-	std::memset(iv3, 2, 16);
-	Openssl_evp::CCipher  cipher1(ciphername1, key1, iv1);
+	{
+		unsigned char input[10240];
+		unsigned char output[100]= {0};
+		Openssl_evp::CDigest digest1("md5");
 
+		int nfd = ::open("./cpp_zh_cn.docset.zip", O_RDONLY);
+		
+		int inlen = ::read(nfd, input, 10240); 
+		if (inlen < 10240)
+		{
+			digest1.Digest(input, inlen, output, true, true);
+			for ( int i = 0 ;i<16;++i )
+			{
+				if(output[i]<16)
+				{
+					printf("0");
+					printf("%x",output[i]);
+				}
+				else
+				{
+					printf("%x",output[i]);
+				}
+			}
+		}
+		else
+		{
+
+			digest1.Digest(input, inlen, output, true, false);
+		}
+
+		while ((std::memset(input,0,10240), inlen =::read(nfd, input, 10240)) > 0)
+		{
+			if ( inlen < 10240 )
+			{
+			digest1.Digest(input, inlen, output, false, true);
+			for ( int i = 0 ;i<16;++i )
+			{
+				if(output[i]<16)
+				{
+					printf("0");
+					printf("%x",output[i]);
+				}
+				else
+				{
+					printf("%x",output[i]);
+				}
+			}
+
+			}
+			else
+			{
+				digest1.Digest(input, inlen, output, false, false);
+			}
+		}
+		close(nfd);
+	}
 }
-TEST_SUITE_END();
+

@@ -81,6 +81,8 @@ class CHmac
 	public:
 		CHmac(IN const string strDigestName, IN const unsigned char* pcuchKey, 
 				IN int nLenOfKey, IN ENGINE* psImpl = nullptr);
+		CHmac(IN const string strDigestName, IN const vector<unsigned char> vecKey, 
+			  IN ENGINE* psImpl = nullptr);
 		~CHmac(void);
 
 		CHmac(IN const CHmac & lref) = delete;
@@ -89,7 +91,14 @@ class CHmac
 		CHmac& operator = (IN CHmac && rref) = delete;
 	public:
 		int HMAC(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
-				 OUT unsigned char* puchOutput, IN bool bIsEnd);
+				 OUT unsigned char* puchOutput, IN bool IsStart,  IN bool bIsEnd);
+
+		int HMAC(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
+				 OUT unsigned char* puchOutput, IN int nLenofOutput, 
+				 IN bool IsStart,  IN bool bIsEnd);
+
+		vector<unsigned char> HMAC(IN const vector<unsigned char>& vecInput,  
+									 IN bool IsStart,  IN bool bIsEnd);
 
 		void Change(IN const string strDigestName = "", IN ENGINE* psImpl = nullptr,
 					IN const unsigned char* pcuchKey = nullptr, IN int nLenOfKey = 0);
@@ -107,13 +116,14 @@ class CHmac
 		int					 __cm_nLenOfKey;
 		int          		 __cm_nError;
 		char                 __cm_pchErrorInfo[1024] = {0};
+
 		bool				 __cm_bIsNeedInit;
 		bool				 __cm_bIsChangeable;
+		bool				 __cm_bIsFinalable;
 };
 }
 
 
-#endif /* end of include guard: __MY_OPENSSL_EVP_DIGESTANDHMAC_H */
 
 //CHmac
 Openssl_evp::CHmac::CHmac(IN const string strDigestName,
@@ -124,6 +134,7 @@ Openssl_evp::CHmac::CHmac(IN const string strDigestName,
 	, __cm_nLenOfKey(nLenOfKey)
 	, __cm_bIsNeedInit(false)
 	, __cm_bIsChangeable(true)
+	, __cm_bIsFinalable(false)
 {
 	GetEVP_MD(strDigestName);
 	HMACInit();
@@ -138,33 +149,107 @@ Openssl_evp::CHmac::~CHmac(void)
 
 int 
 Openssl_evp::CHmac::HMAC(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-		IN OUT unsigned char* puchOutput, IN bool bIsEnd)
-{	
-	int nLen = 0;
+						 OUT unsigned char* puchOutput,IN bool bIsStart, IN bool bIsEnd)
+{
+	if (bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据处理还未完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		HMACInit();
+	}
+
 	if (nLenOfInput == 0 && bIsEnd == true)
 	{
-		nLen = HMACFinal(puchOutput);
-		HMACInit();
-		__cm_bIsChangeable = true;
-		return nLen;
+		return   HMACFinal(puchOutput);
 	}
 	else if (nLenOfInput == 0 &&bIsEnd == false)
 	{
 		throw std::runtime_error("未传入数据");
 	}
-	__cm_bIsChangeable = false;
+	
 	HMACUpdate(pcuchInput, nLenOfInput);
+	
 	if(bIsEnd == true)
 	{
-		nLen = HMACFinal(puchOutput);
-		HMACInit();
-		__cm_bIsChangeable = true;
-		return nLen;
+		return  HMACFinal(puchOutput);
 	}
 	return 0;
 }
 
+int 
+Openssl_evp::CHmac::HMAC(IN const unsigned char* pcuchInput, IN int nLenOfInput,
+						OUT unsigned char* puchOutput, IN int nLenOfOutput,
+						IN bool bIsStart, IN bool bIsEnd)
+{
+	if (bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据处理还未完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		HMACInit();
+	}
+		
+	if (nLenOfOutput < __cm_psMD->md_size)
+	{
+		throw std::logic_error("输出缓冲区太小");
+	}
+
+	if (nLenOfInput == 0 && bIsEnd == true)
+	{
+		return   HMACFinal(puchOutput);
+	}
+	else if (nLenOfInput == 0 &&bIsEnd == false)
+	{
+		throw std::runtime_error("未传入数据");
+	}
 	
+	HMACUpdate(pcuchInput, nLenOfInput);
+	
+	if(bIsEnd == true)
+	{
+		return  HMACFinal(puchOutput);
+	}
+	return 0;
+}
+
+Openssl_evp::vector<unsigned char>  
+Openssl_evp::CHmac::HMAC(IN const vector<unsigned char>& vecInput, 
+						IN bool bIsStart, IN bool bIsEnd)
+{
+	if (bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据处理还未完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		HMACInit();
+	}
+
+	if (vecInput.size() == 0 && bIsEnd == true)
+	{
+		vector<unsigned char> vecTemp(__cm_psMD->md_size);
+		vecTemp.clear();
+		return   vecTemp;
+	}
+	else if (vecInput.size() == 0 &&bIsEnd == false)
+	{
+		throw std::runtime_error("未传入数据");
+	}
+	
+	HMACUpdate(vecInput.data(), vecInput.size());
+	
+	if(bIsEnd == true)
+	{
+		vector<unsigned char> vecTemp(__cm_psMD->md_size);
+		vecTemp.clear();
+		return   vecTemp;
+	}
+	return vector<unsigned char>();
+}
+
 void 
 Openssl_evp::CHmac::Change(IN const string strDigestName /*=nullptr*/,
 		                     IN ENGINE* psImpl /*= nullptr*/,
@@ -193,10 +278,10 @@ Openssl_evp::CHmac::Change(IN const string strDigestName /*=nullptr*/,
 		{
 			throw std::invalid_argument("参数不正确");
 		}
-		if (__cm_pcuchKey != nullptr && __cm_nLenOfKey > 0)
+
+		if (__cm_bIsNeedInit == true)
 		{
 			HMACInit();
-			 __cm_bIsNeedInit = false;
 		}
 	}
 	else
@@ -227,12 +312,14 @@ Openssl_evp::CHmac::HMACInit()
 		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
 		throw std::runtime_error(__cm_pchErrorInfo);
 	}
+	__cm_bIsNeedInit = false;
 }
 
 
 void
 Openssl_evp::CHmac::HMACUpdate(IN const unsigned char* pcuchInput, IN int nLenOfInput)
 {
+	__cm_bIsChangeable = false;
 	if (!::HMAC_Update(&__cm_sHmacCtx, pcuchInput, nLenOfInput))
 	{
 		__cm_nError = ::ERR_get_error();
@@ -240,23 +327,31 @@ Openssl_evp::CHmac::HMACUpdate(IN const unsigned char* pcuchInput, IN int nLenOf
 		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
 		throw std::runtime_error(__cm_pchErrorInfo);
 	}
+	__cm_bIsFinalable = true;
 }
 
 int
 Openssl_evp::CHmac::HMACFinal(IN unsigned char* puchOutput)
 {
 	int nLen = 0;
-	if (!::HMAC_Final(&__cm_sHmacCtx, puchOutput, 
-				reinterpret_cast<unsigned int*>(&nLen)))
+	if (__cm_bIsFinalable == true)
 	{
-		__cm_nError = ::ERR_get_error();
-		::bzero(__cm_pchErrorInfo,1024);
-		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
-		throw std::runtime_error(__cm_pchErrorInfo);
+		if (!::HMAC_Final(&__cm_sHmacCtx, puchOutput, 
+					reinterpret_cast<unsigned int*>(&nLen)))
+		{
+			__cm_nError = ::ERR_get_error();
+			::bzero(__cm_pchErrorInfo,1024);
+			::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
+			throw std::runtime_error(__cm_pchErrorInfo);
+		}
+		__cm_bIsFinalable = false;
+		__cm_bIsChangeable = true;
+		return nLen;
 	}
-	return nLen;
+	else
+	{
+		throw std::logic_error("还未调用update");
+	}
 }
 
-
-
-
+#endif /* end of include guard: __MY_OPENSSL_EVP_DIGESTANDHMAC_H */

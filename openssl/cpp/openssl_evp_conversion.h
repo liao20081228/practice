@@ -237,3 +237,4 @@ Openssl_evp::CConversion::StrToData(IN const char* pcuchInput, IN int nLenOfInpu
 		default:throw std::invalid_argument("输入的进制转换不支持");
 	}
 }
+#endif

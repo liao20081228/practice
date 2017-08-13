@@ -86,6 +86,8 @@ class CCipher
 	public:
 		CCipher(IN const string strCipherName, IN const unsigned char* pcuchKey, 
 				IN const unsigned char* pcuchInitVec, IN ENGINE* psImpl = nullptr);
+		CCipher(IN const string strCipherName, IN const vector<unsigned char>&  vecKey, 
+				IN const vector<unsigned char>& vecInitVec, IN ENGINE* psImpl = nullptr);
 		
 		~CCipher(void) noexcept;
 		
@@ -95,30 +97,35 @@ class CCipher
 		CCipher& operator = (IN CCipher && rref) = delete; //不可移动赋值
 	public:
 		int Encry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput, IN bool IsEnd = false);     //标志位标记是否是最后一次数据
+			      OUT unsigned char* puchOutput,IN bool bIsStart,  IN bool IsEnd);   
+
 		int Decry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput, IN bool IsEnd = false);     //标志位标记是否是最后一次数据
+			       OUT unsigned char* puchOutput, IN bool bIsStart, IN bool IsEnd); 
+		
 		int Encry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput,IN int nLenofoutput, IN bool IsEnd = false);     //标志位标记是否是最后一次数据
+			       OUT unsigned char* puchOutput,IN int nLenofoutput, IN bool bIsStart, IN bool IsEnd); 
+		
 		int Decry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput, IN int nLenOfOutput,IN bool IsEnd = false);     //标志位标记是否是最后一次数据
-		vector<unsigned char> Encry(IN const vector<unsigned char>& vecInput, IN bool IsEnd = false);
-		vector<unsigned char> Decry(IN const vector<unsigned char>& vecInput, IN bool IsEnd = false);
-	
-	
+			       OUT unsigned char* puchOutput, IN int nLenOfOutput,IN bool bIsStart, IN bool IsEnd);   
+		
+		vector<unsigned char> Encry(IN const vector<unsigned char>& vecInput,
+									IN bool bIsStart,  IN bool IsEnd);
+		
+		vector<unsigned char> Decry(IN const vector<unsigned char>& vecInput,
+									IN bool bIsStart,  IN bool IsEnd);
 	
 	private:
 		int Cipher(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput, IN bool bIsEnd);     //标志位标记是否是最后一次数据
+			       OUT unsigned char* puchOutput, IN bool bIsStart, IN bool bIsEnd);  
 	public:
-		void Change(IN const string strCipherName, 
+		void Change(IN const string strCipherName = "", 
 					IN const unsigned char* pcuchKey = nullptr, 
 					IN const unsigned char* pcuchInitVec = nullptr,
 					IN ENGINE* psImpl = nullptr);
 	private:
 		void Init(void); //包括CTX初始化和cipher初始化
-		int Final(OUT unsigned char* puchOutput);
-		int Update(IN const unsigned char* pcuchInput, 
+		int  Final(OUT unsigned char* puchOutput);
+		int  Update(IN const unsigned char* pcuchInput, 
 				   IN int nLenOfInput, 
 				   OUT unsigned char* puchOutput);
 	private:
@@ -129,15 +136,16 @@ class CCipher
 		const unsigned char* __cm_pcuchKey;
 		const unsigned char* __cm_pcuchInitVec;
 		const EVP_CIPHER*    __cm_psCipher;
+
 		bool                 __cm_bIsEncry; //是否是加密
 		bool				 __cm_bIsNeedInit;//是够需要初始化
-		bool				 __cm_bIsChangeable;//是否可以改变
-		bool				 __cm_bIsFinalable;//是否可以可以调用final函数
+		bool				 __cm_bIsChangeable;//是否可以改变参数
+		bool				 __cm_bIsFinalable;//是否可以调用final函数
+		
 		int          		 __cm_nError;
 		char                 __cm_pchErrorInfo[1024] = {0}; //C++11新特性只有静态非常量才需要在类外初始化
 };
 }
-#endif
 
 
 //class CCipher
@@ -148,6 +156,20 @@ Openssl_evp::CCipher::CCipher(IN const string strCipherName, IN const unsigned c
 	, __cm_pcuchKey(pcuchKey)
 	, __cm_pcuchInitVec(pcuchInitVec)
 	, __cm_bIsEncry(true) //初始设置为加密
+	, __cm_bIsNeedInit(false) //不需初始化,因为构造时已经初始化了
+	, __cm_bIsChangeable(true) //可以改变参数，构造的时候是加密，可以构造后立刻解密
+	, __cm_bIsFinalable(false)//不可调用Final函数，初始时未调用update，不可调用Final
+{
+	GetEVP_CIPHER(strCipherName);//获取算法名字
+	Init(); 
+}
+
+Openssl_evp::CCipher::CCipher(IN const string strCipherName, IN const vector<unsigned char>&  vecKey, 
+				IN const vector<unsigned char>& vecInitVec, IN ENGINE* psImpl /*= nullptr*/)
+	: __cm_psImpl(psImpl)
+	, __cm_pcuchKey(vecKey.data())
+	, __cm_pcuchInitVec(vecInitVec.data())
+	, __cm_bIsEncry(true) //初始设置为加密
 	, __cm_bIsNeedInit(false) //不需初始化
 	, __cm_bIsChangeable(true) //可以改变参数
 	, __cm_bIsFinalable(false)//不可调用Final函数
@@ -155,7 +177,6 @@ Openssl_evp::CCipher::CCipher(IN const string strCipherName, IN const unsigned c
 	GetEVP_CIPHER(strCipherName);//获取算法名字
 	Init(); 
 }
-
 inline
 Openssl_evp::CCipher::~CCipher(void) noexcept
 {
@@ -164,6 +185,112 @@ Openssl_evp::CCipher::~CCipher(void) noexcept
 
 
 
+
+
+
+int 
+Openssl_evp::CCipher::Encry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
+			       OUT unsigned char* puchOutput, IN bool bIsStart, IN bool IsEnd/* = false*/)     //标志位标记是否是最后一次数据
+{
+	if (__cm_bIsEncry == false && __cm_bIsChangeable == true)
+	{
+		__cm_bIsEncry = true;
+	}
+	else if (__cm_bIsEncry == false  && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("加密还未完成");
+	}
+	return Cipher(pcuchInput, nLenOfInput, puchOutput,bIsStart,  IsEnd);
+}
+
+Openssl_evp::vector<unsigned char> 
+Openssl_evp::CCipher::Encry(IN const vector<unsigned char>& vecInput, IN bool bIsStart, IN bool IsEnd /*= false*/)
+{
+	if (__cm_bIsEncry == false && __cm_bIsChangeable == true)
+	{
+		__cm_bIsEncry = true;
+	}
+	else if (__cm_bIsEncry == false  && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("加密还未完成");
+	}
+	vector<unsigned char> vecTemp(vecInput);
+	vecTemp.clear();
+	Cipher(vecInput.data(), vecInput.size(), vecTemp.data(), bIsStart, IsEnd);
+	return vecTemp;
+}
+
+
+
+int 
+Openssl_evp::CCipher::Encry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
+			       OUT unsigned char* puchOutput, IN int nLenOfOutput,IN bool bIsStart,  IN bool IsEnd/* = false*/)     //标志位标记是否是最后一次数据
+{
+	if ( nLenOfOutput < nLenOfInput )
+	{
+		throw std::invalid_argument("输出缓冲区太小");
+	}
+	if (__cm_bIsEncry == false && __cm_bIsChangeable == true)
+	{
+		__cm_bIsEncry = true;
+	}
+	else if (__cm_bIsEncry == false  && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("加密还未完成");
+	}
+	return Cipher(pcuchInput, nLenOfInput, puchOutput,bIsStart, IsEnd);
+}
+
+int 
+Openssl_evp::CCipher::Decry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
+			       OUT unsigned char* puchOutput,IN bool bIsStart,  IN bool IsEnd )     //标志位标记是否是最后一次数据
+{
+	if (__cm_bIsEncry == true && __cm_bIsChangeable == true)
+	{
+		__cm_bIsEncry = false;
+	}
+	else if (__cm_bIsEncry == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("加密还未完成");
+	}
+	return Cipher(pcuchInput, nLenOfInput, puchOutput, bIsStart, IsEnd);
+}
+
+int 
+Openssl_evp::CCipher::Decry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
+			       OUT unsigned char* puchOutput,IN int nLenOfOutput, IN bool bIsStart, IN bool IsEnd )     //标志位标记是否是最后一次数据
+{
+	if ( nLenOfOutput < nLenOfInput )
+	{
+		throw std::invalid_argument("输出缓冲区");
+	}
+	if (__cm_bIsEncry == true && __cm_bIsChangeable == true)
+	{
+		__cm_bIsEncry = false;
+	}
+	else if (__cm_bIsEncry == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("加密还未完成");
+	}
+	return Cipher(pcuchInput, nLenOfInput, puchOutput, bIsStart, IsEnd);
+}
+
+Openssl_evp::vector<unsigned char>
+Openssl_evp::CCipher::Decry(IN const vector<unsigned char>& vecInput, IN bool bIsStart, IN bool IsEnd)
+{
+	if (__cm_bIsEncry == true && __cm_bIsChangeable == true)
+	{
+		__cm_bIsEncry = false;
+	}
+	else if (__cm_bIsEncry == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("加密还未完成");
+	}
+	vector<unsigned char> vecTemp(vecInput);
+	vecTemp.clear();
+	Cipher(vecInput.data(), vecInput.size(), vecTemp.data(), bIsStart, IsEnd);
+	return vecTemp;
+}
 
 void
 Openssl_evp::CCipher::Change(IN const string strCipherName /*=""*/, 
@@ -196,7 +323,6 @@ Openssl_evp::CCipher::Change(IN const string strCipherName /*=""*/,
 		if(__cm_bIsNeedInit == true)
 		{
 			Init();
-			__cm_bIsNeedInit = false;
 		}
 	}
 	else
@@ -204,118 +330,6 @@ Openssl_evp::CCipher::Change(IN const string strCipherName /*=""*/,
 		throw std::logic_error("上次任务还未完成不可更改参数");
 	}
 }
-
-
-int 
-Openssl_evp::CCipher::Encry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput, IN bool IsEnd/* = false*/)     //标志位标记是否是最后一次数据
-{
-	if (__cm_bIsEncry == false && __cm_bIsChangeable == true)
-	{
-		__cm_bIsEncry = true;
-		Init();
-	}
-	else if (__cm_bIsEncry == false  && __cm_bIsChangeable == false)
-	{
-		throw std::logic_error("加密还未完成");
-	}
-	return Cipher(pcuchInput, nLenOfInput, puchOutput, IsEnd);
-}
-
-Openssl_evp::vector<unsigned char> 
-Openssl_evp::CCipher::Encry(IN const vector<unsigned char>& vecInput, IN bool IsEnd /*= false*/)
-{
-	if (__cm_bIsEncry == false && __cm_bIsChangeable == true)
-	{
-		__cm_bIsEncry = true;
-		Init();
-	}
-	else if (__cm_bIsEncry == false  && __cm_bIsChangeable == false)
-	{
-		throw std::logic_error("加密还未完成");
-	}
-	vector<unsigned char> vecTemp(vecInput);
-	vecTemp.clear();
-	Cipher(vecInput.data(), vecInput.size(), vecTemp.data(), IsEnd);
-	return vecTemp;
-}
-
-
-
-int 
-Openssl_evp::CCipher::Encry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput, IN int nLenOfOutput, IN bool IsEnd/* = false*/)     //标志位标记是否是最后一次数据
-{
-	if ( nLenOfOutput < nLenOfInput )
-	{
-		throw std::invalid_argument("输出缓冲区");
-	}
-	if (__cm_bIsEncry == false && __cm_bIsChangeable == true)
-	{
-		__cm_bIsEncry = true;
-		Init();
-	}
-	else if (__cm_bIsEncry == false  && __cm_bIsChangeable == false)
-	{
-		throw std::logic_error("加密还未完成");
-	}
-	return Cipher(pcuchInput, nLenOfInput, puchOutput, IsEnd);
-}
-
-int 
-Openssl_evp::CCipher::Decry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput, IN bool IsEnd /*= false*/)     //标志位标记是否是最后一次数据
-{
-	if (__cm_bIsEncry == true && __cm_bIsChangeable == true)
-	{
-		__cm_bIsEncry = false;
-		Init();
-	}
-	else if (__cm_bIsEncry == true && __cm_bIsChangeable == false)
-	{
-		throw std::logic_error("加密还未完成");
-	}
-	return Cipher(pcuchInput, nLenOfInput, puchOutput, IsEnd);
-}
-
-int 
-Openssl_evp::CCipher::Decry(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-			       OUT unsigned char* puchOutput,IN int nLenOfOutput, IN bool IsEnd /*= false*/)     //标志位标记是否是最后一次数据
-{
-	if ( nLenOfOutput < nLenOfInput )
-	{
-		throw std::invalid_argument("输出缓冲区");
-	}
-	if (__cm_bIsEncry == true && __cm_bIsChangeable == true)
-	{
-		__cm_bIsEncry = false;
-		Init();
-	}
-	else if (__cm_bIsEncry == true && __cm_bIsChangeable == false)
-	{
-		throw std::logic_error("加密还未完成");
-	}
-	return Cipher(pcuchInput, nLenOfInput, puchOutput, IsEnd);
-}
-
-Openssl_evp::vector<unsigned char>
-Openssl_evp::CCipher::Decry(IN const vector<unsigned char>& vecInput, IN bool IsEnd/*= false*/)
-{
-	if (__cm_bIsEncry == true && __cm_bIsChangeable == true)
-	{
-		__cm_bIsEncry = false;
-		Init();
-	}
-	else if (__cm_bIsEncry == true && __cm_bIsChangeable == false)
-	{
-		throw std::logic_error("加密还未完成");
-	}
-	vector<unsigned char> vecTemp(vecInput);
-	vecTemp.clear();
-	Cipher(vecInput.data(), vecInput.size(), vecTemp.data(), IsEnd);
-	return vecTemp;
-}
-
 
 void
 Openssl_evp::CCipher::Init()
@@ -328,6 +342,7 @@ Openssl_evp::CCipher::Init()
 		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
 		throw (std::runtime_error(__cm_pchErrorInfo));
 	}
+	__cm_bIsNeedInit = false;
 }
 
 
@@ -336,7 +351,7 @@ Openssl_evp::CCipher::Update(IN const unsigned char* pcuchInput,
 							 IN int nLenOfInput, OUT unsigned char* puchOutput)
 {
 	int nLength = 0;
-	__cm_bIsChangeable = false;
+	__cm_bIsChangeable = false; //调用了update之后不可更改参数
 	if (!::EVP_CipherUpdate(&__cm_sCtx, puchOutput, &nLength, 
 							pcuchInput, nLenOfInput))
 	{
@@ -346,7 +361,7 @@ Openssl_evp::CCipher::Update(IN const unsigned char* pcuchInput,
 		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
 		throw (std::runtime_error(__cm_pchErrorInfo));
 	}
-	__cm_bIsFinalable = true;
+	__cm_bIsFinalable = true; //调用了update之后，可以调用Final
 	return nLength;
 } 
 
@@ -364,42 +379,58 @@ int
 Openssl_evp::CCipher::Final(OUT unsigned char* puchOutput)
 {
 	int nLength = 0;
-	if (!::EVP_CipherFinal_ex(&__cm_sCtx, puchOutput, &nLength))
+	if(__cm_bIsFinalable == false)
 	{
-		 __cm_nError = ::ERR_get_error();
-		::bzero(__cm_pchErrorInfo,1024);
-		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
-		throw (std::runtime_error(__cm_pchErrorInfo));
+		throw std::logic_error("没有调用过update");
 	}
-	__cm_bIsChangeable = true;
-	__cm_bIsFinalable = false;
-	Init();
-	return nLength;
+	else
+	{
+		if (!::EVP_CipherFinal_ex(&__cm_sCtx, puchOutput, &nLength))
+		{
+			 __cm_nError = ::ERR_get_error();
+			::bzero(__cm_pchErrorInfo,1024);
+			::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
+			throw (std::runtime_error(__cm_pchErrorInfo));
+		}
+		__cm_bIsChangeable = true;//调用final后，可以更改参数
+		__cm_bIsFinalable = false;//调用final后，没有调用Update之前，不可调用final
+		return nLength;
+	}
 }
 
 int 
-Openssl_evp::CCipher::Cipher(IN const unsigned char* pcuchInput, 
-		                     IN int nLenOfInput, OUT unsigned char* puchOutput, 
-							 IN bool bIsEnd)
+Openssl_evp::CCipher::Cipher(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
+							 OUT unsigned char* puchOutput, 
+							 IN bool bIsStart,  IN bool bIsEnd)
 {
-	int nLength = 0,                         // the length of output data
-		nTempLen = 0;                       
+	int nLength = 0;                         // the length of output data
+	if (bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一个任务还未完成，不可以开始");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		Init();
+	}
+
 	if(nLenOfInput == 0 && bIsEnd == true)
 	{
-		nTempLen = Final(puchOutput + nLength);
-		nLength += nTempLen;
-		return nTempLen;
+		nLength += Final(puchOutput + nLength);
+		return nLength;
 	}
 	else if (nLenOfInput == 0 && bIsEnd == false )
 	{
 		throw std::invalid_argument("非法参数");
 	}
+
 	nLength = Update(pcuchInput, nLenOfInput, puchOutput);
+	
 	if (bIsEnd == true ) // if the data is last,then call final
 	{
-		nTempLen = Final(puchOutput + nLength);
-		nLength += nTempLen;
+		nLength += Final(puchOutput + nLength);
+		return nLength;
 	}
 	return nLength;
 }
 
+#endif

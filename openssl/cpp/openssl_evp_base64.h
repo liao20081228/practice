@@ -18,10 +18,6 @@ Department     : no
 Email          : no
 Changes        : create
 *******************************************************************************/
-
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include"doctest.h"
-/*myhead_cpp.h is a headfile in “/usr/local/include”,include all headfiles*/
 #ifndef __MY_OPENSSL_EVP_BASE64_H
 #define __MY_OPENSSL_EVP_BASE64_H
 
@@ -82,9 +78,18 @@ class CBase64
 		~CBase64(void);
 	public:
 		int Encode(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
-					OUT unsigned char* puchOutput, IN int nLenOfOutput, IN bool bIsEnd);
+					OUT unsigned char* puchOutput, IN int nLenOfOutput, 
+					IN bool bIsStart, IN bool bIsEnd);
+
 		int Decode(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-				OUT unsigned char* puchOutput, IN int nLenOfOutput,  IN bool bIsEnd);
+				OUT unsigned char* puchOutput, IN int nLenOfOutput,
+					IN bool  bIsStart, IN bool bIsEnd);
+
+		vector<unsigned char> Encode(IN const vector<unsigned char>& vecInput,
+									 IN bool bIsStart, IN bool bIsEnd);
+
+		vector<unsigned char> Decode(IN const vector<unsigned char>& vecInput,
+									 IN bool bIsStart, IN bool bIsEnd);
 
 	private:
 		void Encode_Init();
@@ -100,9 +105,10 @@ class CBase64
 		EVP_ENCODE_CTX __cm_sCtx;
 		bool		   __cm_bIsEncode = true;
 		bool		   __cm_bIsChangeable = true;
+		bool		   __cm_bIsNeedInit;
+		bool		   __cm_bIsFinalable;
 };
 }
-#endif /* end of include guard: __MY_OPENSSL_EVP */
 
 
 
@@ -113,6 +119,8 @@ inline
 Openssl_evp::CBase64::CBase64(void)
 	: __cm_bIsEncode(true)
 	, __cm_bIsChangeable(true)
+	, __cm_bIsNeedInit(false)
+	, __cm_bIsFinalable(false)
 {
 	Encode_Init();
 }
@@ -125,12 +133,14 @@ Openssl_evp::CBase64::~CBase64(void)
 
 int 
 Openssl_evp::CBase64::Encode(IN const unsigned char* pcuchInput, IN int nLenOfInput,
-					OUT unsigned char* puchOutput,IN int nLenOfOutput,IN bool bIsEnd)
+					OUT unsigned char* puchOutput,IN int nLenOfOutput, 
+					IN bool bIsStart, IN bool bIsEnd)
 {
 	if (nLenOfOutput < nLenOfInput * 4 / 3 + 3)
 	{
 		throw std::invalid_argument("输出缓冲区太小");
 	}
+
 	int nLength = 0;
 	if (nLenOfInput == 0 && bIsEnd == true)
 	{
@@ -213,6 +223,7 @@ Openssl_evp::CBase64::Decode(IN const unsigned char* pcuchInput, IN int nLenOfIn
 void Openssl_evp::CBase64::Encode_Init(void)
 {
 	::EVP_EncodeInit(&__cm_sCtx);
+	__cm_bIsNeedInit = false;
 }
 
 int
@@ -254,18 +265,3 @@ Openssl_evp::CBase64::Decode_Final(OUT  unsigned char* puchOutput)
 	return nLength;
 }
 
-
-TEST_CASE("base64")
-{
-	char input[] =  "dsajfhdkjsafhdf";
-	char output[1024] = {'\0'};
-	char output2[3] = {'\0'};
-
-	Openssl_evp::CBase64  base64;
-
-	 int n = base64.Encode((unsigned char*)input,strlen(input),(unsigned char*)output,1024,false);
-	 CHECK( n == 15 /3 * 4 );
-	 CHECK( strcmp(output, "ZHNhamZoZGtqc2FmaGRm") == 0);
-	 CHECK_THROWS_AS(base64.Encode((unsigned char*)input,strlen(input),(unsigned char*)output2,3,false), std::invalid_argument&);
-	 CHECK_THROWS_AS(base64.Decode((unsigned char*)output, strlen(output),(unsigned char*) input, 16,false), std::logic_error&);
-}

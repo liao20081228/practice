@@ -87,15 +87,20 @@ class CDigest
 		CDigest& operator = (IN CDigest && rref) = delete;
 	public:
 		int Digest(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
-				   OUT unsigned char* puchOutput, IN bool bIsEnd);
+				   OUT unsigned char* puchOutput, IN bool bIsStart, IN bool bIsEnd);
+		
+		int Digest(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
+				   OUT unsigned char* puchOutput, IN int nLenofOutput, IN bool bIsStart, IN bool bIsEnd);
+		
+		vector<unsigned char> Digest(IN const vector<unsigned char>& vecInput, bool bIsStart, IN bool bIsEnd);
 
 		void Change(IN const string strDigestName = "", IN ENGINE* psImpl = nullptr);
+
 	private:
 		void MDInit(void);//ctx初始化和degist初始化
 		void MDUpdate(IN const unsigned char* pcuchInput, IN int nLenOfInput);
 		int  MDFinal(OUT unsigned char* puchOutput);
 		
-		void ThrowException(IN const char* pchInfo) const;
 	private:
 		void GetEVP_MD(IN const string& strDigestName);
 	private:
@@ -106,11 +111,11 @@ class CDigest
 		char                 __cm_pchErrorInfo[1024] = {0};
 		bool				 __cm_bIsNeedInit; //是否需要初始化
 		bool				 __cm_bIsChangeable; //是否可以修改参数
+		bool				 __cm_bIsFinalable; //是否可以调用final
 };
 
 
 }
-#endif /* end of include guard: __MY_OPENSSL_EVP_DIGESTANDHMAC_H */
 
 //CDigest
 Openssl_evp::CDigest::CDigest(IN const string strDigestName,
@@ -118,6 +123,7 @@ Openssl_evp::CDigest::CDigest(IN const string strDigestName,
 	: __cm_psImpl(psImpl)
 	, __cm_bIsNeedInit(false)
 	, __cm_bIsChangeable(true)
+	, __cm_bIsFinalable(false)
 {
 	GetEVP_MD(strDigestName);
 	MDInit();
@@ -132,35 +138,108 @@ Openssl_evp::CDigest::~CDigest(void)
 
 
 int
-Openssl_evp::CDigest::Digest(IN const unsigned char* pcuchInput, 
-							 IN int nLenOfInput, 
-							 OUT unsigned char* puchOutput, 
-							 IN bool bIsEnd/*=false*/)  
+Openssl_evp::CDigest::Digest(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
+							 OUT unsigned char* puchOutput,
+							 IN bool bIsStart, IN bool bIsEnd)  
 {
-	int nLen = 0;
+	if ( bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据还未处理完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		MDInit();
+	}
+	//不会出现新任务开始却没有数据进来的情况,只会在真实数据读入后才会调用函数
 	if (nLenOfInput == 0 && bIsEnd == true)
 	{
-		nLen = MDFinal(puchOutput);
-		__cm_bIsChangeable = true;
-		MDInit();
-		return nLen;
+		return MDFinal(puchOutput);
 	}
 	if (nLenOfInput == 0 && bIsEnd == false)
 	{
 		throw std::invalid_argument("参数非法");
 	}
-	__cm_bIsChangeable = false;
+
 	MDUpdate(pcuchInput, nLenOfInput);
+	
 	if(bIsEnd == true)
 	{
-		nLen = MDFinal(puchOutput);
-		MDInit();
-		__cm_bIsChangeable = true;
-		return nLen;
+		return MDFinal(puchOutput);
 	}
 	return 0;
 }
 
+int 
+Openssl_evp::CDigest::Digest(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
+				   OUT unsigned char* puchOutput, IN int nLenofOutput, IN bool bIsStart, IN bool bIsEnd)
+{
+	if ( bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据还未处理完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		MDInit();
+	}
+
+	if (nLenofOutput < __cm_psMD->md_size)
+	{
+		throw std::logic_error("输出缓冲区太小");
+	}
+	if (nLenOfInput == 0 && bIsEnd == true)
+	{
+		return  MDFinal(puchOutput);
+	}
+	if (nLenOfInput == 0 && bIsEnd == false)
+	{
+		throw std::invalid_argument("参数非法");
+	}
+	MDUpdate(pcuchInput, nLenOfInput);
+	if(bIsEnd == true)
+	{
+		return  MDFinal(puchOutput);
+	}
+	return 0;
+}
+
+Openssl_evp::vector<unsigned char> 
+Openssl_evp::CDigest::Digest(IN const vector<unsigned char>& vecInput, bool bIsStart, IN bool bIsEnd)
+{
+	
+	if ( bIsStart == true && __cm_bIsChangeable == false)
+	{
+		throw std::logic_error("上一次数据还未处理完成");
+	}
+	else if (bIsStart == true && __cm_bIsChangeable == true)
+	{
+		MDInit();
+	}
+
+	if (vecInput.size() == 0 && bIsEnd == true)
+	{
+		vector<unsigned char> vecTemp(__cm_psMD->md_size);
+		vecTemp.clear();
+		MDFinal(vecTemp.data());
+		return vecTemp;
+	}
+	if (vecInput.size() == 0 && bIsEnd == false)
+	{
+		throw std::invalid_argument("参数非法");
+	}
+	MDUpdate(vecInput.data(), vecInput.size());
+	if(bIsEnd == true)
+	{
+		vector<unsigned char> vecTemp(__cm_psMD->md_size);
+		vecTemp.clear();
+		MDFinal(vecTemp.data());
+		return vecTemp;
+	}
+	return vector<unsigned char>();
+}
+
+	
+	
+	
 void 
 Openssl_evp::CDigest::Change(IN const string strDigestName /*=nullptr*/,
 		                     IN ENGINE* psImpl /*= nullptr*/)
@@ -180,7 +259,6 @@ Openssl_evp::CDigest::Change(IN const string strDigestName /*=nullptr*/,
 		if (__cm_bIsNeedInit == true)
 		{
 			MDInit();
-			__cm_bIsNeedInit = false;
 		}
 	}
 	else
@@ -188,6 +266,9 @@ Openssl_evp::CDigest::Change(IN const string strDigestName /*=nullptr*/,
 		throw std::logic_error("现在不可以更改属性");
 	}
 }
+
+
+
 
 void 
 Openssl_evp::CDigest::GetEVP_MD(IN const string& strDigestName)
@@ -211,11 +292,13 @@ Openssl_evp::CDigest::MDInit(void)
 		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
 		throw std::runtime_error(__cm_pchErrorInfo);
 	}
+	__cm_bIsNeedInit = false;
 }
 
 void 
 Openssl_evp::CDigest::MDUpdate(IN const unsigned char* pcuchInput, IN int nLenOfInput)
 {
+	__cm_bIsChangeable = false;
 	if (!::EVP_DigestUpdate(&__cm_sMdCtx, pcuchInput, nLenOfInput))
 	{
 		 __cm_nError = ::ERR_get_error();
@@ -223,20 +306,31 @@ Openssl_evp::CDigest::MDUpdate(IN const unsigned char* pcuchInput, IN int nLenOf
 		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
 		throw std::runtime_error(__cm_pchErrorInfo);
 	}
+	__cm_bIsFinalable = true;
 }
 
 int 
 Openssl_evp::CDigest::MDFinal(OUT unsigned char* puchOutput)
 {
 	int nLength = 0;
-	if (!::EVP_DigestFinal_ex(&__cm_sMdCtx, puchOutput, 
-				reinterpret_cast<unsigned int*>(&nLength)))
+	if (__cm_bIsFinalable == true)
 	{
-		 __cm_nError = ::ERR_get_error();
-		::bzero(__cm_pchErrorInfo,1024);
-		::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
-		throw std::runtime_error(__cm_pchErrorInfo);
+		if (!::EVP_DigestFinal_ex(&__cm_sMdCtx, puchOutput, 
+					reinterpret_cast<unsigned int*>(&nLength)))
+		{
+			 __cm_nError = ::ERR_get_error();
+			::bzero(__cm_pchErrorInfo,1024);
+			::ERR_error_string(__cm_nError, __cm_pchErrorInfo);
+			throw std::runtime_error(__cm_pchErrorInfo);
+		}
+		__cm_bIsFinalable = false;
+		__cm_bIsChangeable = true;
+		return nLength;
 	}
-	return nLength;
+	else
+	{
+		throw std::logic_error("还未调用update");
+	}
 }
 
+#endif /* end of include guard: __MY_OPENSSL_EVP_DIGESTANDHMAC_H */
