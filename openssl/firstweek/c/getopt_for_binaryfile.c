@@ -54,7 +54,7 @@ ReadAccordingFormat(IN int nFdIn, IN const char*format, OUT unsigned char* pchda
 		}
 		else 
 		{
-			int len = HexToBin(pchdata,nLen, temp, nLenTemp);
+			int len = OpenSSL_HexToBin(pchdata,nLen, temp, nLenTemp);
 			return len;
 		}
 	}
@@ -98,7 +98,7 @@ WriteAccordingFormat(IN int nFdOut, IN const char*format, IN const unsigned char
 	else if (strcmp(format, "HEX") == 0) 
 	{
 		unsigned char temp[MY_MAX_BUFFER_SIZE*2] = {0};
-		int len = BinToHex(temp, MY_MAX_BUFFER_SIZE*2, pchdata, nLen);
+		int len = OpenSSL_BinToHex(temp, MY_MAX_BUFFER_SIZE*2, pchdata, nLen);
 		if(-1 == write(nFdOut, temp, len))
 		{
 			goto err;
@@ -250,11 +250,11 @@ err:
 int
 HandleCommandArgument(IN int argc, IN char* argv[])
 {
-	if (openssl_flag == 0)
+	if (g_nOpenSSLoadFlag == 0)
 	{
 		OpenSSL_add_all_algorithms();
 		ERR_load_crypto_strings();
-		openssl_flag = 1;
+		g_nOpenSSLoadFlag = 1;
 	}
 	char pchMode[10] = {'\0'},
 		 pchAlgorithom[20] = {'\0'},
