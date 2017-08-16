@@ -65,6 +65,8 @@ Modifier       : liaoweizhi
 Department     : 技术研发总部
 Changes        : create
 *******************************************************************************/
+int openssl_flag = 0;
+	
 int
 OpenSSL_Cipher(IN const char* pcchCipherName, IN ENGINE* impl,IN const unsigned char* pcuchKey, 
 		       IN const unsigned char* pcuchInitVec, IN const unsigned char* pcuchInput,
@@ -72,23 +74,25 @@ OpenSSL_Cipher(IN const char* pcchCipherName, IN ENGINE* impl,IN const unsigned 
 			   OUT int* pnLenOfOutput, IN int nIsEncry) 
 {
 	*pnLenOfOutput = 0;
-	int nRetVal = 0,                         // the return Value of this function
-		nTempLen = 0,                        // last block with padding
-		nRet = 0;                            // return value of system calling 
-	char pchErrorInfo[1024] = {'\0'};        //Error Information buffer
-	OpenSSL_add_all_algorithms();          //load globle configuration
+	int nRetVal = 0,          
+		nTempLen = 0,        
+		nRet = 0;           
+	char pchErrorInfo[1024] = {'\0'};      
+	if (openssl_flag == 0)
+	{
+		OpenSSL_add_all_algorithms();     
+		ERR_load_crypto_strings();
+		openssl_flag = 1;
+	}
+	EVP_CIPHER_CTX sCtx;                 
+	EVP_CIPHER_CTX_init(&sCtx);         
 	
-	EVP_CIPHER_CTX sCtx;                     //加密使用的上下文
-	EVP_CIPHER_CTX_init(&sCtx);            //初始化上下文
-	
-	const EVP_CIPHER *psCipher = EVP_get_cipherbyname(pcchCipherName);   //获取算法对应的const EVP_CIPHER*
+	const EVP_CIPHER *psCipher = EVP_get_cipherbyname(pcchCipherName);
 	if (NULL == psCipher)
 	{
 		printf("不支持算法:%s\n",pcchCipherName);
 		goto err;
 	}
-	 // 初始化：设置对称算法的密钥，IV，以及加解密标志位
-	 // 如果使用Engine，此时会调用其实现的EVP_CIPHER->init回调函数
 	if (!EVP_CipherInit_ex(&sCtx, psCipher, impl, pcuchKey, pcuchInitVec, nIsEncry))
 	{
 		nRet = ERR_get_error();
@@ -98,11 +102,6 @@ OpenSSL_Cipher(IN const char* pcchCipherName, IN ENGINE* impl,IN const unsigned 
 		goto err;
 	}
 
-	/*
-	 *对数据进行加/解密运算（如果使用Engine，此时会调用其实现的EVP_CIPHER->do_cipher回调函数）
-	 *对于连续数据流，CipherUpdate一般会被调用多次
-	 */
-
 		if (!EVP_CipherUpdate(&sCtx, puchOutput, pnLenOfOutput, pcuchInput, nLenOfInput))
 		{
 			nRet = ERR_get_error();
@@ -111,11 +110,6 @@ OpenSSL_Cipher(IN const char* pcchCipherName, IN ENGINE* impl,IN const unsigned 
 			nRetVal = -4;
 			goto err;
 		}
-	/*
-	 *输出最后一块数据结果（块加密时，数据将被padding到block长度的整数倍，因此会产生额外的最后一段数据）
-	 *注意：如果使用Engine，此时会触发其实现的EVP_CIPHER->do_cipher，而不是EVP_CIPHER->cleanup
-	 *这点上与EVP_DigestFinal/EVP_SignFinal/EVP_VerifyFinal是完全不同的
-	 */
 	if (!EVP_CipherFinal_ex(&sCtx, puchOutput + *pnLenOfOutput, &nTempLen))
 	{
 		nRet = ERR_get_error();
@@ -165,6 +159,12 @@ OpenSSL_Digest(IN const char* pcchDigestName, IN ENGINE *impl, IN const unsigned
 		nRet = 0;                            // return value of system calling 
 	char pchErrorInfo[1024] = {'\0'};        //Error Information
 	
+	if (openssl_flag == 0)
+	{
+		OpenSSL_add_all_algorithms();          //load globle configuration
+		ERR_load_crypto_strings();
+		openssl_flag = 1;
+	}
 	EVP_MD_CTX sCtx;                         //digest context 
 	EVP_MD_CTX_init(&sCtx);                //initialize context
 	const EVP_MD *psDigest = EVP_get_digestbyname(pcchDigestName);  //算法对应的const EVP_MD*
@@ -174,9 +174,6 @@ OpenSSL_Digest(IN const char* pcchDigestName, IN ENGINE *impl, IN const unsigned
 		nRetVal = -1;
 		goto err;
 	}
-	/*
-	 * 初始化,如果使用Engine，此时会调用其实现的EVP_MD->init回调函数
-	 */
 	if (!EVP_DigestInit_ex(&sCtx, psDigest, impl))
 	{
 		nRet = ERR_get_error();
@@ -185,9 +182,8 @@ OpenSSL_Digest(IN const char* pcchDigestName, IN ENGINE *impl, IN const unsigned
 		nRetVal = -3;
 		goto err;
 	}
-	*pnLenOfOutput = 0; //置为0
+	*pnLenOfOutput = 0; 
 	
-	//计算摘要
 	if (!EVP_DigestUpdate(&sCtx,  pcuchInput, nLenOfInput))
 	{
 		nRet = ERR_get_error();
@@ -196,7 +192,6 @@ OpenSSL_Digest(IN const char* pcchDigestName, IN ENGINE *impl, IN const unsigned
 		nRetVal = -4;
 		goto err;
 	}
-	//处理尾部字节
 	if (!EVP_DigestFinal_ex(&sCtx, puchOutput , (unsigned int*)pnLenOfOutput))
 	{
 		nRet = ERR_get_error();
@@ -244,6 +239,12 @@ OpenSSL_HMAC(IN const char* pcsDigestName, IN ENGINE *pstEngine, IN const unsign
 			 OUT unsigned char* puchOutput, OUT unsigned int* punLenOfOutput)
 
 {
+	if (openssl_flag == 0)
+	{
+		OpenSSL_add_all_algorithms();          //load globle configuration
+		ERR_load_crypto_strings();
+		openssl_flag = 1;
+	}
 	*punLenOfOutput = 0;
 	int nRetVal = 0,                        //return value of this function
 		nERR = 0;                             // return value of error
@@ -315,38 +316,47 @@ Department     : no
 Email          : no
 Changes        : create
 *******************************************************************************/
+int 
+BinToHex(OUT unsigned char *puchOutput, OUT int nLenOfOutput, IN const unsigned char* pcuchInput, IN int nLenOfInput)
+{
+	if (nLenOfOutput < nLenOfInput * 2)
+	{
+		printf("BinToHex输出缓冲区过小\n");
+		return -1;
+	}
+	const char hex[17] = "0123456789abcdef";
+	int i = 0,
+		j = 0;
+	for (i = 0,j = 0; i < nLenOfInput ; ++i)
+	{
+		puchOutput[j++] = hex[pcuchInput[i] >> 4 & 0xf];
+		puchOutput[j++] = hex[pcuchInput[i] & 0xf];
+	}
+	return j;
+}
 
 int 
-Output_HEX(IN const unsigned char* pcuchdata, IN unsigned int nLenOfData, const char* pFileName) 
+HexToBin(OUT unsigned char *puchOutput, OUT int nLenOfOutput, IN const unsigned char* pcuchInput, IN int nLenOfInput)
 {
-	int nFd = 1;
-	if (pFileName)
+	if (nLenOfInput % 2 != 0)
 	{
-		nFd = open(pFileName, O_WRONLY|O_CLOEXEC|O_CREAT|O_TRUNC, 0755);
-		if (nFd == -1)
-		{
-			perror("open() failed or occur error");
-			return -1;
-		}
+		printf("HexToBex 输入的十六进制数据有误\n");
 	}
-	for (unsigned int i = 0; i < nLenOfData; ++i) 
+	if (nLenOfOutput < nLenOfInput / 2)
 	{
-		if (pcuchdata[i] < 16)
-		{
-			dprintf(nFd, "%x", 0);
-			dprintf(nFd, "%x", pcuchdata[i]);
-		}
-		else
-		{
-			dprintf(nFd, "%x", pcuchdata[i]);
-		}
-		
+		printf("HexToBex输出缓冲区过小");
+		return -1;
 	}
-	if (nFd != 1)
+	char temp[3] =  {0};
+	int i = 0,
+		j = 0;
+	for (i = 0, j = 0; i < nLenOfInput ; i+=2 )
 	{
-		close(nFd);
+		temp[0] = pcuchInput[i];
+		temp[1] = pcuchInput[i+1];
+		puchOutput[j++] = strtoul(temp, NULL, 16);
 	}
-	return 0;
+	return j;
 }
 
 
@@ -375,21 +385,31 @@ Email          : no
 Changes        : create
 *******************************************************************************/
 
-void 
-OpenSSL_BASE64_encode(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
-					   OUT unsigned char* puchOutput,  OUT int* pnLenOfOutput)
+int  
+OpenSSL_BASE64_encode( OUT unsigned char* puchOutput,  IN int nLenOfOutput,
+						IN const unsigned char* pcuchInput, IN int nLenOfInput )
 {
-	*pnLenOfOutput = 0;
+	int len = nLenOfInput % 3 == 0 ? nLenOfInput / 3  * 4  : nLenOfInput / 3  * 4 + 4 ;
+	if (nLenOfOutput < len)
+	{
+		printf("OpenSSL_BASE64_encode输出缓冲区过小\n");
+		return -1;
+	}
+	if (openssl_flag == 0)
+	{
+		OpenSSL_add_all_algorithms();        
+		ERR_load_crypto_strings();
+		openssl_flag = 1;
+	}
 
 	int nTempLen = 0;
+	int nLenOut = 0;
 	EVP_ENCODE_CTX ctx;
 	EVP_EncodeInit(&ctx);
-	
-	EVP_EncodeUpdate(&ctx, puchOutput, pnLenOfOutput, pcuchInput, nLenOfInput);
-
-	EVP_EncodeFinal(&ctx, puchOutput + *pnLenOfOutput, &nTempLen);
-
-	*pnLenOfOutput += nTempLen;
+	EVP_EncodeUpdate(&ctx, puchOutput, &nLenOut, pcuchInput, nLenOfInput);
+	EVP_EncodeFinal(&ctx, puchOutput + nLenOut, &nTempLen);
+	nLenOut += nTempLen;
+	return nLenOut - 1;
 }
 
 /*!@function
@@ -418,28 +438,47 @@ Changes        : create
 *******************************************************************************/
 
 int
-OpenSSL_BASE64_decode(IN const unsigned char* pcuchInput, IN int nLenOfInput, 
-					  OUT unsigned char* puchOutput, OUT int* pnLenOfOutput)
+OpenSSL_BASE64_decode( OUT unsigned char* puchOutput, IN int nLenOfOutput,
+		IN const unsigned char* pcuchInput, IN int nLenOfInput )
 {
-	bzero(puchOutput, *pnLenOfOutput);
-	*pnLenOfOutput = 0;
-
+	int nLenOut = 0;
 	int nTempLen = 0;
 	EVP_ENCODE_CTX ctx;
+	if (nLenOfOutput < nLenOfInput / 4 * 3)
+	{
+		printf("OpenSSL_BASE64_decode输出缓冲区过小\n");
+		goto err;
+	}
+	if ( nLenOfInput % 4 != 0 )
+	{
+		printf("输入的BASE64数据有误\n");
+		goto err;
+	}
+	if (openssl_flag == 0)
+	{
+		OpenSSL_add_all_algorithms();    
+		ERR_load_crypto_strings();
+		openssl_flag = 1;
+	}
+	
 	EVP_DecodeInit(&ctx);
 	
-	if(-1 == EVP_DecodeUpdate(&ctx, puchOutput, pnLenOfOutput, pcuchInput, nLenOfInput))
+	if(-1 == EVP_DecodeUpdate(&ctx, puchOutput, &nLenOut, pcuchInput, nLenOfInput))
 	{
 		printf( "EVP_DecodeUpdate failed" );
-		return -1;
+		goto err;
 	}
-	if ( -1 ==EVP_DecodeFinal(&ctx, puchOutput + *pnLenOfOutput, &nTempLen) )
+	if ( -1 ==EVP_DecodeFinal(&ctx, puchOutput + nLenOut, &nTempLen) )
 	{
 		printf("EVP_DecodeFinal failed");
-		return -1;
+		goto err;
 	}
-	*pnLenOfOutput += nTempLen;
-	return 0;
+	nLenOut += nTempLen;
+	return nLenOut;
+err:
+	return -1;
 }
+
+
 
 #endif /* end of include guard: __MY_OPENSSL_EVP_H */
