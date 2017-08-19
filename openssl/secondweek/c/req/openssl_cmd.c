@@ -16,42 +16,26 @@ ShowHelpInfo(void)
 
 
 int 
-WriteAccordingFormat(IN int nFdOut, IN const char*format, IN const unsigned char* pchdata, IN int nLen)
+WriteAccordingFormat(IN FILE * FpOut, IN const char*format, X509_REQ * pReq)
 {
-	if (strlen(format) == 0 || strcmp(format, "BINARY") == 0)
+	if (strlen(format) == 0 || strcmp(format, "DER") == 0)
 	{
-		if (-1 == write(nFdOut, pchdata, nLen))
+		if (i2d_X509_REQ_fp(FpOut, pReq) != 1 )
 		{
-			sprintf(g_pchErrorInformation,"write failed");
 			goto err;
 		}
 
 	}
-	else if (strcmp(format, "HEX") == 0) 
+	else if (strcmp(format, "PEM") == 0) 
 	{
-		unsigned char temp[__MY_MAX_BUFFER_SIZE*2] = {0};
-		int len = OpenSSL_BinToHex(temp, __MY_MAX_BUFFER_SIZE*2, pchdata, nLen);
-		if(-1 == write(nFdOut, temp, len))
+		if (PEM_write_X509_REQ(FpOut, pReq))
 		{
-			sprintf(g_pchErrorInformation,"write failed");
-			goto err;
-		}
-	}
-	else if (strcmp(format, "BASE64") == 0)
-	{
-		unsigned char temp[__MY_MAX_BUFFER_SIZE*2] = {0};
-		int len = OpenSSL_BASE64_encode(temp, __MY_MAX_BUFFER_SIZE*2, pchdata, nLen);
-		if (-1 == write(nFdOut, temp, len))
-		{
-			g_nErrorFlag = 0;
-			sprintf(g_pchErrorInformation,"write failed");
 			goto err;
 		}
 	}
 	return 0;
-
 err:
-	g_nErrorFlag = 0;
+	g_nErrorFlag = 1;
 	OpenSSL_PrintErrorInformation();
 	return -1;
 }
@@ -127,52 +111,29 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 	     pchFormat[20] = {'\0'},
 		 pchKeyfile[255] = {'\0'};
 
-	int nFdOut = STDOUT_FILENO;
+	FILE* fpOut = stdout;
 	
-	unsigned char puchInput[__MY_MAX_BUFFER_SIZE],
-				  puchOutput[__MY_MAX_BUFFER_SIZE * 2];
+	unsigned char puchMD[__MY_MAX_BUFFER_SIZE];
 	
-	int nLenOfIn  = 0,
-		nLenOfOut = 0;
+	int nLenOfMD  = 0;
+
+	EVP_PKEY* pKey = NULL;
+	FILE* fpKey    = NULL;
 	
-	EVP_PKEY pKey;
-	RSA* rsaKey = NULL;
-	FILE* fpKey  = NULL;
 	const EVP_MD* psMD = NULL;
 	
-	X509_REQ req;
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#if 0
+	X509_REQ  *req = X509_REQ_new();
+	X509_NAME *name = X509_NAME_new();
+	char *p = pchSubject;
 
 	if (0 != ReadCommandArgument(pchDigestName,pchKeyfile, 
 				pchSubject, pchOutputFile, pchFormat, argc, argv))
 	{
 		sprintf(g_pchErrorInformation, "ReadCommandArgument failed");
-		goto err0;
+		goto err3;
 	}
-
-//req
+	
+	
 	fpKey = fopen(pchKeyfile,"rb");
 	if (fpKey == NULL)
 	{
@@ -180,102 +141,91 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 		goto err0;
 	}
 	
-	if (NULL == PEM_read_RSAPrivateKey(fpKey, &rsaKey, NULL ,NULL))
+	if (NULL == PEM_read_PrivateKey(fpKey, &pKey, NULL ,NULL))
 	{
 		rewind(fpKey);
-		if (NULL == d2i_RSAPrivateKey_fp(fpKey,&rsaKey))
+		if (NULL == d2i_PrivateKey_fp(fpKey,&pKey))
 		{
-			sprintf(g_pchErrorInformation, "read key file   failed");
 			fclose(fpKey);
-			goto err0;
-		}
-	}
-	memset(&pKey, 0, sizeof (EVP_PKEY));
-	EVP_PKEY_set1_RSA(&pKey, rsaKey);
-	fclose(fpKey);
-
-	if (strlen(pchOutputFile) != 0)
-	{
-		if ((nFdOut = open(pchOutputFile, O_WRONLY | O_CREAT | O_CLOEXEC | O_TRUNC, 0666)) == -1) 
-		{
-			sprintf(g_pchErrorInformation, "open output file  failed");
-			goto err1;
-		}
-	}
-		
-	psMD = EVP_get_digestbyname(pchDigestName);
-		
-	if (psMD == NULL)
-	{
-		sprintf(g_pchErrorInformation,"不支持算法:%s",pchDigestName);
-		goto err2;
-	}
-	EVP_MD_CTX ctx;
-	EVP_MD_CTX_init(&ctx);
-	if(EVP_SignInit_ex(&ctx, psMD ,NULL) != 1)
-	{
-		EVP_MD_CTX_cleanup(&ctx);
-		goto err3;
-	}
-	while ((nLenOfIn = read(nFdIn, puchInput, __MY_MAX_BUFFER_SIZE)) > 0)
-	{
-		
-		if (EVP_SignUpdate(&ctx, puchInput, nLenOfIn) != 1)
-		{
-			EVP_MD_CTX_cleanup(&ctx);
 			goto err3;
 		}
 	}
-	if (EVP_SignFinal(&ctx, puchOutput, (unsigned int*)&nLenOfOut, &pKey) != 1)
+	fclose(fpKey);
+	
+	
+	if (strlen(pchOutputFile) != 0)
 	{
-		EVP_MD_CTX_cleanup(&ctx);
+		if (( fpOut = fopen(pchOutputFile, "wb+")) == NULL) 
+		{
+			sprintf(g_pchErrorInformation, "open output file  failed");
+			goto err0;
+		}
+	}
+		
+	if (1 !=X509_REQ_set_version(req, (long)1) )
+	{
 		goto err3;
 	}
-	EVP_MD_CTX_cleanup(&ctx);
-	if (0 != WriteAccordingFormat(nFdOut, pchFormat, puchOutput, nLenOfOut))
+	if (1 != X509_REQ_set_pubkey(req,pKey))
 	{
-		sprintf(g_pchErrorInformation,"WriteAccordingFormat failed");
-		goto err2;
+		goto err3;
 	}
 	
-	close(nFdIn);
-	if( nFdOut != STDOUT_FILENO)
+	for (char* token = strsep(&p,"/"); token != NULL; token = strsep(&p,"/"))
 	{
-		close(nFdOut);
+		char* temp = strsep(&token,"=");
+		if (1 != X509_NAME_add_entry_by_txt(name,temp,V_ASN1_UTF8STRING,(unsigned char*)token, strlen(token),0, -1))
+		{
+			goto err3;
+		}
 	}
+	if (1 != X509_REQ_set_subject_name(req,name))
+	{
+		goto err3;
+	}
+
+	if ((psMD = EVP_get_digestbyname(pchDigestName)) == NULL)
+	{
+		sprintf(g_pchErrorInformation, "不支持此摘要算法");
+		goto err0;
+	}
+	
+	if(1 != X509_REQ_digest(req, psMD, puchMD, (unsigned int*)& nLenOfMD))
+	{
+		goto err3;
+	}
+
+	if (1 != X509_REQ_sign(req, pKey, psMD))
+	{
+		goto err3;
+	}
+	if (0 != WriteAccordingFormat(fpOut , pchFormat, req))
+	{
+		sprintf(g_pchErrorInformation, "ReadCommandArgument failed");
+		goto err3;
+	}
+	
+	if( fpOut != stdout)
+	{
+		fclose(fpOut);
+	}
+	X509_REQ_free(req);
+	X509_NAME_free(name);
 	return 0;
 err0:
 	g_nErrorFlag = 0;
-	OpenSSL_PrintErrorInformation();
-	return -1;
-err1: 
-	close(nFdIn);
-	g_nErrorFlag = 0;
-	OpenSSL_PrintErrorInformation();
-	return -1;
-err2: 
-	close(nFdIn);
-	if( nFdOut != STDOUT_FILENO)
+	goto err2;
+err2:
+	if( fpOut != stdout)
 	{
-		close(nFdOut);
+		fclose(fpOut);
 	}
-	g_nErrorFlag = 0;
+	X509_REQ_free(req);
+	X509_NAME_free(name);
 	OpenSSL_PrintErrorInformation();
 	return -1;
+
 err3:
 	g_nErrorFlag = 1;
-	if( nFdOut != STDOUT_FILENO)
-	{
-		close(nFdOut);
-	}
-	OpenSSL_PrintErrorInformation();
-#endif
-	return -1;
-}
-
-int main(void)
-{
-	OpensSSL_LoadAlgorithmAndErrorString();
-	printf("%ld",sizeof(X509_REQ));
-	return 0;
+	goto err2;
 }
