@@ -453,7 +453,7 @@ OpenSSL_BASE64_encode( OUT unsigned char* puchOutput,  IN int nLenOfOutput,
 	EVP_EncodeUpdate(&ctx, puchOutput, &nLenOut, pcuchInput, nLenOfInput);
 	EVP_EncodeFinal(&ctx, puchOutput + nLenOut, &nTempLen);
 	nLenOut += nTempLen;
-	return nLenOut - 1;
+	return nLenOut;
 err:
 	OpenSSL_PrintErrorInformation();
 	return  -1;
@@ -470,12 +470,6 @@ OpenSSL_BASE64_decode( OUT unsigned char* puchOutput, IN int nLenOfOutput,
 	{
 		g_nErrorFlag = 0;
 		sprintf(g_pchErrorInformation,"OpenSSL_BASE64_decode 输出缓冲区过小");
-		goto err;
-	}
-	if ( nLenOfInput % 4 != 0 )
-	{
-		g_nErrorFlag = 0;
-		sprintf(g_pchErrorInformation, "输入的BASE64数据有误");
 		goto err;
 	}
 	if (g_nOpenSSLoadFlag == 0)

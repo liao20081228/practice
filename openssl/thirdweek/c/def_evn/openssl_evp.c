@@ -27,6 +27,8 @@ int g_nErrorFlag = 0;
 char g_pchErrorInformation[__MY_ERR_BUFFER_SIZE] = {0};
 void (*HandleRrror_cb)(void);
 
+
+
 /*!@function
 ********************************************************************************
 Function Name  : OpenSSL_PrintErrorInformation
@@ -126,7 +128,7 @@ OpenSSL_Cipher(OUT unsigned char* puchOutput, IN int nLenOfOutBuf,
 {
 	int nLenOfOutput = 0,
 		nTempLen = 0;        
-	EVP_CIPHER_CTX sCtx;                 
+	EVP_CIPHER_CTX *psCtx = EVP_CIPHER_CTX_new();                 
 		
 	const EVP_CIPHER *psCipher = EVP_get_cipherbyname(pcchCipherName);
 	if (NULL == psCipher)
@@ -142,22 +144,23 @@ OpenSSL_Cipher(OUT unsigned char* puchOutput, IN int nLenOfOutBuf,
 	}
 
 
-	EVP_CIPHER_CTX_init(&sCtx);         
+	EVP_CIPHER_CTX_init(psCtx);         
 	
-	if (!EVP_CipherInit_ex(&sCtx, psCipher, impl, pcuchKey, pcuchInitVec, nIsEncry))
+	if (!EVP_CipherInit_ex(psCtx, psCipher, impl, pcuchKey, pcuchInitVec, nIsEncry))
 	{
 		goto err1;
 	}
-	if (!EVP_CipherUpdate(&sCtx, puchOutput, &nLenOfOutput, pcuchInput, nLenOfInput))
+	if (!EVP_CipherUpdate(psCtx, puchOutput, &nLenOfOutput, pcuchInput, nLenOfInput))
 	{
 		goto err0;
 	}
-	if (!EVP_CipherFinal_ex(&sCtx, puchOutput + nLenOfOutput, &nTempLen))
+	if (!EVP_CipherFinal_ex(psCtx, puchOutput + nLenOfOutput, &nTempLen))
 	{
 		goto err1;
 	}
 	nLenOfOutput += nTempLen;
-	EVP_CIPHER_CTX_cleanup(&sCtx);
+	EVP_CIPHER_CTX_cleanup(psCtx);
+	EVP_CIPHER_CTX_free(psCtx);
 	return nLenOfOutput;
 
 err0:
@@ -166,7 +169,7 @@ err0:
 	return -1;
 err1:
 	g_nErrorFlag = 1;
-	EVP_CIPHER_CTX_cleanup(&sCtx);
+	EVP_CIPHER_CTX_cleanup(psCtx);
 	OpenSSL_PrintErrorInformation();
 	return -1;
 }
@@ -451,7 +454,7 @@ OpenSSL_BASE64_encode( OUT unsigned char* puchOutput,  IN int nLenOfOutput,
 	EVP_EncodeUpdate(&ctx, puchOutput, &nLenOut, pcuchInput, nLenOfInput);
 	EVP_EncodeFinal(&ctx, puchOutput + nLenOut, &nTempLen);
 	nLenOut += nTempLen;
-	return nLenOut-1;
+	return nLenOut - 1;
 err:
 	OpenSSL_PrintErrorInformation();
 	return  -1;

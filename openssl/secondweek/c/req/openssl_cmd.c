@@ -20,7 +20,7 @@ WriteAccordingFormat(IN FILE * FpOut, IN const char*format, X509_REQ * pReq)
 {
 	if (strlen(format) == 0 || strcmp(format, "DER") == 0)
 	{
-		if (i2d_X509_REQ_fp(FpOut, pReq) != 1 )
+		if ( i2d_X509_REQ_fp(FpOut, pReq) != 1 )
 		{
 			goto err;
 		}
@@ -28,7 +28,7 @@ WriteAccordingFormat(IN FILE * FpOut, IN const char*format, X509_REQ * pReq)
 	}
 	else if (strcmp(format, "PEM") == 0) 
 	{
-		if (PEM_write_X509_REQ(FpOut, pReq))
+		if (1 != PEM_write_X509_REQ(FpOut, pReq))
 		{
 			goto err;
 		}
@@ -113,9 +113,9 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 
 	FILE* fpOut = stdout;
 	
-	unsigned char puchMD[__MY_MAX_BUFFER_SIZE];
+	/*unsigned char puchMD[__MY_MAX_BUFFER_SIZE];*/
 	
-	int nLenOfMD  = 0;
+	/*int nLenOfMD  = 0;*/
 
 	EVP_PKEY* pKey = NULL;
 	FILE* fpKey    = NULL;
@@ -125,6 +125,7 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 	X509_REQ  *req = X509_REQ_new();
 	X509_NAME *name = X509_NAME_new();
 	char *p = pchSubject;
+	
 
 	if (0 != ReadCommandArgument(pchDigestName,pchKeyfile, 
 				pchSubject, pchOutputFile, pchFormat, argc, argv))
@@ -162,19 +163,10 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 		}
 	}
 		
-	if (1 !=X509_REQ_set_version(req, (long)1) )
-	{
-		goto err3;
-	}
-	if (1 != X509_REQ_set_pubkey(req,pKey))
-	{
-		goto err3;
-	}
-	
 	for (char* token = strsep(&p,"/"); token != NULL; token = strsep(&p,"/"))
 	{
 		char* temp = strsep(&token,"=");
-		if (1 != X509_NAME_add_entry_by_txt(name,temp,V_ASN1_UTF8STRING,(unsigned char*)token, strlen(token),0, -1))
+		if (0 == X509_NAME_add_entry_by_txt(name,temp,V_ASN1_UTF8STRING,(unsigned char*)token, strlen(token),0,-1))
 		{
 			goto err3;
 		}
@@ -184,18 +176,22 @@ HandleCommandArgument(IN int argc, IN char* argv[])
 		goto err3;
 	}
 
+		
+	if (1 !=X509_REQ_set_version(req, 0L ))
+	{
+		goto err3;
+	}
+	if (1 != X509_REQ_set_pubkey(req,pKey))
+	{
+		goto err3;
+	}
+
 	if ((psMD = EVP_get_digestbyname(pchDigestName)) == NULL)
 	{
 		sprintf(g_pchErrorInformation, "不支持此摘要算法");
 		goto err0;
 	}
-	
-	if(1 != X509_REQ_digest(req, psMD, puchMD, (unsigned int*)& nLenOfMD))
-	{
-		goto err3;
-	}
-
-	if (1 != X509_REQ_sign(req, pKey, psMD))
+	if (0 == X509_REQ_sign(req, pKey, psMD))
 	{
 		goto err3;
 	}

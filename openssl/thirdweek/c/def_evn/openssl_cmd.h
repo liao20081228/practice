@@ -24,11 +24,12 @@
 #define ____MY_MAX_BUFFER_SIZE 12000
 #endif
 
+
 void ShowHelpInfo(void);
 
 int ReadCommandArgument(OUT char* pchDigetName, OUT char* pchKeyfile,
-					OUT char* pchInputFile, OUT char* pchOutputFile, 
-					OUT char* pchFormat,IN int argc, IN char* argv[]);
+		OUT char* pchInputFile, OUT char* pchOutputFile, 
+		OUT char* pchFormat,IN int argc, IN char* argv[]);
 
 int HandleCommandArgument(IN int argc, IN char* argv[]);
 
