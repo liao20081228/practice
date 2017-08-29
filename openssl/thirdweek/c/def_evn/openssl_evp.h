@@ -18,7 +18,6 @@ Department     : no
 Email          : no
 Changes        : create
 *******************************************************************************/
-/*myhead_cpp.h is a headfile in “/usr/local/include”,include all headfiles*/
 
 #pragma once
 
