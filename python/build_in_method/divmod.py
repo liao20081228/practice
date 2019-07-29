@@ -1,0 +1,5 @@
+print(divmod(1,2),1//2,1%2)
+print(divmod(1,-2),1//-2,1%-2)
+print(divmod(-1,2),-1//2,-1%2)
+print(divmod(-1,-2),-1//-2,-1%-2)
+print(divmod(3,3.14),3//3.14,3%3.14)
