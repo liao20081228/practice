@@ -1,21 +1,32 @@
-#include <stdio.h>
-int main()
+#include<myhead_cpp.h>
+
+int fun( int a )
 {
-   int n,k;
-   printf("please input the number:\n");
-   scanf("%d",&n);
-   for(k=2;k<n;k++)
-   {
-       while(k!=n)
-     {
-       if(n%k==0)
-       {
-           printf("%d\n",k);
-           n=n/k;
-       }
-       else break;         //跳出while使k+1                
-     }
-   }
-   printf("%d\n",n);       //打印最后一个质因数，即k等于n是的那个
-    return 0;
+	cout<<"Test"<<endl;
+	return 0;
+}
+
+//函数名，就是函数的入口地址
+//
+
+
+int main(void)
+{
+	int a[10]={1,2,3,4}; //a是数组的首地址
+	printf("%p\n",a);   //
+	printf("%p\n",&a[0]);//&a[0]是数组第一个元素的地址
+	printf("%p\n",&a[0]);//&a是数组的地址
+
+	int* p1=a;
+	int (*p2)[10]=&a;
+	
+	cout<<p1[0]<<endl;
+	cout<<p2[2]<<endl;
+
+	int (*pfun1)(int)=&fun;
+	int (*pfun2)(int)=fun;
+	pfun1(1);
+	(*pfun1)(1);
+	pfun2(2);
+	(*pfun2)(2);
 }

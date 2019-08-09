@@ -1,117 +1,143 @@
-#include<iostream>
-#include<cmath>
-#include<cstdlib>
-#include<cassert>
-#include<ctime>
-int fun(int n)
-{
+#include<myhead_cpp.h>
 
-	for (int i=2;i<=sqrt(n);++i)
-	{
-		if (n % i == 0)
+bool judge1(int n)
+{	if (n == 1)
+		return false;
+	else
+		for ( int i = 2; i <n ; ++i )
+			if (n % i == 0)
+				return false;
+	return true;
+}
+
+bool judge2(int n)
+{
+	if (n==1)
+		return false;
+	else
+		for(int i=2; i<= sqrt(n); i++)
+			if (n% i==0)
+				return false;
+	return true;
+}
+
+bool judge3(int n)
+{
+	if (n%2 == 0 || n ==1)
+		return false;
+	else if (n == 2)
+		return true;
+	for (int i =3; i<=sqrt(n);i+=2)
+		if (n % i==0)
 			return false;
-	}
+	return true;
+}
+
+bool judge4(int n)
+{
+	if (n ==2 || n==3)
+		return  true;
+	else if (n ==1)
+		return false;
+	if (n % 6 !=1 && n%6!=5)
+		return false;
+	for (int i=5; i<=sqrt(n);i+=6)
+		if (n % i == 0 || n % (i+2) ==0)
+			return false;		
 	return true;
 }
 
 
-
-bool prime(int n)
+void fenjie1(int n)
 {
-	if (n==2)
-		return true;
-	else if (n % 2 == 0)
-		return false;
-	else 
-		return fun(n);
-}
-
-//法1
-void fenjie( int n )
-{
-	if (prime(n))
-	{	
-		std::cout<< n <<std::endl;
+	if (judge4(n))
+	{
+		cout<<n<<endl;
 		return;
 	}
 	else
-		for (int i=2;i<n;++i)
-			if( n%i==0 )
+		for ( int i=2 ; i<n;i++ )
+			if (n %i==0)
 			{
-				std::cout<<i<<"x"<<std::ends;
-				fenjie(n/i);
-				return;
-			}
+				cout<<i<<"x";
+				fenjie1(n/i);
+				return ;
+			}			
 }
 
-//法2
 
 void fenjie2(int n)
 {
-	for (int i =2;i<n ;++i)
+	cout<< n<< "=";
+	for ( int i =2;i<n ;++i )
 		if (n%i==0)
 		{
+			cout<< i <<"x";
 			n/=i;
-			std::cout << i-- << "x" ;
+			--i;
 		}
-	std::cout<<n<<std::endl;
+	//另一种写法
+	//for (int i =2 ; i<n;)
+	//	if (n%i==0)
+	//	{
+	//		cout<<i<<"x";
+	//		n/=i;
+	//	}
+	//	else 
+	//		++i;
+	//
+	//还有一种写法
+	//for ( int i =2;i< n;++i )
+	//	while(n%i==0)
+	//	{
+	//		cout<< i <<"x";
+	//		n/=i;
+	//	}
+
+
+	cout << n <<endl;
 }
 
-//法3
 void fenjie3(int n)
 {
-	while(n%2==0)
+	cout << n << "=";
+	while(n % 2 ==0 && n != 2)
 	{
-		std::cout<<2<<"x";
-		n/=2;
+		cout<< 2 << "x";
+		n /=2;
 	}
-	for (int i=3;i<n ;i+=2)
+	for ( int i=3;i< n ; )	
 	{
-		if (n%i==0)
+		if (n % i == 0)
 		{
-			std::cout<<i<<"x";
-			n/=i;
-			i-=2;
+			cout << i <<"x";
+			n /= i;
 		}
+		else 
+			i+=2;
 	}
-	std::cout<<n<<std::endl;
+	cout << n <<endl;
 }
 
 
 
-//分解4
-void fenjie4(int n)
+
+
+
+
+int main( int argc,char*argv[])
 {
-	for(int k=2;k<n;k++)
-	{
-		while(k!=n)
-		{
-		       if(n%k==0)
-		       {
-		           printf("%d\n",k);
-		           n=n/k;
-		       }
-		       else break;         //跳出while使k+1                
-		}
-	}
-	printf("%d\n",n);       //打印最后一个质因数，即k等于n是的那个
-}
-
-
-int main(int argc, char *argv[])
-{
-	const int MAXVAL=atoi(argv[1]);
-
+	int n=atoi(argv[1]);
 	clock_t a1=clock();
-		fenjie(MAXVAL);
-
+	fenjie1(n);
 	clock_t a2=clock();
-		fenjie2(MAXVAL);
-	
+	fenjie2(n);
 	clock_t a3=clock();
-		fenjie2(MAXVAL);
+	fenjie3(n);
 	clock_t a4=clock();
-	std::cout<<a2-a1<<"us  " << a3-a2 <<"us  "<<a4-a3<< "us"<<std::endl;
-	return 0;
 
+	cout << (float)(a2-a1)/ CLOCKS_PER_SEC*1000 << endl;
+	cout << (float)(a3-a2)/ CLOCKS_PER_SEC*1000 << endl;
+	cout << (float)(a4-a3)/ CLOCKS_PER_SEC*1000 << endl;
+	return 0;
 }
