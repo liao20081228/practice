@@ -10,10 +10,7 @@
 using std::cout;
 using std::cin;
 using std::endl;
-inline void func()
-{
-	cout<<"func inline"<<endl;
-}
+inline void func(){	cout<<"func inline"<<endl;}
 int  main()
 {
 	func();
