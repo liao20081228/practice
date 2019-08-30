@@ -1,17 +1,16 @@
 #include<iostream>
 namespace mystd
 {
-	struct node
-	{
-		int data;
-		node* next;
-	
-	};
 
 
 	class LinkList
 	{
-		node head;
+		struct node
+		{
+			int data;
+			node* next;
+	
+		} head;
 		
 	public:
 		LinkList(void)
