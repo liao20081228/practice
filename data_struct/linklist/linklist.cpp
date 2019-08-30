@@ -3,8 +3,8 @@
 bool mystd::LinkList::insert(int pos, int val)
 {
 	int i=0;
-	node* p = &head;
-	while(i!=pos && p->next != nullptr)
+	node* p = &head; //node* p = head.next;
+	while(i!=pos && p->next != nullptr) // while(i!=pos && p != nullptr)
 	{
 		++i;
 		p=p->next;
@@ -58,4 +58,11 @@ bool mystd::LinkList::establish_reverse(void)
 
 	return true;
 
+}
+
+
+bool mystd::LinkList::del(int pos, int &val)
+{
+	int i=0;
+	node* p = head.
 }
