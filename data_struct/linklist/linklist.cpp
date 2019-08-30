@@ -163,6 +163,7 @@ void mystd::LinkList::display(void) const
 		std::cout << p->data << ",";
 		p=p->next;
 	}
+	std::cout << "\n";
 }
 
 mystd::LinkList::~LinkList(void)

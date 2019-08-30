@@ -17,6 +17,7 @@ namespace mystd
 		{
 			head.data=0;
 			head.next=nullptr;
+			std::cout << " call constructor\n"; 
 		}
 		
 		bool establish_front(void);
