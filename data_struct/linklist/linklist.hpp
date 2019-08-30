@@ -3,16 +3,15 @@
 namespace mystd
 {
 
+	struct node
+	{
+		int data;
+		node* next;
+	};	
 
 	class LinkList
 	{
-		struct node
-		{
-			int data;
-			node* next;
-	
-		} head;
-		
+		node head;
 	public:
 		LinkList(void)
 		{

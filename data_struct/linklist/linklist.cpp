@@ -141,7 +141,7 @@ std::vector<int> mystd::LinkList::search(int val) const
 	return vec;
 }
 
-node* mystd::LinkList::search_by_pos(int pos )
+mystd::node* mystd::LinkList::search_by_pos(int pos ) const
 {
 	
 }
