@@ -11,13 +11,14 @@ bool mystd::LinkList::insert_before(int pos, int val)
 
 	int i = 0;
 	node* p = &head;
-        while (i != pos && p->next)
+        while (i != pos-1 && p->next)
 	{
 		++i;
 		p = p->next;
 	}
-	if (p->next == nullptr)
+	if (i != pos - 1)
 		return false;
+	node* temp = p->next;
 
 
 }
