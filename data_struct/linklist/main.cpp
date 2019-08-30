@@ -3,9 +3,9 @@
 int main(void)
 {
 	mystd::LinkList a{};
-	//mystd::LinkList b{};
+	mystd::LinkList b{};
 	a.establish_front();
-	//b.establish_trail();
+	b.establish_trail();
 	a.display();
 	//b.display();
 
