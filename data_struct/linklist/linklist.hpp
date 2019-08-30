@@ -28,8 +28,7 @@ namespace mystd
 		bool del(int pos, int& val);
 		bool del(int val);
 		std::vector<int> search(int val) const;
-		int search_by_order(int pos) const;
-		int search_by_val(int val) const;
+		node* search_by_pos(int pos) const;
 		int length(void ) const;
 		bool is_empty(void) const;
 		~LinkList(void);
