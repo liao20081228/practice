@@ -165,4 +165,11 @@ void mystd::LinkList::display(void) const
 	}
 }
 
-
+mystd::LinkList::~LinkList(void)
+{
+	if(is_empty())
+		return;
+	else
+	{
+	}
+}
