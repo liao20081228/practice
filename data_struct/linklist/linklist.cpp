@@ -19,6 +19,8 @@ bool mystd::LinkList::insert_before(int pos, int val)
 	if (i != pos - 1)
 		return false;
 	node* temp = p->next;
-
+	p->next = new node;
+	p->next->data = val;
+	p->next->next = temp;
 
 }
