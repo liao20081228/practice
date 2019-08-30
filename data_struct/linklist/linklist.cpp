@@ -89,9 +89,25 @@ bool mystd::LinkList::establish_trail()
 
 bool mystd::LinkList::del(int pos, int& val)
 {
+	int i=0;
+	node *p = &head;
+	while(i != pos - 1 && p->next  )
+	{
+		++i;
+		p = p->next;
+	}
 
+	if (i != pos -1)
+		return false;
+	val = p->next->data;
+	node *temp = p->next;
+	p->next=p->next->next;
+	delete temp;
+	return true;
 }
+
 bool mystd::LinkList::del(int val)
 {
-
+	node* p =&head;
+	while(p)
 }
