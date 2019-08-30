@@ -167,9 +167,11 @@ void mystd::LinkList::display(void) const
 
 mystd::LinkList::~LinkList(void)
 {
-	if(is_empty())
-		return;
-	else
-	{
-	}
+		node*p = head.next;
+		while(p)
+		{
+			head.next=p->next;
+			delete p;
+			p=head.next;
+		}
 }
