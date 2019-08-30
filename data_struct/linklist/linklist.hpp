@@ -19,8 +19,8 @@ namespace mystd
 			head.next=nullptr;
 		}
 		
-		bool establish_before(void);
-		bool establish_after(void);
+		bool establish_front(void);
+		bool establish_trail(void);
 		bool establish_reverse(void);
 		bool insert_after(int pos, int val);
 		bool insert_before(int pos, int val);

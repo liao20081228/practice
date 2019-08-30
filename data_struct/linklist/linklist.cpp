@@ -58,3 +58,40 @@ int mystd::LinkList::length(void) const
 		++i;
 	return i;
 }
+
+
+bool mystd::LinkList::establish_front()
+{
+	int val=0;
+	std::cin >> val;
+	while( val != -1 )
+	{
+		if (insert_after(0, val) == false)
+			return false;
+		std::cin >> val;
+	}
+	return true;
+}
+
+bool mystd::LinkList::establish_trail()
+{
+	int val=0;
+	std::cin >> val;
+	while( val != -1 )
+	{
+		if (insert_after(length(), val) == false)
+			return false;
+		std::cin >> val;
+	}
+	return true;
+}
+
+
+bool mystd::LinkList::del(int pos, int& val)
+{
+
+}
+bool mystd::LinkList::del(int val)
+{
+
+}
