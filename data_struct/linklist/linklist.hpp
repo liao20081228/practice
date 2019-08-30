@@ -30,6 +30,7 @@ namespace mystd
 		node* search_by_pos(int pos) const;
 		int length(void ) const;
 		bool is_empty(void) const;
+		void display(void) const;
 		~LinkList(void);
 	};
 }

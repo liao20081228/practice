@@ -153,3 +153,16 @@ mystd::node* mystd::LinkList::search_by_pos(int pos ) const
 	}
 	return nullptr;
 }
+
+
+void mystd::LinkList::display(void) const
+{
+	node *p = head.next;
+	while(p)
+	{
+		std::cout << p->data << ",";
+		p=p->next;
+	}
+}
+
+
