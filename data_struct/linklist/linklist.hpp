@@ -1,4 +1,5 @@
 #include<iostream>
+#include<array>
 namespace mystd
 {
 

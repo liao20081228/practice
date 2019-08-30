@@ -109,5 +109,26 @@ bool mystd::LinkList::del(int pos, int& val)
 bool mystd::LinkList::del(int val)
 {
 	node* p =&head;
-	while(p)
+	while(p->next )
+	{
+		if (p->next->data == val)
+		{
+			node *temp = p->next;
+			p->next=p->next->next;
+			delete temp;	
+		}
+		else
+		{
+			p = p->next;
+		}
+	}
+	return true;
+}
+
+
+int mystd::LinkList::search(int val) const
+{
+
+
+
 }
