@@ -143,5 +143,13 @@ std::vector<int> mystd::LinkList::search(int val) const
 
 mystd::node* mystd::LinkList::search_by_pos(int pos ) const
 {
-	
+	int i = 0;
+	node* p = head.next;
+	while(p)
+	{
+		++i;
+		if ( i == pos )
+			return p; 
+	}
+	return nullptr;
 }
