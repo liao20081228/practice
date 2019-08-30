@@ -126,9 +126,21 @@ bool mystd::LinkList::del(int val)
 }
 
 
-int mystd::LinkList::search(int val) const
+std::vector<int> mystd::LinkList::search(int val) const
 {
+	std::vector<int> vec;
+	const node* p = &head;
+	int i=0;
+	while(p->next)
+	{
+		++i;
+		if (p->next->data == val)
+		{
+			
+		}
+	}
 
 
-
+	return vec;
 }
+

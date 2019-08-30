@@ -1,5 +1,5 @@
 #include<iostream>
-#include<array>
+#include<vector>
 namespace mystd
 {
 
@@ -27,7 +27,7 @@ namespace mystd
 		bool insert_before(int pos, int val);
 		bool del(int pos, int& val);
 		bool del(int val);
-		int search(int val) const;
+		std::vector<int> search(int val) const;
 		int search_by_order(int pos) const;
 		int search_by_val(int val) const;
 		int length(void ) const;
