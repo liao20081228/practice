@@ -20,9 +20,11 @@ namespace mystd
 			head.next=nullptr;
 		}
 		
-		bool establish(void);
+		bool establish_before(void);
+		bool establish_after(void);
 		bool establish_reverse(void);
-		bool insert(int pos, int val);
+		bool insert_after(int pos, int val);
+		bool insert_before(int pos, int val);
 		bool del(int pos, int& val);
 		bool del(int val);
 		int search(int val) const;
