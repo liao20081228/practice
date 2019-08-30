@@ -55,7 +55,10 @@ int mystd::LinkList::length(void) const
 	int i=0;
 	const node* p = &head;
 	while(p->next)
+	{
 		++i;
+		p=p->next;
+	}
 	return i;
 }
 
