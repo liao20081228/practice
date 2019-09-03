@@ -1,15 +1,13 @@
 #include<iostream>
 class animal
 {
-	int age;
-	const char name[12];
-	const char*color;
-	int&& weight;
-	animal():name("bird"),weight(10)
-	{
-		age=10;
-		color=new char[15];
-	}
+  static const float age=10;
+
 };
 
 
+int main(void)
+{
+	animal a;
+	return 0;
+}
