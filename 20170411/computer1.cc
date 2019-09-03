@@ -4,7 +4,7 @@
     > Mail: liao20081228@126.com 
     > Created Time: 2017年04月12日 星期三 10时24分30秒
  ************************************************************************/
-#include<myhead.h>/*myhead.h is a headfile defined in /usr/include*/
+#include<myhead_cpp.h>/*myhead.h is a headfile defined in /usr/include*/
 #include<iostream>
 #include<string>
 using std::cout;
