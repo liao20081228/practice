@@ -15,7 +15,6 @@ public:
 	{
 		name=new char[std::string(p).length()+1];
 		strcpy(name,p);
-		name=const_cast<char*>(p);
 		std::cout<<"构造函数" <<std::endl;
 	}
 
@@ -47,7 +46,8 @@ public:
 			return *this;
 		
 		}
-		delete []name;
+		delete [] name;
+		age=ref.age;
 		name= new char[strlen(ref.name)+1];
 		strcpy(name,ref.name);
 		std::cout << "赋值运算符函数" << std::endl;
