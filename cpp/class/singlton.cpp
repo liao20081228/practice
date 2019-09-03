@@ -1,23 +1,29 @@
 #include<iostream>
 
 class singleton
-{
+{	
+	static singleton* p;
+	static singleton* init()
+	{
+		if(p)
+			return p;
+		else
+			return new singleton;
+	}
 	private:
+		singleton()
+		{
+
+		}
 		~singleton()
 		{
 
 		}
-	
-	//public:
-		singleton()
-		{
-			std::cout <<"gouzaohanshu"<< std::endl;
-		}
 
 };
+singleton* singleton::p=nullptr;
 
 int main(void)
 {
-	singleton *a=new singleton;
 	return 0;
 }
