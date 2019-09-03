@@ -11,11 +11,11 @@ public:
 		//2.数据成员开辟内存
 		//3.数据成员初始化
 	//1.无返回值，与类同名，可以重载，参数可带默认值，不可主动调用
-	animal(char* p ,int age=0):age(age) //如果一个参数带有默认参数，则之后的参数都要带有默认参数
+	animal(const char* p ,int age=0):age(age) //如果一个参数带有默认参数，则之后的参数都要带有默认参数
 	{
 		name=new char[std::string(p).length()+1];
 		strcpy(name,p);
-		name=p;
+		name=const_cast<char*>(p);
 		std::cout<<"构造函数" <<std::endl;
 	}
 
@@ -38,6 +38,7 @@ public:
 	}
 	//运算符函数
 	//默认提供赋值运算符函数
+	//将一个已经对象赋值给另一个已经存在对象时调用
 	animal& operator = (const animal& ref)
 	{
 		if (this == &ref)
@@ -45,6 +46,21 @@ public:
 		delete []name;
 		name= new char[strlen(ref.name)+1];
 		strcpy(name,ref.name);
-		return *this;
+		std::cout << "赋值运算符函数" << std::endl;
+		 return *this;
 	}
 };
+
+
+int main(void)
+{
+	animal a("bird",10);
+	animal b("bird");
+
+	return 0;
+}
+
+
+
+
+
