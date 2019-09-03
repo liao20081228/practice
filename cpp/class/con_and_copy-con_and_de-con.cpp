@@ -36,4 +36,15 @@ public:
 		strcpy(name,ref.name);
 		std::cout << "拷贝构造函数" <<std::endl;
 	}
+	//运算符函数
+	//默认提供赋值运算符函数
+	animal& operator = (const animal& ref)
+	{
+		if (this == &ref)
+			return *this;
+		delete []name;
+		name= new char[strlen(ref.name)+1];
+		strcpy(name,ref.name);
+		return *this;
+	}
 };
