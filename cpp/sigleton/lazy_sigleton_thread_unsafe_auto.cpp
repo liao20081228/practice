@@ -36,7 +36,7 @@ int main(void)
 	sigleton* a=sigleton::GetInstance();
 	sigleton* b=sigleton::GetInstance();
 
-	if (&a==&b)
+	if (a==b)
 		std::cout << "sigleton" <<std::endl;
 	a->destory();
 	return 0;
