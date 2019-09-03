@@ -4,7 +4,7 @@
   > Mail: liao20081228@126.com 
   > Created Time: 2017年04月22日 星期六 11时12分44秒
  ************************************************************************/
-#include<myhead>/*myhead is a headfile defined in in the directory:/usr/include,which include all headfile we need*/
+#include<myhead_cpp.h>/*myhead is a headfile defined in in the directory:/usr/include,which include all headfile we need*/
 class singleton
 {
 	private:
