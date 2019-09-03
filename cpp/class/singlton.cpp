@@ -7,10 +7,11 @@ class singleton
 		{
 
 		}
-	public:
+	
+	//public:
 		singleton()
 		{
-
+			std::cout <<"gouzaohanshu"<< std::endl;
 		}
 
 };
