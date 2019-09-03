@@ -11,15 +11,12 @@ public:
 		//2.数据成员开辟内存
 		//3.数据成员初始化
 	//1.无返回值，与类同名，可以重载，参数可带默认值，不可主动调用
-	animal(int age=0 , char * p):age(age)
+	animal(char* p ,int age=0):age(age) //如果一个参数带有默认参数，则之后的参数都要带有默认参数
 	{
 		name=new char[std::string(p).length()+1];
+		strcpy(name,p);
 		name=p;
-	}
-	animal(char*p )
-	{
-		name=new char[std::string(p).length()+1];
-		name=p;
+		std::cout<<"构造函数" <<std::endl;
 	}
 
 	//析构函数：清理动态内存（含有指针数据成员）
@@ -28,7 +25,8 @@ public:
 	{
 		if (name)
 			delete [] name;
-	}
+		std::cout << "析构函数" <<std::endl;
+	 }
 	//拷贝构造函数是特殊的构造函数
 	//函数按值传递、是返回值、用已有对象初始化另一个对象
 	animal(const animal & ref)
@@ -36,7 +34,6 @@ public:
 		age=ref.age;
 		name = new char[std::string(ref.name).length()+1]();
 		strcpy(name,ref.name);
+		std::cout << "拷贝构造函数" <<std::endl;
 	}
-
-	
 };
