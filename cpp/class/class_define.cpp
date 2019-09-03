@@ -10,15 +10,12 @@ public:
 	{
 		std::cout << "action" << std::endl;
 	}
-
-	animal(int age);
-	animal();
-	~animal(void);
 };
 
 
 int main(void)
 {
-	animal a();
+	animal a();//认为是一个函数声明
+	animal b{};
 	return 0;
 }
