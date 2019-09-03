@@ -8,10 +8,6 @@ private:
 	sigleton()
 	{
 	}
-	~sigleton()
-	{
-
-	}
 
 public:
 	static sigleton* GetInstance()
@@ -21,10 +17,12 @@ public:
 		return _sigleton;
 	}
 
-	void destory()
+	~sigleton()
 	{
 		if (_sigleton)
 			delete _sigleton;
+		std::cout << "自动销毁" <<std::endl;
+		
 	}
 };
 
@@ -38,7 +36,7 @@ int main(void)
 
 	if (a==b)
 		std::cout << "sigleton" <<std::endl;
-	a->destory();
+	a->~sigleton();
 	return 0;
 
 }
