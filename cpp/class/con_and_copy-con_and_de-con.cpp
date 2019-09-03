@@ -42,7 +42,11 @@ public:
 	animal& operator = (const animal& ref)
 	{
 		if (this == &ref)
+		{
+			std::cout<< "自赋值" <<std::endl;
 			return *this;
+		
+		}
 		delete []name;
 		name= new char[strlen(ref.name)+1];
 		strcpy(name,ref.name);
@@ -51,12 +55,33 @@ public:
 	}
 };
 
+int fun1(animal a)
+{
+	return 0;
+}
+
+int fun2(animal & a)
+{
+	return 0;
+}
+int fun3(animal* a)
+{
+	return 0;
+}
 
 int main(void)
 {
 	animal a("bird",10);
 	animal b("bird");
 
+	animal c=a;
+	animal d(b);
+	
+	a=b;
+
+	fun1(c);
+	fun2(c);
+	fun3(&c);
 	return 0;
 }
 
