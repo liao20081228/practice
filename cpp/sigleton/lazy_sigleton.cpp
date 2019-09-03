@@ -2,7 +2,9 @@
 
 class sigleton
 {
+private:
 	static sigleton * _sigleton;
+private:
 	sigleton()
 	{
 	}
@@ -31,10 +33,12 @@ sigleton* sigleton::_sigleton=nullptr;
 
 int main(void)
 {
-	sigleton* a=sigleton.GetInstance();
-	sigleton* b;b.GetInstance();
+	sigleton* a=sigleton::GetInstance();
+	sigleton* b=sigleton::GetInstance();
 
 	if (&a==&b)
 		std::cout << "sigleton" <<std::endl;
+	a->destory();
 	return 0;
+
 }
