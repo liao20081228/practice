@@ -182,6 +182,7 @@ def get_table_data_dict(table,alldata):
     cursor = conn.cursor()
     cursor.execute("describe "+table)
     cols = cursor.fetchall()
+    print("!!!!",cols)
     col_box = []
     ret_dict = {}
     for col in cols:
@@ -326,11 +327,9 @@ def handle_day(all_data=False):
 
 def handle_minute(all_data=False):
     tables_10 = get_table_list()
-    print('[Info] 10 minutes tables:', len(tables_10))
     for table in tables_10:
         site_name = table.split('_MIN_')[0].replace('-AWS', '')
-        print('[Info] Handling Site:', site_name)
-        # table_info_dict = get_table_data_dict(table,all_data)
+        table_info_dict = get_table_data_dict(table,all_data)
         # length = len(table_info_dict['timestamp'])
         # send_json_dict = {}
         # send_json_dict['site_name'] = site_name
@@ -348,9 +347,8 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    get_table_list();
+    handle_minute(True)
     # handle_day(True)
-    # handle_minute(True)
     # count=0
     # while True:
         # handle_minute()
