@@ -182,36 +182,34 @@ def get_table_data_dict(table,alldata):
     cursor = conn.cursor()
     cursor.execute("describe "+table)
     cols = cursor.fetchall()
-    print("cols is:" ,cols,"\n")
     col_box = []
     ret_dict = {}
     for col in cols:
         col_box.append(col[0])
-    print("col_box is:" ,col_box,"\n")
     for col in col_box:
         if alldata: 
             cursor.execute("Select " + col + "  FROM " + table)
         else:
             cursor.execute("Select " + col + "  FROM " +table + " order by RecNum desc limit 1")
         rows = cursor.fetchall()
-        print("rows is:" ,rows,"\n")
         ret_dict[col] = []
         for row in rows:
             ret_dict[col].append(row[0])
-    # renamed_ret_dict = {}
-    # for k, v in ret_dict.items():
-        # if k in TABLE_NAME_DICT:
-            # renamed_ret_dict[TABLE_NAME_DICT[k]] = v
-        # else:
-            # for handler in RENAME_HANDLERS:
-                # chk = eval(handler + '(k)')
-                # if chk:
-                    # renamed_ret_dict[chk] = v
+    print(ret_dict)
+    renamed_ret_dict = {}
+    for k, v in ret_dict.items():
+        if k in TABLE_NAME_DICT:
+            renamed_ret_dict[TABLE_NAME_DICT[k]] = v
+        else:
+            for handler in RENAME_HANDLERS:
+                chk = eval(handler + '(k)')
+                if chk:
+                    renamed_ret_dict[chk] = v
     
-    # break
+    break
 
-    # print(table, renamed_ret_dict,"\n")
-    # return renamed_ret_dict
+    print(table, renamed_ret_dict,"\n")
+    return renamed_ret_dict
 
 ###################################################
 #                    SDK Utils                    #
@@ -346,6 +344,7 @@ if __name__ == '__main__':
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
     handle_day(True)
+    handle_day(False)
     # handle_day(True)
     # count=0
     # while True:
