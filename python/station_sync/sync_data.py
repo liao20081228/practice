@@ -11,11 +11,10 @@ API_HOST = 'http://202.201.1.136:8000'
 RENAME_HANDLERS = [
     'analysis_air_temperature',
     'analysis_air_humidity',
-    'analysis_air_windspeed',
-    'analysis_air_windspeed',
-    'analysis_air_winddirection',
-    'analysis_soil_waterpotential',
-    'analysis_soil_watercontent',
+    'analysis_air_wind_speed',
+    'analysis_air_wind_direction',
+    'analysis_soil_water_potential',
+    'analysis_soil_water_content',
     'analysis_soil_temperatrue',
     'analysis_soil_elecrate',
 ]
@@ -33,12 +32,6 @@ TABLE_NAME_DICT = {
     'SHF_1_1_2_Avg': 'soil_heat_flux_10',
     'Rain_Tot': 'air_rainfall',
     'TargTempC_Avg': 'photo_infrared_temperature',
-    'WS_1':'air_wind_speed_1',
-    'WD_1':'air_wind_direction_1',
-    'Par_Avg':'photo_active_radiation',
-    'Ta_1m_Avg':'air_temperature_1',
-    'RH_1m_Avg':'air_humidity_1',
-    'SWC_1_10_1_Avg':'soil_tem'
 }
 
 ##################################################
@@ -51,7 +44,7 @@ def analysis_air_temperature(str):
     if result:
         return 'air_temperature_' + result[1]
     else:
-        r = re.compile('Ta_(.+)_Avg')
+        r = re.compile('Ta_[0-9]m_Avg')
         result = r.search(str)
         if result:
             return 'air_temperature_' + result[1].strip('m')
