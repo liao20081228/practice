@@ -192,16 +192,16 @@ def get_table_data_dict(table,alldata):
         else:
             cursor.execute("Select " + col + "  FROM " +table + "order by RecNum desc limit 1")
         rows = cursor.fetchall()
-        print("rows  is :",rows,"\n")
-        ret_dict[col] = []
-        for row in rows:
-            print("row is :",row,"\n")
-            ret_dict[col].append(row[0])
-    print(ret_dict,"\n")
-    renamed_ret_dict = {}
-    for k, v in ret_dict.items():
-        if k in TABLE_NAME_DICT:
-            renamed_ret_dict[TABLE_NAME_DICT[k]] = v
+        # print("rows  is :",rows,"\n")
+        # ret_dict[col] = []
+        # for row in rows:
+            # print("row is :",row,"\n")
+            # ret_dict[col].append(row[0])
+    # print(ret_dict,"\n")
+    # renamed_ret_dict = {}
+    # for k, v in ret_dict.items():
+        # if k in TABLE_NAME_DICT:
+            # renamed_ret_dict[TABLE_NAME_DICT[k]] = v
         # else:
             # for handler in RENAME_HANDLERS:
                 # chk = eval(handler + '(k)')
@@ -210,8 +210,8 @@ def get_table_data_dict(table,alldata):
     
     # break
 
-    print(table, renamed_ret_dict,"\n")
-    return renamed_ret_dict
+    # print(table, renamed_ret_dict,"\n")
+    # return renamed_ret_dict
 
 ###################################################
 #                    SDK Utils                    #
