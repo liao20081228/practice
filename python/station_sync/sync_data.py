@@ -6,8 +6,10 @@ import requests
 from datetime import datetime
 import time
 # API_KEY = '384947d9c0169f60'
-# API_KEY = '969a89379c2776d2'
+API_KEY = '969a89379c2776d2'
 API_HOST = 'http://202.201.1.136:8000'
+##########################################3
+
 RENAME_HANDLERS = [
     'analysis_air_temperature',
     'analysis_air_humidity',
@@ -255,6 +257,16 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
         print('[Error] Failed to report data, reason:', ret['error'])
         return False
 
+def get_station_list(key):
+    requests.get()
+
+
+
+
+
+
+
+
 # Report Data by Minute
 def report_data_by_min(json_dict):
     post_data = {
@@ -326,9 +338,7 @@ def handle_minute(all_data=False):
         report_data_by_min(send_json_dict)
 
 if __name__ == '__main__':
-    API_KEY = get_user_key("walcheng","123456")
-    print(API_KEY)
-    #  add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
+    # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
     # count=0
