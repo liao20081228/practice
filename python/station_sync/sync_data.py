@@ -225,7 +225,11 @@ def get_user_key(useranme,password):
             }
     req = requests.post(API_HOST + '/api/v1/user/login', data=post_data)
     ret = json.loads(req.content.decode("utf-8"))
-    return ret["key"]
+    if ret["status"]:
+        return ret["key"]
+    else:
+        print('[Error] Failed to login, reason:', ret['error'])
+        return False
 
 
 
