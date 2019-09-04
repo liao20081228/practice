@@ -6,7 +6,7 @@ import requests
 from datetime import datetime
 import time
 # API_KEY = '384947d9c0169f60'
-API_KEY = '969a89379c2776d2'
+# API_KEY = '969a89379c2776d2'
 API_HOST = 'http://202.201.1.136:8000'
 RENAME_HANDLERS = [
     'analysis_air_temperature',
@@ -218,6 +218,16 @@ def get_table_data_dict(table,alldata):
 ###################################################
 #                    SDK Utils                    #
 ###################################################
+def get_user_key(useranme,password):
+    post_data={
+            'useranme':useranme,
+            'password':password
+            }
+    req = requests.post(API_HOST + '/api/v1/user/login', data=post_data)
+    ret = json.loads(req.content.decode("utf-8"))
+    return ret["key"]
+
+
 
 # Add Site
 def add_site(site_name, administrator, school, address, chinese_name, longitude, latitude, collector_number):
@@ -312,9 +322,9 @@ def handle_minute(all_data=False):
         report_data_by_min(send_json_dict)
 
 if __name__ == '__main__':
-    API_KEY = '969a89379c2776d2'
-    API_HOST = 'http://202.201.1.136:8000'
-    add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
+    API_KEY = get_user_key("walcheng","123456")
+    print(API_KEY)
+    #  add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
     # count=0
