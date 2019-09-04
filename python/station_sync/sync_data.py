@@ -220,18 +220,22 @@ def get_table_data_dict(table,alldata):
 ###################################################
 #                    SDK Utils                    #
 ###################################################
-def get_user_key(useranme, password):
+def get_user_key(username, password):
     post_data={
-            'useranme':useranme,
+            'username':username,
             'password':password
             }
-    req = requests.post(API_HOST + '/api/v1/user/login', data=post_data)
-    ret = json.loads(req.content.decode("utf-8"))
-    if ret["status"]:
-        return ret["key"]
-    else:
-        print('[Error] Failed to login, reason:', ret['error'])
-        return False
+    req = requests.get(API_HOST + '/api/v1/user/login', params=post_data)
+    print(req.url)
+    print(req.text)
+    print(req.text["key"])
+
+    # ret = json.loads(req.content.decode("utf-8"))
+    # if ret["status"]:
+        # return ret["key"]
+    # else:
+        # print('[Error] Failed to login, reason:', ret['error'])
+        # return False
 
 
 
@@ -260,7 +264,6 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
 def get_station_list(key):
     parameters={'key':key}
     ret=requests.get(API_HOST+"/api/v1/user/station/get",parameters)
-    ret.encoding="gbk23221"
     print(ret.url) 
     print(ret.text) 
     print(ret.content)
@@ -345,7 +348,7 @@ def handle_minute(all_data=False):
 
 if __name__ == '__main__':
     API_KEY=get_user_key("walcheng","123456")
-    get_station_list(API_KEY)
+    # get_station_list(API_KEY)
     # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
