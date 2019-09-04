@@ -8,16 +8,16 @@ import time
 API_HOST = 'http://202.201.1.136:8000'
 ##########################################3
 
-RENAME_HANDLERS = [
-    'analysis_air_temperature',
-    'analysis_air_humidity',
-    'analysis_air_wind_speed',
-    'analysis_air_wind_direction',
-    'analysis_soil_water_potential',
-    'analysis_soil_water_content',
-    'analysis_soil_temperatrue',
-    'analysis_soil_elecrate',
-]
+RENAME_HANDLERS = {
+    'Ta':'analysis_air_temperature',
+    'RH':'analysis_air_humidity',
+    'WS':'analysis_air_wind_speed',
+    'WD':'analysis_air_wind_direction',
+    'SWP':'analysis_soil_water_potential',
+    'SWC':'analysis_soil_water_content',
+    'TS':'analysis_soil_temperatrue',
+    'EC':'analysis_soil_elec_rate',
+}
 
 TABLE_NAME_DICT = {
     'TmStamp': 'timestamp',
@@ -197,12 +197,12 @@ def get_table_data_dict(table,alldata):
     for k, v in ret_dict.items():
         if k in TABLE_NAME_DICT:
             renamed_ret_dict[TABLE_NAME_DICT[k]] = v
-        # else:
-            # for handler in RENAME_HANDLERS:
-                # chk = eval(handler + '(k)')
-                # if chk:
-                    # renamed_ret_dict[chk] = v
-    # print(table, renamed_ret_dict,"\n")
+        else:
+            for handler in RENAME_HANDLERS:
+                chk = eval(handler + '(k)')
+                if chk:
+                    renamed_ret_dict[chk] = v
+    print(table, renamed_ret_dict,"\n")
     return renamed_ret_dict
 
 ###################################################
