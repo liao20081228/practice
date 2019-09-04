@@ -258,7 +258,7 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
         return False
 
 def get_station_list(key):
-    requests.get()
+    requests.get(:wq)
 
 
 
