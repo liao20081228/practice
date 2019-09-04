@@ -74,7 +74,11 @@ def analysis_air_wind_speed(str):
         r = re.compile('WS_([0-9]+)')
         result = r.search(str)
         if result:
-            return 'air_wind_speed_' + result[1].strip('m')
+            print(result[0])
+            print(result[1])
+            print(result[2])
+            # return 'air_wind_speed_' + result[1].strip('m')
+            # return 'air_wind_speed_' + result[1].strip('m')
         else:
             return None
 
