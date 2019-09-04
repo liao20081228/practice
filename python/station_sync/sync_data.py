@@ -205,9 +205,6 @@ def get_table_data_dict(table,alldata):
                 chk = eval(handler + '(k)')
                 if chk:
                     renamed_ret_dict[chk] = v
-    
-    break
-
     print(table, renamed_ret_dict,"\n")
     return renamed_ret_dict
 
@@ -343,7 +340,7 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    handle_day(True)
+    # handle_day(True)
     handle_day(False)
     # handle_day(True)
     # count=0
