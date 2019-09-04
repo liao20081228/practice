@@ -33,8 +33,12 @@ TABLE_NAME_DICT = {
     'SHF_1_1_2_Avg': 'soil_heat_flux_10',
     'Rain_Tot': 'air_rainfall',
     'TargTempC_Avg': 'photo_infrared_temperature',
-    'WS_4':'wind speed',
-    'WD_4':'wind directtion'
+    'WS_1':'air_wind_speed_1',
+    'WD_1':'air_wind_direction_1',
+    'Par_Avg':'photo_active_radiation',
+    'Ta_1m_Avg':'air_temperature_1',
+    'RH_1m_Avg':'air_humidity_1',
+    'SWC_1_10_1_Avg':'soil_tem'
 }
 
 ##################################################
