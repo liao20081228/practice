@@ -182,12 +182,10 @@ def get_table_data_dict(table,alldata):
     cursor = conn.cursor()
     cursor.execute("describe "+table)
     cols = cursor.fetchall()
-    print("!!!!",cols)
     col_box = []
     ret_dict = {}
     for col in cols:
         col_box.append(col[0])
-    print(col_box,"\n")
     for col in col_box:
         if alldata: 
             cursor.execute("Select " + col + "  FROM " + table)
