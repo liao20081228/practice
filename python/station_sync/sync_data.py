@@ -184,7 +184,6 @@ def get_table_data_dict(table,alldata):
     for col in cols:
         col_box.append(col[0])
     for col in col_box:
-        print(col)
         if alldata: 
             cursor.execute("Select " + col + "  FROM " + table)
         else:
@@ -198,11 +197,15 @@ def get_table_data_dict(table,alldata):
         if k in TABLE_NAME_DICT:
             renamed_ret_dict[TABLE_NAME_DICT[k]] = v
         else:
-            for handler in RENAME_HANDLERS:
-                chk = eval(handler + '(k)')
-                if chk:
-                    renamed_ret_dict[chk] = v
-    print(table, renamed_ret_dict,"\n")
+            r=re.compile("[TRWSTE][aHSDWSC][_PC]")
+            re_ret=re.search(k)
+            print(re_ret)
+            # for handler in RENAME_HANDLERS:
+                
+                # chk = eval(handler + '(k)')
+                # if chk:
+                    # renamed_ret_dict[chk] = v
+    # print(table, renamed_ret_dict,"\n")
     return renamed_ret_dict
 
 ###################################################
