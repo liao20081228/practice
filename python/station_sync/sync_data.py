@@ -330,18 +330,18 @@ def handle_minute(all_data=False):
     for table in tables_10:
         site_name = table.split('_MIN_')[0].replace('-AWS', '')
         print('[Info] Handling Site:', site_name)
-        table_info_dict = get_table_data_dict(table,all_data)
-        length = len(table_info_dict['timestamp'])
-        send_json_dict = {}
-        send_json_dict['site_name'] = site_name
-        send_json_dict['json_list'] = []
-        for i in range(0, length):
-            item = {}
-            for k in table_info_dict.keys():
-                item[k] = table_info_dict[k][i]
-            item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
-            send_json_dict['json_list'].append(item)
-        report_data_by_min(send_json_dict)
+        # table_info_dict = get_table_data_dict(table,all_data)
+        # length = len(table_info_dict['timestamp'])
+        # send_json_dict = {}
+        # send_json_dict['site_name'] = site_name
+        # send_json_dict['json_list'] = []
+        # for i in range(0, length):
+            # item = {}
+            # for k in table_info_dict.keys():
+                # item[k] = table_info_dict[k][i]
+            # item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
+            # send_json_dict['json_list'].append(item)
+        # report_data_by_min(send_json_dict)
 
 if __name__ == '__main__':
     user_key=get_user_key("walcheng","123456")
