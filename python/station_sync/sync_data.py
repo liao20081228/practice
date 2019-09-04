@@ -5,7 +5,8 @@ import pymysql
 import requests
 from datetime import datetime
 import time
-API_KEY = '384947d9c0169f60'
+# API_KEY = '384947d9c0169f60'
+API_KEY = '969a89379c2776d2'
 API_HOST = 'http://202.201.1.136:8000'
 RENAME_HANDLERS = [
     'analysis_air_temperature',
