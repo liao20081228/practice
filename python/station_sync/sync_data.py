@@ -225,10 +225,8 @@ def get_user_key(username, password):
             'username':username,
             'password':password
             }
-    req = requests.get(API_HOST + '/api/v1/user/login', params=post_data)
-    print(req.url)
-    print(req.text)
-    print(req.text["key"])
+    req = requests.post(API_HOST + '/api/v1/user/login', data=post_data)
+    print(req.json()["key"])
 
     # ret = json.loads(req.content.decode("utf-8"))
     # if ret["status"]:
