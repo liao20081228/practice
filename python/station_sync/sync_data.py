@@ -251,7 +251,7 @@ def add_station(site_name, administrator, school, address, chinese_name, longitu
     if ret['status']:
         return True
     else:
-        print('[Error] Failed to report data, reason:', ret['error'])
+        print('[Error] Failed to add station , reason:', ret['error'])
         return False
 
 def get_station_list(key):
@@ -356,7 +356,8 @@ def handle_minute(all_data=False):
 if __name__ == '__main__':
     user_key=get_user_key("walcheng","123456")
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
-        add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key)
+        if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
+            SystemExit()
     
 
     # handle_day(True)
