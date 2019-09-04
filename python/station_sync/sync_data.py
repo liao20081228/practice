@@ -264,7 +264,16 @@ def get_station_list(key):
     else :
         print("Error! get station list failed, reason is:", ret["error"])
         return None
-def judge_station_existed()
+
+
+def judge_station_existed(station_list, station):
+    if station in station_list:
+        return True
+    else:
+        return False
+
+    
+
      
 
 
@@ -346,9 +355,11 @@ def handle_minute(all_data=False):
 
 if __name__ == '__main__':
     API_KEY=get_user_key("walcheng","123456")
-    station_list=get_station_list(API_KEY)
+    if not judge_station_existed(get_station_list(API_KEY),{"chinese_name":"胡杨楼站","name":"hylz"}):
+        pass
+        # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
+    
 
-    # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
     # count=0
