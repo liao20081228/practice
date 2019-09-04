@@ -190,14 +190,12 @@ def get_table_data_dict(table,alldata):
         if alldata: 
             cursor.execute("Select " + col + "  FROM " + table)
         else:
-            cursor.execute("Select " + col + "  FROM " +table + "order by RecNum desc limit 1")
+            cursor.execute("Select " + col + "  FROM " +table + " order by RecNum desc limit 1")
         rows = cursor.fetchall()
-        print("rows  is :",rows,"\n")
-        # ret_dict[col] = []
-        # for row in rows:
-            # print("row is :",row,"\n")
-            # ret_dict[col].append(row[0])
-    # print(ret_dict,"\n")
+        ret_dict[col] = []
+        for row in rows:
+            ret_dict[col].append(row[0])
+    print(ret_dict,"\n")
     # renamed_ret_dict = {}
     # for k, v in ret_dict.items():
         # if k in TABLE_NAME_DICT:
@@ -345,7 +343,7 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    handle_minute(True)
+    handle_minute(False)
     # handle_day(True)
     # count=0
     # while True:
