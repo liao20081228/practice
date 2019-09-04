@@ -283,10 +283,10 @@ def report_data_by_min(json_dict):
         return False
 
 # Report Data by Day
-def report_data_by_day(json_dict):
+def report_data_by_day(json_dict, key):
     post_data = {
         'json': json.dumps(json_dict),
-        'key': API_KEY
+        'key': key
     }
     req = requests.post(API_HOST + '/api/v1/data/station/transfer_daydata/', data=post_data)
     ret = json.loads(req.content.decode("utf-8"))
@@ -302,20 +302,19 @@ def report_data_by_day(json_dict):
 
 def handle_day(all_data=False):
     tables_day = get_table_list(type='1440')
-    print('[Info] day tables:', tables_day)
     for table in tables_day:
-        site_name = table.split('_MIN_')[0].replace('-AWS', '')
+        name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        # length = len(table_info_dict['timestamp'])
-        # send_json_box = []
-        # for i in range(0, length):
-            # item = {}
-            # for k in table_info_dict.keys():
-                # item[k] = table_info_dict[k][i]
-            # item['site_name'] = site_name
-            # item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
-            # send_json_box.append(item)
-        # report_data_by_day(send_json_box)
+        length = len(table_info_dict['timestamp'])
+        send_json_box = []
+        for i in range(0, length):
+            item = {}
+            for k in table_info_dict.keys():
+                item[k] = table_info_dict[k][i]
+            item['site_name'] = site_name
+            item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
+            send_json_box.append(item)
+        report_data_by_day(send_json_box)
 
 def handle_minute(all_data=False):
     tables_10 = get_table_list()
