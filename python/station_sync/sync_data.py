@@ -344,7 +344,8 @@ def handle_minute(all_data=False):
         report_data_by_min(send_json_dict)
 
 if __name__ == '__main__':
-    get_station_list(API_KEY);
+    API_KEY=get_user_key("walcheng","123456")
+    get_station_list(API_KEY)
     # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
