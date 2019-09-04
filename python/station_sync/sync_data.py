@@ -9,14 +9,14 @@ API_HOST = 'http://202.201.1.136:8000'
 ##########################################3
 
 RENAME_HANDLERS = {
-    'Ta':'analysis_air_temperature',
-    'RH':'analysis_air_humidity',
-    'WS':'analysis_air_wind_speed',
-    'WD':'analysis_air_wind_direction',
+    'Ta_':'analysis_air_temperature',
+    'RH_':'analysis_air_humidity',
+    'WS_':'analysis_air_wind_speed',
+    'WD_':'analysis_air_wind_direction',
     'SWP':'analysis_soil_water_potential',
     'SWC':'analysis_soil_water_content',
-    'TS':'analysis_soil_temperatrue',
-    'EC':'analysis_soil_elec_rate',
+    'TS_':'analysis_soil_temperatrue',
+    'EC_':'analysis_soil_elec_rate',
 }
 
 TABLE_NAME_DICT = {
@@ -197,10 +197,9 @@ def get_table_data_dict(table,alldata):
         if k in TABLE_NAME_DICT:
             renamed_ret_dict[TABLE_NAME_DICT[k]] = v
         else:
-            print(k)
             r=re.compile("[TRWSTE][aHSDWSC][_PC]")
             re_ret=r.search(k)
-            print(re_ret)
+            print(k,":",re_ret.group(0),RENAME_HANDLERS[re_ret.group[0]])
             # for handler in RENAME_HANDLERS:
                 
                 # chk = eval(handler + '(k)')
