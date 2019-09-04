@@ -259,9 +259,9 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
 
 def get_station_list(key):
     parameters={'key':key}
-    ret=requests.get(API_HOST+"api/v1/user/station/get",parameters)
-    print(ret)
-    
+    ret=requests.get(API_HOST+"/api/v1/user/station/get",parameters)
+    print(ret["status"]) 
+    print(ret["data"]) 
 
 
 
