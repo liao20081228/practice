@@ -152,9 +152,9 @@ def analysis_soil_elecrate(str):
 def get_db_conn():
     try:
         server = 'localhost'
-        db_name = 'windsolar'
-        db_user = 'liuxin'
-        db_password = 'nopasswd'
+        db_name = 'station'
+        db_user = 'lndb'
+        db_password = 'lndb'
         conn = pymysql.connect(server, db_user, db_password, db_name)
         return conn
     except Exception as e:
