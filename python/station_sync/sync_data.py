@@ -182,10 +182,12 @@ def get_table_data_dict(table,alldata):
     cursor = conn.cursor()
     cursor.execute("describe "+table)
     cols = cursor.fetchall()
+    print("cols is:" ,cols,"\n")
     col_box = []
     ret_dict = {}
     for col in cols:
         col_box.append(col[0])
+    print("col_box is:" ,col_box,"\n")
     for col in col_box:
         if alldata: 
             cursor.execute("Select " + col + "  FROM " + table)
@@ -195,7 +197,6 @@ def get_table_data_dict(table,alldata):
         ret_dict[col] = []
         for row in rows:
             ret_dict[col].append(row[0])
-    print(ret_dict,"\n")
     # renamed_ret_dict = {}
     # for k, v in ret_dict.items():
         # if k in TABLE_NAME_DICT:
@@ -310,16 +311,16 @@ def handle_day(all_data=False):
         site_name = table.split('_MIN_')[0].replace('-AWS', '')
         print('[Info] Handling Site:', site_name)
         table_info_dict = get_table_data_dict(table,all_data)
-        length = len(table_info_dict['timestamp'])
-        send_json_box = []
-        for i in range(0, length):
-            item = {}
-            for k in table_info_dict.keys():
-                item[k] = table_info_dict[k][i]
-            item['site_name'] = site_name
-            item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
-            send_json_box.append(item)
-        report_data_by_day(send_json_box)
+        # length = len(table_info_dict['timestamp'])
+        # send_json_box = []
+        # for i in range(0, length):
+            # item = {}
+            # for k in table_info_dict.keys():
+                # item[k] = table_info_dict[k][i]
+            # item['site_name'] = site_name
+            # item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
+            # send_json_box.append(item)
+        # report_data_by_day(send_json_box)
 
 def handle_minute(all_data=False):
     tables_10 = get_table_list()
@@ -343,7 +344,7 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    handle_minute(False)
+    handle_day(True)
     # handle_day(True)
     # count=0
     # while True:
