@@ -182,6 +182,7 @@ def get_table_data_dict(table,alldata):
     cursor = conn.cursor()
     cursor.execute("describe "+table)
     cols = cursor.fetchall()
+    print(cols)
     col_box = []
     ret_dict = {}
     for col in cols:
@@ -340,7 +341,7 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    # handle_day(True)
+    handle_minute(False)
     handle_day(False)
     # handle_day(True)
     # count=0
