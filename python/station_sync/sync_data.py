@@ -174,7 +174,6 @@ def get_table_list(type='10'):
             ret_list.append(row[0])
     cursor.close()
     conn.close()
-    print(ret_list,"\n")
     return ret_list
 
 # get_data dict
@@ -348,8 +347,8 @@ if __name__ == '__main__':
     user_key=get_user_key("walcheng","123456")
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
-    
-
+            pass  
+    get_table_list();
     # handle_day(True)
     # handle_minute(True)
     # count=0
