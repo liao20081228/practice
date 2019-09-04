@@ -233,7 +233,7 @@ def get_user_key(username, password):
         return None
 
 # Add Site
-def add_site(site_name, administrator, school, address, chinese_name, longitude, latitude, collector_number):
+def add_site(site_name, administrator, school, address, chinese_name, longitude, latitude, collector_number,key):
     post_data = {
         'site_name': site_name,
         'administrator': administrator,
@@ -244,7 +244,7 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
         'longitude': longitude,
         'latitude': latitude,
         'collector_number': collector_number,
-        'key': API_KEY
+        'key': key
     }
     req = requests.post(API_HOST + '/api/v1/site/add', data=post_data)
     ret = json.loads(req.content.decode("utf-8"))
@@ -354,10 +354,9 @@ def handle_minute(all_data=False):
         report_data_by_min(send_json_dict)
 
 if __name__ == '__main__':
-    API_KEY=get_user_key("walcheng","123456")
-    if not judge_station_existed(get_station_list(API_KEY),{"chinese_name":"胡杨楼站","name":"hylz"}):
-        pass
-        # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
+    user_key=get_user_key("walcheng","123456")
+    if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
+        add_site()
     
 
     # handle_day(True)
