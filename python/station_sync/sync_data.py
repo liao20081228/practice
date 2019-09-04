@@ -182,11 +182,11 @@ def get_table_data_dict(table,alldata):
     cursor = conn.cursor()
     cursor.execute("describe "+table)
     cols = cursor.fetchall()
-    print(cols)
     col_box = []
     ret_dict = {}
     for col in cols:
         col_box.append(col[0])
+    print(col_box)
     for col in col_box:
         if alldata: 
             cursor.execute("Select " + col + "  FROM " + table)
@@ -196,18 +196,17 @@ def get_table_data_dict(table,alldata):
         ret_dict[col] = []
         for row in rows:
             ret_dict[col].append(row[0])
-    print(ret_dict)
     renamed_ret_dict = {}
-    for k, v in ret_dict.items():
-        if k in TABLE_NAME_DICT:
-            renamed_ret_dict[TABLE_NAME_DICT[k]] = v
-        else:
-            for handler in RENAME_HANDLERS:
-                chk = eval(handler + '(k)')
-                if chk:
-                    renamed_ret_dict[chk] = v
-    print(table, renamed_ret_dict,"\n")
-    return renamed_ret_dict
+    # for k, v in ret_dict.items():
+        # if k in TABLE_NAME_DICT:
+            # renamed_ret_dict[TABLE_NAME_DICT[k]] = v
+        # else:
+            # for handler in RENAME_HANDLERS:
+                # chk = eval(handler + '(k)')
+                # if chk:
+                    # renamed_ret_dict[chk] = v
+    # print(table, renamed_ret_dict,"\n")
+    # return renamed_ret_dict
 
 ###################################################
 #                    SDK Utils                    #
@@ -303,10 +302,9 @@ def report_data_by_day(json_dict):
 
 def handle_day(all_data=False):
     tables_day = get_table_list(type='1440')
-    print('[Info] day tables:', len(tables_day))
+    print('[Info] day tables:', tables_day)
     for table in tables_day:
         site_name = table.split('_MIN_')[0].replace('-AWS', '')
-        print('[Info] Handling Site:', site_name)
         table_info_dict = get_table_data_dict(table,all_data)
         # length = len(table_info_dict['timestamp'])
         # send_json_box = []
