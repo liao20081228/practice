@@ -312,6 +312,8 @@ def handle_minute(all_data=False):
         report_data_by_min(send_json_dict)
 
 if __name__ == '__main__':
+    API_KEY = '969a89379c2776d2'
+    API_HOST = 'http://202.201.1.136:8000'
     add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
