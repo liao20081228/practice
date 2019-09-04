@@ -194,6 +194,7 @@ def get_table_data_dict(table,alldata):
         else:
             cursor.execute("Select " + col + "  FROM " +table + " order by RecNum desc limit 1")
         rows = cursor.fetchall()
+        print("rows is:" ,rows,"\n")
         ret_dict[col] = []
         for row in rows:
             ret_dict[col].append(row[0])
