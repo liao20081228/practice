@@ -260,8 +260,11 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
 def get_station_list(key):
     parameters={'key':key}
     ret=requests.get(API_HOST+"/api/v1/user/station/get",parameters)
+    ret.encoding="gbk23221"
     print(ret.url) 
     print(ret.text) 
+    print(ret.content)
+    print(ret.json()) 
 
 
 
