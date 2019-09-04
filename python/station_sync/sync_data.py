@@ -186,8 +186,8 @@ def get_table_data_dict(table,alldata):
     ret_dict = {}
     for col in cols:
         col_box.append(col[0])
-    print(table , "表中的属性为:", col_box)
     for col in col_box:
+        print(col)
         if alldata: 
             cursor.execute("Select " + col + "  FROM " + table)
         else:
