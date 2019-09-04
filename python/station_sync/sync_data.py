@@ -258,7 +258,10 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
         return False
 
 def get_station_list(key):
-    requests.get(:wq)
+    parameters={'key':key}
+    ret=requests.get(API_HOST+"api/v1/user/station/get",parameters)
+    print(ret)
+    
 
 
 
@@ -338,6 +341,7 @@ def handle_minute(all_data=False):
         report_data_by_min(send_json_dict)
 
 if __name__ == '__main__':
+    get_station_list(API_KEY);
     # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
