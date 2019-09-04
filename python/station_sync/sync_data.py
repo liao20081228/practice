@@ -256,8 +256,16 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
 
 def get_station_list(key):
     parameters={'key':key}
-    ret=requests.get(API_HOST+"/api/v1/user/station/get",parameters)
-    
+    response=requests.get(API_HOST+"/api/v1/user/station/get",parameters)
+    response.encoding="utf-8"
+    ret=response.json()
+    if ret["status"]:
+        return ret["data"]
+    else :
+        print("Error! get station list failed, reason is:", ret["error"])
+        return None
+def judge_station_existed()
+     
 
 
 
@@ -338,7 +346,8 @@ def handle_minute(all_data=False):
 
 if __name__ == '__main__':
     API_KEY=get_user_key("walcheng","123456")
-    get_station_list(API_KEY)
+    station_list=get_station_list(API_KEY)
+
     # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
