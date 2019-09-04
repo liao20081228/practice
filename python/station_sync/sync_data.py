@@ -233,7 +233,7 @@ def get_user_key(username, password):
         return None
 
 # Add Site
-def add_site(site_name, administrator, school, address, chinese_name, longitude, latitude, collector_number,key):
+def add_station(site_name, administrator, school, address, chinese_name, longitude, latitude, collector_number,key):
     post_data = {
         'site_name': site_name,
         'administrator': administrator,
@@ -356,7 +356,7 @@ def handle_minute(all_data=False):
 if __name__ == '__main__':
     user_key=get_user_key("walcheng","123456")
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
-        add_site()
+        add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key)
     
 
     # handle_day(True)
