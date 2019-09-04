@@ -5,8 +5,6 @@ import pymysql
 import requests
 from datetime import datetime
 import time
-# API_KEY = '384947d9c0169f60'
-API_KEY = '969a89379c2776d2'
 API_HOST = 'http://202.201.1.136:8000'
 ##########################################3
 
@@ -225,17 +223,14 @@ def get_user_key(username, password):
             'username':username,
             'password':password
             }
-    req = requests.post(API_HOST + '/api/v1/user/login', data=post_data)
-    print(req.json()["key"])
-
-    # ret = json.loads(req.content.decode("utf-8"))
-    # if ret["status"]:
-        # return ret["key"]
-    # else:
-        # print('[Error] Failed to login, reason:', ret['error'])
-        # return False
-
-
+    response= requests.post(API_HOST + '/api/v1/user/login', data=post_data)
+    response.encoding="utf-8"
+    ret=response.json();
+    if ret["status"]:
+        return ret["key"]
+    else:
+        print("Error! login failed, reason is:", ret["error"])
+        return None
 
 # Add Site
 def add_site(site_name, administrator, school, address, chinese_name, longitude, latitude, collector_number):
@@ -262,10 +257,7 @@ def add_site(site_name, administrator, school, address, chinese_name, longitude,
 def get_station_list(key):
     parameters={'key':key}
     ret=requests.get(API_HOST+"/api/v1/user/station/get",parameters)
-    print(ret.url) 
-    print(ret.text) 
-    print(ret.content)
-    print(ret.json()) 
+    
 
 
 
@@ -346,7 +338,7 @@ def handle_minute(all_data=False):
 
 if __name__ == '__main__':
     API_KEY=get_user_key("walcheng","123456")
-    # get_station_list(API_KEY)
+    get_station_list(API_KEY)
     # add_site("huyanglou","DSLab","LZU","huyanglou","胡杨楼顶部","103.8599","36.0459","0001")
     # handle_day(True)
     # handle_minute(True)
