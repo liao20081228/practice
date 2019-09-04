@@ -218,7 +218,7 @@ def get_table_data_dict(table,alldata):
 ###################################################
 #                    SDK Utils                    #
 ###################################################
-def get_user_key(useranme,password):
+def get_user_key(useranme, password):
     post_data={
             'useranme':useranme,
             'password':password
