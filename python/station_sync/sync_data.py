@@ -41,6 +41,7 @@ TABLE_NAME_DICT = {
 def analysis_air_temperature(str):
     r = re.compile('Ta_2_1_1_(.+)_')
     result = r.search(str)
+    print("!!!!!!!!!!!!!",result)
     if result:
         return 'air_temperature_' + result[1]
     else:
@@ -64,7 +65,7 @@ def analysis_air_humidity(str):
         else:
             return None
 
-def analysis_air_windspeed(str):
+def analysis_air_wind_speed(str):
     r = re.compile('WS_16_33_1_(.+)_')
     result = r.search(str)
     if result:
@@ -77,7 +78,7 @@ def analysis_air_windspeed(str):
         else:
             return None
 
-def analysis_air_winddirection(str):
+def analysis_air_wind_direction(str):
     r = re.compile('WD_16_33_1_(.+)_')
     result = r.search(str)
     if result:
@@ -90,7 +91,7 @@ def analysis_air_winddirection(str):
         else:
             return None
 
-def analysis_soil_waterpotential(str):
+def analysis_soil_water_potential(str):
     r = re.compile('SWP_1_([0-9]+)_')
     result = r.search(str)
     if result:
@@ -103,7 +104,7 @@ def analysis_soil_waterpotential(str):
         else:
             return None
 
-def analysis_soil_watercontent(str):
+def analysis_soil_water_content(str):
     r = re.compile('SWC_11_36_1_(.+)_')
     result = r.search(str)
     if result:
@@ -129,7 +130,7 @@ def analysis_soil_temperatrue(str):
         else:
             return None
 
-def analysis_soil_elecrate(str):
+def analysis_soil_elec_rate(str):
     r = re.compile('EC_99_99_1_(.+)_')
     result = r.search(str)
     if result:
@@ -197,12 +198,12 @@ def get_table_data_dict(table,alldata):
         if k in TABLE_NAME_DICT:
             renamed_ret_dict[TABLE_NAME_DICT[k]] = v
         else:
-            r=re.compile("[TRWSTE][aHSDWSC][_PC]")
-            re_ret=r.search(k)
-            print(k,":",re_ret.group(0),RENAME_HANDLERS[re_ret.group[0]])
-            # for handler in RENAME_HANDLERS:
+            # r=re.compile("[TRWSTE][aHSDWSC][_PC]")
+            # re_ret=r.search(k)
+            # print(k,":",re_ret.group(0),RENAME_HANDLERS[re_ret.group(0)])
+            for key,val in RENAME_HANDLERS.items():
                 
-                # chk = eval(handler + '(k)')
+                chk = eval(val + '(k)')
                 # if chk:
                     # renamed_ret_dict[chk] = v
     # print(table, renamed_ret_dict,"\n")
