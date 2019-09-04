@@ -186,7 +186,7 @@ def get_table_data_dict(table,alldata):
     ret_dict = {}
     for col in cols:
         col_box.append(col[0])
-    print(col_box)
+    print(table , "表中的属性为:", col_box)
     for col in col_box:
         if alldata: 
             cursor.execute("Select " + col + "  FROM " + table)
@@ -197,16 +197,16 @@ def get_table_data_dict(table,alldata):
         for row in rows:
             ret_dict[col].append(row[0])
     renamed_ret_dict = {}
-    # for k, v in ret_dict.items():
-        # if k in TABLE_NAME_DICT:
-            # renamed_ret_dict[TABLE_NAME_DICT[k]] = v
+    for k, v in ret_dict.items():
+        if k in TABLE_NAME_DICT:
+            renamed_ret_dict[TABLE_NAME_DICT[k]] = v
         # else:
             # for handler in RENAME_HANDLERS:
                 # chk = eval(handler + '(k)')
                 # if chk:
                     # renamed_ret_dict[chk] = v
     # print(table, renamed_ret_dict,"\n")
-    # return renamed_ret_dict
+    return renamed_ret_dict
 
 ###################################################
 #                    SDK Utils                    #
@@ -300,23 +300,24 @@ def report_data_by_day(json_dict, key):
 #                 Data Collectors                 #
 ###################################################
 
-def handle_day(all_data=False):
+def handle_day(all_data,key):
     tables_day = get_table_list(type='1440')
     for table in tables_day:
         name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        length = len(table_info_dict['timestamp'])
-        send_json_box = []
-        for i in range(0, length):
-            item = {}
-            for k in table_info_dict.keys():
-                item[k] = table_info_dict[k][i]
-            item['site_name'] = site_name
-            item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
-            send_json_box.append(item)
-        report_data_by_day(send_json_box)
+        # print(table_info_dict)
+        # length = len(table_info_dict['timestamp'])
+        # send_json_box = []
+        # for i in range(0, length):
+            # item = {}
+            # for k in table_info_dict.keys():
+                # item[k] = table_info_dict[k][i]
+            # item['site_name'] = site_name
+            # item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
+            # send_json_box.append(item)
+        # report_data_by_day(send_json_box, key)
 
-def handle_minute(all_data=False):
+def handle_minute(all_data, key):
     tables_10 = get_table_list()
     for table in tables_10:
         site_name = table.split('_MIN_')[0].replace('-AWS', '')
@@ -338,8 +339,9 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    handle_minute(False)
-    handle_day(False)
+    # handle_minute(False)
+    handle_day(False,user_key)
+    handle_minute(False,user_key)
     # handle_day(True)
     # count=0
     # while True:
