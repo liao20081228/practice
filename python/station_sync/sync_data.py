@@ -294,7 +294,7 @@ def handle_day(all_data,key):
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
         print(send_json_box)
-        report_data(send_json_box, key)
+        # report_data(send_json_box, key)
 
 def handle_minute(all_data, key):
     tables_10 = get_table_list()
@@ -319,18 +319,17 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    handle_minute(False,user_key)
-    handle_day(False,user_key)
     # handle_minute(False,user_key)
-    # handle_day(True)
-    # count=0
-    # while True:
-        # handle_minute()
-        # time.sleep(600)
-        # count+=1
-        # if count==144:
-            # handle_day()
-            # count=0
+    handle_day(False,user_key)
+    count=0
+    while True:
+        time.sleep(600)
+        handle_minute(False,user_key)
+        handle_minute(False,user_key)
+        count+=1
+        if count==144:
+            handle_day()
+            count=0
 
     
     
