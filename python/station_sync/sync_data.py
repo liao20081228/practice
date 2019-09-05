@@ -313,7 +313,7 @@ def handle_day(all_data,key):
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
         print(send_json_box)
-        # report_data_by_day(send_json_box, key)
+        report_data_by_day(send_json_box, key)
 
 def handle_minute(all_data, key):
     tables_10 = get_table_list()
