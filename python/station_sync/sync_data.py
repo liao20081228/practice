@@ -40,10 +40,8 @@ TABLE_NAME_DICT = {
 }
 
 
-def auto_change_filed_name(str1,pre_str2,pat1,pat2,):
-    r1 = re.compile(pat1)
-    r2 = re.compile(pat2)
-    result = r1.search(str1) or r2.search(str1)
+def auto_change_filed_name(origin_str,prefix_str,pattern1,pattern2):
+    result = re.compile(pattern1).search(origin_str) or re.compile(pattern2).search(origin_str)
     if result:
         return pre_str2 + result.group(1)
     else:
@@ -109,7 +107,7 @@ def get_table_data_dict(table,alldata):
             r=re.compile("[TRWSTE][aHSDWSC][_PC]")
             re_ret=r.search(k)
             if re_ret:
-                chk = auto_change_filed_name(RENAME_HANDLERS[re_ret.group(0)])
+                chk = auto_change_filed_name(k,RENAME_HANDLERS[re_ret.group(0)][0],RENAME_HANDLERS[re_ret.group(0)][1],RENAME_HANDLERS[re_ret.group(0)][2])
                 if chk:
                     renamed_ret_dict[chk] = v
     return renamed_ret_dict
