@@ -265,10 +265,10 @@ def judge_station_existed(station_list, station):
 
 
 # Report Data by Minute
-def report_data_by_min(json_dict):
+def report_data_by_min(json_dict, key):
     post_data = {
         'json': json.dumps(json_dict),
-        'key': API_KEY
+        'key': key
     }
 
     req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata/', data=post_data)
@@ -318,13 +318,13 @@ def handle_day(all_data,key):
 def handle_minute(all_data, key):
     tables_10 = get_table_list()
     for table in tables_10:
-        site_name = table.split('_MIN_')[0].replace('-AWS', '')
+        name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
         print(table_info_dict,"\n")
         length = len(table_info_dict['timestamp'])
         print(length,"\n")
         send_json_dict = {}
-        send_json_dict['site_name'] = site_name
+        send_json_dict['name'] = name
         send_json_dict['json_list'] = []
         for i in range(0, length):
             item = {}
