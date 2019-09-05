@@ -267,11 +267,11 @@ def judge_station_existed(station_list, station):
 # Report Data by Minute
 def report_data_by_min(json_dict, key):
     post_data = {
-        'json': json.dumps(json_dict),
+        'json': json_dict,
         'key': key
     }
 
-    req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata/', data=post_data)
+    req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata', data=post_data)
     ret = json.loads(req.content.decode("utf-8"))
     if ret['status']:
         return True
@@ -320,19 +320,16 @@ def handle_minute(all_data, key):
     for table in tables_10:
         station_name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        print(table_info_dict,"\n")
         length = len(table_info_dict['timestamp'])
-        print(length,"\n")
         send_json_dict = {}
-        send_json_dict['site_name'] = station_name
+        send_json_dict['name'] = station_name
         send_json_dict['data'] = []
         for i in range(0, length):
             item = {}
             for k in table_info_dict.keys():
                 item[k] = table_info_dict[k][i]
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
-            print(item,"\n")
-            send_json_dict['json_list'].append(item)
+            send_json_dict['data'].append(item)
         report_data_by_min(send_json_dict ,key)
 
 if __name__ == '__main__':
