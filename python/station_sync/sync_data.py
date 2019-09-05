@@ -47,7 +47,7 @@ def analysis_air_temperature(str):
     else:
         r = re.compile('Ta_[0-9]m_Avg')
         result = r.search(str)
-        print(result)
+        print(result.groups())
         if result:
             return 'air_temperature_' + result.group(0)
         else:
@@ -61,6 +61,7 @@ def analysis_air_humidity(str):
     else:
         r = re.compile('RH_(.+)_Avg')
         result = r.search(str)
+        print(result.groups())
         if result:
             return 'air_humidity_' + result.group(0)
         else:
