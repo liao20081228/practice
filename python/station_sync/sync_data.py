@@ -267,12 +267,13 @@ def judge_station_existed(station_list, station):
 # Report Data by Minute
 def report_data_by_min(json_dict, key):
     post_data = {
-        'json': json_dict,
+        'Body': json_dict,
         'key': key
     }
-
+    print(post_data)
     req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata', data=post_data)
-    ret = json.loads(req.content.decode("utf-8"))
+    req.encoding="utf-8"
+    ret = req.json()
     if ret['status']:
         return True
     else:
@@ -330,7 +331,7 @@ def handle_minute(all_data, key):
                 item[k] = table_info_dict[k][i]
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_dict['data'].append(item)
-        report_data_by_min(send_json_dict ,key)
+        report_data_by_min(send_json_dict, key)
 
 if __name__ == '__main__':
     user_key=get_user_key("walcheng","123456")
