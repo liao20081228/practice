@@ -68,6 +68,7 @@ def analysis_air_humidity(str):
 def analysis_air_wind_speed(str):
     r = re.compile('WS_16_33_1_(.+)_')
     result = r.search(str)
+    print(result.groups())
     if result:
         return 'air_wind_speed_' + result[1].strip('m')
     else:
