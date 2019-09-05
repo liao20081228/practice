@@ -318,19 +318,20 @@ def handle_day(all_data,key):
 def handle_minute(all_data, key):
     tables_10 = get_table_list()
     for table in tables_10:
-        name = table.split('_MIN_')[0].replace('-AWS', '')
+        station_name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
         print(table_info_dict,"\n")
         length = len(table_info_dict['timestamp'])
         print(length,"\n")
         send_json_dict = {}
-        send_json_dict['site_name'] = name
+        send_json_dict['site_name'] = station_name
         send_json_dict['data'] = []
         for i in range(0, length):
             item = {}
             for k in table_info_dict.keys():
                 item[k] = table_info_dict[k][i]
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
+            print(item,"\n")
             send_json_dict['json_list'].append(item)
         report_data_by_min(send_json_dict ,key)
 
