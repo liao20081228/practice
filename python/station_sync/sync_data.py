@@ -202,8 +202,9 @@ def get_table_data_dict(table,alldata):
             if re_ret:
                 chk = eval(RENAME_HANDLERS[re_ret.group(0)] + '(k)')
                 if chk:
-                    renamed_ret_dict[chk] = v
-    print(renamed_ret_dict)
+                    print(k," to " ,chk)
+                    # renamed_ret_dict[chk] = v
+    # print(renamed_ret_dict)
 
 ###################################################
 #                    SDK Utils                    #
