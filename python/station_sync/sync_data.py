@@ -46,7 +46,6 @@ def analysis_air_temperature(str):
     else:
         r = re.compile('Ta_(\d+)m_Avg')
         result = r.search(str)
-        print("!!!",result.group(1))
         if result:
             return 'air_temperature_' + result.group(1)
         else:
@@ -60,19 +59,18 @@ def analysis_air_humidity(str):
     else:
         r = re.compile('RH_(\d+)m_Avg')
         result = r.search(str)
-        print(result.groups())
         if result:
             return 'air_humidity_' + result.group(1)
         else:
             return None
 
 def analysis_air_wind_speed(str):
-    r = re.compile('WS_16_33_1_(.+)_')
+    r = re.compile('WS_16_33_1_(\d+)_')
     result = r.search(str)
     if result:
         return 'air_wind_speed_' + result.group(1)
     else:
-        r = re.compile('WS_([0-9]+)')
+        r = re.compile('WS_(\d+)')
         result = r.search(str)
         if result:
             return 'air_wind_speed_' + result.group(1)
@@ -80,12 +78,12 @@ def analysis_air_wind_speed(str):
             return None
 
 def analysis_air_wind_direction(str):
-    r = re.compile('WD_16_33_1_(.+)_')
+    r = re.compile('WD_16_33_1_(\d+)_')
     result = r.search(str)
     if result:
         return 'air_wind_direction_' + result.group(1)
     else:
-        r = re.compile('WD_(.+)')
+        r = re.compile('WD_(\d+)')
         result = r.search(str)
         if result:
             return 'air_wind_direction_' + result.group(1)
@@ -93,12 +91,12 @@ def analysis_air_wind_direction(str):
             return None
 
 def analysis_soil_water_potential(str):
-    r = re.compile('SWP_1_([0-9]+)_')
+    r = re.compile('SWP_1_(\d+)_')
     result = r.search(str)
     if result:
         return 'soil_water_potential_' + result.group(1)
     else:
-        r = re.compile('SWP_4_41_1_([0-9]+)_')
+        r = re.compile('SWP_4_41_1_(\d+)_')
         result = r.search(str)
         if result:
             return 'soil_water_potential_' + result.group(1)
@@ -106,12 +104,12 @@ def analysis_soil_water_potential(str):
             return None
 
 def analysis_soil_water_content(str):
-    r = re.compile('SWC_11_36_1_(.+)_')
+    r = re.compile('SWC_11_36_1_(\d+)_')
     result = r.search(str)
     if result:
         return 'soil_water_content_' + result.group(1)
     else:
-        r = re.compile('SWC_1_([0-9]+)_')
+        r = re.compile('SWC_1_(\d+)_')
         result = r.search(str)
         if result:
             return 'soil_water_content_' + result.group(1)
@@ -119,12 +117,12 @@ def analysis_soil_water_content(str):
             return None
 
 def analysis_soil_temperatrue(str):
-    r = re.compile('TS_2_38_1_(.+)_')
+    r = re.compile('TS_2_38_1_(\d+)_')
     result = r.search(str)
     if result:
         return 'soil_temperature_' + result.group(1)
     else:
-        r = re.compile('TS_1_([0-9]+)_')
+        r = re.compile('TS_1_(\d+)_')
         result = r.search(str)
         if result:
             return 'soil_temperature_' + result.group(1)
@@ -132,12 +130,12 @@ def analysis_soil_temperatrue(str):
             return None
 
 def analysis_soil_elec_rate(str):
-    r = re.compile('EC_99_99_1_(.+)_')
+    r = re.compile('EC_99_99_1_(\d+)_')
     result = r.search(str)
     if result:
         return 'soil_elec_rate_' + result.group(1)
     else:
-        r = re.compile('EC_1_([0-9]+)')
+        r = re.compile('EC_1_(\d+)')
         result = r.search(str)
         if result:
             return 'soil_elec_rate_' + result.group(1)
@@ -204,9 +202,8 @@ def get_table_data_dict(table,alldata):
             if re_ret:
                 chk = eval(RENAME_HANDLERS[re_ret.group(0)] + '(k)')
                 if chk:
-                    print(k," to " ,chk)
-                    # renamed_ret_dict[chk] = v
-    # print(renamed_ret_dict)
+                    renamed_ret_dict[chk] = v
+    return renamed_ret_dict
 
 ###################################################
 #                    SDK Utils                    #
@@ -305,16 +302,16 @@ def handle_day(all_data,key):
     for table in tables_day:
         name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        # print(table_info_dict)
-        # length = len(table_info_dict['timestamp'])
-        # send_json_box = []
-        # for i in range(0, length):
-            # item = {}
-            # for k in table_info_dict.keys():
-                # item[k] = table_info_dict[k][i]
-            # item['site_name'] = site_name
-            # item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
-            # send_json_box.append(item)
+        print(table_info_dict)
+        length = len(table_info_dict['timestamp'])
+        send_json_box = []
+        for i in range(0, length):
+            item = {}
+            for k in table_info_dict.keys():
+                item[k] = table_info_dict[k][i]
+            item['site_name'] = site_name
+            item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
+            send_json_box.append(item)
         # report_data_by_day(send_json_box, key)
 
 def handle_minute(all_data, key):
@@ -322,7 +319,8 @@ def handle_minute(all_data, key):
     for table in tables_10:
         site_name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        # length = len(table_info_dict['timestamp'])
+        print(table_info_dict)
+        length = len(table_info_dict['timestamp'])
         # send_json_dict = {}
         # send_json_dict['site_name'] = site_name
         # send_json_dict['json_list'] = []
