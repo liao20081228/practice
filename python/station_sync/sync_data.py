@@ -309,7 +309,7 @@ def handle_day(all_data,key):
             item = {}
             for k in table_info_dict.keys():
                 item[k] = table_info_dict[k][i]
-            item['site_name'] = site_name
+            item['name'] = name
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
         print(send_json_box)
