@@ -43,7 +43,7 @@ TABLE_NAME_DICT = {
 def auto_change_filed_name(origin_str,prefix_str,pattern1,pattern2):
     result = re.compile(pattern1).search(origin_str) or re.compile(pattern2).search(origin_str)
     if result:
-        return pre_str2 + result.group(1)
+        return prefix_str + result.group(1)
     else:
         return None
 
@@ -200,14 +200,14 @@ def handle_day(all_data,key):
             item['site_name'] = name
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
-        print(send_json_box)
-        # report_data(send_json_box, key)
+        report_data(send_json_box, key)
 
 def handle_minute(all_data, key):
     tables_10 = get_table_list()
     for table in tables_10:
         station_name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
+        print("\n\n",table_info_dict,"\n\n")
         length = len(table_info_dict['timestamp'])
         send_json_dict = {}
         send_json_dict['site_name'] = station_name
@@ -226,17 +226,17 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    # handle_minute(False,user_key)
-    handle_day(False,user_key)
-    count=0
-    while True:
-        time.sleep(600)
-        handle_minute(False,user_key)
-        handle_minute(False,user_key)
-        count+=1
-        if count==144:
-            handle_day()
-            count=0
+    handle_minute(True,user_key)
+    # handle_day(False,user_key)
+    # count=0
+    # while True:
+        # time.sleep(600)
+        # handle_minute(False,user_key)
+        # handle_minute(False,user_key)
+        # count+=1
+        # if count==144:
+            # handle_day()
+            # count=0
 
     
     
