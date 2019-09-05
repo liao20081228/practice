@@ -266,13 +266,12 @@ def judge_station_existed(station_list, station):
 
 # Report Data by Minute
 def report_data_by_min(json_dict, key):
-    print(json_dict)
-    print(key)
     post_data = {
         'key': key,
-        'body': json.dumps(json_dict)
+        # 'body': json.dumps(json_dict)
+        'body': json_dict
     }
-    req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata', data=post_data)
+    req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata', json=post_data)
     req.encoding="utf-8"
     ret = req.json()
     if ret['status']:
