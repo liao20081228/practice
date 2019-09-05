@@ -171,8 +171,8 @@ def judge_station_existed(station_list, station):
 
 
 # Report Data by Minute
-def report_data(json_dict, key, url):
-    req = requests.post(API_HOST + '/api/v1/data/station/transfer_daydata/', params={'key':key},json=json_dict)
+def report_data(json_data, key, url):
+    req = requests.post(url, params={'key':key},json=json_data)
     req.encoding="utf-8"
     ret = req.json()
     if ret['status']:
@@ -199,7 +199,7 @@ def handle_day(all_data,key):
             item['site_name'] = name
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
-        report_data(send_json_box, key)
+        report_data(send_json_box, key, API_HOST + '/api/v1/data/station/transfer_daydata')
 
 def handle_minute(all_data, key):
     tables_10 = get_table_list()
@@ -216,7 +216,7 @@ def handle_minute(all_data, key):
                 item[k] = table_info_dict[k][i]
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_dict['data'].append(item)
-        report_data(send_json_dict, key)
+        report_data(send_json_dict, key, API_HOST + '/api/v1/data/station/transfer_mindata')
 
 #############################################################################
 if __name__ == '__main__':
@@ -225,7 +225,7 @@ if __name__ == '__main__':
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
     handle_minute(True,user_key)
-    # handle_day(True,user_key)
+    handle_day(True,user_key)
     # count=0
     # while True:
         # time.sleep(600)
