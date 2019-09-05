@@ -14,14 +14,14 @@ API_HOST = 'http://202.201.1.136:8000'
 
 #对有规律的字段自动分析
 RENAME_HANDLERS = {
-    'Ta_':['analysis_air_temperature', 'air_temperature_','Ta_2_1_1_(\d+)_','Ta_(\d+)m_Avg'],
-    'RH_':['analysis_air_humidity','air_humidity_','RH_19_3_1_(\d+)_','RH_(\d+)m_Avg'],
-    'WS_':['analysis_air_wind_speed','air_wind_speed_','WS_16_33_1_(\d+)_' ,'WS_(\d+)'],
-    'WD_':['analysis_air_wind_direction','air_wind_direction_','WD_16_33_1_(\d+)_' ,'WD_(\d+)'],
-    'SWP':['analysis_soil_water_potential','soil_water_potential_','SWP_1_(\d+)_','SWP_4_41_1_(\d+)_'],
-    'SWC':['analysis_soil_water_content','soil_water_content_','SWC_11_36_1_(\d+)_','SWC_1_(\d+)_'],
-    'TS_':['analysis_soil_temperatrue','soil_temperature_','TS_2_38_1_(\d+)_','TS_1_(\d+)_'],
-    'EC_':['analysis_soil_elec_rate','soil_elec_rate_','EC_99_99_1_(\d+)_','EC_1_(\d+)']
+    'Ta_':['air_temperature_','Ta_2_1_1_(\d+)_','Ta_(\d+)m_Avg'],
+    'RH_':['air_humidity_','RH_19_3_1_(\d+)_','RH_(\d+)m_Avg'],
+    'WS_':['air_wind_speed_','WS_16_33_1_(\d+)_' ,'WS_(\d+)'],
+    'WD_':['air_wind_direction_','WD_16_33_1_(\d+)_' ,'WD_(\d+)'],
+    'SWP':['soil_water_potential_','SWP_1_(\d+)_','SWP_4_41_1_(\d+)_'],
+    'SWC':['soil_water_content_','SWC_11_36_1_(\d+)_','SWC_1_(\d+)_'],
+    'TS_':['soil_temperature_','TS_2_38_1_(\d+)_','TS_1_(\d+)_'],
+    'EC_':['soil_elec_rate_','EC_99_99_1_(\d+)_','EC_1_(\d+)']
 }
 #对无规律的字段一一映射名字
 TABLE_NAME_DICT = {
@@ -40,18 +40,16 @@ TABLE_NAME_DICT = {
 }
 
 
-def auto_change_filed_name(str):
-    r = re.compile('EC_99_99_1_(\d+)_')
-    result = r.search(str)
+def auto_change_filed_name(str1,pre_str2,pat1,pat2,):
+    r1 = re.compile(pat1)
+    r2 = re.compile(pat2)
+    result = r1.search(str1) or r2.search(str1)
     if result:
-        return 'soil_elec_rate_' + result.group(1)
+        return pre_str2 + result.group(1)
     else:
-        r = re.compile('EC_1_(\d+)')
-        result = r.search(str)
-        if result:
-            return 'soil_elec_rate_' + result.group(1)
-        else:
-            return None
+        return None
+
+
 
 ##################################################
 #                  Public Utils                  #
@@ -111,7 +109,7 @@ def get_table_data_dict(table,alldata):
             r=re.compile("[TRWSTE][aHSDWSC][_PC]")
             re_ret=r.search(k)
             if re_ret:
-                chk = eval(RENAME_HANDLERS[re_ret.group(0)] + '(k)')
+                chk = auto_change_filed_name(RENAME_HANDLERS[re_ret.group(0)])
                 if chk:
                     renamed_ret_dict[chk] = v
     return renamed_ret_dict
