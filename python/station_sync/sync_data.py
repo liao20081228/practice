@@ -328,11 +328,11 @@ def handle_minute(all_data, key):
         send_json_dict['json_list'] = []
         for i in range(0, length):
             item = {}
-            # for k in table_info_dict.keys():
-                # item[k] = table_info_dict[k][i]
-            # item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
-            # send_json_dict['json_list'].append(item)
-        # report_data_by_min(send_json_dict)
+            for k in table_info_dict.keys():
+                item[k] = table_info_dict[k][i]
+            item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
+            send_json_dict['json_list'].append(item)
+        report_data_by_min(send_json_dict ,key)
 
 if __name__ == '__main__':
     user_key=get_user_key("walcheng","123456")
