@@ -324,8 +324,8 @@ def handle_minute(all_data, key):
         length = len(table_info_dict['timestamp'])
         print(length,"\n")
         send_json_dict = {}
-        send_json_dict['name'] = name
-        send_json_dict['json_list'] = []
+        send_json_dict['site_name'] = name
+        send_json_dict['data'] = []
         for i in range(0, length):
             item = {}
             for k in table_info_dict.keys():
