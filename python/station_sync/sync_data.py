@@ -334,7 +334,8 @@ def handle_minute(all_data, key):
         report_data_by_min(send_json_dict, key)
 
 if __name__ == '__main__':
-    user_key=get_user_key("walcheng","123456")
+    # user_key=get_user_key("walcheng","123456")
+    user_key="969a89379c2776d2"
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
