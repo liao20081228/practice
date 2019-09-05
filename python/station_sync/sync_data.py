@@ -55,45 +55,38 @@ def analysis_air_humidity(str):
     r = re.compile('RH_19_3_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'air_humidity_' + result[1].strip('m')
+        return 'air_humidity_' + result.group(0)
     else:
         r = re.compile('RH_(.+)_Avg')
         result = r.search(str)
         if result:
-            return 'air_humidity_' + result[1].strip('m')
+            return 'air_humidity_' + result.group(0)
         else:
             return None
 
 def analysis_air_wind_speed(str):
     r = re.compile('WS_16_33_1_(.+)_')
     result = r.search(str)
-    print(result.groups())
     if result:
-        return 'air_wind_speed_' + result[1].strip('m')
+        return 'air_wind_speed_' + result.group(0)
     else:
         r = re.compile('WS_([0-9]+)')
         result = r.search(str)
         if result:
-            print(result.groups())
-            print(result)
-            # print(result[0])
-            # print(result[1])
-            # print(result[2])
-            # return 'air_wind_speed_' + result[1].strip('m')
-            # return 'air_wind_speed_' + result[1].strip('m')
-        else:
+            return 'air_wind_speed_' + result.group(0)
+        else:  
             return None
 
 def analysis_air_wind_direction(str):
     r = re.compile('WD_16_33_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'air_wind_direction_' + result[1].strip('m')
+        return 'air_wind_direction_' + result.group(0)
     else:
         r = re.compile('WD_(.+)')
         result = r.search(str)
         if result:
-            return 'air_wind_direction_' + result[1].strip('m')
+            return 'air_wind_direction_' + result.group(0)
         else:
             return None
 
@@ -101,12 +94,12 @@ def analysis_soil_water_potential(str):
     r = re.compile('SWP_1_([0-9]+)_')
     result = r.search(str)
     if result:
-        return 'soil_water_potential_' + result[1].strip('m')
+        return 'soil_water_potential_' + result.group(0)
     else:
         r = re.compile('SWP_4_41_1_([0-9]+)_')
         result = r.search(str)
         if result:
-            return 'soil_water_potential_' + result[1].strip('m')
+            return 'soil_water_potential_' + result.group(0)
         else:
             return None
 
@@ -114,12 +107,12 @@ def analysis_soil_water_content(str):
     r = re.compile('SWC_11_36_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'soil_water_content_' + result[1].strip('m')
+        return 'soil_water_content_' + result.group(0)
     else:
         r = re.compile('SWC_1_([0-9]+)_')
         result = r.search(str)
         if result:
-            return 'soil_water_content_' + result[1].strip('m')
+            return 'soil_water_content_' + result.group(0)
         else:
             return None
 
@@ -127,12 +120,12 @@ def analysis_soil_temperatrue(str):
     r = re.compile('TS_2_38_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'soil_temperature_' + result[1].strip('m')
+        return 'soil_temperature_' + result.group(0)
     else:
         r = re.compile('TS_1_([0-9]+)_')
         result = r.search(str)
         if result:
-            return 'soil_temperature_' + result[1].strip('m')
+            return 'soil_temperature_' + result.group(0)
         else:
             return None
 
@@ -140,12 +133,12 @@ def analysis_soil_elec_rate(str):
     r = re.compile('EC_99_99_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'soil_elec_rate_' + result[1].strip('m')
+        return 'soil_elec_rate_' + result.group(0)
     else:
         r = re.compile('EC_1_([0-9]+)')
         result = r.search(str)
         if result:
-            return 'soil_elec_rate_' + result[1].strip('m')
+            return 'soil_elec_rate_' + result.group(0)
         else:
             return None
 
@@ -159,7 +152,7 @@ def get_db_conn():
         server = 'localhost'
         db_name = 'station'
         db_user = 'lndb'
-        "!!!!!!"db_password = 'lndb'
+        db_password = 'lndb'
         conn = pymysql.connect(server, db_user, db_password, db_name)
         return conn
     except Exception as e:
@@ -210,8 +203,7 @@ def get_table_data_dict(table,alldata):
                 chk = eval(RENAME_HANDLERS[re_ret.group(0)] + '(k)')
                 if chk:
                     renamed_ret_dict[chk] = v
-    print(table, "!!!!!!",renamed_ret_dict)
-    return renamed_ret_dict
+    print(renamed_ret_dict)
 
 ###################################################
 #                    SDK Utils                    #
