@@ -41,11 +41,13 @@ TABLE_NAME_DICT = {
 def analysis_air_temperature(str):
     r = re.compile('Ta_2_1_1_(.+)_')
     result = r.search(str)
+    print(result)
     if result:
         return 'air_temperature_' + result.group(0)
     else:
         r = re.compile('Ta_[0-9]m_Avg')
         result = r.search(str)
+        print(result)
         if result:
             return 'air_temperature_' + result.group(0)
         else:
