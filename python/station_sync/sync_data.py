@@ -266,12 +266,7 @@ def judge_station_existed(station_list, station):
 
 # Report Data by Minute
 def report_data_by_min(json_dict, key):
-    post_data = {
-        'key': key,
-        # 'body': json.dumps(json_dict)
-        'body': json_dict
-    }
-    req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata', json=post_data)
+    req = requests.post(API_HOST + '/api/v1/data/station/transfer_daydata/', params={'key':key},json=json_dict)
     req.encoding="utf-8"
     ret = req.json()
     if ret['status']:
@@ -282,12 +277,9 @@ def report_data_by_min(json_dict, key):
 
 # Report Data by Day
 def report_data_by_day(json_dict, key):
-    post_data = {
-        'json': json.dumps(json_dict),
-        'key': key
-    }
-    req = requests.post(API_HOST + '/api/v1/data/station/transfer_daydata/', data=post_data)
-    ret = json.loads(req.content.decode("utf-8"))
+    req = requests.post(API_HOST + '/api/v1/data/station/transfer_daydata/', params={'key':key},json=json_dict)
+    req.encoding="utf-8"
+    ret = req.json()
     if ret['status']:
         return True
     else:
@@ -339,7 +331,7 @@ if __name__ == '__main__':
     # if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         # if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             # pass  
-    # handle_minute(False)
+    handle_minute(False,user_key)
     # handle_day(False,user_key)
     # handle_minute(False,user_key)
     # handle_day(True)
