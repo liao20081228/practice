@@ -41,14 +41,13 @@ TABLE_NAME_DICT = {
 def analysis_air_temperature(str):
     r = re.compile('Ta_2_1_1_(.+)_')
     result = r.search(str)
-    print("!!!!!!!!!!!!!",result)
     if result:
-        return 'air_temperature_' + result[1]
+        return 'air_temperature_' + result.group(0)
     else:
         r = re.compile('Ta_[0-9]m_Avg')
         result = r.search(str)
         if result:
-            return 'air_temperature_' + result[1].strip('m')
+            return 'air_temperature_' + result.group(0)
         else:
             return None
 
@@ -160,7 +159,7 @@ def get_db_conn():
         server = 'localhost'
         db_name = 'station'
         db_user = 'lndb'
-        db_password = 'lndb'
+        "!!!!!!"db_password = 'lndb'
         conn = pymysql.connect(server, db_user, db_password, db_name)
         return conn
     except Exception as e:
@@ -209,9 +208,9 @@ def get_table_data_dict(table,alldata):
             re_ret=r.search(k)
             if re_ret:
                 chk = eval(RENAME_HANDLERS[re_ret.group(0)] + '(k)')
-                # if chk:
-                    # renamed_ret_dict[chk] = v
-    # print(table, renamed_ret_dict,"\n")
+                if chk:
+                    renamed_ret_dict[chk] = v
+    print(table, "!!!!!!",renamed_ret_dict)
     return renamed_ret_dict
 
 ###################################################
