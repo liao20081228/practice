@@ -185,7 +185,7 @@ def get_table_data_dict(table,alldata):
         col_box.append(col[0])
     for col in col_box:
         if alldata: 
-            cursor.execute("Select " + col + "  FROM " + table)
+            cursor.execute("Select  " + col + "  FROM " + table)
         else:
             cursor.execute("Select " + col + "  FROM " +table + " order by RecNum desc limit 1")
         rows = cursor.fetchall()
