@@ -14,9 +14,10 @@ API_HOST = 'http://202.201.1.136:8000'
 
 #对有规律的字段自动分析
 RENAME_HANDLERS = {
-    'Ta_':['analysis_air_temperature', 'air_temperature_','Ta_2_1_1_(\d+)_','Ta_(\d+)m_Avg']
-    'RH_':'analysis_air_humidity',
-    'WS_':'analysis_air_wind_speed',
+    'Ta_':['analysis_air_temperature', 'air_temperature_','Ta_2_1_1_(\d+)_','Ta_(\d+)m_Avg'],
+    'RH_':['analysis_air_humidity','air_humidity_','RH_19_3_1_(\d+)_','RH_(\d+)m_Avg'],
+    'WS_':['analysis_air_wind_speed','air_wind_speed_','WS_16_33_1_(\d+)_' ,'WS_(\d+)'],
+    'WD_':['analysis_air_wind_direction','air_wind_direction_','WD_16_33_1_(\d+)_' ,'WD_(\d+)'],
     'WD_':'analysis_air_wind_direction',
     'SWP':'analysis_soil_water_potential',
     'SWC':'analysis_soil_water_content',
@@ -38,58 +39,6 @@ TABLE_NAME_DICT = {
     'Rain_Tot': 'air_rainfall',
     'TargTempC_Avg': 'photo_infrared_temperature',
 }
-
-def analysis_air_temperature(str):
-    r = re.compile('Ta_2_1_1_(\d+)_')
-    result = r.search(str)
-    if result:
-        return 'air_temperature_' + result.group(1)
-    else:
-        r = re.compile('Ta_(\d+)m_Avg')
-        result = r.search(str)
-        if result:
-            return 'air_temperature_' + result.group(1)
-        else:
-            return None
-
-def analysis_air_humidity(str):
-    r = re.compile('RH_19_3_1_(\d+)_')
-    result = r.search(str)
-    if result:
-        return 'air_humidity_' + result.group(1)
-    else:
-        r = re.compile('RH_(\d+)m_Avg')
-        result = r.search(str)
-        if result:
-            return 'air_humidity_' + result.group(1)
-        else:
-            return None
-
-def analysis_air_wind_speed(str):
-    r = re.compile('WS_16_33_1_(\d+)_')
-    result = r.search(str)
-    if result:
-        return 'air_wind_speed_' + result.group(1)
-    else:
-        r = re.compile('WS_(\d+)')
-        result = r.search(str)
-        if result:
-            return 'air_wind_speed_' + result.group(1)
-        else:  
-            return None
-
-def analysis_air_wind_direction(str):
-    r = re.compile('WD_16_33_1_(\d+)_')
-    result = r.search(str)
-    if result:
-        return 'air_wind_direction_' + result.group(1)
-    else:
-        r = re.compile('WD_(\d+)')
-        result = r.search(str)
-        if result:
-            return 'air_wind_direction_' + result.group(1)
-        else:
-            return None
 
 def analysis_soil_water_potential(str):
     r = re.compile('SWP_1_(\d+)_')
