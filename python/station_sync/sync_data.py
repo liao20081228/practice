@@ -207,8 +207,8 @@ def get_table_data_dict(table,alldata):
         else:
             r=re.compile("[TRWSTE][aHSDWSC][_PC]")
             re_ret=r.search(k)
-            for key,val in RENAME_HANDLERS.items():
-                chk = eval(val + '(k)')
+            if re_ret:
+                chk = eval(RENAME_HANDLERS[re_ret.group(0)] + '(k)')
                 # if chk:
                     # renamed_ret_dict[chk] = v
     # print(table, renamed_ret_dict,"\n")
@@ -347,7 +347,7 @@ if __name__ == '__main__':
             pass  
     # handle_minute(False)
     handle_day(False,user_key)
-    handle_minute(False,user_key)
+    # handle_minute(False,user_key)
     # handle_day(True)
     # count=0
     # while True:
