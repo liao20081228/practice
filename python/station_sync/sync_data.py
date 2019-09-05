@@ -6,10 +6,15 @@ import requests
 from datetime import datetime
 import time
 API_HOST = 'http://202.201.1.136:8000'
-##########################################3
 
+
+#################################################################
+################改变属性名为当前web中的标准名字##################
+#################################################################
+
+#对有规律的字段自动分析
 RENAME_HANDLERS = {
-    'Ta_':'analysis_air_temperature',
+    'Ta_':['analysis_air_temperature', 'air_temperature_','Ta_2_1_1_(\d+)_','Ta_(\d+)m_Avg']
     'RH_':'analysis_air_humidity',
     'WS_':'analysis_air_wind_speed',
     'WD_':'analysis_air_wind_direction',
@@ -18,7 +23,7 @@ RENAME_HANDLERS = {
     'TS_':'analysis_soil_temperatrue',
     'EC_':'analysis_soil_elec_rate',
 }
-
+#对无规律的字段一一映射名字
 TABLE_NAME_DICT = {
     'TmStamp': 'timestamp',
     'P_Avg': 'air_pressure',
@@ -33,10 +38,6 @@ TABLE_NAME_DICT = {
     'Rain_Tot': 'air_rainfall',
     'TargTempC_Avg': 'photo_infrared_temperature',
 }
-
-##################################################
-#                 Table Col Utils                #
-##################################################
 
 def analysis_air_temperature(str):
     r = re.compile('Ta_2_1_1_(\d+)_')
