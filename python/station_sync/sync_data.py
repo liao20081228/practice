@@ -302,7 +302,7 @@ def handle_day(all_data,key):
     for table in tables_day:
         name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        print(table_info_dict)
+        print(table_info_dict,"\n")
         length = len(table_info_dict['timestamp'])
         send_json_box = []
         for i in range(0, length):
