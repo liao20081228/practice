@@ -205,11 +205,9 @@ def get_table_data_dict(table,alldata):
         if k in TABLE_NAME_DICT:
             renamed_ret_dict[TABLE_NAME_DICT[k]] = v
         else:
-            # r=re.compile("[TRWSTE][aHSDWSC][_PC]")
-            # re_ret=r.search(k)
-            # print(k,":",re_ret.group(0),RENAME_HANDLERS[re_ret.group(0)])
+            r=re.compile("[TRWSTE][aHSDWSC][_PC]")
+            re_ret=r.search(k)
             for key,val in RENAME_HANDLERS.items():
-                
                 chk = eval(val + '(k)')
                 # if chk:
                     # renamed_ret_dict[chk] = v
