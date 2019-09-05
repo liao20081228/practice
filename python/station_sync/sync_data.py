@@ -267,8 +267,8 @@ def judge_station_existed(station_list, station):
 # Report Data by Minute
 def report_data_by_min(json_dict, key):
     post_data = {
-        'Body': json_dict,
-        'key': key
+        'key': key,
+        'body': json.dumps(json_dict)
     }
     print(post_data)
     req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata', data=post_data)
@@ -340,7 +340,7 @@ if __name__ == '__main__':
             pass  
     # handle_minute(False)
     # handle_day(False,user_key)
-    handle_minute(True,user_key)
+    handle_minute(False,user_key)
     # handle_day(True)
     # count=0
     # while True:
