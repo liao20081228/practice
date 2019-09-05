@@ -270,7 +270,6 @@ def report_data_by_min(json_dict, key):
         'key': key,
         'body': json.dumps(json_dict)
     }
-    print(post_data)
     req = requests.post(API_HOST + '/api/v1/data/station/transfer_mindata', data=post_data)
     req.encoding="utf-8"
     ret = req.json()
@@ -340,7 +339,7 @@ if __name__ == '__main__':
             pass  
     # handle_minute(False)
     # handle_day(False,user_key)
-    handle_minute(False,user_key)
+    handle_minute(True,user_key)
     # handle_day(True)
     # count=0
     # while True:
