@@ -39,31 +39,30 @@ TABLE_NAME_DICT = {
 ##################################################
 
 def analysis_air_temperature(str):
-    r = re.compile('Ta_2_1_1_(.+)_')
+    r = re.compile('Ta_2_1_1_(\d+)_')
     result = r.search(str)
-    print(result)
     if result:
-        return 'air_temperature_' + result.group(0)
+        return 'air_temperature_' + result.group(1)
     else:
-        r = re.compile('Ta_[0-9]m_Avg')
+        r = re.compile('Ta_(\d+)m_Avg')
         result = r.search(str)
-        print(result.groups())
+        print("!!!",result.group(1))
         if result:
-            return 'air_temperature_' + result.group(0)
+            return 'air_temperature_' + result.group(1)
         else:
             return None
 
 def analysis_air_humidity(str):
-    r = re.compile('RH_19_3_1_(.+)_')
+    r = re.compile('RH_19_3_1_(\d+)_')
     result = r.search(str)
     if result:
-        return 'air_humidity_' + result.group(0)
+        return 'air_humidity_' + result.group(1)
     else:
-        r = re.compile('RH_(.+)_Avg')
+        r = re.compile('RH_(\d+)m_Avg')
         result = r.search(str)
         print(result.groups())
         if result:
-            return 'air_humidity_' + result.group(0)
+            return 'air_humidity_' + result.group(1)
         else:
             return None
 
@@ -71,12 +70,12 @@ def analysis_air_wind_speed(str):
     r = re.compile('WS_16_33_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'air_wind_speed_' + result.group(0)
+        return 'air_wind_speed_' + result.group(1)
     else:
         r = re.compile('WS_([0-9]+)')
         result = r.search(str)
         if result:
-            return 'air_wind_speed_' + result.group(0)
+            return 'air_wind_speed_' + result.group(1)
         else:  
             return None
 
@@ -84,12 +83,12 @@ def analysis_air_wind_direction(str):
     r = re.compile('WD_16_33_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'air_wind_direction_' + result.group(0)
+        return 'air_wind_direction_' + result.group(1)
     else:
         r = re.compile('WD_(.+)')
         result = r.search(str)
         if result:
-            return 'air_wind_direction_' + result.group(0)
+            return 'air_wind_direction_' + result.group(1)
         else:
             return None
 
@@ -97,12 +96,12 @@ def analysis_soil_water_potential(str):
     r = re.compile('SWP_1_([0-9]+)_')
     result = r.search(str)
     if result:
-        return 'soil_water_potential_' + result.group(0)
+        return 'soil_water_potential_' + result.group(1)
     else:
         r = re.compile('SWP_4_41_1_([0-9]+)_')
         result = r.search(str)
         if result:
-            return 'soil_water_potential_' + result.group(0)
+            return 'soil_water_potential_' + result.group(1)
         else:
             return None
 
@@ -110,12 +109,12 @@ def analysis_soil_water_content(str):
     r = re.compile('SWC_11_36_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'soil_water_content_' + result.group(0)
+        return 'soil_water_content_' + result.group(1)
     else:
         r = re.compile('SWC_1_([0-9]+)_')
         result = r.search(str)
         if result:
-            return 'soil_water_content_' + result.group(0)
+            return 'soil_water_content_' + result.group(1)
         else:
             return None
 
@@ -123,12 +122,12 @@ def analysis_soil_temperatrue(str):
     r = re.compile('TS_2_38_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'soil_temperature_' + result.group(0)
+        return 'soil_temperature_' + result.group(1)
     else:
         r = re.compile('TS_1_([0-9]+)_')
         result = r.search(str)
         if result:
-            return 'soil_temperature_' + result.group(0)
+            return 'soil_temperature_' + result.group(1)
         else:
             return None
 
@@ -136,12 +135,12 @@ def analysis_soil_elec_rate(str):
     r = re.compile('EC_99_99_1_(.+)_')
     result = r.search(str)
     if result:
-        return 'soil_elec_rate_' + result.group(0)
+        return 'soil_elec_rate_' + result.group(1)
     else:
         r = re.compile('EC_1_([0-9]+)')
         result = r.search(str)
         if result:
-            return 'soil_elec_rate_' + result.group(0)
+            return 'soil_elec_rate_' + result.group(1)
         else:
             return None
 
