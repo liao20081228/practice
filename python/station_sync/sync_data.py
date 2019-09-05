@@ -18,11 +18,10 @@ RENAME_HANDLERS = {
     'RH_':['analysis_air_humidity','air_humidity_','RH_19_3_1_(\d+)_','RH_(\d+)m_Avg'],
     'WS_':['analysis_air_wind_speed','air_wind_speed_','WS_16_33_1_(\d+)_' ,'WS_(\d+)'],
     'WD_':['analysis_air_wind_direction','air_wind_direction_','WD_16_33_1_(\d+)_' ,'WD_(\d+)'],
-    'WD_':'analysis_air_wind_direction',
-    'SWP':'analysis_soil_water_potential',
-    'SWC':'analysis_soil_water_content',
-    'TS_':'analysis_soil_temperatrue',
-    'EC_':'analysis_soil_elec_rate',
+    'SWP':['analysis_soil_water_potential','soil_water_potential_','SWP_1_(\d+)_','SWP_4_41_1_(\d+)_'],
+    'SWC':['analysis_soil_water_content','soil_water_content_','SWC_11_36_1_(\d+)_','SWC_1_(\d+)_'],
+    'TS_':['analysis_soil_temperatrue','soil_temperature_','TS_2_38_1_(\d+)_','TS_1_(\d+)_'],
+    'EC_':['analysis_soil_elec_rate','soil_elec_rate_','EC_99_99_1_(\d+)_','EC_1_(\d+)']
 }
 #对无规律的字段一一映射名字
 TABLE_NAME_DICT = {
@@ -40,46 +39,8 @@ TABLE_NAME_DICT = {
     'TargTempC_Avg': 'photo_infrared_temperature',
 }
 
-def analysis_soil_water_potential(str):
-    r = re.compile('SWP_1_(\d+)_')
-    result = r.search(str)
-    if result:
-        return 'soil_water_potential_' + result.group(1)
-    else:
-        r = re.compile('SWP_4_41_1_(\d+)_')
-        result = r.search(str)
-        if result:
-            return 'soil_water_potential_' + result.group(1)
-        else:
-            return None
 
-def analysis_soil_water_content(str):
-    r = re.compile('SWC_11_36_1_(\d+)_')
-    result = r.search(str)
-    if result:
-        return 'soil_water_content_' + result.group(1)
-    else:
-        r = re.compile('SWC_1_(\d+)_')
-        result = r.search(str)
-        if result:
-            return 'soil_water_content_' + result.group(1)
-        else:
-            return None
-
-def analysis_soil_temperatrue(str):
-    r = re.compile('TS_2_38_1_(\d+)_')
-    result = r.search(str)
-    if result:
-        return 'soil_temperature_' + result.group(1)
-    else:
-        r = re.compile('TS_1_(\d+)_')
-        result = r.search(str)
-        if result:
-            return 'soil_temperature_' + result.group(1)
-        else:
-            return None
-
-def analysis_soil_elec_rate(str):
+def auto_change_filed_name(str):
     r = re.compile('EC_99_99_1_(\d+)_')
     result = r.search(str)
     if result:
