@@ -320,13 +320,14 @@ def handle_minute(all_data, key):
     for table in tables_10:
         site_name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        print(table_info_dict)
+        print(table_info_dict,"\n")
         length = len(table_info_dict['timestamp'])
-        # send_json_dict = {}
-        # send_json_dict['site_name'] = site_name
-        # send_json_dict['json_list'] = []
-        # for i in range(0, length):
-            # item = {}
+        print(length,"\n")
+        send_json_dict = {}
+        send_json_dict['site_name'] = site_name
+        send_json_dict['json_list'] = []
+        for i in range(0, length):
+            item = {}
             # for k in table_info_dict.keys():
                 # item[k] = table_info_dict[k][i]
             # item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
@@ -339,8 +340,8 @@ if __name__ == '__main__':
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
     # handle_minute(False)
-    handle_day(False,user_key)
-    # handle_minute(False,user_key)
+    # handle_day(False,user_key)
+    handle_minute(True,user_key)
     # handle_day(True)
     # count=0
     # while True:
