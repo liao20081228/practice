@@ -170,9 +170,8 @@ def judge_station_existed(station_list, station):
         return False
 
 
-
 # Report Data by Minute
-def report_data(json_dict, key):
+def report_data(json_dict, key, url):
     req = requests.post(API_HOST + '/api/v1/data/station/transfer_daydata/', params={'key':key},json=json_dict)
     req.encoding="utf-8"
     ret = req.json()
@@ -207,7 +206,6 @@ def handle_minute(all_data, key):
     for table in tables_10:
         station_name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        print("\n\n",table_info_dict,"\n\n")
         length = len(table_info_dict['timestamp'])
         send_json_dict = {}
         send_json_dict['site_name'] = station_name
@@ -227,7 +225,7 @@ if __name__ == '__main__':
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
     handle_minute(True,user_key)
-    # handle_day(False,user_key)
+    # handle_day(True,user_key)
     # count=0
     # while True:
         # time.sleep(600)
