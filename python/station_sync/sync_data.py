@@ -266,6 +266,8 @@ def judge_station_existed(station_list, station):
 
 # Report Data by Minute
 def report_data_by_min(json_dict, key):
+    print(json_dict)
+    print(key)
     post_data = {
         'key': key,
         'body': json.dumps(json_dict)
@@ -322,7 +324,7 @@ def handle_minute(all_data, key):
         table_info_dict = get_table_data_dict(table,all_data)
         length = len(table_info_dict['timestamp'])
         send_json_dict = {}
-        send_json_dict['name'] = station_name
+        send_json_dict['site_name'] = station_name
         send_json_dict['data'] = []
         for i in range(0, length):
             item = {}
@@ -339,7 +341,7 @@ if __name__ == '__main__':
             pass  
     # handle_minute(False)
     # handle_day(False,user_key)
-    handle_minute(True,user_key)
+    handle_minute(False,user_key)
     # handle_day(True)
     # count=0
     # while True:
