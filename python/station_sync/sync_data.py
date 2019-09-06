@@ -178,7 +178,7 @@ def report_data(json_data, key, url):
     if ret['status']:
         return True
     else:
-        print('[Error] Failed to report data, reason:', ret['error'],ret['detail'])
+        print('[Error] Failed to report data, reason:', ret['error'])
         return False
 
 ###################################################
@@ -199,7 +199,6 @@ def handle_day(all_data,key):
             item['site_name'] = name
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
-        print(send_json_box)
         report_data(send_json_box, key, API_HOST + '/api/v1/data/station/transfer_daydata')
 
 def handle_minute(all_data, key):
@@ -207,7 +206,6 @@ def handle_minute(all_data, key):
     for table in tables_10:
         station_name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        print(table_info_dict)
         length = len(table_info_dict['timestamp'])
         send_json_dict = {}
         send_json_dict['site_name'] = station_name
@@ -226,12 +224,11 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    # handle_minute(False,user_key)
-    handle_day(False,user_key)
+    handle_minute(True,user_key)
+    # handle_day(False,user_key)
     # count=0
     # while True:
         # time.sleep(600)
-        # handle_minute(False,user_key)
         # handle_minute(False,user_key)
         # count+=1
         # if count==144:
