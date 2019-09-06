@@ -121,12 +121,12 @@ def get_user_key(username, password):
             'password':password
             }
     response= requests.post(API_HOST + '/api/v1/user/login', data=post_data)
-    # response.encoding="utf-8"
-    # ret=response.json();
-    # if ret["status"]:
-        # return ret["key"]
-    # else:
-        # print("Error! login failed, reason is:", ret["error"])
+    response.encoding="utf-8"
+    ret=response.json();
+    if ret["status"]:
+        return ret["key"]
+    else:
+        print("Error! login failed, reason is:", ret["error"])
         return None
 
 # Add Site
@@ -211,22 +211,22 @@ def handle_minute(all_data, key):
         send_json_dict = {}
         send_json_dict['site_name'] = station_name
         send_json_dict['data'] = []
-        # for i in range(0, length):
-            # item = {}
-            # for k in table_info_dict.keys():
-                # item[k] = table_info_dict[k][i]
-            # item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
-            # send_json_dict['data'].append(item)
-        # report_data(send_json_dict, key, API_HOST + '/api/v1/data/station/transfer_mindata')
+        for i in range(0, length):
+            item = {}
+            for k in table_info_dict.keys():
+                item[k] = table_info_dict[k][i]
+            item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
+            send_json_dict['data'].append(item)
+        report_data(send_json_dict, key, API_HOST + '/api/v1/data/station/transfer_mindata')
 
 #############################################################################
 if __name__ == '__main__':
     user_key=get_user_key("walcheng","123456")
-    # if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
-        # if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
-            # pass  
-    # handle_minute(True,user_key)
-    # handle_day(False,user_key)
+    if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
+        if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
+            pass  
+    handle_minute(True,user_key)
+    handle_day(False,user_key)
     # count=0
     # while True:
         # time.sleep(600)
