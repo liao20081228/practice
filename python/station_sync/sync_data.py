@@ -189,9 +189,8 @@ def handle_day(all_data,key):
     tables_day = get_table_list(type='1440')
     for table in tables_day:
         name = table.split('_MIN_')[0].replace('-AWS', '')
-        table_info_dict={'air_pressure': [840.0], 'timestamp': [datetime.datetime(2019, 9, 6, 13, 25)], 'photo_active_radiation': [756.4], 'air_rainfall': [0.0], 'soil_water_potential_10': [-707.09], 'air_wind_direction_1': [51.27], 'photo_upward_long_radiation': [529.6], 'air_humidity_1': [41.21], 'photo_infrared_temperature': [32.93], 'soil_elec_rate_10': [234.3], 'soil_heat_flux_5': [96.9], 'soil_heat_flux_10': [16.55], 'photo_downward_short_radiation': [577.3], 'photo_sunshine_hours': [0.0], 'photo_upward_short_radiation': [73.25], 'soil_temperature_10': [27.51], 'air_wind_speed_1': [0.23], 'air_temperature_1': [28.87], 'photo_downward_long_radiation': [521.2], 'soil_water_content_10': [20.04]}
-
-        # table_info_dict = get_table_data_dict(table,all_data)
+        table_info_dict = get_table_data_dict(table,all_data)
+        print(table_info_dict)
         length = len(table_info_dict['timestamp'])
         send_json_box = []
         for i in range(0, length):
