@@ -200,6 +200,7 @@ def handle_day(all_data,key):
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
         send_json_dict={'data':send_json_box}
+        print(send_json_dict)
         report_data(send_json_dict, key, API_HOST + '/api/v1/data/station/transfer_daydata')
 
 def handle_minute(all_data, key):
@@ -226,7 +227,7 @@ if __name__ == '__main__':
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
     handle_minute(True,user_key)
-    handle_day(False,user_key)
+    handle_day(True,user_key)
     # count=0
     # while True:
         # time.sleep(600)
