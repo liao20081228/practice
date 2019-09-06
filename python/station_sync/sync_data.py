@@ -178,7 +178,7 @@ def report_data(json_data, key, url):
     if ret['status']:
         return True
     else:
-        print('[Error] Failed to report data, reason:', ret['error'])
+        print('[Error] Failed to report data, reason:', ret['error'],ret['detail'])
         return False
 
 ###################################################
