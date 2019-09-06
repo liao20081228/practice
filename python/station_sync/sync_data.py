@@ -189,7 +189,9 @@ def handle_day(all_data,key):
     tables_day = get_table_list(type='1440')
     for table in tables_day:
         name = table.split('_MIN_')[0].replace('-AWS', '')
-        table_info_dict = get_table_data_dict(table,all_data)
+        table_info_dict={'air_pressure': [840.0], 'timestamp': [datetime.datetime(2019, 9, 6, 13, 25)], 'photo_active_radiation': [756.4], 'air_rainfall': [0.0], 'soil_water_potential_10': [-707.09], 'air_wind_direction_1': [51.27], 'photo_upward_long_radiation': [529.6], 'air_humidity_1': [41.21], 'photo_infrared_temperature': [32.93], 'soil_elec_rate_10': [234.3], 'soil_heat_flux_5': [96.9], 'soil_heat_flux_10': [16.55], 'photo_downward_short_radiation': [577.3], 'photo_sunshine_hours': [0.0], 'photo_upward_short_radiation': [73.25], 'soil_temperature_10': [27.51], 'air_wind_speed_1': [0.23], 'air_temperature_1': [28.87], 'photo_downward_long_radiation': [521.2], 'soil_water_content_10': [20.04]}
+
+        # table_info_dict = get_table_data_dict(table,all_data)
         length = len(table_info_dict['timestamp'])
         send_json_box = []
         for i in range(0, length):
@@ -206,6 +208,7 @@ def handle_minute(all_data, key):
     for table in tables_10:
         station_name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
+        print(table_info_dict)
         length = len(table_info_dict['timestamp'])
         send_json_dict = {}
         send_json_dict['site_name'] = station_name
@@ -224,8 +227,8 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    handle_minute(True,user_key)
-    handle_day(True,user_key)
+    # handle_minute(False,user_key)
+    handle_day(False,user_key)
     # count=0
     # while True:
         # time.sleep(600)
