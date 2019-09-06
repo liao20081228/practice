@@ -190,7 +190,6 @@ def handle_day(all_data,key):
     for table in tables_day:
         name = table.split('_MIN_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
-        print(table_info_dict)
         length = len(table_info_dict['timestamp'])
         send_json_box = []
         for i in range(0, length):
@@ -200,6 +199,7 @@ def handle_day(all_data,key):
             item['site_name'] = name
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
+        print(send_json_box)
         report_data(send_json_box, key, API_HOST + '/api/v1/data/station/transfer_daydata')
 
 def handle_minute(all_data, key):
