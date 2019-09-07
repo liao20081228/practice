@@ -10,7 +10,7 @@ void bubble_sort_raw(int array[], int n)
 
 
 
-void bubble_sort(int array[], int n)
+void bubble_up_sort(int array[], int n)
 {
 	int temp=0;
 	for (int i = 0; i < n-1; ++i)
@@ -36,10 +36,19 @@ void bubble_sort(int array[], int n)
 	}
 }
 
+void bubble_down_sort(int array[], int n)
+{
+
+}
+
+
+
+
+
 
 int main(void)
 {
 	int a[]={7,5,4,28,1,9,4};
-	bubble_sort(a,sizeof(a)/sizeof(int));
+	bubble_up_sort(a,sizeof(a)/sizeof(int));
 	return 0;
 }
