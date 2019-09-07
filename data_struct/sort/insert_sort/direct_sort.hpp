@@ -13,7 +13,7 @@ void direct_insert_sort(int array[], int n)
 			{
 				array[j+1] =array[j];
 			}
-			array[j]=temp;
+			array[j+1]=temp;
 		}
 	}
 }
