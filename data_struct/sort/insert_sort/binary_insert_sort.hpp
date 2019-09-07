@@ -1,7 +1,7 @@
 void binary_insert_sort(int array[], int n)
 {
 	int i,j,low,high,mid,temp;
-	for (i= 1; i<= n-1; ++i)
+	for (i= 1; i< n; ++i)
 	{
 		if (array[i] < array[i-1])
 		{
@@ -16,11 +16,9 @@ void binary_insert_sort(int array[], int n)
 				else
 					low=mid+1;
 			}
-			for(j=i-1;j>=high+1;--j)
-			{
+			for(j=i-1;j>high;--j)
 				array[j+1]=array[j];
-			}
-			array[high+1]=temp;
+			array[j]=temp;
 		}
 	}
 }
