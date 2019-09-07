@@ -19,7 +19,7 @@ void binary_insert_sort(int array[], int n)
 			//循环结束时high指向要插入的位置的前一个位置
 			for(j=i-1;j>high;--j)
 				array[j+1]=array[j];
-			array[high]=temp;
+			array[high+1]=temp;
 		}
 	}
 }
