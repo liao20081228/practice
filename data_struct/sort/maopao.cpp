@@ -30,6 +30,6 @@ void bubble_sort(int array[], int n)
 int main(void)
 {
 	int a[]={7,5,4,28,1,9,4};
-	bubble_sort(a,sizeof(a));
+	bubble_sort(a,sizeof(a)/sizeof(int));
 	return 0;
 }
