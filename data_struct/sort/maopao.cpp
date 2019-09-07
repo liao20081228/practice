@@ -16,7 +16,20 @@ void bubble_sort(int array[], int n)
 				flag = true;
 			}
 		}
+		for(int k=0;k<n;++k)
+		{
+			std::cout<< array[k] << ",";
+		}
+			std::cout<<"\n";
 		if ( !flag )
 			return ;
 	}
+}
+
+
+int main(void)
+{
+	int a[]={7,5,4,28,1,9,4};
+	bubble_sort(a,sizeof(a));
+	return 0;
 }
