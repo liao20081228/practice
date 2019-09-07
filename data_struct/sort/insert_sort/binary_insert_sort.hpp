@@ -15,10 +15,11 @@ void binary_insert_sort(int array[], int n)
 					high=mid-1;
 				else
 					low=mid+1;
-			}
+			} 
+			//循环结束时high指向要插入的位置的前一个位置
 			for(j=i-1;j>high;--j)
 				array[j+1]=array[j];
-			array[j]=temp;
+			array[high]=temp;
 		}
 	}
 }
