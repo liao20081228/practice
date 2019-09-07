@@ -1,5 +1,15 @@
 #include<iostream>
 
+
+void bubble_sort_raw(int array[], int n)
+{
+}
+
+
+
+
+
+
 void bubble_sort(int array[], int n)
 {
 	int temp=0;
