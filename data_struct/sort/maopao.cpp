@@ -28,9 +28,9 @@ void bubble_up_sort(int array[], int n)
 void bubble_down_sort(int array[], int n)
 {
 	int temp(0);
-	bool flag(false);
 	for (int i = 0; i < n-1; ++i)
 	{
+		bool flag(false);
 		for (int j = 0; j < n- 1 -i; j++)
 		{
 			if (array[j]> array[j+1])
@@ -50,8 +50,6 @@ void bubble_down_sort(int array[], int n)
 		if ( !flag )
 			return;
 	}
-
-	
 }
 
 
@@ -59,6 +57,8 @@ int main(void)
 {
 	int a[]={7,5,4,28,1,9,4};
 	bubble_up_sort(a,sizeof(a)/sizeof(int));
-	bubble_down_sort(a,sizeof(a)/sizeof(int));
+	std::cout<<"\n";
+	int b[]={7,5,4,28,1,9,4};
+	bubble_down_sort(b,sizeof(b)/sizeof(int));
 	return 0;
 }
