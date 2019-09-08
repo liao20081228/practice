@@ -1,5 +1,8 @@
 #include<iostream>
-
+//思想：
+//假设n个元素中前i个（i最初为1）有序，则只需把第i+1个元素插入前面的i个有序元素中，
+//同时插入的位置之后的元素向后移动，则前i+1个元素也是有序的
+//重复直到所有元素都有序
 void direct_insert_sort(int array[], int n)
 {
 	int temp = 0,
@@ -13,7 +16,7 @@ void direct_insert_sort(int array[], int n)
 			for (j = i-1; j >= 0 && array[j] > temp; --j)
 			{
 				array[j+1] = array[j];
-			}
+			}//array[j]是要插入位置的前一个位置
 			array[j+1] = temp;
 
 		}

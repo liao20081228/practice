@@ -1,4 +1,6 @@
 #include<iostream>
+//对直接插入排序的改进
+//在寻找待插入位置时采用二分查找
 void binary_insert_sort( int array[], int n)
 {
 	int i = 0,
