@@ -225,16 +225,16 @@ if __name__ == '__main__':
     if not judge_station_existed(get_station_list(user_key),{"chinese_name":"胡杨楼站","name":"hylz"}):
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
-    handle_minute(True,user_key)
+    # handle_minute(True,user_key)
     handle_day(True,user_key)
-    count=0
-    while True:
-        time.sleep(600)
-        handle_minute(False,user_key)
-        count+=1
-        if count==144:
-            handle_day(False,user_key)
-            count=0
+    # count=0
+    # while True:
+        # time.sleep(600)
+        # handle_minute(False,user_key)
+        # count+=1
+        # if count==144:
+            # handle_day(False,user_key)
+            # count=0
 
     
     
