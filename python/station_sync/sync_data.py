@@ -200,7 +200,6 @@ def handle_day(all_data,key):
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
         send_json_dict={'data':send_json_box}
-        print(send_json_dict)
         report_data(send_json_dict, key, API_HOST + '/api/v1/data/station/transfer_daydata')
 
 def handle_minute(all_data, key):
