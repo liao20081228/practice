@@ -227,14 +227,14 @@ if __name__ == '__main__':
             pass  
     handle_minute(True,user_key)
     handle_day(True,user_key)
-    # count=0
-    # while True:
-        # time.sleep(600)
-        # handle_minute(False,user_key)
-        # count+=1
-        # if count==144:
-            # handle_day()
-            # count=0
+    count=0
+    while True:
+        time.sleep(600)
+        handle_minute(False,user_key)
+        count+=1
+        if count==144:
+            handle_day(False,user_key)
+            count=0
 
     
     
