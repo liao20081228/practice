@@ -17,7 +17,7 @@ int simple_match(const char* str, const  char *substr)
 		}
 	}
 	if (j == (int)strlen(substr))
-		return i - j;
+		return i - j; // 从0开始计算的匹配位置。
 	else
 		return 0;
 }
