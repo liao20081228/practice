@@ -1,11 +1,11 @@
 #include<string.h>
 #include<iso646.h>
-bool simple_match(const char* str, const  char *substr)
+int simple_match(const char* str, const  char *substr)
 {
 	int i=0,j=0;
 	while(i < (int)strlen(str) and j < (int)strlen(substr) )
 	{
-		if ( str[i] == str[j] )
+		if ( str[i] == substr[j] )
 		{
 			++i;
 			++j;
@@ -16,7 +16,7 @@ bool simple_match(const char* str, const  char *substr)
 		 	i= i - j + 1;
 		}
 	}
-	if (j > (int)strlen(substr))
+	if (j == (int)strlen(substr))
 		return i - j;
 	else
 		return 0;
