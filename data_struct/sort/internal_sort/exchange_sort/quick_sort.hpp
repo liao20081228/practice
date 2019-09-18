@@ -1,3 +1,5 @@
+#include<iostream>
+
 void quick_sort(int a[], int low , int high )
 {
 	if (low < high)
@@ -18,4 +20,14 @@ void quick_sort(int a[], int low , int high )
 		quick_sort(a,low,i-1);
 		quick_sort(a,i+1,high);
 	}
+}
+
+
+int main(void)
+{
+	int a[]={12,1,2,5,4,8,7,3};
+	quick_sort(a,0,7);
+	for(int e:a)
+		std::cout<<e<<",";
+	return 0;
 }
