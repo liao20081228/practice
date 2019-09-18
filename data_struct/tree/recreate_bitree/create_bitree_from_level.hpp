@@ -59,7 +59,13 @@ bool de_queue(queue & Q, int& x)
 
 
 
-tree* create_tree(vector<char> & vec)
+tree* create_tree(std::vector<char> & vec)
 {
+	if (vec[0] == '#')
+		return NULL;
+	tree* T=new tree_node;
+	T->data=vec[0];
+	T->left=NULL;
+	T->right=NULL;
 
 }
