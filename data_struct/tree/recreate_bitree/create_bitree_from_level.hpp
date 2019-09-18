@@ -10,7 +10,7 @@ typedef tree_node tree;
 
 struct queue_node
 {
-	tree_node* p;
+	int data;
 	queue_node* next;
 };
 
@@ -33,8 +33,26 @@ bool is_empty(queue & Q)
 	return Q.front == Q.rear;
 }
 
-void en_queue(queue& Q, tree_node x)
+void en_queue(queue& Q, tree_node* x)
 {
 	queue_node * p=new queue_node;
+	p->next=NULL;
+	p->pval=x;
+	Q.rear->next=p;
+	Q.rear=p;
 	
+}
+
+
+bool de_queue(queue & Q, tree_node*& x)
+{
+	if (is_empty(Q))
+		return false;
+	p=q.front->next;
+	x=p->pval;
+	q.front->next=p->next;
+	if ( q.rear== p )
+		q.rear=q.front;
+	delete p;
+	return true;
 }
