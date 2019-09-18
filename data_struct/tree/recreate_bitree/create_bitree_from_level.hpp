@@ -23,5 +23,18 @@ struct queue
 
 void init_queue(queue & Q)
 {
-	Q.
+	Q.front = Q.rear = new queue_node;
+	Q.front ->next = NULL;
+}
+
+
+bool is_empty(queue & Q)
+{
+	return Q.front == Q.rear;
+}
+
+void en_queue(queue& Q, tree_node x)
+{
+	queue_node * p=new queue_node;
+	
 }
