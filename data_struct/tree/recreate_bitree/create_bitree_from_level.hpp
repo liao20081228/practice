@@ -67,5 +67,5 @@ tree* create_tree(std::vector<char> & vec)
 	T->data=vec[0];
 	T->left=NULL;
 	T->right=NULL;
-
+	if ()
 }
