@@ -1,8 +1,8 @@
 #include<iostream>
-
+#include<vector>
 struct tree_node
 {
-	int data;
+	char data;
 	tree_node * left;
         tree_node * right;
 };
@@ -10,7 +10,7 @@ typedef tree_node tree;
 
 struct queue_node
 {
-	int data;
+	char data;
 	queue_node* next;
 };
 
@@ -33,26 +33,33 @@ bool is_empty(queue & Q)
 	return Q.front == Q.rear;
 }
 
-void en_queue(queue& Q, tree_node* x)
+void en_queue(queue& Q, int  x)
 {
 	queue_node * p=new queue_node;
 	p->next=NULL;
-	p->pval=x;
+	p->data=x;
 	Q.rear->next=p;
 	Q.rear=p;
 	
 }
 
 
-bool de_queue(queue & Q, tree_node*& x)
+bool de_queue(queue & Q, int& x)
 {
 	if (is_empty(Q))
 		return false;
-	p=q.front->next;
-	x=p->pval;
-	q.front->next=p->next;
-	if ( q.rear== p )
-		q.rear=q.front;
+	queue_node* p=Q.front->next;
+	x=p->data;
+	Q.front->next=p->next;
+	if ( Q.rear== p )
+		Q.rear=Q.front;
 	delete p;
 	return true;
+}
+
+
+
+tree* create_tree(vector<char> & vec)
+{
+
 }
