@@ -1,4 +1,5 @@
 #include<string.h>
+#include<iostream>
 void merge(int a[], int n,int low ,int mid ,int high)
 {
 	int* b = new int[n];
@@ -29,6 +30,8 @@ void merge_sort(int a[],int n,int low, int high)
 
 int main()
 {
-	int a[]={1,3,9,7,7,2,6,8,11,10};
+	int a[]={1,3,9,7,15,2,6,8,11,10};
 	merge_sort(a,10,0,9);
+	for(int e: a)
+		std::cout << e <<",";
 }
