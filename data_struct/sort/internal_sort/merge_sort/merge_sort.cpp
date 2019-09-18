@@ -1,7 +1,8 @@
+#include<string.h>
 void merge(int a[], int n,int low ,int mid ,int high)
 {
 	int* b = new int[n+1];
-	
+	memcpy(b, a, n*sizeof(a[0]));
 }
 void merge_sort(int a[],int n,int low, int high)
 {
