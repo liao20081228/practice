@@ -29,8 +29,4 @@ int main(void)
 		}
 	
 	std::cout<<  dp[vec1.size()][vec2.size()];
-	
-	for
-
-	return 0;
 }
