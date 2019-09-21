@@ -11,14 +11,19 @@ int main(void)
 		vec1.push_back(temp);
 	while(std::cin>>temp)
 		vec2.push_back(temp);
+	int dp[1000][1000]={};
+
+	for (int i=1; i < (int)vec1.size();++i)
+
+		for(int j=1; j < (int)vec2.size();++j)
+		{
+			if ( vec1[i-1] == vec2[j-1] )
+				dp[i][j]=dp[i-1][j-1]+1;
+			else
+				dp[i][j]=dp[i-1][j]>dp[i][j-1]?dp[i-1][j]:dp[i][j-1];
+		}
 	
-	vector< vector<int> > vec(vec1.size());
-	for (auto e:vec)
-		e.resize(vec2.size());
-	vec[0][0]=0;
-	vec[0][1]=0;
-	vec[1][0]=0;
-	
+	std::cout<< vec1.size() - dp[vec1.size()-1][vec2.size()-1];
 
 
 
