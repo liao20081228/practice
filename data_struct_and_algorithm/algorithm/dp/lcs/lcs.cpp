@@ -19,7 +19,7 @@ int main(void)
 				dp[i][j]=dp[i-1][j]>dp[i][j-1]?dp[i-1][j]:dp[i][j-1];
 		}
 	
-	std::cout<<  dp[vec1.size()-1][vec2.size()-1];
+	std::cout<<  dp[vec1.size()][vec2.size()];
 
 
 
