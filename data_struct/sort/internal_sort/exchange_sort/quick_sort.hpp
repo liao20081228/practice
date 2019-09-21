@@ -6,7 +6,6 @@ void quick_sort(int a[], int low , int high )
 	{
 		int i=low,j=high;
 		int pos=a[i];
-
 		while(i<j)
 		{
 			while(i<j&& a[j] >= pos)
