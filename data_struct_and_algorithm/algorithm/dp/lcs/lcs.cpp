@@ -1,6 +1,10 @@
 #include<iostream>
 #include<string>
 #include<vector>
+//长度为m，n的序列a b的最长公共子序列：
+//f（m,n）=z，是最长子序列的长度
+//如果a,b最后一个元素相同, f(m，n)=f(m-1,n-1)+1;
+//否则，f(m,n)=max(f(m-1,n),f(m,n-1));
 int main(void)
 {
 	using std::vector;
