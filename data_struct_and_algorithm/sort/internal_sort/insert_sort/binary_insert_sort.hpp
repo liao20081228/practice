@@ -1,6 +1,9 @@
 #include<iostream>
 //对直接插入排序的改进
 //在寻找待插入位置时采用二分查找
+//时间复杂度：最好O（n），最坏O（n^2），平均O（n^2）
+//空间复杂度：O（1）
+//稳定
 void binary_insert_sort( int array[], int n)
 {
 	int i = 0,
