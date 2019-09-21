@@ -13,5 +13,14 @@ int main(void)
 		vec2.push_back(temp);
 	
 	vector< vector<int> > vec(vec1.size());
+	for (auto e:vec)
+		e.resize(vec2.size());
+	vec[0][0]=0;
+	vec[0][1]=0;
+	vec[1][0]=0;
+	
+
+
+
 	return 0;
 }
