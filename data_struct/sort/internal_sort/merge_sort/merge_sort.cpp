@@ -5,7 +5,7 @@ void merge(int a[], int n,int low ,int mid ,int high)
 	int* b = new int[n];
 	memcpy(b, a, n*sizeof(a[0]));
 	int i,j,k;
-	for( i =low ,j=mid+1,k=i; i<=low && j <= high;k++)
+	for( i =low ,j=mid+1,k=i; i<=mid && j <= high;k++)
 		if (b[i] < b[j])
 			a[k]=b[i++];
 		else
