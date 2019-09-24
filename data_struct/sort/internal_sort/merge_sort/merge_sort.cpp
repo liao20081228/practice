@@ -30,8 +30,8 @@ void merge_sort(int a[],int n,int low, int high)
 
 int main()
 {
-	int a[]={1,3,9,7,15,2,6,8,11,10};
-	merge_sort(a,10,0,9);
+	int a[]={1,3,9,7,12,2,5};
+	merge_sort(a,10,0,6);
 	for(int e: a)
 		std::cout << e <<",";
 }
