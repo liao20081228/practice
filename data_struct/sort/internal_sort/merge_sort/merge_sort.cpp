@@ -1,8 +1,9 @@
 #include<string.h>
 #include<iostream>
+int *b=new int[10]();
 void merge(int a[], int n,int low ,int mid ,int high)
 {
-	int* b = new int[n];
+	//int* b = new int[n];
 	memcpy(b, a, n*sizeof(a[0]));
 	int i,j,k;
 	for( i =low ,j=mid+1,k=i; i<=low && j <= high;k++)
@@ -14,7 +15,7 @@ void merge(int a[], int n,int low ,int mid ,int high)
 		a[k++]=b[i++];
 	while(j<=high)
 		a[k++]=b[j++];
-	delete[] b;
+	//delete[] b;
 }
 void merge_sort(int a[],int n,int low, int high)
 {
