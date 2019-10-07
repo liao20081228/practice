@@ -1,5 +1,13 @@
 #include<iostream>
-
+void adjust_up(int a[], int k)
+{
+	a[0]=a[k];
+	for(int i=k/2;i>0;i=k/2)
+	{
+		a[k]=a[i];
+		k=i;
+	}
+}
 void adjust_down(int a[], int k, int n)
 {
 	a[0]=a[k];
