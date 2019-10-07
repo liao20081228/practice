@@ -2,11 +2,16 @@
 void adjust_up(int a[], int k)
 {
 	a[0]=a[k];
-	for(int i=k/2;i>0;i=k/2)
+	int i=k/2;
+	while(i>0 && a[i]<a[0])
 	{
 		a[k]=a[i];
 		k=i;
+		i=k/2;
 	}
+	a[k]=a[0];
+
+
 }
 void adjust_down(int a[], int k, int n)
 {
