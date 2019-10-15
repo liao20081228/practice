@@ -89,7 +89,7 @@ bool sqList<T>::insert(T e, int pos)
 template<typename T>
 bool sqList<T>::del(int pos, T&e)
 {
-	if (pos >= length || pos < 1 )
+	if (pos > length || pos < 1 )
 		return false;
 	e=data[pos-1];
 	for(int i=pos-1;i<length-1;++i)
