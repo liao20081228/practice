@@ -35,6 +35,7 @@ template<typename T>
 void sqList<T>::clear(void)
 {
 	memset(data, 0, sizeof(T)*capacity);
+	length=0;
 }
 
 
@@ -45,7 +46,9 @@ bool sqList<T>::resize(int n)
 	data=new T[n]();
 	if(data)
 	{
+		memcpy(data,temp,sizeof(T)*length);
 		delete []temp;
+		capacity=n;
 		return true;
 	}
 	else
@@ -67,6 +70,7 @@ bool sqList<T>::insert(T e, int pos)
 	for(int i=length; i >= pos ;--i)
 		data[i]=data[i-1];
 	data[pos-1]=e;
+	++length;
 	return true;
 }
 
@@ -78,6 +82,7 @@ bool sqList<T>::del(int pos, T&e)
 	e=data[pos-1];
 	for(int i=pos-1;i<length-1;++i)
 		data[i]=data[i+1];
+	--length;
 	return true;
 }
 
@@ -111,6 +116,17 @@ bool sqList<T>::empty(void) const
 }
 
 
+template<typename T>
+int sqList<T>::find(T e)const
+{
+	if (empty())
+		return -1;
+	for(int i=0; i < length; ++i)
+		if(e== data[i])
+			return i;
+	return -1;
+
+}
 
 
 
