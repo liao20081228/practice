@@ -3,7 +3,7 @@
 #define MY_SQLIST_H
 
 #include<stdio.h>
-
+#include<stdlib.h>
 
 struct _sqList
 {
@@ -11,12 +11,15 @@ struct _sqList
 	int capacity;
 	int length;
 
-	bool (*initialize)(int n);
-
-
-
+	int initialize(int n)
+	{
+		sqList = (int*)malloc(sizeof(int) * n);
+		if(sqList)
+			return 1;
+		else
+			return 0;
+	}
 };
-
 
 
 
