@@ -1,7 +1,8 @@
 #pragma once
-#ifndef MY_SQLIST_H
-#define MY_SQLIST_H
-#include<stdlib.h>
+#ifndef MY_SQLIST_HPP
+#define MY_SQLIST_HPP
+#include<cstdlib>
+#include<iostream>
 template<typename T>
 class sqList
 {
@@ -128,6 +129,12 @@ int sqList<T>::find(T e)const
 
 }
 
-
+template<typename T>
+void sqList<T>::display(void)const
+{
+	for(int i=0;i<length;++i)
+		std::cout<<data[i]<<",";
+	std::cout<<std::endl;
+}
 
 #endif /* end of include guard: MY_SQLIST_H */
