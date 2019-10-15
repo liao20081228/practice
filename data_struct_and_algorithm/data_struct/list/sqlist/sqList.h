@@ -2,29 +2,16 @@
 #ifndef MY_SQLIST_H
 #define MY_SQLIST_H
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
-struct sqList
+class sqList
 {
 	int * data;
 	int capacity;
 	int length;
 	
+	sqList(void);
+	~sqList(void);
+
 };
-
-bool initialize(struct sqList* l,int n)
-{
-	if((l->data = (int*)malloc(sizeof(int) * n)))
-	{
-		return true; 
-	}
-	else
-		return false;
-}
-
-
-
 
 
 
