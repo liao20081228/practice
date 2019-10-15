@@ -16,7 +16,7 @@ public:
 	bool insert(T e, int pos);//在位置pos上插入e
 	bool del(int pos, T & e);//删除位置pos的 元素
 	bool del(T e);//删除值为e的元素
-	void clear(void);//清空元素
+	bool clear(void);//清空元素
 	int  size(void) const;//返回元素个数
 	bool empty(void) const;//为空
 	bool full(void) const;//为满
@@ -41,7 +41,18 @@ void sqList<T>::clear(void)
 template<typename T>
 bool sqList<T>::resize(int n)
 {
-
+	T* temp=data;
+	data=new T[n]();
+	if(data)
+	{
+		delete []temp;
+		return true;
+	}
+	else
+	{
+		data=temp;
+		return false;
+	}
 }
 
 
@@ -49,7 +60,7 @@ bool sqList<T>::resize(int n)
 template<typename T>
 bool sqList<T>::insert(int pos ,int e)
 {
-	
+	if(pos>=)
 }
 
 
