@@ -1,8 +1,7 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#include<string.h>
-
+#pragma once
+#ifndef MY_BUBLE_SORT
+#define MY_BUBLE_SORT
+#endif
 void buble_sort(int* a, int n)
 {
 	int i = 0, 
@@ -14,7 +13,7 @@ void buble_sort(int* a, int n)
 		flag = 0;
 		for(j = 0; j < n - 1 - i; ++j)
 		{
-			if(a[j] > a[j + 1])
+			if(*(a + j) > *(a + j +1))
 			{
 				temp = a[j];
 				a[j] = a[j + 1];
