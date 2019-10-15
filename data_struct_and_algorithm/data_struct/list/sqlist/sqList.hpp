@@ -3,6 +3,7 @@
 #define MY_SQLIST_HPP
 #include<cstdlib>
 #include<iostream>
+#include<cstring>
 template<typename T>
 class sqList
 {
