@@ -1,7 +1,6 @@
 #pragma once
 #ifndef MY_DIRECT_INSERT_SORT_H
 #define MY_DIRECT_INSERT_SORT_H
-#endif /* end of include guard: MY_DIRECT_INSERT_SORT_H */
 
 void direct_insert_sort(int a[], int n)
 {
@@ -19,3 +18,4 @@ void direct_insert_sort(int a[], int n)
 		}
 	}
 }
+#endif /* end of include guard: MY_DIRECT_INSERT_SORT_H */

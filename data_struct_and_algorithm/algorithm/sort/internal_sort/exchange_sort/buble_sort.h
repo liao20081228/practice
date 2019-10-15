@@ -1,7 +1,6 @@
 #pragma once
 #ifndef MY_BUBLE_SORT_H
 #define MY_BUBLE_SORT_H
-#endif
 void buble_sort(int* a, int n)
 {
 	int i = 0, 
@@ -25,3 +24,4 @@ void buble_sort(int* a, int n)
 			return;
 	}	
 }
+#endif

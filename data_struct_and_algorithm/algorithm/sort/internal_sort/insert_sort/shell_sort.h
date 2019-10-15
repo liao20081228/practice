@@ -1,7 +1,6 @@
 #pragma once
 #ifndef MY_SHELL_SORT_H
 #define MY_SHELL_SORT_H
-#endif /* end of include guard: MY_SHELL_SORT_H */
 
 void shell_sort(int a[], int n)
 {
@@ -25,3 +24,4 @@ void shell_sort(int a[], int n)
 	}
 }
 
+#endif /* end of include guard: MY_SHELL_SORT_H */

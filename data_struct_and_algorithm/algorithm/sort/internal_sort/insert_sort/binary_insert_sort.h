@@ -1,7 +1,6 @@
 #pragma once
 #ifndef MY_BINARY_INSERT_H
 #define MY_BINARY_INSERT_H
-#endif /* end of include guard: MY_BINARY_INSERT_H */
 void binary_insert_sort(int a[], int n)
 {
 	int i = 0,
@@ -32,3 +31,4 @@ void binary_insert_sort(int a[], int n)
 
 	}
 }
+#endif /* end of include guard: MY_BINARY_INSERT_H */

@@ -1,7 +1,6 @@
 #pragma once
 #ifndef MY_QUICK_SORT_H
 #define MY_QUICK_SORT_H
-#endif /* end of include guard: MY_QUICK_SORT_H */
 
 void quick_sort(int a[], int low, int high)
 {
@@ -23,3 +22,4 @@ void quick_sort(int a[], int low, int high)
 	quick_sort(a, i + 1, high);
 	quick_sort(a, low, i - 1);
 }
+#endif /* end of include guard: MY_QUICK_SORT_H */

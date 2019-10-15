@@ -1,8 +1,15 @@
+#pragma once
+#ifndef MY_SQLIST_H
+#define MY_SQLIST_H
+
+
 #include<cstring>
 #include<iostream>
 #include<exception>
 #include<random>
 #include<vector>
+
+
 namespace mystd
 {
 class sqList
@@ -14,6 +21,7 @@ class sqList
 	public:
 		sqList(int size);
 		~sqList(void);
+
 		bool  initialize(void);
 
 		bool  insert(int pos, int val);
@@ -33,3 +41,5 @@ class sqList
 		int   length(void) const;
 };
 } // namespace mystd
+
+#endif /* end of include guard: MY_SQLIST_H */
