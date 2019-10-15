@@ -9,7 +9,7 @@ class sqList
 {
 	T *  data;
 	int capacity;
-	int length;
+	volatile int length;
 public:
 	sqList(int n=1);
 	~sqList(void);
