@@ -6,5 +6,6 @@
 
 void heap_sort(int a[] , int n)
 {
-
+	build_max_heap(a, n);
+	for(int i = i-1;)
 }
