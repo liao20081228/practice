@@ -9,6 +9,14 @@ void merge(int a[], int n, int low, int mid, int high)
 {
 	int* b=(int*)malloc(n * sizeof(int));
 	memcpy(b, a, sizeof(int) * n);
+
+	for(int i = 0, j = mid + 1, k = i; i <= mid && j <= high; ++k)
+	{
+		if( b[i] < b[j] )
+			a[k] = b[i++];
+		else
+			a[k] = b[j++];
+	}
 }
 
 
