@@ -33,6 +33,16 @@ sqList<T>::sqList(int n):data(new T[n]()),capacity(n),length(0)
 }
 
 template<typename T>
+sqList<T>::~sqList(void)
+{
+	if(data)
+	{
+		delete[]data;
+		data=NULL;
+	
+	}
+}
+template<typename T>
 void sqList<T>::clear(void)
 {
 	memset(data, 0, sizeof(T)*capacity);
