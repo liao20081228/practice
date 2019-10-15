@@ -124,7 +124,7 @@ bool sqList<T>::full(void) const
 template<typename T>
 bool sqList<T>::empty(void) const
 {
-	return length;
+	return !length;
 }
 
 
