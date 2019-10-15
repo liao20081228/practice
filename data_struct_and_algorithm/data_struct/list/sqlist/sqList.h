@@ -5,21 +5,23 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct _sqList
+struct sqList
 {
 	int * sqList;
 	int capacity;
 	int length;
-
-	int initialize(int n)
-	{
-		sqList = (int*)malloc(sizeof(int) * n);
-		if(sqList)
-			return 1;
-		else
-			return 0;
-	}
+	
 };
+
+bool initialize(struct sqList l,int n)
+{
+	if((l.sqList = (int*)malloc(sizeof(int) * n)))
+	{
+		return 
+	}
+	
+}
+
 
 
 
