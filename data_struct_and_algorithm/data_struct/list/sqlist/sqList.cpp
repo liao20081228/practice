@@ -105,7 +105,7 @@ std::vector<int> sqList::location(int val) const
 	return vec;
 }
 
-int sqList::len(void)const
+int sqList::length(void)const
 {
 	return length;
 }

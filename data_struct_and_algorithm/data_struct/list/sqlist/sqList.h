@@ -19,7 +19,6 @@ class sqList
 			{
 				throw std::invalid_argument("nullptr");
 			}
-			std::cout << "call constructor" << std::endl; 
 		}
 		~sqList(void);
 
@@ -32,7 +31,6 @@ class sqList
 		std::vector<int>   location(int val) const;
 		bool  is_empty(void) const;
 		bool  is_full(void) const;
-		int   len(void) const;
-			
+		int   length(void) const;
 };
 } // namespace mystd
