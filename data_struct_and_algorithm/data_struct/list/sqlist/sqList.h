@@ -4,23 +4,25 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-
+#include<stdbool.h>
 struct sqList
 {
-	int * sqList;
+	int * data;
 	int capacity;
 	int length;
 	
 };
 
-bool initialize(struct sqList l,int n)
+bool initialize(struct sqList* l,int n)
 {
-	if((l.sqList = (int*)malloc(sizeof(int) * n)))
+	if((l->data = (int*)malloc(sizeof(int) * n)))
 	{
-		return 
+		return true; 
 	}
-	
+	else
+		return false;
 }
+
 
 
 
