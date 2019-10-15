@@ -5,9 +5,24 @@
 #endif /* end of include guard: MY_HEAP_SORT_H */
 
 
-void adjust_down(int a[], int m ,int k)
+void adjust_down(int a[], int n ,int k)
 {
 
+	a[0] = a[k];
+	for(int i = 2 * k; i <= n; i*=2)
+	{
+		if(a[i] < a[i +1] && i < n)
+			++i;
+		if(a[0] > a[i])
+			break;
+		else
+		{
+			a[k]=a[i];
+			k = i;
+		}
+
+	}
+	a[k]= a[0];
 }
 
 
@@ -27,6 +42,6 @@ void heap_sort(int a[] , int n)
 		a[0] = a[i];
 		a[i] = a[1];
 		a[1] = a[0];
-		adjust_down(a, n, 1);
+		adjust_down(a, i - 1, 1);
 	}
 }
