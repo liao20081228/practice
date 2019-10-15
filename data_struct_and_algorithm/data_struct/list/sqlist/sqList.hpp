@@ -105,7 +105,7 @@ void sqList<T>::del(T e)
 	T c;
 	while((pos=find(e)) != -1)
 	{
-		del(pos,c);
+		del(pos+1,c);
 	}
 }
 
