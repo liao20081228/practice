@@ -62,7 +62,14 @@ bool sqList<T>::insert(T e, int pos)
 {
 	if(pos>=length+2)
 		return false;
+	if(capacity == length && !resize(capacity*2))
+		return false;
+	for(int i=length; i >= pos ;--i)
+		data[i]=data[i-1];
+	data[pos-1]=e;
+	return true;
 }
+
 
 
 
