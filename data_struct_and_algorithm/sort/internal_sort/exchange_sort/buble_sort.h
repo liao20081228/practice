@@ -1,6 +1,6 @@
 #pragma once
-#ifndef MY_BUBLE_SORT
-#define MY_BUBLE_SORT
+#ifndef MY_BUBLE_SORT_H
+#define MY_BUBLE_SORT_H
 #endif
 void buble_sort(int* a, int n)
 {
