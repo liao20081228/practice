@@ -12,15 +12,14 @@ public:
 	~sqList(void);
 
 	bool resize(int n);
-	
-	bool insert_by_pos(int pos, int e);
-
-	bool del_by_pos(int pos, int & e);
-	bool del_by_val(int e);
-
-
-
-
+	bool insert(int pos, T e, bool direction);
+	bool del(int pos, T & e);
+	bool del(T e);
+	bool clear(void);
+	int size(void) const;
+	bool empty(void) const;
+	bool full(void) const;
+	bool find(T e, int & pos) const;
 };
 
 
