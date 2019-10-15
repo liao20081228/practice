@@ -62,7 +62,7 @@ bool sqList<T>::insert(T e, int pos)
 {
 	if(pos>=length+2 || pos <1)
 		return false;
-	if(capacity == length && !resize(capacity*2))
+	if(full() && !resize(capacity*2))
 		return false;
 	for(int i=length; i >= pos ;--i)
 		data[i]=data[i-1];
@@ -73,7 +73,7 @@ bool sqList<T>::insert(T e, int pos)
 template<typename T>
 bool sqList<T>::del(int pos, T&e)
 {
-	if (pos >= length || pos < 1)
+	if (pos >= length || pos < 1 )
 		return false;
 	e=data[pos-1];
 	for(int i=pos-1;i<length-1;++i)
@@ -91,6 +91,25 @@ void sqList<T>::del(T e)
 		del(pos,c);
 	}
 }
+
+template<typename T>
+int sqList<T>::size(void) const
+{
+	return length;
+}
+
+template<typename T>
+bool sqList<T>::full(void) const
+{
+	return length==capacity;
+}
+
+template<typename T>
+bool sqList<T>::empty(void) const
+{
+	return length;
+}
+
 
 
 
