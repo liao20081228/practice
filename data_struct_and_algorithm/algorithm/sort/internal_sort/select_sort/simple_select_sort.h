@@ -2,7 +2,6 @@
 #ifndef MY_SIMPLE_SELECT_SORT_H
 #define MY_SIMPLE_SELECT_SORT_H
 
-#endif /* end of include guard: MY_SIMPLE_SELECT_SORT_H */
 
 void simple_select_sort(int a[], int n)
 {
@@ -27,3 +26,4 @@ void simple_select_sort(int a[], int n)
 		}
 	}
 }
+#endif /* end of include guard: MY_SIMPLE_SELECT_SORT_H */

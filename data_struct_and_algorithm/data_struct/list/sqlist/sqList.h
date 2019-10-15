@@ -2,7 +2,6 @@
 #ifndef MY_SQLIST_H
 #define MY_SQLIST_H
 
-
 #include<cstring>
 #include<iostream>
 #include<exception>
@@ -15,7 +14,7 @@ namespace mystd
 class sqList
 {
 	int* List;
-	int size;
+	int capacity;
 	int length;
 	
 	public:
@@ -38,7 +37,7 @@ class sqList
 
 		bool  is_full(void) const;
 
-		int   length(void) const;
+		int   size(void) const;
 };
 } // namespace mystd
 

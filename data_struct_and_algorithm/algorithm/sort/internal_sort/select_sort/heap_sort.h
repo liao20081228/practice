@@ -2,7 +2,6 @@
 #ifndef MY_HEAP_SORT_H
 #define MY_HEAP_SORT_H
 
-#endif /* end of include guard: MY_HEAP_SORT_H */
 
 
 void adjust_down(int a[], int n ,int k)
@@ -45,3 +44,4 @@ void heap_sort(int a[] , int n)
 		adjust_down(a, i - 1, 1);
 	}
 }
+#endif /* end of include guard: MY_HEAP_SORT_H */
