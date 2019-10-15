@@ -15,7 +15,7 @@ public:
 	bool resize(int n);//重新分配大小
 	bool insert(T e, int pos);//在位置pos上插入e
 	bool del(int pos, T & e);//删除位置pos的 元素
-	bool del(T e);//删除值为e的元素
+	void del(T e);//删除值为e的元素
 	void clear(void);//清空元素
 	int  size(void) const;//返回元素个数
 	bool empty(void) const;//为空
@@ -80,10 +80,16 @@ bool sqList<T>::del(int pos, T&e)
 		data[i]=data[i+1];
 	return true;
 }
+
 template<typename T>
-bool sqList<T>::del(T e)
+void sqList<T>::del(T e)
 {
-	
+	int pos=0;
+	T c;
+	while((pos=find(e)) != -1)
+	{
+		del(pos,c);
+	}
 }
 
 
