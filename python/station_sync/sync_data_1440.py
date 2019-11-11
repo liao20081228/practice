@@ -5,8 +5,8 @@ import pymysql
 import requests
 from datetime import datetime
 import time
-API_HOST = 'http://202.201.1.136:8000'
-
+#API_HOST = 'http://202.201.1.136:8000'
+API_HOST = 'http://carn.synology.me:8000/'
 
 #################################################################
 ################改变属性名为当前web中的标准名字##################
@@ -74,7 +74,7 @@ def get_table_list(type='10'):
     rows = cursor.fetchall()
     ret_list = []
     for row in rows:
-        if 'MIN' in row[0] and 'arch' not in row[0] and type in row[0]:
+        if 'min' in row[0] and 'arch' not in row[0] and type in row[0]:
             ret_list.append(row[0])
     cursor.close()
     conn.close()
@@ -188,7 +188,7 @@ def report_data(json_data, key, url):
 def handle_day(all_data,key):
     tables_day = get_table_list(type='1440')
     for table in tables_day:
-        name = table.split('_MIN_')[0].replace('-AWS', '')
+        name = table.split('_min_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
         length = len(table_info_dict['timestamp'])
         send_json_box = []
@@ -200,12 +200,13 @@ def handle_day(all_data,key):
             item['timestamp'] = item['timestamp'].strftime('%Y-%m-%d %H:%M')
             send_json_box.append(item)
         send_json_dict={'data':send_json_box}
-        report_data(send_json_dict, key, API_HOST + '/api/v1/data/station/transfer_daydata')
+        print(send_json_dict)
+        return report_data(send_json_dict, key, API_HOST + '/api/v1/data/station/transfer_daydata')
 
 def handle_minute(all_data, key):
     tables_10 = get_table_list()
     for table in tables_10:
-        station_name = table.split('_MIN_')[0].replace('-AWS', '')
+        station_name = table.split('_min_')[0].replace('-AWS', '')
         table_info_dict = get_table_data_dict(table,all_data)
         length = len(table_info_dict['timestamp'])
         send_json_dict = {}
@@ -226,7 +227,7 @@ if __name__ == '__main__':
         if not add_station("hylz","dslab","lzu","none","胡杨楼站","36.0510793966","103.8689573922","0001",user_key):
             pass  
     # handle_minute(True,user_key)
-    handle_day(True,user_key)
+    print(handle_day(True,user_key))
     # count=0
     # while True:
         # time.sleep(600)
