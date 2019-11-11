@@ -6,7 +6,7 @@ import requests
 from datetime import datetime
 import time
 #API_HOST = 'http://202.201.1.136:8000'
-API_HOST = 'http://carn.synology.me:8000/'
+API_HOST = 'http://carn.synology.me:8000'
 
 
 #################################################################
@@ -123,7 +123,7 @@ def get_user_key(username, password):
             }
     response= requests.post(API_HOST + '/api/v1/user/login', data=post_data)
     response.encoding="utf-8"
-    ret=response.json();
+    ret=response.json()
     if ret["status"]:
         return ret["key"]
     else:
