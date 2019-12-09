@@ -95,8 +95,16 @@ int main(void)
 	printf("pkey_tbl_len is : %hu\n ",ib_port_attr->pkey_tbl_len);
 	printf("lid is : %hu\n ",ib_port_attr->lid);
 	printf("sm_lid is : %hu\n ",ib_port_attr->sm_lid);
-	printf("is : %\n ",ib_port_attr->);
-	
+	printf("lmc is : %hhu\n ",ib_port_attr->lmc);
+	printf("max_vl_num is : %hhu\n ",ib_port_attr->max_vl_num);
+	printf("sm_sl is : %hhu\n ",ib_port_attr->sm_sl);
+	printf("subnet_timeout is : %hhu\n ",ib_port_attr->subnet_timeout);
+	printf("init_type_reply  is : %hhu\n ",ib_port_attr->init_type_reply);
+	printf("active_width is : %hhu\n ",ib_port_attr->active_width);
+	printf("active_speed is : %hhu\n ",ib_port_attr->active_speed);
+	printf("phys_state is : %hhu\n ",ib_port_attr->phys_state);
+	free(ib_port_attr);
+	ib_dev_attr=NULL;
 
 
 	assert(0==ibv_close_device(ib_dev_context));
