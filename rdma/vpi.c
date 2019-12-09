@@ -18,6 +18,9 @@ int main(void)
 		printf("%s\n", it->dev_name);
 		printf("%s\n", it->dev_path);
 		printf("%s\n", it->ibdev_path);
+		printf("the device name is:%s\n ", ibv_get_device_name(it));
+		printf("the device guid is:%lld \n ",ibv_get_device_guid(it));
+		printf("the node_type is %s\n",ibv_node_type_str(it->node_type));
 	}
 
 	ibv_free_device_list(ib_dev_list);
