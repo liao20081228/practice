@@ -86,7 +86,15 @@ int main(void)
 	printf("print port attrs=====================================print port attrs\n");
 	printf("ibv_port_state is : %d, state is %s\n ",ib_port_attr->state, ibv_port_state_str(ib_port_attr->state));
 	printf("max_mtu is : %u\n ",ib_port_attr->max_mtu);
-	printf("is : %\n ",ib_port_attr->);
+	printf("active_mtu s : %u\n ",ib_port_attr->active_mtu);
+	printf("gid_tbl_len is : %u\n ",ib_port_attr->gid_tbl_len);
+	printf("port_cap_flags is : %u\n ",ib_port_attr->port_cap_flags);
+	printf("max_msg_sz is : %u\n ",ib_port_attr->max_msg_sz);
+	printf("bad_pksy_cntr is : %u\n ",ib_port_attr->bad_pkey_cntr);
+	printf("qkey_viol_cntr is : %u\n ",ib_port_attr->qkey_viol_cntr);
+	printf("pkey_tbl_len is : %hu\n ",ib_port_attr->pkey_tbl_len);
+	printf("lid is : %hu\n ",ib_port_attr->lid);
+	printf("sm_lid is : %hu\n ",ib_port_attr->sm_lid);
 	printf("is : %\n ",ib_port_attr->);
 	
 
