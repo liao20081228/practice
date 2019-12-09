@@ -84,8 +84,8 @@ int main(void)
 	assert(NULL!=ib_port_attr);
 	assert(0==ibv_query_port(ib_dev_context, 1, ib_port_attr));
 	printf("print port attrs=====================================print port attrs\n");
-	printf("ibv_port_state is : %d\n ",ib_port_attr->state);
-	printf("is : %\n ",ib_port_attr->);
+	printf("ibv_port_state is : %d, state is %s\n ",ib_port_attr->state, ibv_port_state_str(ib_port_attr->state));
+	printf("max_mtu is : %u\n ",ib_port_attr->max_mtu);
 	printf("is : %\n ",ib_port_attr->);
 	printf("is : %\n ",ib_port_attr->);
 	
