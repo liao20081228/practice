@@ -34,7 +34,9 @@ int main(void)
 	}
 	
 	struct ibv_device_attr * ib_dev_attr=(struct ibv_device_attr*)malloc(sizeof(struct ibv_device_attr));
+	assert(NULL!=ib_dev_attr);
 	assert(0==ibv_query_device(ib_dev_context,ib_dev_attr));
+	printf("print device attrs=====================================print device attrs\n");
 	printf("fw_ver is : %s\n ",ib_dev_attr->fw_ver);
 	printf("node_guid is : %llu\n ",ib_dev_attr->node_guid);
 	printf("sys_image_guid is : %llu\n ",ib_dev_attr->sys_image_guid);
@@ -77,8 +79,18 @@ int main(void)
 	printf("phys_port_cnt is : %hhu\n ",ib_dev_attr->phys_port_cnt);
 	free(ib_dev_attr);
 	ib_dev_attr=NULL;
-
 	
+	struct ibv_port_attr* ib_port_attr=(struct ibv_port_attr*)malloc(sizeof(struct ibv_port_attr));
+	assert(NULL!=ib_port_attr);
+	assert(0==ibv_query_port(ib_dev_context, 1, ib_port_attr));
+	printf("print port attrs=====================================print port attrs\n");
+	printf("ibv_port_state is : %d\n ",ib_port_attr->state);
+	printf("is : %\n ",ib_port_attr->);
+	printf("is : %\n ",ib_port_attr->);
+	printf("is : %\n ",ib_port_attr->);
+	
+
+
 	assert(0==ibv_close_device(ib_dev_context));
 	ibv_free_device_list(ib_dev_list);
 	return 0;
