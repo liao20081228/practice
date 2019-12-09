@@ -1,14 +1,17 @@
 #include<infiniband/verbs.h>
 #include<errno.h>
 #include<stdio.h>
+#include<stdlib.h>
+#include<assert.h>
 int main(void)
 {
 	int ib_dev_num=0;
-	struct ibv_device ** ib_dev_list=ibv_get_device_list(&ib_dev_num);
+	struct ibv_device** ib_dev_list=ibv_get_device_list(&ib_dev_num);
 
 	if(!ib_dev_list)
 	{
 		perror("not find ib device");
+		exit(-1);
 	}
 	printf("the number of ib device is:%d\n", ib_dev_num);
 	for(int i=0;i<ib_dev_num;++i)
@@ -23,6 +26,15 @@ int main(void)
 		printf("the node_type is %s\n",ibv_node_type_str(it->node_type));
 	}
 
+	struct ibv_context* ib_dev_context=ibv_open_device(ib_dev_list[0]);
+	if(!ib_dev_context)
+	{
+		printf("open device failed\n");
+		exit(-1);
+	}
+
+	
+	assert(0==ibv_close_device(ib_dev_context));
 	ibv_free_device_list(ib_dev_list);
 	return 0;
 }
