@@ -15,8 +15,8 @@ int main(void)
 	{
 		printf("%s\n", it->name);
 		printf("%s\n", it->dev_name);
-		printf("%s\n", it->dev_path);
-		printf("%s\n", it->ibdev_path);
+		/*printf("%s\n", it->dev_path);*/
+		/*printf("%s\n", it->ibdev_path);*/
 	}
 
 	ibv_free_device_list(ib_dev_list);
