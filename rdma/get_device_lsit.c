@@ -11,12 +11,13 @@ int main(void)
 		perror("not find ib device");
 	}
 	printf("the number of ib device is:%d\n", ib_dev_num);
-	for(struct ibv_device* it = (struct ibv_device*)ib_dev_list;it!=NULL;it++)
+	for(int i=0;i<ib_dev_num;++i)
 	{
+		struct ibv_device *it=ib_dev_list[i];
 		printf("%s\n", it->name);
 		printf("%s\n", it->dev_name);
-		/*printf("%s\n", it->dev_path);*/
-		/*printf("%s\n", it->ibdev_path);*/
+		printf("%s\n", it->dev_path);
+		printf("%s\n", it->ibdev_path);
 	}
 
 	ibv_free_device_list(ib_dev_list);
