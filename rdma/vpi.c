@@ -128,8 +128,9 @@ int main(void)
 	struct ibv_pd* pd=ibv_alloc_pd(ib_dev_context);
 	assert(pd!=NULL);
 	
+	struct ibv_cq=ibv_create_cq(ib_dev_context, 1000, )
 
-	assert(0==ibv_)
+	assert(0==ibv_dealloc_pd(pd));
 	assert(0==ibv_close_device(ib_dev_context));
 	ibv_free_device_list(ib_dev_list);
 	return 0;
