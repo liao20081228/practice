@@ -5,6 +5,7 @@
 #include<assert.h>
 int main(void)
 {
+	//get IB device list
 	int ib_dev_num=0;
 	struct ibv_device** ib_dev_list=ibv_get_device_list(&ib_dev_num);
 
@@ -26,6 +27,7 @@ int main(void)
 		printf("the node_type is %s\n",ibv_node_type_str(it->node_type));
 	}
 
+	//open IB device 
 	struct ibv_context* ib_dev_context=ibv_open_device(ib_dev_list[0]);
 	if(!ib_dev_context)
 	{
@@ -33,6 +35,8 @@ int main(void)
 		exit(-1);
 	}
 	
+
+	//get IB device  attrs
 	struct ibv_device_attr * ib_dev_attr=(struct ibv_device_attr*)malloc(sizeof(struct ibv_device_attr));
 	assert(NULL!=ib_dev_attr);
 	assert(0==ibv_query_device(ib_dev_context,ib_dev_attr));
@@ -80,6 +84,7 @@ int main(void)
 	free(ib_dev_attr);
 	ib_dev_attr=NULL;
 	
+	//get IB device port attrs
 	struct ibv_port_attr* ib_port_attr=(struct ibv_port_attr*)malloc(sizeof(struct ibv_port_attr));
 	assert(NULL!=ib_port_attr);
 	assert(0==ibv_query_port(ib_dev_context, 1, ib_port_attr));
@@ -105,8 +110,26 @@ int main(void)
 	printf("phys_state is : %hhu\n ",ib_port_attr->phys_state);
 	free(ib_port_attr);
 	ib_dev_attr=NULL;
+	
+	//get port gid
+	union ibv_gid* ib_port_gid=(union ibv_gid*)malloc(sizeof(union ibv_gid));
+	assert(NULL!=ib_port_gid);
+	memset(ib_port_gid, 0, sizeof(union ibv_gid));
+	assert(0==ibv_quert_gid(ib_dev_context, 1, 0, ib_port_gid));
+	free(ib_port_gid);
+	ib_port_gid=NULL;
 
+	//get pkey
+	uint16_t pkey=0;
+	assert(0==ibv_query_pkey(ib_dev_context, 1,0,&pkey));
+	printf("pkey is %hu\n" ,pkey);
 
+	//create pd
+	struct ibv_pd* pd=ibv_alloc_pd(ib_dev_context);
+	assert(pd!=NULL);
+	
+
+	assert(0==ibv_)
 	assert(0==ibv_close_device(ib_dev_context));
 	ibv_free_device_list(ib_dev_list);
 	return 0;
