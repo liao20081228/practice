@@ -115,7 +115,7 @@ int main(void)
 	union ibv_gid* ib_port_gid=(union ibv_gid*)malloc(sizeof(union ibv_gid));
 	assert(NULL!=ib_port_gid);
 	memset(ib_port_gid, 0, sizeof(union ibv_gid));
-	assert(0==ibv_quert_gid(ib_dev_context, 1, 0, ib_port_gid));
+	assert(0==ibv_query_gid(ib_dev_context, 1, 0, ib_port_gid));
 	free(ib_port_gid);
 	ib_port_gid=NULL;
 
@@ -124,13 +124,6 @@ int main(void)
 	assert(0==ibv_query_pkey(ib_dev_context, 1,0,&pkey));
 	printf("pkey is %hu\n" ,pkey);
 
-	//create pd
-	struct ibv_pd* pd=ibv_alloc_pd(ib_dev_context);
-	assert(pd!=NULL);
-	
-	struct ibv_cq=ibv_create_cq(ib_dev_context, 1000, )
-
-	assert(0==ibv_dealloc_pd(pd));
 	assert(0==ibv_close_device(ib_dev_context));
 	ibv_free_device_list(ib_dev_list);
 	return 0;
