@@ -6,6 +6,7 @@ void fun(int argc, char**argv)
 	for(int i=0;i<argc;++i)
 		printf("%s,  ", argv[i]);
 		printf("\n");
+		printf("--------------------------------------------------------------------------------------------\n");
 
 }
 int main(int argc, char** argv)
@@ -13,8 +14,8 @@ int main(int argc, char** argv)
 	
         const char* opstring="m:n::o";
         char ret=0;
-        fun(argc,argv);
         printf("0                        optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d\n",optind,optarg,opterr,optopt,optopt,ret,ret);
+        fun(argc,argv);
 	
 	ret=getopt(argc,argv,opstring);
         printf("1                        optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d\n",optind,optarg,opterr,optopt,optopt,ret,ret);
