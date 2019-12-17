@@ -1,8 +1,9 @@
 #include"common.h"
-
-void handle_cmd_args(int argc, char** argv)
+#include<stdio.h>
+void main(int argc, char** argv)
 {
 	const char* opstring="a:c:s";
-	getopt_long();
+	printf("optind is %d, optarg is %s, %p, opterr is %d, optopt is %c, %d",optind,optarg,optarg,opterr,optopt,optopt);
+	getopt(argc,argv,opstring);
 }
 
