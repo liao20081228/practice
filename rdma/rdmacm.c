@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<rdma/rdma_verbs.h>
 #include<rdma/rdma_cma.h>
+#include<getopt.h>
+
 
 int main(void)
 {
