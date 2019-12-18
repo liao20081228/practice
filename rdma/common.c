@@ -17,10 +17,10 @@ void show_help_info(void)
 
 
 
-void handle_cmd(int argc, char* argv[])
+void handle_cmd(int argc, char* argv[], struct option* longopt)
 {
 	int ret = 0;
-	int opt_indexi = 0;
+	int opt_index = 0;
 	while((ret = getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index)) != -1)
 	{
 		switch(ret)
