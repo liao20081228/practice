@@ -15,28 +15,21 @@ void show_help_info(void)
 
 
 
-struct option longopt[]=
-{
-	{"help", no_argument, NULL, 'H'},
-	{"version", no_argument, NULL, 'V'},
-	{"server", no_argument, NULL, 's'},
-	{"client",no_argument, NULL, 'c'},
-	{"port",required_argument, NULL, 'p'},
-	{"address",required_argument, NULL, 'a'},
-	{0,0,0,0,}
-};
-
 
 
 void handle_cmd(int argc, char* argv[])
 {
-	int ret=0;
-	int opt_index=0
-	while((ret=getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index))!=-1)
+	int ret = 0;
+	int opt_indexi = 0;
+	while((ret = getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index)) != -1)
 	{
 		switch(ret)
 		{
 			case 'H':
+				show_help_info();
+				break;
+			case 'V':
+				printf("current version:%d.%d", VERSION_MAJOR, VERSION_MINOR);	
 
 		}
 	}		
