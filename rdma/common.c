@@ -18,19 +18,19 @@ int main(int argc, char** argv)
         fun(argc,argv);
 	
 	ret=getopt(argc,argv,opstring);
-        printf("0       optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d,",optind,optarg,opterr,optopt,optopt,ret,ret);
+        printf("1       optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d,",optind,optarg,opterr,optopt,optopt,ret,ret);
         fun(argc,argv);
         
 	ret=getopt(argc,argv,opstring);                                                                                                                                                    
-        printf("0       optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d,",optind,optarg,opterr,optopt,optopt,ret,ret);
+        printf("2       optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d,",optind,optarg,opterr,optopt,optopt,ret,ret);
         fun(argc,argv);
         
 	ret=getopt(argc,argv,opstring);
-        printf("0       optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d,",optind,optarg,opterr,optopt,optopt,ret,ret);
+        printf("3       optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d,",optind,optarg,opterr,optopt,optopt,ret,ret);
         fun(argc,argv);
         
 	ret=getopt(argc,argv,opstring);
-        printf("0       optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d,",optind,optarg,opterr,optopt,optopt,ret,ret);
+        printf("4       optind is %d,             optarg is %s,      opterr is %d,           optopt is %c, %d,       return value is %c, %d,",optind,optarg,opterr,optopt,optopt,ret,ret);
         fun(argc,argv);
 }        
    
