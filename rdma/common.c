@@ -12,7 +12,7 @@ void fun(int argc, char**argv)
 int main(int argc, char** argv)
 { 
 	
-        const char* opstring="m:";
+        const char* opstring="+m";
         char ret=0;
         printf("0\toptind is %d,\toptarg is %s,\topterr is %d,\tptopt is %c, %d,\treturn value is %c, %d,\t",optind,optarg,opterr,optopt,optopt,ret,ret);
         fun(argc,argv);
