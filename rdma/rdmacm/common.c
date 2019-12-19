@@ -27,26 +27,34 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 		switch(ret)
 		{
 			case 'H':
+				printf("opt_index is$%d\n", opt_index);
 				show_help_info();
 				break;
 			case 'V':
+				printf("opt_index is$%d\n", opt_index);
 				printf("current version:%d.%d\n", VERSION_MAJOR, VERSION_MINOR);
 				break;
 			case 's':
+				printf("opt_index is$%d\n", opt_index);
 				break;
 			case 'c':
+				printf("opt_index is$%d\n", opt_index);
 				break;
 			case 'a':
+				printf("opt_index is$%d\n", opt_index);
 				printf("the arg of -%c , --%s is %s\n",ret, longopt[opt_index].name, optarg);
 				break;
 			case 'p':
+				printf("opt_index is$%d\n", opt_index);
 				printf("the arg of -%c , --%s is %s\n",ret, longopt[opt_index].name, optarg);
 				break;
 			case '?':
+				printf("opt_index is$%d\n", opt_index);
 				printf("erro: -%c is invalid options \n", optopt);
 				show_help_info();
 				break;
 			case ':':
+				printf("opt_index is$%d\n", opt_index);
 				printf("erro: -%c,--%s is missing arg \n", optopt, longopt[opt_index].name);
 				show_help_info();
 				break;
