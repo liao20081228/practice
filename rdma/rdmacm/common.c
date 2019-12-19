@@ -1,5 +1,5 @@
 #include"common.h"
-int port=5000;
+const  char* port="5000";
 const char* address="127.0.0.1";
 void show_help_info(void)
 {

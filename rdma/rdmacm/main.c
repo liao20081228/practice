@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-Gint main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	struct option longopts[]=
 	{
@@ -32,7 +32,12 @@ Gint main(int argc, char *argv[])
 	struct rdma_addrinfo hints, 
 			     *res = NULL;
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
-	rdma_getaddrinfo(address, port, &hints, &res);
+	
+	if(0!=rdma_getaddrinfo(address, port, &hints, &res))
+	{
+		perror("reason:");
+		exit(0);
+	}
 	
 	printf("ai_flags: %d\n", hints.ai_flags);		
 	printf("ai_family: %d\n", hints.ai_family);		
@@ -42,8 +47,8 @@ Gint main(int argc, char *argv[])
 	printf("ai_dst_len: %d\n", hints.ai_dst_len);
 	printf("ai_src_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(hints.ai_src_addr))->sin_addr));
 	printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(hints.ai_dst_addr))->sin_addr));
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
+	printf("ai_src_canonname: %s\n", hints.ai_src_canonname);		
+	printf("ai_dst_canonname: %s\n", hints.ai_dst_canonname);		
 	printf("ai_family: %d\n", hints.ai_family);		
 	printf("ai_family: %d\n", hints.ai_family);		
 	printf("ai_family: %d\n", hints.ai_family);		
