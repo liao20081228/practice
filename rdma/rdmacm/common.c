@@ -39,7 +39,7 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				address = optarg;
 				break;
 			case 'p':
-				port = atof(optarg);
+				port = optarg;
 				break;
 			case '?':
 				break;
