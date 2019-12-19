@@ -21,6 +21,7 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 {
 	int ret = 0;
 	int opt_index = 0;
+	opterr = 0;
 	while((ret = getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index)) != -1)
 	{
 		switch(ret)
@@ -29,7 +30,7 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				show_help_info();
 				break;
 			case 'V':
-				printf("current version:%d.%d", VERSION_MAJOR, VERSION_MINOR);
+				printf("current version:%d.%d\n", VERSION_MAJOR, VERSION_MINOR);
 				break;
 			case 's':
 				break;
@@ -46,10 +47,26 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				printf("the arg of -%c , --%s is %s\n",ret, longopt[opt_index].name, optarg);
 				break;
 			case '?':
-				printf("the violate option is -%c ", ret);
+				printf("the violate option is -%c \n", optopt);
 			default:
 				show_help_info();
 		}
 	}		
 }
-   
+  
+
+int main(int argc, char *argv[])
+{
+	struct option longopts[]=
+	{
+		{"help",    no_argument,       NULL, 'H'},
+		{"version", no_argument,       NULL, 'V'},
+		{"client",  no_argument,       NULL, 'c'},
+		{"server",  no_argument,       NULL, 's'},
+		{"port",    required_argument, NULL, 'p'},
+		{"address", required_argument, NULL, 'a'},
+		{0,         0,                 0,     0}
+	};
+	handle_cmd(argc, argv, longopts);
+	return 0;
+}
