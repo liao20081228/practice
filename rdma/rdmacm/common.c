@@ -24,6 +24,7 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 	opterr = 0;
 	while((ret = getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index)) != -1)
 	{
+
 		switch(ret)
 		{
 			case 'H':
@@ -62,6 +63,7 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				show_help_info();
 				break;
 		}
+		opt_index=-1;
 	}		
 }
   
