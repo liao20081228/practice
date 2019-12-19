@@ -6,8 +6,8 @@
 #include<stdlib.h>
 #include<getopt.h>
 #include"version.h"
-extern int port;
-extern const char* address;
+extern const char *port;
+extern const char *address;
 
 void handle_cmd(int, char*[], struct option[]);
 
