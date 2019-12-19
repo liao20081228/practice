@@ -6,7 +6,8 @@
 #include<stdlib.h>
 #include<getopt.h>
 #include"version.h"
-
+extern int port;
+extern const char* address;
 
 
 
