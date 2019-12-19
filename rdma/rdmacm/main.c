@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
 	rdma_getaddrinfo(address, port, &hints, &res);
 	
+	printf("ai_flags: %d\n", hints.ai_flags);		
 	
 	return 0;
 }
