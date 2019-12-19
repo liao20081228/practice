@@ -63,7 +63,6 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				show_help_info();
 				break;
 		}
-		opt_index=-1;
 	}		
 }
   
