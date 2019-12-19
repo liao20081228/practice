@@ -51,7 +51,7 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				show_help_info();
 				break;
 			case ':':
-				printf("erro: -%c is missing arg \n", optopt);
+				printf("erro: -%c,--%s is missing arg \n", optopt, longopt[opt_index].name);
 				show_help_info();
 				break;
 			default:
