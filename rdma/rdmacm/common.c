@@ -25,6 +25,8 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 	while((ret = getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index)) != -1)
 	{
 
+		printf("--------------------\noptind is: %d,  optopt is:%d,    ", optind , optopt);
+
 		switch(ret)
 		{
 			case 'H':
