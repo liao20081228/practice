@@ -22,7 +22,7 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 	int ret = 0;
 	int opt_index = 0;
 	opterr = 0;
-	while((ret = getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index)) != -1)
+	while((ret = getopt_long(argc,argv,":HVscp:a:",longopt, &opt_index)) != -1)
 	{
 		switch(ret)
 		{
@@ -47,9 +47,16 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				printf("the arg of -%c , --%s is %s\n",ret, longopt[opt_index].name, optarg);
 				break;
 			case '?':
-				printf("the violate option is -%c \n", optopt);
+				printf("erro: -%c is invalid options \n", optopt);
+				show_help_info();
+				break;
+			case ':':
+				printf("erro: -%c is missing arg \n", optopt);
+				show_help_info();
+				break;
 			default:
 				show_help_info();
+				break;
 		}
 	}		
 }
