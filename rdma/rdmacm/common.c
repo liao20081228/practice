@@ -22,7 +22,7 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 	int ret = 0;
 	int opt_index = 0;
 	opterr = 0;
-	while((ret = getopt_long(argc,argv,":HVscp:a:",longopt, &opt_index)) != -1)
+	while((ret = getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index)) != -1)
 	{
 		switch(ret)
 		{
