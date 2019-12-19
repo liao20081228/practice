@@ -29,8 +29,20 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				show_help_info();
 				break;
 			case 'V':
-				printf("current version:%d.%d", VERSION_MAJOR, VERSION_MINOR);	
-
+				printf("current version:%d.%d", VERSION_MAJOR, VERSION_MINOR);
+				break;
+			case 's':
+				break;
+			case 'c':
+				break;
+			case 'p':
+				break;	
+			case 'a':
+				break;
+			case '?':
+				printf("is violate option");
+			default:
+				show_help_info();
 		}
 	}		
 }
