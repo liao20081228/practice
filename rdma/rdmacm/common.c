@@ -21,7 +21,7 @@ void show_help_info(void)
 void handle_cmd(int argc, char* argv[], struct option* longopt)
 {
 	int ret=-1;	
-	while((ret= getopt_long(argc,argv,"HVscp:a:",longopt, &opt_index)) != -1)
+	while((ret= getopt_long(argc,argv,"HVscp:a:",longopt, NULL)) != -1)
 	{
 
 		printf("--------------------\noptind is: %d,  optopt is:%d,    ", optind , optopt);
@@ -39,10 +39,13 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 			case 'c':
 				break;
 			case 'a':
+
 				break;
 			case 'p':
+				port = atof(optarg);
 				break;
 			case '?':
+				address = optarg;
 				break;
 			case ':':
 				break;
@@ -67,5 +70,7 @@ int main(int argc, char *argv[])
 		{0,         0,                 0,     0}
 	};
 	handle_cmd(argc, argv, longopts);
+
+	printf("%d,%s",port,address);
 	return 0;
 }
