@@ -35,12 +35,18 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 				break;
 			case 'c':
 				break;
-			case 'p':
+				{
+					
+				}
 				break;	
 			case 'a':
+				printf("the arg of -%c , --%s is %s\n",ret, longopt[opt_index].name, optarg);
+				break;
+			case 'p':
+				printf("the arg of -%c , --%s is %s\n",ret, longopt[opt_index].name, optarg);
 				break;
 			case '?':
-				printf("is violate option");
+				printf("the violate option is -%c ", ret);
 			default:
 				show_help_info();
 		}
