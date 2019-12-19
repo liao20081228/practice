@@ -39,10 +39,9 @@ Gint main(int argc, char *argv[])
 	printf("ai_qp_type: %d\n", hints.ai_qp_type);		
 	printf("ai_port_space: %d\n", hints.ai_port_space);		
 	printf("ai_src_len: %d\n", hints.ai_src_len);		
-	printf("ai_dst_len: %d\n", hints.ai_dst_len);		
-	printf("ai_src_addr: %s\n", inet_ntoa((struct in_addr*)(hints.ai_src_addr)));
-
-	printf("ai_family: %d\n", hints.ai_dst_addr);		
+	printf("ai_dst_len: %d\n", hints.ai_dst_len);
+	printf("ai_src_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(hints.ai_src_addr))->sin_addr));
+	printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(hints.ai_dst_addr))->sin_addr));
 	printf("ai_family: %d\n", hints.ai_family);		
 	printf("ai_family: %d\n", hints.ai_family);		
 	printf("ai_family: %d\n", hints.ai_family);		
