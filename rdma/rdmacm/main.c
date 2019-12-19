@@ -15,6 +15,5 @@ int main(int argc, char *argv[])
 	};
 	handle_cmd(argc, argv, longopts);
 
-	printf("%d,%s\n",port,address);
 	return 0;
 }

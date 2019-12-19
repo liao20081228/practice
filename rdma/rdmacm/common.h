@@ -9,7 +9,7 @@
 extern int port;
 extern const char* address;
 
-void handle_cmd(int, char**, struct option);
+void handle_cmd(int, char*[], struct option[]);
 
 
 
