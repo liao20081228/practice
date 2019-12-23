@@ -91,8 +91,10 @@ int main(int argc, char *argv[])
 	
 	rdma_post_recv(id, NULL, recv_msg, 16, recv_mr);
 	rdma_connect(id,NULL);
-	rdma_post_send(id,NULL,send_msg,16 send_mr)
-
+	rdma_post_send(id,NULL,send_msg,16,send_mr,0);
+	struct ibv_wc wc;
+	rdma_get_send_comp(id,&wc);
+	rdma_get_recv_comp(id, &wc);
 	return 0;
 
 }
