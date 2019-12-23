@@ -23,33 +23,36 @@ int main(int argc, char *argv[])
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
 	hints.ai_port_space=RDMA_PS_TCP;//RC
 	hints.ai_port_space=user_params.portspace;	
-	if(rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res))
+	
+	int ret=rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res);
 	{
 		perror("call rdma_getaddrinfo  failed:");
+		goto out;
 	}
 
-	printf("------------------struct rdma_addrinfo----------------\n");		
-	printf("ai_flags: %d\n", res->ai_flags);		
-	printf("ai_family: %d\n", res->ai_family);		
-	printf("ai_qp_type: %d\n", res->ai_qp_type);		
-	printf("ai_port_space: %d\n", res->ai_port_space);		
-	printf("ai_src_len: %d\n", res->ai_src_len);		
-	printf("ai_dst_len: %d\n", res->ai_dst_len);
-	if(res->ai_src_len!=0)
-		printf("ai_src_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_src_addr))->sin_addr));
-	if(res->ai_dst_len!=0)
-		printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_dst_addr))->sin_addr));
-	printf("ai_src_canonname: %s\n", res->ai_src_canonname);		
-	printf("ai_dst_canonname: %s\n", res->ai_dst_canonname);		
-	printf("ai_route_len: %lu\n", res->ai_route_len);		
-	printf("ai_route: %p\n", res->ai_route);		
-	printf("ai_connect_len: %lu\n", res->ai_connect_len);		
-	printf("ai_connect: %p\n", res->ai_connect);		
-	printf("ai_next: %p\n", res->ai_next);		
+	/*
+	 *printf("------------------struct rdma_addrinfo----------------\n");		
+	 *printf("ai_flags: %d\n", res->ai_flags);		
+	 *printf("ai_family: %d\n", res->ai_family);		
+	 *printf("ai_qp_type: %d\n", res->ai_qp_type);		
+	 *printf("ai_port_space: %d\n", res->ai_port_space);		
+	 *printf("ai_src_len: %d\n", res->ai_src_len);		
+	 *printf("ai_dst_len: %d\n", res->ai_dst_len);
+	 *if(res->ai_src_len!=0)
+	 *        printf("ai_src_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_src_addr))->sin_addr));
+	 *if(res->ai_dst_len!=0)
+	 *        printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_dst_addr))->sin_addr));
+	 *printf("ai_src_canonname: %s\n", res->ai_src_canonname);		
+	 *printf("ai_dst_canonname: %s\n", res->ai_dst_canonname);		
+	 *printf("ai_route_len: %lu\n", res->ai_route_len);		
+	 *printf("ai_route: %p\n", res->ai_route);		
+	 *printf("ai_connect_len: %lu\n", res->ai_connect_len);		
+	 *printf("ai_connect: %p\n", res->ai_connect);		
+	 *printf("ai_next: %p\n", res->ai_next);		
+	 */
 
 	//create iD and QP
 	struct rdma_cm_id *id=NULL;
-
 	struct ibv_qp_init_attr qp_init_attr;
 	memset (&qp_init_attr, 0, sizeof(struct ibv_qp_init_attr));
 	qp_init_attr.cap.max_send_wr = 1;
@@ -57,11 +60,12 @@ int main(int argc, char *argv[])
 	qp_init_attr.cap.max_send_sge = 1; 
 	qp_init_attr.cap.max_recv_sge = 1;
 
-
-	if(0 != rdma_create_ep(&id, res, NULL, &qp_init_attr))
+	
+	ret= rdma_create_ep(&id, res, NULL, &qp_init_attr);
+	if(ret)
 	{
 		perror("call rdma_create_ep failed");
-		exit(-2);
+		goto out_free_addrinfo;
 	}
 
 	printf("------------------struct inv_qp_init_attr----------------\n");		
@@ -102,7 +106,8 @@ int main(int argc, char *argv[])
 	rdma_dereg_mr(recv_mr);
 
 	rdma_destroy_ep(id);
+out_free_addrinfo:	
 	rdma_freeaddrinfo(res);
-	return 0;
-
+out:
+       	return ret;
 }
