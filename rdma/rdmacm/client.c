@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 	qp_init_attr.cap.max_recv_sge = 1;
 
 
-	if(0 != rdma_create_ep(&id, res, NULL, &qp_init_attr))
+	if(0 != rdma_create_ep(&id, res, NULL, NULL))
 	{
 		perror("call rdma_create_ep failed");
 		exit(-2);
