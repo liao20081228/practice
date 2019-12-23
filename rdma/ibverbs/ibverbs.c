@@ -4,8 +4,10 @@
 #include<stdlib.h>
 #include<assert.h>
 
-#define _PRINTF(a,b) printf(#a,b)
-#define PRINTF_FIELD(a, b, c) _PRINTF(b ##c \n  ,a->b )
+#define PER %
+#define __PRINTF(a,b) printf(#a, b)
+#define _PRINTF(a,b) __PRINTF(a,b)
+#define PRINTF_FIELD(a, b, c) _PRINTF(b##PER##c \n  ,a->b )
 
 int main(void)
 {
