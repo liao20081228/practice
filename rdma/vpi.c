@@ -11,7 +11,7 @@ int main(void)
 
 	if(!ib_dev_list)
 	{
-		perror("not find ib device");
+		perror("errno: not find ib device");
 		exit(-1);
 	}
 	printf("the number of ib device is:%d\n", ib_dev_num);
