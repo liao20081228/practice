@@ -5,24 +5,16 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-char
 
 
 int main(int argc, char *argv[])
 {
-	struct option longopts[]=
-	{
-		{"help",    no_argument,       NULL, 'H'},
-		{"version", no_argument,       NULL, 'V'},
-		{"client",  no_argument,       NULL, 'c'},
-		{"server",  no_argument,       NULL, 's'},
-		{"port",    required_argument, NULL, 'p'},
-		{"a:ddress", optional_argument, NULL, 'a'},
-		{0,         0,                 0,     0}
-	};
 
-
-	handle_cmd(argc, argv, longopts);
+	//
+	struct user_parameters user_params={0,0};
+	user_params.address="192.168.3.190";
+	user_params.port="8888";
+	handle_cmd(&user_params,argc, argv);
 	
 
 	struct rdma_cm_id *rdma_id = NULL;

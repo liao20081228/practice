@@ -1,7 +1,7 @@
 
 #pragma once
-#ifndef RDMA_COMMON_H
-	#define RDMA_COMMON_H
+#ifndef RDMA_PARAMETERS_H
+	#define RDMA_PARAMETERS_H
 #include<stdio.h>
 #include<stdlib.h>
 #include<getopt.h>
@@ -15,7 +15,7 @@ struct user_parameters
 
 
 
-int handle_cmd(struct user_parameters*, int, char*[], struct option[]);
+int handle_cmd(struct user_parameters*, int, char*[]);
 
 
 
