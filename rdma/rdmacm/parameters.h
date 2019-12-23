@@ -6,15 +6,16 @@
 #include<stdlib.h>
 #include<getopt.h>
 #include"version.h"
-extern const char *port;
-extern const char *address;
 
-void handle_cmd(int, char*[], struct option[]);
+struct user_parameters 
+{
+	char * port;
+	char * address;
+};
 
 
 
-
-
+int handle_cmd(struct user_parameters*, int, char*[], struct option[]);
 
 
 

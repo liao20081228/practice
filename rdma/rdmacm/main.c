@@ -1,9 +1,12 @@
-#include"common.h"
+#include"parameters.h"
 #include<rdma/rdma_cma.h>
 #include<rdma/rdma_verbs.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+
+char
+
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +20,7 @@ int main(int argc, char *argv[])
 		{"a:ddress", optional_argument, NULL, 'a'},
 		{0,         0,                 0,     0}
 	};
+
 
 	handle_cmd(argc, argv, longopts);
 	

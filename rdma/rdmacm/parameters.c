@@ -1,6 +1,4 @@
-#include"common.h"
-const  char* port="5000";
-const char* address="127.0.0.1";
+#include"parameters.h"
 void show_help_info(void)
 {
 	printf("Usag: app [-H] [-V] -[s|c] [-a ipaddress]\n");
@@ -18,7 +16,7 @@ void show_help_info(void)
 
 
 
-void handle_cmd(int argc, char* argv[], struct option* longopt)
+int handle_cmd(struct user_parameters* user_params,int argc, char* argv[], struct option* longopt )
 {
 	int ret=-1;	
 	while((ret= getopt_long(argc,argv,"HVscp:a:",longopt, NULL)) != -1)
@@ -36,10 +34,10 @@ void handle_cmd(int argc, char* argv[], struct option* longopt)
 			case 'c':
 				break;
 			case 'a':
-				address = optarg;
+				user_params->address = optarg;
 				break;
 			case 'p':
-				port = optarg;
+				user_params->port = optarg;
 				break;
 			case '?':
 				break;
