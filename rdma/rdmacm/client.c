@@ -86,10 +86,12 @@ int main(int argc, char *argv[])
 	//reg buffer
 	uint8_t recv_msg[16],
 		send_msg[16];
-	struct ibv_mr* mr=rdma_reg_msgs(id, recv, 16);
-
-
-
+	struct ibv_mr* recv_mr=rdma_reg_msgs(id, recv_msg, 16);
+	struct ibv_mr* send_mr=rdma_reg_msgs(id, send_msg, 16);
+	
+	rdma_post_recv(id, NULL, recv_msg, 16, recv_mr);
+	rdma_connect(id,NULL);
+	rdma_post_send(id,NULL,send_msg,16 send_mr)
 
 	return 0;
 
