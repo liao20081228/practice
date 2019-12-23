@@ -52,7 +52,8 @@ int main(int argc, char *argv[])
 	 */
 
 	//create iD and QP
-	struct rdma_cm_id *listen_id=NULL;
+	struct rdma_cm_id *listen_id=NULL,
+			  *id=NULL;
 	struct ibv_qp_init_attr qp_init_attr;
 	memset (&qp_init_attr, 0, sizeof(struct ibv_qp_init_attr));
 	qp_init_attr.cap.max_send_wr = 1;
@@ -92,9 +93,17 @@ int main(int argc, char *argv[])
 	if(ret)
 	{
 		perror("call rdma_listen failed");
-		goto out_destroy_ep;
+		goto out_destroy_listen_ep;
 	}
-		
+	
+	ret=rdma_get_request(listen_id,&id);	
+	if(ret)
+	{
+		perror("call rdma_get_request failed");
+		goto out_destroy_listen_ep;
+	}
+
+
 	//reg buffer
 	uint8_t recv_msg[16],
 		send_msg[16];
@@ -103,7 +112,7 @@ int main(int argc, char *argv[])
 	{
 		perror("call rdma_reg_msgs for recv_mr faild");
 		ret = -1;
-		goto out_destroy_ep;
+		goto out_destroy_;
 	}
 
 	struct ibv_mr* send_mr=rdma_reg_msgs(id, send_msg, 16);
@@ -155,6 +164,8 @@ out_dereg_send_mr:
 	rdma_dereg_mr(send_mr);
 out_dereg_recv_mr:
 	rdma_dereg_mr(recv_mr);
+out_destroy_accept_qp:
+	rdma_destroy_ep(id);
 out_destroy_listen_ep:
 	rdma_destroy_ep(listen_id);
 out_free_addrinfo:	
