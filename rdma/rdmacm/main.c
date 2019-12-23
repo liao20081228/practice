@@ -26,12 +26,14 @@ int main(int argc, char *argv[])
 	char recv_msg[100];
 
 
+	//get addinfo
 	struct rdma_addrinfo hints, 
 			     *res = NULL;
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
-	hints.ai_flags=RDMA_PS_TCP;//RC
+	hints.ai_port_space=RDMA_PS_TCP;//RC
+	hints.ai_flags=RAI_NUMERICHOST;
 	hints.ai_port_space=user_params.portspace;	
-	if(0!=rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res))
+	if(0 != rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res))
 	{
 		perror("call rdma_getaddrinfo  failed:");
 		exit(-2);
@@ -55,6 +57,9 @@ int main(int argc, char *argv[])
 	printf("ai_family: %p\n", res->ai_connect);		
 	printf("ai_family: %p\n", res->ai_next);		
 
-	printf(" %s, %s\n", user_params.address,user_params.port)	;
+	//create iD and QP
+	
+
 	return 0;
+
 }
