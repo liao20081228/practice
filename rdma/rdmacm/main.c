@@ -15,16 +15,6 @@ int main(int argc, char *argv[])
 	user_params.address="192.168.3.190";
 	user_params.port="8888";
 	handle_cmd(&user_params,argc, argv);
-	
-
-	struct rdma_cm_id *rdma_id = NULL;
-	struct ibv_mr *send_mr = NULL,
-			*recv_mr = NULL;
-	int flags = 0;
-	
-	char send_msg[100];
-	char recv_msg[100];
-
 
 	//get addinfo
 	struct rdma_addrinfo hints, 
@@ -58,7 +48,13 @@ int main(int argc, char *argv[])
 	printf("ai_family: %p\n", res->ai_next);		
 
 	//create iD and QP
+	struct rdma_cm_id *id=NULL;
+
+	struct ibv_qp_init_attr qp_init_attr;
+	memset (&qp_init_attr, 0, sizeof(struct ibv_qp_init_attr));
 	
+	if(0 != rdma_create_ep(&id))
+
 
 	return 0;
 
