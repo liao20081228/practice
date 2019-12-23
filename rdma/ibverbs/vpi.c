@@ -15,6 +15,8 @@ int main(void)
 		exit(-1);
 	}
 	printf("the number of ib device is:%d\n", ib_dev_num);
+
+	printf("---------struct ibv_device-----------------\n") ;
 	for(int i=0;i<ib_dev_num;++i)
 	{
 		struct ibv_device *it=ib_dev_list[i];
@@ -24,7 +26,7 @@ int main(void)
 		printf("%s\n", it->ibdev_path);
 		printf("the device name is:%s\n ", ibv_get_device_name(it));
 		printf("the device guid is:%lld \n ",ibv_get_device_guid(it));
-		printf("the node_type is %s\n",ibv_node_type_str(it->node_type));
+		printf("the node_type is : %s\n",ibv_node_type_str(it->node_type));
 	}
 
 	//open IB device 
