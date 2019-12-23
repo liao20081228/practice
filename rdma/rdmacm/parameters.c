@@ -29,7 +29,7 @@ void handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 
 	int ret=-1;
 	int longindex=-1;	
-	while((ret= getopt_long(argc,argv,":HVscp:a:",longopts, &longindex)) != -1)
+	while((ret= getopt_long(argc,argv,":HVscp:a:f:z:",longopts, &longindex)) != -1)
 	{
 		switch(ret)
 		{
