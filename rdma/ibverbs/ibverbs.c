@@ -4,8 +4,6 @@
 #include<stdlib.h>
 #include<assert.h>
 
-/*#define __PRINTF(a,b,c) */
-#define PRINTF_FIELD(a, b, c) __PRINTF( b## is ## '%' ,c, a->b )  
 
 int main(void)
 {
@@ -33,7 +31,6 @@ int main(void)
 		printf("the device name is:%s\n ", ibv_get_device_name(it));
 		printf("the device guid is:%lld \n ",ibv_get_device_guid(it));
 		printf("the node_type is :%d, %s\n",it->node_type,ibv_node_type_str(it->node_type));
-		PRINTF_FIELD(it,dev_path,s);
 	}
 
 	//open IB device 
