@@ -36,21 +36,21 @@ int main(int argc, char *argv[])
 		exit(-2);
 	}
 	
-	printf("ai_flags: %d\n", hints.ai_flags);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_qp_type: %d\n", hints.ai_qp_type);		
-	printf("ai_port_space: %d\n", hints.ai_port_space);		
-	printf("ai_src_len: %d\n", hints.ai_src_len);		
-	printf("ai_dst_len: %d\n", hints.ai_dst_len);
-	printf("ai_src_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(hints.ai_src_addr))->sin_addr));
-	printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(hints.ai_dst_addr))->sin_addr));
-	printf("ai_src_canonname: %s\n", hints.ai_src_canonname);		
-	printf("ai_dst_canonname: %s\n", hints.ai_dst_canonname);		
-	printf("ai_family: %lu\n", hints.ai_route_len);		
-	printf("ai_family: %p\n", hints.ai_route);		
-	printf("ai_family: %lu\n", hints.ai_connect_len);		
-	printf("ai_family: %p\n", hints.ai_connect);		
-	printf("ai_family: %p\n", hints.ai_next);		
+	printf("ai_flags: %d\n", res->ai_flags);		
+	printf("ai_family: %d\n", res->ai_family);		
+	printf("ai_qp_type: %d\n", res->ai_qp_type);		
+	printf("ai_port_space: %d\n", res->ai_port_space);		
+	printf("ai_src_len: %d\n", res->ai_src_len);		
+	printf("ai_dst_len: %d\n", res->ai_dst_len);
+	printf("ai_src_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_src_addr))->sin_addr));
+	printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_dst_addr))->sin_addr));
+	printf("ai_src_canonname: %s\n", res->ai_src_canonname);		
+	printf("ai_dst_canonname: %s\n", res->ai_dst_canonname);		
+	printf("ai_family: %lu\n", res->ai_route_len);		
+	printf("ai_family: %p\n", res->ai_route);		
+	printf("ai_family: %lu\n", res->ai_connect_len);		
+	printf("ai_family: %p\n", res->ai_connect);		
+	printf("ai_family: %p\n", res->ai_next);		
 
 	printf(" %s, %s\n", user_params.address,user_params.port)	;
 	return 0;
