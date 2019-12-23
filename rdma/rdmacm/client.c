@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
 	printf("max_recv_sge: %u \n",qp_init_attr.cap.max_recv_sge);
 	printf("qp_type: %u \n",qp_init_attr.qp_type);
 	printf("sq_sig_all: %u \n",qp_init_attr.sq_sig_all);
+	
 	printf("------------------struct rdma_cm_id----------------\n");		
-
 	PRINT_FILED(id->verbs, verbs, p);
 	PRINT_FILED(id->ps,ps,d);
 	PRINT_FILED(id->qp_type, qp_type, d);		
