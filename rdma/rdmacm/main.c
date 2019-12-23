@@ -41,11 +41,11 @@ int main(int argc, char *argv[])
 		printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_dst_addr))->sin_addr));
 	printf("ai_src_canonname: %s\n", res->ai_src_canonname);		
 	printf("ai_dst_canonname: %s\n", res->ai_dst_canonname);		
-	printf("ai_family: %lu\n", res->ai_route_len);		
-	printf("ai_family: %p\n", res->ai_route);		
-	printf("ai_family: %lu\n", res->ai_connect_len);		
-	printf("ai_family: %p\n", res->ai_connect);		
-	printf("ai_family: %p\n", res->ai_next);		
+	printf("ai_route_len: %lu\n", res->ai_route_len);		
+	printf("ai_route: %p\n", res->ai_route);		
+	printf("ai_connect_len: %lu\n", res->ai_connect_len);		
+	printf("ai_connect: %p\n", res->ai_connect);		
+	printf("ai_next: %p\n", res->ai_next);		
 
 	//create iD and QP
 	struct rdma_cm_id *id=NULL;
@@ -53,13 +53,13 @@ int main(int argc, char *argv[])
 	struct ibv_qp_init_attr qp_init_attr;
 	memset (&qp_init_attr, 0, sizeof(struct ibv_qp_init_attr));
 	
-	if(0 != rdma_create_ep(&id, res,NULL,&qp_init_attr))
+	if(0 != rdma_create_ep(&id, res, NULL, &qp_init_attr))
 	{
 		perror("call rdma_create_ep failed");
 		exit(-2);
 	}
 
-	
+		
 	printf("qp_context: %p \n",qp_init_attr.qp_context);
 	printf("send_cq: %p \n",qp_init_attr.send_cq);
 	printf("recv_cq: %p \n",qp_init_attr.recv_cq);
