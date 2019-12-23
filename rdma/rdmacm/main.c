@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	struct rdma_addrinfo hints, 
 			     *res = NULL;
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
-	
+	hints.ai_flags=RAI_PASSIVE;	
 	if(0!=rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res))
 	{
 		perror("call rdma_getaddrinfo  failed:");
@@ -42,8 +42,10 @@ int main(int argc, char *argv[])
 	printf("ai_port_space: %d\n", res->ai_port_space);		
 	printf("ai_src_len: %d\n", res->ai_src_len);		
 	printf("ai_dst_len: %d\n", res->ai_dst_len);
-	printf("ai_src_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_src_addr))->sin_addr));
-	printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_dst_addr))->sin_addr));
+	if(res->ai_src_len!=0)
+		printf("ai_src_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_src_addr))->sin_addr));
+	if(res->ai_dst_len!=0)
+		printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(res->ai_dst_addr))->sin_addr));
 	printf("ai_src_canonname: %s\n", res->ai_src_canonname);		
 	printf("ai_dst_canonname: %s\n", res->ai_dst_canonname);		
 	printf("ai_family: %lu\n", res->ai_route_len);		
