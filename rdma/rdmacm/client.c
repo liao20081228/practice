@@ -93,8 +93,14 @@ int main(int argc, char *argv[])
 	rdma_connect(id,NULL);
 	rdma_post_send(id,NULL,send_msg,16,send_mr,0);
 	struct ibv_wc wc;
-	rdma_get_send_comp(id,&wc);
-	rdma_get_recv_comp(id, &wc);
+	while(rdma_get_send_comp(id,&wc)==0);
+	while(rdma_get_recv_comp(id, &wc)==0);
+	
+	rdma_disconnect(id);
+	rdma_dereg_mr(send_mr);
+	rdma_dereg_mr(recv_mr);
+
+	rdma_desr
 	return 0;
 
 }
