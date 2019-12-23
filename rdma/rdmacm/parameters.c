@@ -22,6 +22,8 @@ void handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 		{"server",  no_argument,       NULL, 's'},
 		{"port",    required_argument, NULL, 'p'},
 		{"address", required_argument, NULL, 'a'},
+		{"flag", required_argument, NULL, 'f'},
+		{"portspace", required_argument, NULL, 'z'},
 		{0,         0,                 0,     0}
 	};
 
@@ -46,6 +48,12 @@ void handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 				break;
 			case 'p':
 				user_params->port = optarg;
+				break;
+			case 'f':
+				user_params->flag=atoi(optarg);
+				break;
+			case 'z':
+				user_params->portspace=atoi(optarg);
 				break;
 			case '?':	
 				printf("error:-%c is invalidate option \n", optopt);

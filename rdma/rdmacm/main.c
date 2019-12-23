@@ -29,7 +29,8 @@ int main(int argc, char *argv[])
 	struct rdma_addrinfo hints, 
 			     *res = NULL;
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
-	hints.ai_flags=RAI_PASSIVE;	
+	hints.ai_flags=user_params.flag;
+	hints.ai_port_space=user_params.portspace;	
 	if(0!=rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res))
 	{
 		perror("call rdma_getaddrinfo  failed:");

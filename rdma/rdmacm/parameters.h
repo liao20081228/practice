@@ -11,6 +11,8 @@ struct user_parameters
 {
 	char * port;
 	char * address;
+	int portspace;
+	int flag;
 };
 
 
