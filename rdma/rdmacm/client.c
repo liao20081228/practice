@@ -23,10 +23,9 @@ int main(int argc, char *argv[])
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
 	hints.ai_port_space=RDMA_PS_TCP;//RC
 	hints.ai_port_space=user_params.portspace;	
-	if(0 != rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res))
+	if(rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res))
 	{
 		perror("call rdma_getaddrinfo  failed:");
-		exit(-2);
 	}
 
 	printf("------------------struct rdma_addrinfo----------------\n");		
@@ -90,7 +89,9 @@ int main(int argc, char *argv[])
 	struct ibv_mr* send_mr=rdma_reg_msgs(id, send_msg, 16);
 	
 	rdma_post_recv(id, NULL, recv_msg, 16, recv_mr);
-	rdma_connect(id,NULL);
+	if(rdma_connect(id,NULL))
+		perror("rmda_connet");
+
 	rdma_post_send(id,NULL,send_msg,16,send_mr,0);
 	struct ibv_wc wc;
 	while(rdma_get_send_comp(id,&wc)==0);
@@ -100,7 +101,8 @@ int main(int argc, char *argv[])
 	rdma_dereg_mr(send_mr);
 	rdma_dereg_mr(recv_mr);
 
-	rdma_desr
+	rdma_destroy_ep(id);
+	rdma_freeaddrinfo(res);
 	return 0;
 
 }
