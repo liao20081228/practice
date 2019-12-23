@@ -1,4 +1,5 @@
 #include"parameters.h"
+opterr=0;
 void show_help_info(void)
 {
 	printf("Usag: app [-H] [-V] -[s|c] [-a ipaddress]\n");
