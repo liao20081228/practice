@@ -21,7 +21,7 @@ int handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 		{"client",  no_argument,       NULL, 'c'},
 		{"server",  no_argument,       NULL, 's'},
 		{"port",    required_argument, NULL, 'p'},
-		{"address", optional_argument, NULL, 'a'},
+		{"address", required_argument, NULL, 'a'},
 		{0,         0,                 0,     0}
 	};
 
@@ -51,10 +51,11 @@ int handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 				printf("error:-%c is invalidate option \n", optopt);
 				exit(-1);
 			case ':':
-				if(longindex != -1)
-					printf("error:-%c, --%s is require argument \n",optopt, longopts[longindex].name);
-				else
-					printf("error:-%c is require argument \n",optopt) ;
+				for(int i = 0, struct option * it = longopts[i]; ;)            
+				{
+
+				}
+				printf("error:-%c, --%s is require argument \n",optopt, longopts[longindex].name);
 				exit(-2);
 			default:
 				show_help_info();
