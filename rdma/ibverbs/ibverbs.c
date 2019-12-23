@@ -20,14 +20,15 @@ int main(void)
 	for(int i=0;i<ib_dev_num;++i)
 	{
 		struct ibv_device *it=ib_dev_list[i];
-		printf("%s\n", it->name);
-		printf("%s\n", it->dev_name);
-		printf("%s\n", it->dev_path);
-		printf("%s\n", it->ibdev_path);
+		printf("name :%s\n", it->name);
+		printf("dev_name: %s\n", it->dev_name);
+		printf("dev_path: %s\n", it->dev_path);
+		printf("ibdev_path: %s\n", it->ibdev_path);
+		printf("transport_type : %d\n", it->transport_type);
 		printf("---------ibv_get_device_name、ibv_get_device_guid、ibv_node_type_str-----------------\n") ;
 		printf("the device name is:%s\n ", ibv_get_device_name(it));
 		printf("the device guid is:%lld \n ",ibv_get_device_guid(it));
-		printf("the node_type is : %s\n",ibv_node_type_str(it->node_type));
+		printf("the node_type is :%d, %s\n",it->node_type,ibv_node_type_str(it->node_type));
 	}
 
 	//open IB device 
