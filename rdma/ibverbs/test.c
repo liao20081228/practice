@@ -1,2 +1,5 @@
-#define PRINTF(value)  printf( #value " = %d/n", value  );
-PRINTF(it);
+
+
+#define PRINTF(a, b, c) _PRINTF(b##%##c  ,a->b )
+
+PRINTF(it,dev,s);
