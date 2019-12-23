@@ -24,6 +24,7 @@ int main(void)
 		printf("%s\n", it->dev_name);
 		printf("%s\n", it->dev_path);
 		printf("%s\n", it->ibdev_path);
+		printf("---------ibv_get_device_name、ibv_get_device_guid、ibv_node_type_str-----------------\n") ;
 		printf("the device name is:%s\n ", ibv_get_device_name(it));
 		printf("the device guid is:%lld \n ",ibv_get_device_guid(it));
 		printf("the node_type is : %s\n",ibv_node_type_str(it->node_type));
