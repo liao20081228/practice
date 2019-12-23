@@ -12,7 +12,7 @@ void show_help_info(void)
 }
 
 
-int handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
+void handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 {
 	struct option longopts[]=
 	{
@@ -65,6 +65,11 @@ int handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 				show_help_info();
 				return 0;
 		}
+	}
+	if(argc!=optind)
+	{
+		printf("some user cmd arguments are invalidate\n");
+		exit(-1);
 	}
 	return 0;
 }

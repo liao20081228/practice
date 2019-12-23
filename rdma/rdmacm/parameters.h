@@ -15,7 +15,7 @@ struct user_parameters
 
 
 
-int handle_cmd(struct user_parameters*, int, char*[]);
+void handle_cmd(struct user_parameters*, int, char*[]);
 
 
 
