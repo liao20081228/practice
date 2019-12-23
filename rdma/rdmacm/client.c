@@ -68,33 +68,57 @@ int main(int argc, char *argv[])
 		goto out_free_addrinfo;
 	}
 
-	printf("------------------struct inv_qp_init_attr----------------\n");		
-	printf("qp_context: %p \n",qp_init_attr.qp_context);
-	printf("send_cq: %p \n",qp_init_attr.send_cq);
-	printf("recv_cq: %p \n",qp_init_attr.recv_cq);
-	printf("srq: %p \n",qp_init_attr.srq);
-	printf("max_inline_data: %u \n",qp_init_attr.cap.max_inline_data);
-	printf("max_send_wr: %u \n",qp_init_attr.cap.max_send_wr);
-	printf("max_recv_wr: %u \n",qp_init_attr.cap.max_recv_wr);
-	printf("max_send_sge: %u \n",qp_init_attr.cap.max_send_sge);
-	printf("max_recv_sge: %u \n",qp_init_attr.cap.max_recv_sge);
-	printf("qp_type: %u \n",qp_init_attr.qp_type);
-	printf("sq_sig_all: %u \n",qp_init_attr.sq_sig_all);
-	
-	printf("------------------struct rdma_cm_id----------------\n");		
-	PRINT_FILED(id->verbs, verbs, p);
-	PRINT_FILED(id->ps,ps,d);
-	PRINT_FILED(id->qp_type, qp_type, d);		
+	/*
+	 *printf("------------------struct inv_qp_init_attr----------------\n");		
+	 *printf("qp_context: %p \n",qp_init_attr.qp_context);
+	 *printf("send_cq: %p \n",qp_init_attr.send_cq);
+	 *printf("recv_cq: %p \n",qp_init_attr.recv_cq);
+	 *printf("srq: %p \n",qp_init_attr.srq);
+	 *printf("max_inline_data: %u \n",qp_init_attr.cap.max_inline_data);
+	 *printf("max_send_wr: %u \n",qp_init_attr.cap.max_send_wr);
+	 *printf("max_recv_wr: %u \n",qp_init_attr.cap.max_recv_wr);
+	 *printf("max_send_sge: %u \n",qp_init_attr.cap.max_send_sge);
+	 *printf("max_recv_sge: %u \n",qp_init_attr.cap.max_recv_sge);
+	 *printf("qp_type: %u \n",qp_init_attr.qp_type);
+	 *printf("sq_sig_all: %u \n",qp_init_attr.sq_sig_all);
+	 *
+	 *printf("------------------struct rdma_cm_id----------------\n");		
+	 *PRINT_FILED(id->verbs, verbs, p);
+	 *PRINT_FILED(id->ps,ps,d);
+	 *PRINT_FILED(id->qp_type, qp_type, d);		
+	 */
 	
 	//reg buffer
 	uint8_t recv_msg[16],
 		send_msg[16];
 	struct ibv_mr* recv_mr=rdma_reg_msgs(id, recv_msg, 16);
+	if(!recv_mr)
+	{
+		perror("call rdma_reg_msgs for recv_mr faild");
+		ret = -1;
+		goto out_destroy_ep;
+	}
+
 	struct ibv_mr* send_mr=rdma_reg_msgs(id, send_msg, 16);
+	if(!send_mr)
+	{
+		perror("call rdma_reg_msgs for send_mr faild");
+		ret=-1;
+		goto out_dereg_recv_mr;
+	}
 	
-	rdma_post_recv(id, NULL, recv_msg, 16, recv_mr);
-	if(rdma_connect(id,NULL))
+	ret=rdma_post_recv(id, NULL, recv_msg, 16, recv_mr);
+	if(ret)
+	{
+		perror("call rdma_post_recv faild");
+		goto out_dereg_send_mr;
+	}
+	ret=rdma_connect(id,NULL);
+	if(ret)
+	{
 		perror("rmda_connet");
+		goto out_dereg_send_mr;
+	}
 
 	rdma_post_send(id,NULL,send_msg,16,send_mr,0);
 	struct ibv_wc wc;
@@ -102,9 +126,11 @@ int main(int argc, char *argv[])
 	while(rdma_get_recv_comp(id, &wc)==0);
 	
 	rdma_disconnect(id);
+out_dereg_send_mr:
 	rdma_dereg_mr(send_mr);
+out_dereg_recv_mr:
 	rdma_dereg_mr(recv_mr);
-
+out_destroy_ep:
 	rdma_destroy_ep(id);
 out_free_addrinfo:	
 	rdma_freeaddrinfo(res);
