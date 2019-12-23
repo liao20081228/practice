@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
 			     *res = NULL;
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
 	hints.ai_port_space=RDMA_PS_TCP;//RC
-	hints.ai_flags=RAI_NUMERICHOST;
 	hints.ai_port_space=user_params.portspace;	
 	if(0 != rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res))
 	{
