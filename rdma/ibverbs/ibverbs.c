@@ -4,7 +4,6 @@
 #include<stdlib.h>
 #include<assert.h>
 
-#define PRINT_FILED(a,b,c) printf(\"(b) is : %(c)\n\", a->b)
 
 int main(void)
 {
