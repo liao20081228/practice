@@ -19,7 +19,7 @@ void show_help_info(void)
 int handle_cmd(struct user_parameters* user_params,int argc, char* argv[], struct option* longopt )
 {
 	int ret=-1;	
-	while((ret= getopt_long(argc,argv,"HVscp:a:",longopt, NULL)) != -1)
+	while((ret= getopt_long(argc,argv,":HVscp:a:",longopt, NULL)) != -1)
 	{
 		switch(ret)
 		{
@@ -39,14 +39,19 @@ int handle_cmd(struct user_parameters* user_params,int argc, char* argv[], struc
 			case 'p':
 				user_params->port = optarg;
 				break;
-			case '?':
+			case '?':	
+				printf("-%c is invalidate option \n");
 				break;
 			case ':':
 				break;
 			default:
 				show_help_info();
-				exit(0);
+				return 0;
 		}
-	}		
+	}
+	return 0;
+misarg:
+
+unkonw:	
 }
   
