@@ -1,4 +1,5 @@
 
-#define PRINT(a,b,c) printf(#(b)## "is%" #s , a->b)
+
+#define PRINT(a,b,c) printf(""##b##"%"##c, a->b)
 
 PRINT(it,dev,s);
