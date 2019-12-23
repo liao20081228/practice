@@ -42,7 +42,7 @@ int main(void)
 	struct ibv_device_attr * ib_dev_attr=(struct ibv_device_attr*)malloc(sizeof(struct ibv_device_attr));
 	assert(NULL!=ib_dev_attr);
 	assert(0==ibv_query_device(ib_dev_context,ib_dev_attr));
-	printf("print device attrs=====================================print device attrs\n");
+	printf("===============================print ibv_device_attr====================================\n");
 	printf("fw_ver is : %s\n ",ib_dev_attr->fw_ver);
 	printf("node_guid is : %llu\n ",ib_dev_attr->node_guid);
 	printf("sys_image_guid is : %llu\n ",ib_dev_attr->sys_image_guid);
@@ -90,7 +90,7 @@ int main(void)
 	struct ibv_port_attr* ib_port_attr=(struct ibv_port_attr*)malloc(sizeof(struct ibv_port_attr));
 	assert(NULL!=ib_port_attr);
 	assert(0==ibv_query_port(ib_dev_context, 1, ib_port_attr));
-	printf("print port attrs=====================================print port attrs\n");
+	printf("==============================print ibv_port_attrs====================\n");
 	printf("ibv_port_state is : %d, state is %s\n ",ib_port_attr->state, ibv_port_state_str(ib_port_attr->state));
 	printf("max_mtu is : %u\n ",ib_port_attr->max_mtu);
 	printf("active_mtu s : %u\n ",ib_port_attr->active_mtu);
