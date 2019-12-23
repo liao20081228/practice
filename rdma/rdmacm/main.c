@@ -53,8 +53,22 @@ int main(int argc, char *argv[])
 	struct ibv_qp_init_attr qp_init_attr;
 	memset (&qp_init_attr, 0, sizeof(struct ibv_qp_init_attr));
 	
-	if(0 != rdma_create_ep(&id))
+	if(0 != rdma_create_ep(&id, res,NULL,&qp_init_attr))
+	{
+		perror("call rdma_create_ep failed");
+		exit(-2);
+	}
 
+	
+	printf("qp_context: %p \n",qp_init_attr.qp_context);
+	printf("qp_context: %p \n",qp_init_attr.send_cq);
+	printf("qp_context: %p \n",qp_init_attr.recv_cq);
+	printf("qp_context: %p \n",qp_init_attr.srq);
+	printf("qp_context: %u \n",qp_init_attr.cap.max_inline_data);
+	printf("qp_context: %u \n",qp_init_attr.cap.max_send_wr);
+	printf("qp_context: %u \n",qp_init_attr.cap.max_recv_wr);
+	printf("qp_context: %u \n",qp_init_attr.cap.max_send_sge);
+	printf("qp_context: %u \n",qp_init_attr.cap.max_inline_data);
 
 	return 0;
 
