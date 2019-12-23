@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 	qp_init_attr.cap.max_recv_wr = 1;
 	qp_init_attr.cap.max_send_sge = 1; 
 	qp_init_attr.cap.max_recv_sge = 1;
-
+	qp_init_attr.sq_sig_all=1;
 	
 	ret= rdma_create_ep(&id, res, NULL, &qp_init_attr);
 	if(ret)
