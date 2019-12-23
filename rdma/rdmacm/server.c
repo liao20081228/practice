@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
 	//parse cmd line arguments
 	struct user_parameters user_params={0};
-	user_params.address="192.168.3.190";
+	user_params.address="0.0.0.0";
 	user_params.port="8888";
 	handle_cmd(&user_params,argc, argv);
 
@@ -22,8 +22,7 @@ int main(int argc, char *argv[])
 			     *res = NULL;
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
 	hints.ai_port_space=RDMA_PS_TCP;//RC
-	hints.ai_port_space=user_params.portspace;	
-	
+		
 	int ret=rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res);
 	if(ret)
 	{
