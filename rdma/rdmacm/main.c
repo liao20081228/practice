@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	struct user_parameters user_params={0,0};
 	user_params.address="192.168.3.190";
 	user_params.port="8888";
-	handle_cmd(&user_params,argc, argv);
+	handle_cmd(&user_params,argc, argv))
 	
 
 	/*struct rdma_cm_id *rdma_id = NULL;*/

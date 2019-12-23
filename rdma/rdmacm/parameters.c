@@ -51,11 +51,15 @@ int handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 				printf("error:-%c is invalidate option \n", optopt);
 				exit(-1);
 			case ':':
-				for(int i = 0, struct option * it = longopts[i]; ;)            
+				for(int i = 0; longopts[i].name != NULL; i++)            
 				{
+					if(longopts[i].val == optopt)
+					{
+						printf("error:-%c, --%s is require argument \n",optopt, longopts[i].name);
+						break;
+					}
 
 				}
-				printf("error:-%c, --%s is require argument \n",optopt, longopts[longindex].name);
 				exit(-2);
 			default:
 				show_help_info();
