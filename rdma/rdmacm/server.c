@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 	{
 		perror("call rdma_reg_msgs for recv_mr faild");
 		ret = -1;
-		goto out_destroy_;
+		goto out_destroy_accept_qp;
 	}
 
 	struct ibv_mr* send_mr=rdma_reg_msgs(id, send_msg, 16);
@@ -129,12 +129,21 @@ int main(int argc, char *argv[])
 		perror("call rdma_post_recv faild");
 		goto out_dereg_send_mr;
 	}
-	ret=rdma_connect(id,NULL);
+
+	ret=rdma_accept(id, NULL);
 	if(ret)
 	{
-		perror("call rmda_connet failed");
-		goto out_dereg_send_mr;
+		perror("call rdma_accept failed");
+		goto out_dereg_recv_mr;
 	}
+	struct ibv_wc wc;
+	while((ret=rdma_get_recv_comp(id,&wc))==0);
+	if(ret<0)
+	{
+		perror("call rdma_get_recv_comp failed");
+		goto out_disconnect;
+	}
+
 
 	ret=rdma_post_send(id,NULL,send_msg,16,send_mr,0);
 	if(ret)
@@ -143,21 +152,14 @@ int main(int argc, char *argv[])
 		goto out_disconnect;
 	}
 	
-	struct ibv_wc wc;
 	while((ret=rdma_get_send_comp(id,&wc))==0);
 	if(ret)
 	{
 		perror("call rdma_get_send_comp failed");
 		goto out_disconnect;
 	}
-	while((ret=rdma_get_recv_comp(id,&wc))==0);
-	if(ret)
-	{
-		perror("call rdma_get_recv_comp failed");
-		goto out_disconnect;
-	}
 	else
-		ret=0;
+		ret =0;
 out_disconnect:	
 	rdma_disconnect(listen_id);
 out_dereg_send_mr:

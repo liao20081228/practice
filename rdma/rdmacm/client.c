@@ -129,13 +129,13 @@ int main(int argc, char *argv[])
 	
 	struct ibv_wc wc;
 	while((ret=rdma_get_send_comp(id,&wc))==0);
-	if(ret)
+	if(ret<0)
 	{
 		perror("call rdma_get_send_comp failed");
 		goto out_disconnect;
 	}
 	while((ret=rdma_get_recv_comp(id,&wc))==0);
-	if(ret)
+	if(ret<0)
 	{
 		perror("call rdma_get_recv_comp failed");
 		goto out_disconnect;
