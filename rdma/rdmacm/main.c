@@ -46,15 +46,11 @@ int main(int argc, char *argv[])
 	printf("ai_dst_addr: %s\n", inet_ntoa( ((struct sockaddr_in*)(hints.ai_dst_addr))->sin_addr));
 	printf("ai_src_canonname: %s\n", hints.ai_src_canonname);		
 	printf("ai_dst_canonname: %s\n", hints.ai_dst_canonname);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
-	printf("ai_family: %d\n", hints.ai_family);		
+	printf("ai_family: %lu\n", hints.ai_route_len);		
+	printf("ai_family: %p\n", hints.ai_route);		
+	printf("ai_family: %lu\n", hints.ai_connect_len);		
+	printf("ai_family: %p\n", hints.ai_connect);		
+	printf("ai_family: %p\n", hints.ai_next);		
 
 	printf(" %s, %s\n", user_params.address,user_params.port)	;
 	return 0;

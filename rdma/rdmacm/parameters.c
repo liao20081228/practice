@@ -63,7 +63,7 @@ void handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 				exit(-2);
 			default:
 				show_help_info();
-				return 0;
+				break;
 		}
 	}
 	if(argc!=optind)
@@ -71,6 +71,5 @@ void handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 		printf("some user cmd arguments are invalidate\n");
 		exit(-1);
 	}
-	return 0;
 }
   
