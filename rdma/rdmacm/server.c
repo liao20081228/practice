@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 	 */
 
 	//create iD and QP
-	struct rdma_cm_id *id=NULL;
+	struct rdma_cm_id *listen_id=NULL;
 	struct ibv_qp_init_attr qp_init_attr;
 	memset (&qp_init_attr, 0, sizeof(struct ibv_qp_init_attr));
 	qp_init_attr.cap.max_send_wr = 1;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 	qp_init_attr.cap.max_recv_sge = 1;
 	qp_init_attr.sq_sig_all=1;
 	
-	ret= rdma_create_ep(&id, res, NULL, &qp_init_attr);
+	ret= rdma_create_ep(&listen_id, res, NULL, &qp_init_attr);
 	if(ret)
 	{
 		perror("call rdma_create_ep failed");
@@ -88,6 +88,13 @@ int main(int argc, char *argv[])
 	 *PRINT_FILED(id->qp_type, qp_type, d);		
 	 */
 	
+	ret=rdma_listen(listen_id, 0);
+	if(ret)
+	{
+		perror("call rdma_listen failed");
+		goto out_destroy_ep;
+	}
+		
 	//reg buffer
 	uint8_t recv_msg[16],
 		send_msg[16];
@@ -143,13 +150,13 @@ int main(int argc, char *argv[])
 	else
 		ret=0;
 out_disconnect:	
-	rdma_disconnect(id);
+	rdma_disconnect(listen_id);
 out_dereg_send_mr:
 	rdma_dereg_mr(send_mr);
 out_dereg_recv_mr:
 	rdma_dereg_mr(recv_mr);
-out_destroy_ep:
-	rdma_destroy_ep(id);
+out_destroy_listen_ep:
+	rdma_destroy_ep(listen_id);
 out_free_addrinfo:	
 	rdma_freeaddrinfo(res);
 out:
