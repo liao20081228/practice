@@ -52,7 +52,10 @@ int main(int argc, char *argv[])
 
 	struct ibv_qp_init_attr qp_init_attr;
 	memset (&qp_init_attr, 0, sizeof(struct ibv_qp_init_attr));
-	
+	qp_init_attr.cap.max_send_wr = qp_init_attr.cap.max_recv_wr = 1;
+	qp_init_attr.cap.max_send_sge = qp_init_attr.cap.max_recv_sge = 1;
+
+
 	if(0 != rdma_create_ep(&id, res, NULL, &qp_init_attr))
 	{
 		perror("call rdma_create_ep failed");
