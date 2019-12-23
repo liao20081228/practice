@@ -3,8 +3,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
-
-
+#define _PRINT_FILED(a,b) printf(#a,b)
+#define  PRINT_FILED(a, b, c) _PRINT_FILED(b is: %c \n, a->b)
 int main(void)
 {
 	//get IB device list
@@ -22,7 +22,6 @@ int main(void)
 	for(int i=0;i<ib_dev_num;++i)
 	{
 		struct ibv_device *it=ib_dev_list[i];
-		printf("name :%s\n", it->name);
 		printf("dev_name: %s\n", it->dev_name);
 		printf("dev_path: %s\n", it->dev_path);
 		printf("ibdev_path: %s\n", it->ibdev_path);
