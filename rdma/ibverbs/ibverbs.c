@@ -4,9 +4,8 @@
 #include<stdlib.h>
 #include<assert.h>
 
-#define PRINT_FILED(a,b,c) (printf("(b) is : (c)\n", (a)->(b)))
+#define PRINT_FILED(a,b,c) printf(\"(b) is : %(c)\n\", a->b)
 
-#define MAX(a,b) ((a)>(b)?(a):(b))
 int main(void)
 {
 	//get IB device list
@@ -33,8 +32,7 @@ int main(void)
 		printf("the device name is:%s\n ", ibv_get_device_name(it));
 		printf("the device guid is:%lld \n ",ibv_get_device_guid(it));
 		printf("the node_type is :%d, %s\n",it->node_type,ibv_node_type_str(it->node_type));
-		PRINT_FILED(it,dev_path,"%c");
-		MAX(1,2)
+		PRINT_FILED(it,dev_path,s);
 	}
 
 	//open IB device 
