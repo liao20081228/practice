@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 			     *res = NULL;
 	memset(&hints, 0, sizeof(struct rdma_addrinfo));
 	hints.ai_port_space=RDMA_PS_TCP;//RC
-		
+	hints.ai_flags=RAI_PASSIVE;		
 	int ret=rdma_getaddrinfo(user_params.address, user_params.port, &hints, &res);
 	if(ret)
 	{
