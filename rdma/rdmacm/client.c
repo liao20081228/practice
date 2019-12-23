@@ -83,7 +83,10 @@ int main(int argc, char *argv[])
 	PRINT_FILED(id->ps,ps,d);
 	PRINT_FILED(id->qp_type, qp_type, d);		
 	
-
+	//reg buffer
+	uint8_t recv_msg[16],
+		send_msg[16];
+	struct ibv_mr* mr=rdma_reg_msgs(id, recv, 16);
 
 
 
