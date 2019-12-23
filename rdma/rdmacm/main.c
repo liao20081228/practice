@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
 
 	//parse cmd line arguments
-	struct user_parameters user_params={0,0};
+	struct user_parameters user_params={0};
 	user_params.address="192.168.3.190";
 	user_params.port="8888";
 	handle_cmd(&user_params,argc, argv);
@@ -61,15 +61,17 @@ int main(int argc, char *argv[])
 
 	
 	printf("qp_context: %p \n",qp_init_attr.qp_context);
-	printf("qp_context: %p \n",qp_init_attr.send_cq);
-	printf("qp_context: %p \n",qp_init_attr.recv_cq);
-	printf("qp_context: %p \n",qp_init_attr.srq);
-	printf("qp_context: %u \n",qp_init_attr.cap.max_inline_data);
-	printf("qp_context: %u \n",qp_init_attr.cap.max_send_wr);
-	printf("qp_context: %u \n",qp_init_attr.cap.max_recv_wr);
-	printf("qp_context: %u \n",qp_init_attr.cap.max_send_sge);
-	printf("qp_context: %u \n",qp_init_attr.cap.max_inline_data);
-
+	printf("send_cq: %p \n",qp_init_attr.send_cq);
+	printf("recv_cq: %p \n",qp_init_attr.recv_cq);
+	printf("srq: %p \n",qp_init_attr.srq);
+	printf("max_inline_data: %u \n",qp_init_attr.cap.max_inline_data);
+	printf("max_send_wr: %u \n",qp_init_attr.cap.max_send_wr);
+	printf("max_recv_wr: %u \n",qp_init_attr.cap.max_recv_wr);
+	printf("max_send_sge: %u \n",qp_init_attr.cap.max_send_sge);
+	printf("max_recv_sge: %u \n",qp_init_attr.cap.max_recv_sge);
+	printf("qp_type: %u \n",qp_init_attr.qp_type);
+	printf("sq_sig_all: %u \n",qp_init_attr.sq_sig_all);
+	
 	return 0;
 
 }
