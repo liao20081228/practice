@@ -1,5 +1,5 @@
 #include"parameters.h"
-opterr=0;
+int opterr=0;
 void show_help_info(void)
 {
 	printf("Usag: app [-H] [-V] -[s|c] [-a ipaddress]\n");
@@ -21,12 +21,12 @@ int handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 		{"client",  no_argument,       NULL, 'c'},
 		{"server",  no_argument,       NULL, 's'},
 		{"port",    required_argument, NULL, 'p'},
-		{"a:ddress", optional_argument, NULL, 'a'},
+		{"address", optional_argument, NULL, 'a'},
 		{0,         0,                 0,     0}
 	};
 
 	int ret=-1;
-	int longindex=0;	
+	int longindex=-1;	
 	while((ret= getopt_long(argc,argv,":HVscp:a:",longopts, &longindex)) != -1)
 	{
 		switch(ret)
@@ -51,7 +51,10 @@ int handle_cmd(struct user_parameters* user_params,int argc, char* argv[])
 				printf("error:-%c is invalidate option \n", optopt);
 				exit(-1);
 			case ':':
-				printf("error:-%d, --%s is require argument \n",optopt, longopts[longindex].name);
+				if(longindex != -1)
+					printf("error:-%c, --%s is require argument \n",optopt, longopts[longindex].name);
+				else
+					printf("error:-%c is require argument \n",optopt) ;
 				exit(-2);
 			default:
 				show_help_info();
