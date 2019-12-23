@@ -27,7 +27,8 @@ int main(int argc, char *argv[])
 		perror("call rdma_getaddrinfo  failed:");
 		exit(-2);
 	}
-	
+
+	printf("------------------struct rdma_addrinfo----------------\n");		
 	printf("ai_flags: %d\n", res->ai_flags);		
 	printf("ai_family: %d\n", res->ai_family);		
 	printf("ai_qp_type: %d\n", res->ai_qp_type);		
@@ -58,7 +59,7 @@ int main(int argc, char *argv[])
 		exit(-2);
 	}
 
-		
+	printf("------------------struct inv_qp_init_attr----------------\n");		
 	printf("qp_context: %p \n",qp_init_attr.qp_context);
 	printf("send_cq: %p \n",qp_init_attr.send_cq);
 	printf("recv_cq: %p \n",qp_init_attr.recv_cq);
