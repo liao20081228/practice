@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
 	else
 		ret =0;
 out_disconnect:	
-	rdma_disconnect(listen_id);
+	rdma_disconnect(id);
 out_dereg_send_mr:
 	rdma_dereg_mr(send_mr);
 out_dereg_recv_mr:
