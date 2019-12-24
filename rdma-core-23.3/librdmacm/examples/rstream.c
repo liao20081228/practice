@@ -75,7 +75,7 @@ static struct test_size_param test_size[] = {
 #define TEST_CNT (sizeof test_size / sizeof test_size[0])
 
 static int rs, lrs;
-static int use_async;
+static int use_async; //异步标志
 static int use_rgai;
 static int verify;
 static int flags = MSG_DONTWAIT;
@@ -91,13 +91,13 @@ static int transfer_count = 1000; //每次传输的次数
 static int buffer_size, inline_size = 64;
 static char test_name[10] = "custom";
 static const char *port = "7471";
-static int keepalive;
+static int keepalive; //保活时间
 static char *dst_addr;
 static char *src_addr;
 static struct timeval start, end;
 static void *buf;
-static struct rdma_addrinfo rai_hints;
-static struct addrinfo ai_hints;
+static struct rdma_addrinfo rai_hints; //rmda的地址信息
+static struct addrinfo ai_hints;//socket的地址信息
 
 static void show_perf(void)
 {
