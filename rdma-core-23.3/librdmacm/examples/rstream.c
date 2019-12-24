@@ -341,13 +341,14 @@ static int server_listen(void)
 	}
 
 	val = 1;
-	//打开地址复用
+	//打开地址复用,不必等待
 	ret = rs_setsockopt(lrs, SOL_SOCKET, SO_REUSEADDR, &val, sizeof val);
 	if (ret) {
 		perror("rsetsockopt SO_REUSEADDR");
 		goto close;
 	}
 
+	//bind
 	ret = rai ? rs_bind(lrs, rai->ai_src_addr, rai->ai_src_len) :
 		    rs_bind(lrs, ai->ai_addr, ai->ai_addrlen);
 	if (ret) {
@@ -355,6 +356,7 @@ static int server_listen(void)
 		goto close;
 	}
 
+	//listen
 	ret = rs_listen(lrs, 1);
 	if (ret)
 		perror("rlisten");
