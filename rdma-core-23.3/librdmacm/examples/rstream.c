@@ -75,13 +75,13 @@ static struct test_size_param test_size[] = {
 #define TEST_CNT (sizeof test_size / sizeof test_size[0])
 
 static int rs, lrs;
-static int use_async; //异步标志
+static int use_async; //是否异步
 static int use_rgai;//是否使用rdma_getaddrinfo
-static int verify;
-static int flags = MSG_DONTWAIT;
+static int verify;//是否验证数据传输
+static int flags = MSG_DONTWAIT;//阻塞/非阻塞标志
 static int poll_timeout = 0;
 static int custom;    //是否自定义测试参数：迭代测试次数，传输次数，每次传输大小
-static int use_fork;
+static int use_fork;//fork服务进程
 static pid_t fork_pid;
 static enum rs_optimization optimization;
 static int size_option;
