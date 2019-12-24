@@ -519,7 +519,7 @@ static int run(void)
 	       "name", "bytes", "xfers", "iters", "total", "time", "Gb/sec", "usec/xfer");
 	if (!custom) {
 		optimization = opt_latency;
-		ret = dst_addr ? client_connect() : server_connect();
+		ret = dst_addr ? client_connect() : server_connect();//作为客户端或者服务端执行
 		if (ret)
 			goto free;
 
