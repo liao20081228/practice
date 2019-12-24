@@ -88,7 +88,6 @@ static int size_option;
 static int iterations = 1;       //要进行多少次测试
 static int transfer_size = 1000; //每次传输的大小
 static int transfer_count = 1000; //每次传输的次数
-static int buffer_size, inline_size = 64;
 static char test_name[10] = "custom";
 static const char *port = "7471";
 static int keepalive; //保活时间
@@ -96,6 +95,7 @@ static char *dst_addr;
 static char *src_addr;
 static struct timeval start, end;
 static void *buf;
+static int buffer_size, inline_size = 64;
 static struct rdma_addrinfo rai_hints; //rmda的地址信息,输入参数
 static struct addrinfo ai_hints;//socket的地址信息，输入参数
 
