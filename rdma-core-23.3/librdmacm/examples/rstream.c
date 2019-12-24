@@ -319,6 +319,7 @@ static int server_listen(void)
 	struct addrinfo *ai;
 	int val, ret;
 
+	//如果使用socket则用getaddrinfo，否则rdma_getaddrinfo
 	if (use_rgai) {
 		rai_hints.ai_flags |= RAI_PASSIVE;
 		ret = rdma_getaddrinfo(src_addr, port, &rai_hints, &rai);
@@ -331,6 +332,7 @@ static int server_listen(void)
 		return ret;
 	}
 
+	//创建socket还是rsocket
 	lrs = rai ? rs_socket(rai->ai_family, SOCK_STREAM, 0) :
 		    rs_socket(ai->ai_family, SOCK_STREAM, 0);
 	if (lrs < 0) {
