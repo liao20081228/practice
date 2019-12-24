@@ -76,7 +76,7 @@ static struct test_size_param test_size[] = {
 
 static int rs, lrs;
 static int use_async; //异步标志
-static int use_rgai;
+static int use_rgai;//是否使用rdma_getaddrinfo
 static int verify;
 static int flags = MSG_DONTWAIT;
 static int poll_timeout = 0;
@@ -96,8 +96,8 @@ static char *dst_addr;
 static char *src_addr;
 static struct timeval start, end;
 static void *buf;
-static struct rdma_addrinfo rai_hints; //rmda的地址信息
-static struct addrinfo ai_hints;//socket的地址信息
+static struct rdma_addrinfo rai_hints; //rmda的地址信息,输入参数
+static struct addrinfo ai_hints;//socket的地址信息，输入参数
 
 static void show_perf(void)
 {
@@ -504,7 +504,7 @@ static int run(void)
 		return -1;
 	}
 
-	if (!dst_addr) {
+	if (!dst_addr) { //dst_addr 目标地址为空则为客户端
 		ret = server_listen();
 		if (ret)
 			goto free;
