@@ -341,6 +341,7 @@ static int server_listen(void)
 	}
 
 	val = 1;
+	//打开地址复用
 	ret = rs_setsockopt(lrs, SOL_SOCKET, SO_REUSEADDR, &val, sizeof val);
 	if (ret) {
 		perror("rsetsockopt SO_REUSEADDR");
