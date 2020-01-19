@@ -10,16 +10,15 @@
 
 int main(void)
 {
-
-
-	struct rdma_event_channel* chanel_event=rdma_create_event_channel();
-	if(!chanel_event)
+	struct rdma_event_channel* cm_channel = rdma_create_event_channel();
+	if(!cm_channel)
 	{
 		perror("create event channel failed");
 		return 1;
 	}
 
-	
+	struct rdma_cm_id
+	int ret = rdma_create_id(cm_channel, 
 
 	return 0;
 }
