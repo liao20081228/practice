@@ -14,8 +14,13 @@
 #endif
 
 
+
 int main(void)
 {
+
+	pthread_t productor,consumer;
+
+
 	struct rdma_event_channel* cm_channel = rdma_create_event_channel();
 	if(!cm_channel)
 	{
@@ -30,6 +35,8 @@ int main(void)
 		perror("create cm id failed");
 		goto free_cm_channel;
 	}
+
+	
 	
 
 
