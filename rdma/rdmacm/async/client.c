@@ -28,10 +28,15 @@ int main(void)
 	if (ret)
 	{
 		perror("create cm id failed");
-		return FAILURE;
+		goto free_cm_channel;
 	}
 
 
+
+
+free_cm_channel:
+	rdma_destroy_event_channel(cm_channel);
+	return FAILURE;
 
 	return SUCCESS;
 }
