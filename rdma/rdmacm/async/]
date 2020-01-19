@@ -33,5 +33,5 @@ int main(void)
 
 
 
-	return SUCCESS;
+	return 0;
 }
