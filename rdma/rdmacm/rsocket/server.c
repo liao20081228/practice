@@ -34,7 +34,7 @@ static int verify;
 static int use_fork;
 static pid_t fork_pid;
 static int size_option;
-
+static int custom = 1;
 
 int main(int argc, char *argv[])
 {
