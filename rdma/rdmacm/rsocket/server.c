@@ -20,6 +20,8 @@ static int keepalive = 0;
 static int flags = MSG_DONTWAIT;
 static int poll_timeout = 0;
 static void *buf = NULL;
+enum rs_optimization {LANT, BW, MIX};
+static enum rs_optimization optimization;
 
 int main(int argc, char *argv[])
 {
