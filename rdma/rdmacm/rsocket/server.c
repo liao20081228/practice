@@ -5,7 +5,7 @@
 #include<endian.h>
 #include<sys/socket.h>
 #include<time.h>
-
+#include<getopt.h>
 struct rdma_addrinfo hint, res;
 static char *src_addr;
 static char *dst_addr;	
@@ -23,7 +23,14 @@ static void *buf = NULL;
 enum rs_optimization {LANT, BW, MIX};
 static enum rs_optimization optimization;
 
+
+
+
+
+
 int main(int argc, char *argv[])
 {
-	return 0;
+	int op, ret;
+	hint.ai_port_space = RDMA_PS_TCP;
+	while( (op = getopt(argc, argv, "s:b:f:B:i:I:C:S:p:K:p:k:T")) )
 }
