@@ -7,15 +7,16 @@
 #include<time.h>
 #include<getopt.h>
 #include<strings.h>
-struct rdma_addrinfo rs_hint;
-struct addrinfo s_hint;
-static char *src_addr;
-static char *dst_addr;	
-static const char *port = "10000"; 
-static struct timespec start = {0, 0} , end = {0, 0};
-static int iteration = 1000;
-static int transfer_size = 1000;
-static int transfer_count = 1000;
+
+struct rdma_addrinfo rs_hint;//rdma address info 
+struct addrinfo s_hint; // socket address info 
+static char *src_addr; // souurce address
+static char *dst_addr; // destnation address  
+static const char *port = "10000";  // port number 
+static struct timespec start = {0, 0} , end = {0, 0}; // time of start and end;
+static int iteration = 1000; // num of repeat test
+static int transfer_size = 1000; // 
+static int transfer_count = 1000;// num of each test
 static int buffer_size = 0;
 static int inline_size = 64; 
 static int keepalive = 0;
@@ -24,10 +25,12 @@ static int poll_timeout = 0;
 static void *buf = NULL;
 enum rs_optimization {LANT, BW, MIX};
 static enum rs_optimization optimization;
-
-
-
-
+static int rd, lrs;
+static int use_async;
+static int verify;
+static int use_fork;
+static pid_t fork_pid;
+static int size_option;
 
 
 int main(int argc, char *argv[])
