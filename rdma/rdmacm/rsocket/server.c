@@ -58,6 +58,25 @@ int main(int argc, char *argv[])
 						rs_hint.ai_flags = RAI_NUMERICHOST | RAI_FAMILY;
 						rs_hint.ai_family = AF_IB;
 					}
+			case 'B':
+				buffer_size = atoi(optarg);
+				break;
+			case 'i':
+				inline_size = atoi(optarg);
+				break;
+			case 'I':
+				custom = 1;
+				iteration = atoi(optarg);
+				break;
+			case 'C':
+				custom = 1;
+				transfer_count = atoi(optarg);
+				break;
+			case 'S':
+				custom = 1;
+				transfer_size = atoi(optarg);
+				break;
+
 
 		}
 	}
