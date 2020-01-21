@@ -7,7 +7,8 @@
 #include<time.h>
 #include<getopt.h>
 #include<strings.h>
-struct rdma_addrinfo hint, res;
+struct rdma_addrinfo rs_hint;
+struct addrinfo s_hint;
 static char *src_addr;
 static char *dst_addr;	
 static const char *port = "10000"; 
@@ -40,7 +41,8 @@ int main(int argc, char *argv[])
 			case 'b':
 				src_addr = optarg;
 			case 'f':
-				if(strncasecmp)
+				if(!strncasecmp("ip", optarg, 2))
+
 		}
 	}
 }
