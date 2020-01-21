@@ -8,6 +8,7 @@
 #include<strings.h>
 #include<sys/types.h>
 #include<netdb.h>
+#include<sys/socket.h>
 
 struct rdma_addrinfo rs_hint; //rdma address info 
 struct addrinfo s_hint; //socket address info
@@ -50,11 +51,12 @@ int main(int argc, char *argv[])
 				break;
 			case 'f':
 				if(!strncasecmp("ip", optarg, 2))
-					s_hint.ai_flags = RAI_NUMERICHOST;
+					s_hint.ai_flags = AI_NUMERICHOST;
 				else 
 					if (!strncasecmp("gid", optarg ,3))
 					{
-						rs_hint.__attribute_malloc__
+						rs_hint.ai_flags = RAI_NUMERICHOST | RAI_FAMILY;
+						rs_hint.ai_family = AF_IB;
 					}
 
 		}
