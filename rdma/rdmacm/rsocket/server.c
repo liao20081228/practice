@@ -7,9 +7,12 @@
 #include<time.h>
 #include<getopt.h>
 #include<strings.h>
+#include<sys/types.h>
+#include<netdb.h>
 
-struct rdma_addrinfo rs_hint;//rdma address info 
-struct addrinfo s_hint; // socket address info
+static struct rdma_addrinfo rs_hint; //rdma address info 
+static struct addrinfo s_hint; //socket address info
+
 static char *src_addr; // souurce address
 static char *dst_addr; // destnation address  
 static const char *port = "10000";  // port number 
@@ -40,10 +43,15 @@ int main(int argc, char *argv[])
 	{
 		switch (op)
 		{
+			case 's':
+				dst_addr = optarg;
+				break;
 			case 'b':
 				src_addr = optarg;
+				break;
 			case 'f':
 				if(!strncasecmp("ip", optarg, 2))
+					s_hint.ai_flags = RAI_NUMERICHOST;
 				else 
 					if (!strncasecmp("gid", optarg ,3))
 					{
