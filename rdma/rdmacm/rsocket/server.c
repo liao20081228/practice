@@ -9,7 +9,7 @@
 #include<strings.h>
 
 struct rdma_addrinfo rs_hint;//rdma address info 
-struct addrinfo s_hint; // socket address info 
+struct addrinfo s_hint; // socket address info
 static char *src_addr; // souurce address
 static char *dst_addr; // destnation address  
 static const char *port = "10000";  // port number 
@@ -36,8 +36,7 @@ static int size_option;
 int main(int argc, char *argv[])
 {
 	int op, ret;
-	hint.ai_port_space = RDMA_PS_TCP;
-	while((op = getopt(argc, argv, "b:f:B:i:I:C:S:p:K:p:k:T:")) != -1 )
+	while((op = getopt(argc, argv, "s:b:f:B:i:I:C:S:p:K:p:k:T:")) != -1 )
 	{
 		switch (op)
 		{
@@ -45,6 +44,11 @@ int main(int argc, char *argv[])
 				src_addr = optarg;
 			case 'f':
 				if(!strncasecmp("ip", optarg, 2))
+				else 
+					if (!strncasecmp("gid", optarg ,3))
+					{
+						rs_hint.__attribute_malloc__
+					}
 
 		}
 	}
