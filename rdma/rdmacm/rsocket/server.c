@@ -3,15 +3,14 @@
 #include<memory.h>
 #include<stdlib.h>
 #include<endian.h>
-#include<sys/socket.h>
 #include<time.h>
 #include<getopt.h>
 #include<strings.h>
 #include<sys/types.h>
 #include<netdb.h>
 
-static struct rdma_addrinfo rs_hint; //rdma address info 
-static struct addrinfo s_hint; //socket address info
+struct rdma_addrinfo rs_hint; //rdma address info 
+struct addrinfo s_hint; //socket address info
 
 static char *src_addr; // souurce address
 static char *dst_addr; // destnation address  
