@@ -6,6 +6,7 @@
 #include<sys/socket.h>
 #include<time.h>
 #include<getopt.h>
+#include<strings.h>
 struct rdma_addrinfo hint, res;
 static char *src_addr;
 static char *dst_addr;	
@@ -32,5 +33,14 @@ int main(int argc, char *argv[])
 {
 	int op, ret;
 	hint.ai_port_space = RDMA_PS_TCP;
-	while( (op = getopt(argc, argv, "s:b:f:B:i:I:C:S:p:K:p:k:T")) )
+	while((op = getopt(argc, argv, "b:f:B:i:I:C:S:p:K:p:k:T:")) != -1 )
+	{
+		switch (op)
+		{
+			case 'b':
+				src_addr = optarg;
+			case 'f':
+				if(strncasecmp)
+		}
+	}
 }
