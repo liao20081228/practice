@@ -27,20 +27,23 @@ static int inline_size = 64;
 static int keepalive = 0;
 static int flags = MSG_DONTWAIT;
 static int poll_timeout = 0;
+
 static void *buf = NULL;
 enum rs_optimization {LANT, BW, MIX};
 static enum rs_optimization optimization;
 static int rd, lrs;
-static int use_async; // if 1 user async , if 0 use sync
-static bool verify =; //if 
+static int use_async = false; // if 1 user async , if 0 use sync
+static bool verify = false; //if 
 static int use_fork;
 static pid_t fork_pid;
 static int size_option;
 static bool custom = false;
 
-
+//处理命令行选项
 int parse_cmd(int argc, char* argv[])
 {
+	bzero(&rs_hint,sizeof rs_hint);
+	rs_hint.ai_port_space = RDMA_PS_TCP;
 	int op, ret;
 	while((op = getopt(argc, argv, "s:b:f:B:i:I:C:S:p:K:p:k:T:")) != -1 )
 	{
