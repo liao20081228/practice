@@ -10,6 +10,7 @@
 #include<netdb.h>
 #include<sys/socket.h>
 #include<stdbool.h>
+
 struct rdma_addrinfo rs_hint; //rdma address info 
 struct addrinfo s_hint; //socket address info
 static bool use_rgai = true;//if 1 ,use rdma_getaddrinfo; if 0, use getaddrinfo
