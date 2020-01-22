@@ -9,13 +9,15 @@
 #include<sys/types.h>
 #include<netdb.h>
 #include<sys/socket.h>
-
+#include<stdbool.h>
 struct rdma_addrinfo rs_hint; //rdma address info 
 struct addrinfo s_hint; //socket address info
+static bool use_rgai = true;//if 1 ,use rdma_getaddrinfo; if 0, use getaddrinfo
 
 static char *src_addr; // souurce address
 static char *dst_addr; // destnation address  
-static const char *port = "10000";  // port number 
+static const char *port = "10000";  // port number
+
 static struct timespec start = {0, 0} , end = {0, 0}; // time of start and end;
 static int iteration = 1000; // num of repeat test
 static int transfer_size = 1000; // 
@@ -29,12 +31,12 @@ static void *buf = NULL;
 enum rs_optimization {LANT, BW, MIX};
 static enum rs_optimization optimization;
 static int rd, lrs;
-static int use_async;
-static int verify;
+static int use_async; // if 1 user async , if 0 use sync
+static bool verify =; //if 
 static int use_fork;
 static pid_t fork_pid;
 static int size_option;
-static int custom = 1;
+static bool custom = false;
 
 
 int parse_cmd(int argc, char* argv[])
