@@ -121,7 +121,7 @@ int parse_cmd(int argc, char* argv[])
 
 		}
 	}
-
+	return 0;
 }
 
 
