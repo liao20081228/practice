@@ -36,7 +36,8 @@ static pid_t fork_pid;
 static int size_option;
 static int custom = 1;
 
-int main(int argc, char *argv[])
+
+int parse_cmd(int argc, char* argv[])
 {
 	int op, ret;
 	while((op = getopt(argc, argv, "s:b:f:B:i:I:C:S:p:K:p:k:T:")) != -1 )
@@ -84,10 +85,50 @@ int main(int argc, char *argv[])
 			case 'k':
 				keepalive = atoi(optarg);
 			case 'T':
+				if (strlen(optarg) == 1)
+					switch(optarg[0])
+					{
+						case 's':
+							use_rs=0;
+							break;
+						case 'a':
+							use_async = 1;
+							break;
+						case 'f':
+							use_rs = 0;
+							use_fork = 1;
+							break;
+						case 'n':
+							flags |= MSG_DONTWAIT;
+							break;
+						case 'r':
+							use_rgai = 1;
+							break;
+						case 'v':
+							verify = 1;
+							break;
+						default: 
+							break;
+					}
 			
 			default :
 				exit(1);
 
 		}
 	}
+
+}
+
+
+
+
+
+
+
+
+
+
+int main(int argc, char *argv[])
+{
+	parse_cmd(argc, argv);
 }
