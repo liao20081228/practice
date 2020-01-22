@@ -15,8 +15,8 @@ static struct rdma_addrinfo rs_hint; //rdma address info
 static struct addrinfo s_hint; //socket address info
 static bool use_rgai = true;//if 1 ,use rdma_getaddrinfo; if 0, use getaddrinfo
 
-static char *src_addr; // souurce address
-static char *dst_addr; // destnation address  
+static const char *src_addr = NULL; // souurce address
+static const char *dst_addr = NULL; // destnation address of client 
 static const char *port = "10000";  // port number
 
 static struct timespec start = {0, 0} , end = {0, 0}; // time of start and end;
@@ -46,7 +46,8 @@ int parse_cmd(int argc, char* argv[])
 {
 	bzero(&rs_hint,sizeof rs_hint);
 	rs_hint.ai_port_space = RDMA_PS_TCP;
-	int op, ret;
+	s_hint.
+	int op;
 	while((op = getopt(argc, argv, "s:b:f:B:i:I:C:S:p:K:p:k:T:")) != -1 )
 	{
 		switch (op)
