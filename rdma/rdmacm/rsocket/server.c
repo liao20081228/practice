@@ -52,13 +52,12 @@ int main(int argc, char *argv[])
 			case 'f':
 				if(!strncasecmp("ip", optarg, 2))
 					s_hint.ai_flags = AI_NUMERICHOST;//node必须使用数字地址
-				else 
-					if (!strncasecmp("gid", optarg ,3))
+				else if (!strncasecmp("gid", optarg ,3))
 					{
 						rs_hint.ai_flags = RAI_NUMERICHOST | RAI_FAMILY;//node为数字地址，并使用ai_family字段
 						rs_hint.ai_family = AF_IB;
 					}
-					else
+				else
 						printf("ip format wrong\n");
 				break;
 			case 'B':
@@ -79,7 +78,15 @@ int main(int argc, char *argv[])
 				custom = 1;
 				transfer_size = atoi(optarg);
 				break;
-
+			case 'p':
+				port = optarg;
+				break;
+			case 'k':
+				keepalive = atoi(optarg);
+			case 'T':
+			
+			default :
+				exit(1);
 
 		}
 	}
