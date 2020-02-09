@@ -1344,26 +1344,30 @@ int main(int argc, char *argv[])
 		ret = EINVAL;
 		goto out;
 	}
-
+	
+	//create event channle
 	cb->cm_channel = create_first_event_channel();
 	if (!cb->cm_channel) {
 		ret = errno;
 		goto out;
 	}
 
-	ret = rdma_create_id(cb->cm_channel, &cb->cm_id, cb, RDMA_PS_TCP);
+	//create id
+	ret = rdma_create_id(cb->cm_channel, &cb->cm_id, cb, RDMA_PS_TCP);//create id
 	if (ret) {
 		perror("rdma_create_id");
 		goto out2;
 	}
 	DEBUG_LOG("created cm_id %p\n", cb->cm_id);
 
-	ret = pthread_create(&cb->cmthread, NULL, cm_thread, cb);
+	////create a cm thread to get-handle-ack cm event
+	ret = pthread_create(&cb->cmthread, NULL, cm_thread, cb); 
 	if (ret) {
 		perror("pthread_create");
 		goto out2;
 	}
-
+	
+	//if server , run as (persistent) server; or as client
 	if (cb->server) {
 		if (persistent_server)
 			ret = rping_run_persistent_server(cb);
