@@ -141,8 +141,8 @@ struct rping_cb {
 	enum test_state state;		/* used for cond/signalling */
 	sem_t sem;
 
-	struct sockaddr_storage sin;
-	struct sockaddr_storage ssource;
+	struct sockaddr_storage sin;      //remote address
+	struct sockaddr_storage ssource;  //local address
 	__be16 port;			/* dst port in NBO */
 	int verbose;			/* verbose logging */
 	int self_create_qp;		/* Create QP not via cma */
