@@ -1276,31 +1276,30 @@ int main(int argc, char *argv[])
 	opterr = 0;
 	while ((op = getopt(argc, argv, "a:I:Pp:C:S:t:scvVdq")) != -1) {
 		switch (op) {
-		case 'a':
+		case 'a': //remote address to connect on client , local address to bind on server
 			ret = get_addr(optarg, (struct sockaddr *) &cb->sin);
 			break;
-		case 'I':
+		case 'I': //local address to bind  on client when existed multiple NICs 
 			ret = get_addr(optarg, (struct sockaddr *) &cb->ssource);
 			break;
-		case 'P':
+		case 'P': //allow multiple clients to conntect to a server
 			persistent_server = 1;
 			break;
-		case 'p':
+		case 'p'://listen port number on server
 			cb->port = htobe16(atoi(optarg));
 			DEBUG_LOG("port %d\n", (int) atoi(optarg));
 			break;
-		case 's':
+		case 's'://run as sever
 			cb->server = 1;
 			DEBUG_LOG("server\n");
 			break;
-		case 'c':
+		case 'c': //run as client
 			cb->server = 0;
 			DEBUG_LOG("client\n");
 			break;
-		case 'S':
+		case 'S'://size of ping-pong data
 			cb->size = atoi(optarg);
-			if ((cb->size < RPING_MIN_BUFSIZE) ||
-			    (cb->size > (RPING_BUFSIZE - 1))) {
+			if ((cb->size < RPING_MIN_BUFSIZE) ||(cb->size > (RPING_BUFSIZE - 1))) {
 				fprintf(stderr, "Invalid size %d "
 				       "(valid range is %zd to %d)\n",
 				       cb->size, RPING_MIN_BUFSIZE, RPING_BUFSIZE);
