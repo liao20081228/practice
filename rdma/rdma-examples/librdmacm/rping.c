@@ -72,9 +72,9 @@ static int debug = 0;
 enum test_state {
 	IDLE = 1,
 	CONNECT_REQUEST,
-	ADDR_RESOLVED,
-	ROUTE_RESOLVED,
-	CONNECTED,
+	ADDR_RESOLVED,// address resolve completed 
+	ROUTE_RESOLVED,//route resolve completed
+	CONNECTED,//connected
 	RDMA_READ_ADV,
 	RDMA_READ_COMPLETE,
 	RDMA_WRITE_ADV,
@@ -84,9 +84,9 @@ enum test_state {
 };
 
 struct rping_rdma_info {
-	__be64 buf;
-	__be32 rkey;
-	__be32 size;
+	__be64 buf;//buffer addr
+	__be32 rkey;//remote key
+	__be32 size;//buffer size 
 };
 
 /*
