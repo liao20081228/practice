@@ -1307,7 +1307,7 @@ int main(int argc, char *argv[])
 			} else
 				DEBUG_LOG("size %d\n", (int) atoi(optarg));
 			break;
-		case 'C':
+		case 'C'://number of message over each connection 
 			cb->count = atoi(optarg);
 			if (cb->count < 0) {
 				fprintf(stderr, "Invalid count %d\n",
@@ -1316,18 +1316,18 @@ int main(int argc, char *argv[])
 			} else
 				DEBUG_LOG("count %d\n", (int) cb->count);
 			break;
-		case 'v':
+		case 'v'://display ping data
 			cb->verbose++;
 			DEBUG_LOG("verbose\n");
 			break;
-		case 'V':
+		case 'V'://verify ping data
 			cb->validate++;
 			DEBUG_LOG("validate data\n");
 			break;
-		case 'd':
+		case 'd'://debug
 			debug++;
 			break;
-		case 'q':
+		case 'q'://create qp by self not via cm
 			cb->self_create_qp = 1;
 			break;
 		default:
