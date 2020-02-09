@@ -4,11 +4,11 @@
 
 void *thread_fun(void* n)
 {
-	int *N = n;
-	printf("this is child thread, val is %d",*N);
+	int N = (int)n;
+	printf("this is child thread, val is %d",N);
 	sleep(10);//主线程先结束，子线程会立即结束,解决办法是
 		//主线程调用 sleep 或  pthread_join
-	switch(*N)
+	switch(N)
 	{
 		case 10:
 			return (void*)10;
@@ -17,19 +17,19 @@ void *thread_fun(void* n)
 		case 7:
 	 		pthread_exit(NULL);
 		default:
-			pthread_exit((void*)*N);
+			pthread_exit((void*)N);
 
 	}
 }
 int main(void)
 {
+	int ret=0;	
 	pthread_t thread_id = 0;
 	if(pthread_create(&thread_id, NULL,thread_fun,(void*)8))
 	{
 		printf("create thread failed\n");
 	}
 	printf("this is main thread, %lu \n", pthread_self());
-	
-	pthread_join(thread_id, NULL);
+	//pthread_join(thread_id, (void**)&ret);
 	return 0;
 }
