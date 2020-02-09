@@ -6,7 +6,8 @@ void *thread_fun(void* n)
 {
 	int *N = n;
 	printf("this is child thread, val is %d",*N);
-	sleep(10);//主线程先结束后，子线程会立即结束,解决办法是用pthread_join	
+	sleep(10);//主线程先结束，子线程会立即结束,解决办法是
+		//主线程调用 sleep 或  pthread_join
 	switch(*N)
 	{
 		case 10:
@@ -28,5 +29,7 @@ int main(void)
 		printf("create thread failed\n");
 	}
 	printf("this is main thread, %lu \n", pthread_self());
+	
+	pthread_join(thread_id, NULL);
 	return 0;
 }
