@@ -1271,7 +1271,7 @@ int main(int argc, char *argv[])
 	cb->size = 64;
 	cb->sin.ss_family = PF_INET;
 	cb->port = htobe16(7174);
-	sem_init(&cb->sem, 0, 0);
+	sem_init(&cb->sem, 0, 0);//信号灯，初始化为0，不可操作
 
 	opterr = 0;
 	while ((op = getopt(argc, argv, "a:I:Pp:C:S:t:scvVdq")) != -1) {
