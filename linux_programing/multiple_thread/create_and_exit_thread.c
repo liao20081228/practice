@@ -1,41 +1,32 @@
 #include<stdio.h>
 #include<pthread.h>
 #include<unistd.h>
-void* add(void * cnt)
+
+void *thread_fun(void* n)
 {
-	int * count = (int *)cnt;
-	for(int i = 0; i < 20; ++i,(*count)++)
+	int *N = n;
+	printf("this is child thread, val is %d",*N);
+	sleep(10);
+	switch(*N)
 	{
-		printf("%lu, count is %d\n", pthread_self(),*count);
-		sleep(1);
+		case 10:
+			return (void*)10;
+		case 9:
+			return NULL;
+		case 7:
+	 		pthread_exit(NULL);
+		default:
+			pthread_exit((void*)*N);
+
 	}
-	return (void*)(*count);
 }
-
-
-
-int main()
+int main(void)
 {
-	int counter = 0;
-
-	pthread_t thread_id1 = 0, thread_id2=0;
-
-	if(pthread_create(&thread_id1, NULL, add, &counter))
+	pthread_t thread_id = 0;
+	if(pthread_create(&thread_id, NULL,thread_fun,(void*)8))
 	{
-		perror("create thread failed!");
-		return 1;
+		printf("create thread failed\n");
 	}
-	if(pthread_create(&thread_id2, NULL, add, &counter))
-	{
-		perror("create thread failed!");
-		return 1;
-	}
-	int ret1 = 0,  ret2 = 0; 
-	pthread_join(thread_id1,(void**)&ret1);
-	pthread_join(thread_id2,(void**)&ret2);
-
-	printf("%lu, ret1 is %d", thread_id1, ret1);
-
-	printf("%lu, ret2 is %d", thread_id2, ret2);
+	printf("this is main thread, %lu \n", pthread_self());
 	return 0;
 }
