@@ -26,8 +26,9 @@ struct context
 
 int main(void)
 {
-	struct rdma_event_channel * rdma_chnnel = rdma_create_event_channel();
-	struct rdma_cm_id* rdma_id = NULL;
-	rdma_create_id(rdma_chnnel,&rdma_id,NULL,RDMA_PS_TCP);
-	rdma_resolve_addr(rdma_id, NULL, )
+	struct context rdma_context;
+	memset(&rdma_context,0, sizeof(rdma_context));
+	rdma_context.rdma_chnnel = rdma_create_event_channel();
+	rdma_create_id(rdma_context.rdma_chnnel,&(rdma_context.rdma_id),NULL,RDMA_PS_TCP);
+	rdma_resolve_addr(rdma_context.rdma_id, NULL, &(rdma_context.dst_addr), 0);
 }
