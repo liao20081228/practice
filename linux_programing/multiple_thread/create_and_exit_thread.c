@@ -9,8 +9,6 @@ void* add(void * cnt)
 		printf("%lu, count is %d\n", pthread_self(),*count);
 		sleep(1);
 	}
-		if (*count == 20)
-		pthread_exit((void*)20);
 	return (void*)(*count);
 }
 
