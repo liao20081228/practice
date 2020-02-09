@@ -4,9 +4,10 @@
 void* add(void * cnt)
 {
 	int * count = (int *)cnt;
-	(*count)++;
+	for(int i = 0; i < 20; ++i,(*count)++)
+		printf("%lu, count is %d", pthread_self(),*count);
 	if (*count == 20)
-		pthread_exit((void*)(20));
+		pthread_exit((void*)20);
 	return (void*)(*count);
 }
 
