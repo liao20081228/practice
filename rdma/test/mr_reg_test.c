@@ -22,8 +22,10 @@ int main()
 		for(int i=0; i< 100;++i)
 		{
 			mhz=get_cpu_mhz(0);
+			void* buf=malloc(k);
 			start=get_cycles();
-							
+			struct ibv_mr * mr = ibv_reg_mr(pd,buf,k,IBV_ACCESS_LOCAL_WRITE|
+						IBV_ACCESS_REMOTE_READ|IBV_ACCESS_REMOTE_WRITE)			
 			end=get_cycles();
 			reg=(end-start)/mhz;
 			sum_reg+=reg;
@@ -34,14 +36,15 @@ int main()
 
 			mhz=get_cpu_mhz(0);
 			start=get_cycles();
-			//dereg	
+			ibv_dereg_mr(mr);	
 			end=get_cycles();
 			dereg=(end-start)/mhz;
 			sum_dereg+=dereg;
 			if(max_dereg<reg)
 				max_dereg=reg;
 			if(min_dereg>reg)
-				min_dereg=reg;		
+				min_dereg=reg;
+			free(buf);		
 		}
 		mean_reg=sum_reg/100;
 		mean_dereg=sum_dereg/100;
