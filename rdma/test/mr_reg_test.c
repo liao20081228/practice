@@ -7,36 +7,36 @@ int main()
 {
 	cycles_t start= 0, end=0;
 	double mhz=0;
-	double reg[100]={0},max_reg=0,min_reg=0,sum_reg=0,mean_reg=0;
-	double dereg[100]={0},max_dereg=0,min_dereg=0,sum_dereg=0,mean_dereg=0;
-
-	while (1)	
+	double reg=0,max_reg=0,min_reg=0,sum_reg=0,mean_reg=0;
+	double dereg=0,max_dereg=0,min_dereg=0,sum_dereg=0,mean_dereg=0;
+	for(int k = 1; k<=64*1024*1024;k*=2)
 	{
 		for(int i=0; i< 100;++i)
 		{
 			mhz=get_cpu_mhz(0);
 			start=get_cycles();
-			//reg			
+							
 			end=get_cycles();
-			reg[i]=(end-start)/mhz;
-			sum_reg+=reg[i];
-			if(max_reg<reg[i])
-				max_reg=reg[i];
-			if(min_reg>reg[i])
-				min_reg=reg[i];	
+			reg=(end-start)/mhz;
+			sum_reg+=reg;
+			if(max_reg<reg)
+				max_reg=reg;
+			if(min_reg>reg)
+				min_reg=reg;
+
 			mhz=get_cpu_mhz(0);
 			start=get_cycles();
 			//dereg	
 			end=get_cycles();
-			reg[i]=(end-start)/mhz;
-			sum_reg+=reg[i];
-			if(max_reg<reg[i])
-				max_reg=reg[i];
-			if(min_reg>reg[i])
-				min_reg=reg[i];		
-
+			dereg=(end-start)/mhz;
+			sum_dereg+=dereg;
+			if(max_dereg<reg)
+				max_dereg=reg;
+			if(min_dereg>reg)
+				min_dereg=reg;		
 		}
-		min_reg=sum_reg/100;
+		mean_reg=sum_reg/100;
+		mean_dereg=sum_dereg/100;
 	
 	}
 }
