@@ -3,6 +3,7 @@
 #include<rdma/rdma_cma.h>
 #include<rdma/rdma_verbs.h>
 #include<infiniband/verbs.h>
+#include<stdlib.h>
 int main()
 {
 	cycles_t start= 0, end=0;
@@ -19,13 +20,13 @@ int main()
 	printf("mr size\tmax_reg\tmin_reg\tmean_reg\tmax_dereg\tmin_dereg\tmean_dereg\n");
 	for(int k = 1; k<=64*1024*1024;k*=2)
 	{
-		for(int i=0; i< 100;++i)
+		for(int i=0; i< 10;++i)
 		{
 			mhz=get_cpu_mhz(0);
 			void* buf=malloc(k);
 			start=get_cycles();
 			struct ibv_mr * mr = ibv_reg_mr(pd,buf,k,IBV_ACCESS_LOCAL_WRITE|
-						IBV_ACCESS_REMOTE_READ|IBV_ACCESS_REMOTE_WRITE)			
+					IBV_ACCESS_REMOTE_READ|IBV_ACCESS_REMOTE_WRITE);			
 			end=get_cycles();
 			reg=(end-start)/mhz;
 			sum_reg+=reg;
@@ -51,5 +52,7 @@ int main()
 		printf("%d\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",k,max_reg,min_reg,mean_reg,
 							max_dereg,min_dereg,mean_dereg);
 	}
+	ibv_dealloc_pd(pd);
+	ibv_close_device(context);
 }
 
