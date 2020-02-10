@@ -9,6 +9,12 @@ int main()
 	double mhz=0;
 	double reg=0,max_reg=0,min_reg=0,sum_reg=0,mean_reg=0;
 	double dereg=0,max_dereg=0,min_dereg=0,sum_dereg=0,mean_dereg=0;
+	
+	struct ibv_device ** dev_list=ibv_get_device_list(NULL);
+	struct ibv_context* context= ibv_open_device(dev_list[0]);
+	ibv_free_device_list(dev_list);
+
+
 
 	for(int k = 1; k<=64*1024*1024;k*=2)
 	{
