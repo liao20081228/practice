@@ -14,10 +14,15 @@ int main()
 	struct ibv_device ** dev_list=ibv_get_device_list(NULL);
 	struct ibv_context* context= ibv_open_device(dev_list[0]);
 	ibv_free_device_list(dev_list);
+
+	struct ibv_device_attr device_attr;
+	ibv_query_device(context, &device_attr);
+	printf("max_mr_size is %lu\n", device_attr.max_mr_size);
+
 	struct ibv_pd* pd=ibv_alloc_pd(context);	
 
 
-	printf("mr_size    \tmax_reg        \tmin_reg    \tmean_reg    \tmax_dereg    \tmin_dereg    \tmean_dereg\n");
+	printf("mr_size \tmax_reg        \tmin_reg    \tmean_reg    \tmax_dereg    \tmin_dereg    \tmean_dereg\n");
 	for(int k = 1; k<=64*1024*1024;k*=2)
 	{
 		for(int i=0; i< 10;++i)
