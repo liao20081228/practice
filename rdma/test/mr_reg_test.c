@@ -27,7 +27,7 @@ int main()
 		double reg=0,max_reg=0,min_reg=INT32_MAX,sum_reg=0,mean_reg=0;
 		double dereg=0,max_dereg=0,min_dereg=INT32_MAX,sum_dereg=0,mean_dereg=0;
 
-		for(int i=0; i< 10;++i)
+		for(int i=0; i< 100;++i)
 		{
 			mhz=get_cpu_mhz(0);
 			//void* buf=malloc(k);
@@ -59,8 +59,8 @@ int main()
 			if(min_dereg>reg)
 				min_dereg=reg;
 		}
-		mean_reg=sum_reg/10;
-		mean_dereg=sum_dereg/10;
+		mean_reg=sum_reg/100;
+		mean_dereg=sum_dereg/100;
 		printf("%d\t  %lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",k,max_reg,min_reg,mean_reg,
 							max_dereg,min_dereg,mean_dereg);
 	}
