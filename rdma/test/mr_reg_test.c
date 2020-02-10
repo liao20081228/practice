@@ -24,7 +24,7 @@ int main()
 
 
 	printf("mr_size \tmax_reg        \tmin_reg    \tmean_reg    \tmax_dereg    \tmin_dereg    \tmean_dereg\n");
-	for(int k = 833608; k<=64*1024*1024;k*=2)
+	for(int k = 1024*1024*16; k<=64*1024*1024;k*=2)
 	{
 		for(int i=0; i< 10;++i)
 		{
