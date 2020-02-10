@@ -8,8 +8,8 @@ int main()
 {
 	cycles_t start= 0, end=0;
 	double mhz=0;
-	double reg=0,max_reg=0,min_reg=0,sum_reg=0,mean_reg=0;
-	double dereg=0,max_dereg=0,min_dereg=0,sum_dereg=0,mean_dereg=0;
+	double reg=0,max_reg=0,min_reg=INT32_MAX,sum_reg=0,mean_reg=0;
+	double dereg=0,max_dereg=0,min_dereg=INT32_MAX,sum_dereg=0,mean_dereg=0;
 	
 	struct ibv_device ** dev_list=ibv_get_device_list(NULL);
 	struct ibv_context* context= ibv_open_device(dev_list[0]);
@@ -17,7 +17,7 @@ int main()
 	struct ibv_pd* pd=ibv_alloc_pd(context);	
 
 
-	printf("mr size\tmax_reg\tmin_reg\tmean_reg\tmax_dereg\tmin_dereg\tmean_dereg\n");
+	printf("mr_size    \tmax_reg        \tmin_reg    \tmean_reg    \tmax_dereg    \tmin_dereg    \tmean_dereg\n");
 	for(int k = 1; k<=64*1024*1024;k*=2)
 	{
 		for(int i=0; i< 10;++i)
