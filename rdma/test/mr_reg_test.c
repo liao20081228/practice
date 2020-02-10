@@ -23,7 +23,7 @@ int main()
 	struct ibv_pd* pd=ibv_alloc_pd(context);	
 
 
-	printf("mr_size \tmax_reg        \tmin_reg    \tmean_reg    \tmax_dereg    \tmin_dereg    \tmean_dereg\n");
+	printf("mr_size\t  max_reg\t  min_reg\t  mean_reg\t  max_dereg\t  min_dereg\t  mean_dereg\n");
 	for(int k = 1; k<=64*1024*1024;k*=2)
 	{
 		for(int i=0; i< 10;++i)
@@ -58,9 +58,9 @@ int main()
 			if(min_dereg>reg)
 				min_dereg=reg;
 		}
-		mean_reg=sum_reg/100;
-		mean_dereg=sum_dereg/100;
-		printf("%d\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",k,max_reg,min_reg,mean_reg,
+		mean_reg=sum_reg/10;
+		mean_dereg=sum_dereg/10;
+		printf("%d\t  %lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",k,max_reg,min_reg,mean_reg,
 							max_dereg,min_dereg,mean_dereg);
 	}
 	ibv_dealloc_pd(pd);
