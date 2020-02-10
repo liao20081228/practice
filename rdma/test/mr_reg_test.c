@@ -18,6 +18,7 @@ int main()
 	struct ibv_device_attr device_attr;
 	ibv_query_device(context, &device_attr);
 	printf("max_mr_size is %lu\n", device_attr.max_mr_size);
+	printf("max_mr is %d\n", device_attr.max_mr);
 
 	struct ibv_pd* pd=ibv_alloc_pd(context);	
 
@@ -36,7 +37,12 @@ int main()
 			}
 			start=get_cycles();
 			struct ibv_mr * mr = ibv_reg_mr(pd,buf,k,IBV_ACCESS_LOCAL_WRITE|
-					IBV_ACCESS_REMOTE_READ|IBV_ACCESS_REMOTE_WRITE);			
+					IBV_ACCESS_REMOTE_READ|IBV_ACCESS_REMOTE_WRITE);
+			if(!mr)
+			{
+				perror("reg mr failed");
+				return 0;
+			}			
 			end=get_cycles();
 			reg=(end-start)/mhz;
 			sum_reg+=reg;
