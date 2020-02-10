@@ -9,6 +9,7 @@ int main()
 	double mhz=0;
 	double reg=0,max_reg=0,min_reg=0,sum_reg=0,mean_reg=0;
 	double dereg=0,max_dereg=0,min_dereg=0,sum_dereg=0,mean_dereg=0;
+
 	for(int k = 1; k<=64*1024*1024;k*=2)
 	{
 		for(int i=0; i< 100;++i)
