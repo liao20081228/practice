@@ -24,20 +24,15 @@ int main()
 
 
 	printf("mr_size \tmax_reg        \tmin_reg    \tmean_reg    \tmax_dereg    \tmin_dereg    \tmean_dereg\n");
-	for(int k = 1024*1024*16; k<=64*1024*1024;k*=2)
+	for(int k = 1; k<=64*1024*1024;k*=2)
 	{
 		for(int i=0; i< 10;++i)
 		{
 			mhz=get_cpu_mhz(0);
-			void* buf=malloc(k);
-			if (!buf)
-			{
-				printf("malloc failed");
-				return 0;
-			}
+			//void* buf=malloc(k);
 			start=get_cycles();
-			struct ibv_mr * mr = ibv_reg_mr(pd,buf,k,IBV_ACCESS_LOCAL_WRITE|
-					IBV_ACCESS_REMOTE_READ|IBV_ACCESS_REMOTE_WRITE);
+			void* buf=malloc(k);
+			struct ibv_mr * mr = ibv_reg_mr(pd,buf,k,IBV_ACCESS_LOCAL_WRITE);
 			if(!mr)
 			{
 				perror("reg mr failed");
@@ -56,12 +51,12 @@ int main()
 			ibv_dereg_mr(mr);	
 			end=get_cycles();
 			dereg=(end-start)/mhz;
+			free(buf);		
 			sum_dereg+=dereg;
 			if(max_dereg<reg)
 				max_dereg=reg;
 			if(min_dereg>reg)
 				min_dereg=reg;
-			free(buf);		
 		}
 		mean_reg=sum_reg/100;
 		mean_dereg=sum_dereg/100;
