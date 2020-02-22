@@ -328,7 +328,8 @@ out:
 	close(connfd);
 	return rem_dest;
 }
-
+//说明：
+//参数：要使用的设备的结构体，ping-pong消息大小，接收工作请求的数量，物理端口索引，时间通知还是轮旬
 static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 					    int rx_depth, int port,
 					    int use_event)
@@ -341,7 +342,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 		return NULL;
 
 	ctx->size       = size;
-	ctx->send_flags = IBV_SEND_SIGNALED;
+	ctx->send_flags = IBV_SEND_SIGNALED;//每个发送WR都会生成CQE
 	ctx->rx_depth   = rx_depth;
 
 	ctx->buf = memalign(page_size, size);
@@ -982,7 +983,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	ctx = pp_init_ctx(ib_dev, size, rx_depth, ib_port, use_event);//初始化ping-pong上下文
+	ctx = pp_init_ctx(ib_dev, size, rx_depth, ib_port, use_event);//获取并初始化ping-pong上下文
 	if (!ctx)
 		return 1;
 
