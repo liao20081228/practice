@@ -436,7 +436,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 		}
 	}
 
-	if (implicit_odp) {
+	if (implicit_odp) {//注册内存
 		ctx->mr = ibv_reg_mr(ctx->pd, NULL, SIZE_MAX, access_flags);
 	} else {
 		ctx->mr = use_dm ? ibv_reg_dm_mr(ctx->pd, ctx->dm, 0,
@@ -449,7 +449,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 		goto clean_dm;
 	}
 
-	if (prefetch_mr) {
+	if (prefetch_mr) {//预取内存
 		struct ibv_sge sg_list;
 		int ret;
 
@@ -465,7 +465,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 			fprintf(stderr, "Couldn't prefetch MR(%d). Continue anyway\n", ret);
 	}
 
-	if (use_ts) {
+	if (use_ts) {//创建CQ或具有时间戳的扩展CQ
 		struct ibv_cq_init_attr_ex attr_ex = {
 			.cqe = rx_depth + 1,
 			.cq_context = NULL,
@@ -480,12 +480,12 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 					     ctx->channel, 0);
 	}
 
-	if (!pp_cq(ctx)) {
+	if (!pp_cq(ctx)) {//判断CQ是都成功创建
 		fprintf(stderr, "Couldn't create CQ\n");
 		goto clean_mr;
 	}
 
-	{
+	{//设置QP容量，QP类型 ，创QP
 		struct ibv_qp_attr attr;
 		struct ibv_qp_init_attr init_attr = {
 			.send_cq = pp_cq(ctx),
