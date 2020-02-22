@@ -1011,14 +1011,14 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	my_dest.lid = ctx->portinfo.lid;//获取目标lid
+	my_dest.lid = ctx->portinfo.lid;//如果L2是以太网则无需lid，否则需要。因为lid的iB网络的
 	if (ctx->portinfo.link_layer != IBV_LINK_LAYER_ETHERNET &&
 							!my_dest.lid) {
 		fprintf(stderr, "Couldn't get local LID\n");
 		return 1;
 	}
 
-	if (gidx >= 0) {
+	if (gidx >= 0) {//如果指定了gid索引则使用指定的gid,否则使用默认索引为0的gid
 		if (ibv_query_gid(ctx->context, ib_port, gidx, &my_dest.gid)) {
 			fprintf(stderr, "can't read sgid of index %d\n", gidx);
 			return 1;
