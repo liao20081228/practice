@@ -221,7 +221,7 @@ static struct pingpong_dest *pp_client_exch_dest(const char *servername, int por
 		goto out;
 
 	sscanf(msg, "%x:%x:%x:%s", &rem_dest->lid, &rem_dest->qpn,
-						&rem_dest->psn, gid);//解析服务端发来的通信信息,主要是GID
+						&rem_dest->psn, gid);//解析服务端发来的通信信息
 	wire_gid_to_gid(gid, &rem_dest->gid);
 
 out:
@@ -229,12 +229,14 @@ out:
 	return rem_dest;
 }
 
+//服务端利用socket来传递通信信息给客户端
 static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 						 int ib_port, enum ibv_mtu mtu,
 						 int port, int sl,
 						 const struct pingpong_dest *my_dest,
 						 int sgid_idx)
 {
+	//创建并接受
 	struct addrinfo *res, *t;
 	struct addrinfo hints = {
 		.ai_flags    = AI_PASSIVE,
