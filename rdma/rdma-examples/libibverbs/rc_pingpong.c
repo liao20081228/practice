@@ -370,13 +370,13 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 	} else
 		ctx->channel = NULL;
 
-	ctx->pd = ibv_alloc_pd(ctx->context);
+	ctx->pd = ibv_alloc_pd(ctx->context);//创建保护域
 	if (!ctx->pd) {
 		fprintf(stderr, "Couldn't allocate PD\n");
 		goto clean_comp_channel;
 	}
 
-	if (use_odp || use_ts || use_dm) {
+	if (use_odp || use_ts || use_dm) {//如果要使用按需分页、时间戳、设备内存,需要先查询设备是否支持扩展功能
 		const uint32_t rc_caps_mask = IBV_ODP_SUPPORT_SEND |
 					      IBV_ODP_SUPPORT_RECV;
 		struct ibv_device_attr_ex attrx;
@@ -397,7 +397,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 				fprintf(stderr, "The device doesn't support implicit ODP\n");
 				goto clean_pd;
 			}
-			access_flags |= IBV_ACCESS_ON_DEMAND;
+			access_flags |= IBV_ACCESS_ON_DEMAND;//如果支持按需分配内存页或隐式按需分配则，MR使用按需分配
 		}
 
 		if (use_ts) {
