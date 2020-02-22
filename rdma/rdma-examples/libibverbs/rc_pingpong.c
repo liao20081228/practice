@@ -957,20 +957,20 @@ int main(int argc, char *argv[])
 	}
 
 	page_size = sysconf(_SC_PAGESIZE);
-
-	dev_list = ibv_get_device_list(NULL);
+	
+	dev_list = ibv_get_device_list(NULL);//获取设备列表
 	if (!dev_list) {
 		perror("Failed to get IB devices list");
 		return 1;
 	}
 
-	if (!ib_devname) {
+	if (!ib_devname) {//获取设备机构体，默认第一个找的设备
 		ib_dev = *dev_list;
 		if (!ib_dev) {
 			fprintf(stderr, "No IB devices found\n");
 			return 1;
 		}
-	} else {
+	} else {//如果指定了设备，则获取指定设备
 		int i;
 		for (i = 0; dev_list[i]; ++i)
 			if (!strcmp(ibv_get_device_name(dev_list[i]), ib_devname))
@@ -982,7 +982,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	ctx = pp_init_ctx(ib_dev, size, rx_depth, ib_port, use_event);
+	ctx = pp_init_ctx(ib_dev, size, rx_depth, ib_port, use_event);//初始化ping-pong上下文
 	if (!ctx)
 		return 1;
 
