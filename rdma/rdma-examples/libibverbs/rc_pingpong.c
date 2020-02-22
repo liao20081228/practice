@@ -539,7 +539,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 		struct ibv_qp_attr attr = {
 			.qp_state        = IBV_QPS_INIT,
 			.pkey_index      = 0,
-			.port_num        = port,//TCP端口号
+			.port_num        = port,//RDMA的设备端口号
 			.qp_access_flags = 0
 		};
 
