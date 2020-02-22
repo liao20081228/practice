@@ -334,7 +334,7 @@ out:
 //      d.创建CQ或扩展CQ
 //      e.创建QP
 //      f.如果inlinesize大于数据大小，则使用内联数据
-//
+//	d.将QP设置为初始态
 //参数：要使用的设备的结构体，ping-pong消息大小，接收工作请求的数量，物理端口索引，时间通知还是轮旬
 static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 					    int rx_depth, int port,
@@ -989,11 +989,11 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	ctx = pp_init_ctx(ib_dev, size, rx_depth, ib_port, use_event);//获取并初始化ping-pong上下文
+	ctx = pp_init_ctx(ib_dev, size, rx_depth, ib_port, use_event);//获取并初始化ping-pong上下文:创建PD、CQ、CC、QP、MR
 	if (!ctx)
 		return 1;
 
-	routs = pp_post_recv(ctx, ctx->rx_depth);
+	routs = pp_post_recv(ctx, ctx->rx_depth);//发布接收请求
 	if (routs < ctx->rx_depth) {
 		fprintf(stderr, "Couldn't post receive (%d)\n", routs);
 		return 1;
