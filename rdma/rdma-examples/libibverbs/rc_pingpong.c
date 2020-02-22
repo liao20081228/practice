@@ -55,14 +55,14 @@ enum {
 	PINGPONG_SEND_WRID = 2,
 };
 
-static int page_size;
-static int use_odp;
-static int implicit_odp;
-static int prefetch_mr;
-static int use_ts;
-static int validate_buf;
-static int use_dm;
-static int use_new_send;
+static int page_size;//页大小
+static int use_odp;//使用按需分页？
+static int implicit_odp;//使用隐式按需分页？
+static int prefetch_mr;//预先取回按需分页内存区
+static int use_ts;//CQE中带有完成时间戳？
+static int validate_buf;//验证接收缓冲区？
+static int use_dm;//使用设备内存
+static int use_new_send;//使用新的发布发送操作的API
 
 struct pingpong_context {
 	struct ibv_context	*context;
@@ -800,18 +800,18 @@ int main(int argc, char *argv[])
 	char                    *ib_devname = NULL;//要使用的RDMA网卡的名字
 	char                    *servername = NULL;
 	unsigned int             port = 18515;//用于同步信息的TCP端口号
-	int                      ib_port = 1;
-	unsigned int             size = 4096;
-	enum ibv_mtu		 mtu = IBV_MTU_1024;
-	unsigned int             rx_depth = 500;
-	unsigned int             iters = 1000;
-	int                      use_event = 0;
+	int                      ib_port = 1;//要使用的RDMA设备的物理端口索引
+	unsigned int             size = 4096;//ping-pong测试使用的数据大小
+	enum ibv_mtu		 mtu = IBV_MTU_1024;//网络的最大传输单元
+	unsigned int             rx_depth = 500;//一次发送的接收工作请求的数量
+	unsigned int             iters = 1000;//重复通信的次数或叫重复试验次数
+	int                      use_event = 0;//等待完成时使用轮询还是时间通知
 	int                      routs;
 	int                      rcnt, scnt;
 	int                      num_cq_events = 0;
-	int                      sl = 0;
-	int			 gidx = -1;
-	char			 gid[33];
+	int                      sl = 0;//服务级别
+	int			 gidx = -1;//要使用gid的索引
+	char			 gid[33];//gid
 	struct ts_params	 ts;
 
 	srand48(getpid() * time(NULL));
