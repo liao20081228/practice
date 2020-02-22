@@ -35,10 +35,10 @@
 
 #include <infiniband/verbs.h>
 
-enum ibv_mtu pp_mtu_to_enum(int mtu);
+enum ibv_mtu pp_mtu_to_enum(int mtu);//获取MTU对应的枚举值
 int pp_get_port_info(struct ibv_context *context, int port,
-		     struct ibv_port_attr *attr);
-void wire_gid_to_gid(const char *wgid, union ibv_gid *gid);
-void gid_to_wire_gid(const union ibv_gid *gid, char wgid[]);
+		     struct ibv_port_attr *attr);//查询端口属性
+void wire_gid_to_gid(const char *wgid, union ibv_gid *gid);//将字符串gid值转为gid
+void gid_to_wire_gid(const union ibv_gid *gid, char wgid[]);//将gid转为大端字符串
 
 #endif /* IBV_PINGPONG_H */
