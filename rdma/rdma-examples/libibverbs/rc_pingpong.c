@@ -332,6 +332,8 @@ out:
 //      b.判断ODP、timestamp、device memory是否指定要使用，如果指定了，则判断是否支持，如果支持则设置相应的标志
 //      c.注册内存（按需分配内存 or 设备内存 or 普通内存）
 //      d.创建CQ或扩展CQ
+//      e.创建QP
+//      f.如果inlinesize大于数据大小，则使用内联数据
 //
 //参数：要使用的设备的结构体，ping-pong消息大小，接收工作请求的数量，物理端口索引，时间通知还是轮旬
 static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
