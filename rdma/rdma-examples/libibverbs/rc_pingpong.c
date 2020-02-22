@@ -328,8 +328,11 @@ out:
 	close(connfd);
 	return rem_dest;
 }
-//说明：获取设备上下文、分配缓冲区、创建时间通道（事件，轮询不需要）、保护域；
-//      判断ODP、timestamp、device memory是否指定要使用，如果指定了，则判断是否支持，如果支持则设置相应的标志
+//说明：a.获取设备上下文、分配缓冲区、创建时间通道（事件，轮询不需要）、保护域；
+//      b.判断ODP、timestamp、device memory是否指定要使用，如果指定了，则判断是否支持，如果支持则设置相应的标志
+//      c.注册内存（按需分配内存 or 设备内存 or 普通内存）
+//      d.创建CQ或扩展CQ
+//
 //参数：要使用的设备的结构体，ping-pong消息大小，接收工作请求的数量，物理端口索引，时间通知还是轮旬
 static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 					    int rx_depth, int port,
