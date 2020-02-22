@@ -156,6 +156,7 @@ static int pp_connect_ctx(struct pingpong_context *ctx, int port, int my_psn,
 	return 0;
 }
 
+//客户端利用socket来传递信息给服务器
 static struct pingpong_dest *pp_client_exch_dest(const char *servername, int port,
 						 const struct pingpong_dest *my_dest)
 {
