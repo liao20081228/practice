@@ -236,7 +236,6 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 						 const struct pingpong_dest *my_dest,
 						 int sgid_idx)
 {
-	//创建并接受
 	struct addrinfo *res, *t;
 	struct addrinfo hints = {
 		.ai_flags    = AI_PASSIVE,
@@ -262,13 +261,13 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 	}
 
 	for (t = res; t; t = t->ai_next) {
-		sockfd = socket(t->ai_family, t->ai_socktype, t->ai_protocol);
+		sockfd = socket(t->ai_family, t->ai_socktype, t->ai_protocol);//创建socket
 		if (sockfd >= 0) {
 			n = 1;
 
 			setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &n, sizeof n);
 
-			if (!bind(sockfd, t->ai_addr, t->ai_addrlen))
+			if (!bind(sockfd, t->ai_addr, t->ai_addrlen))//绑定
 				break;
 			close(sockfd);
 			sockfd = -1;
@@ -283,15 +282,15 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 		return NULL;
 	}
 
-	listen(sockfd, 1);
-	connfd = accept(sockfd, NULL, NULL);
+	listen(sockfd, 1);//监听
+	connfd = accept(sockfd, NULL, NULL);//接收
 	close(sockfd);
 	if (connfd < 0) {
 		fprintf(stderr, "accept() failed\n");
 		return NULL;
 	}
 
-	n = read(connfd, msg, sizeof msg);
+	n = read(connfd, msg, sizeof msg);//读取客户端传来的元数据
 	if (n != sizeof msg) {
 		perror("server read");
 		fprintf(stderr, "%d/%d: Couldn't read remote address\n", n, (int) sizeof msg);
@@ -303,7 +302,7 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 		goto out;
 
 	sscanf(msg, "%x:%x:%x:%s", &rem_dest->lid, &rem_dest->qpn,
-							&rem_dest->psn, gid);
+							&rem_dest->psn, gid);//解析客户端传来的通信数据
 	wire_gid_to_gid(gid, &rem_dest->gid);
 
 	if (pp_connect_ctx(ctx, ib_port, my_dest->psn, mtu, sl, rem_dest,
