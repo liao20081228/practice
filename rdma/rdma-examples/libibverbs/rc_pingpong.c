@@ -328,7 +328,8 @@ out:
 	close(connfd);
 	return rem_dest;
 }
-//说明：
+//说明：获取设备上下文、分配缓冲区、创建时间通道（事件，轮询不需要）、保护域；
+//      判断ODP、timestamp、device memory是否指定要使用，如果指定了，则判断是否支持，如果支持则设置相应的标志
 //参数：要使用的设备的结构体，ping-pong消息大小，接收工作请求的数量，物理端口索引，时间通知还是轮旬
 static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 					    int rx_depth, int port,
@@ -386,7 +387,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 			goto clean_pd;
 		}
 
-		if (use_odp) {
+		if (use_odp) {//查询是否支持按需分页或隐式按需分页？
 			if (!(attrx.odp_caps.general_caps & IBV_ODP_SUPPORT) ||
 			    (attrx.odp_caps.per_transport_caps.rc_odp_caps & rc_caps_mask) != rc_caps_mask) {
 				fprintf(stderr, "The device isn't ODP capable or does not support RC send and receive with ODP\n");
@@ -400,15 +401,15 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 			access_flags |= IBV_ACCESS_ON_DEMAND;//如果支持按需分配内存页或隐式按需分配则，MR使用按需分配
 		}
 
-		if (use_ts) {
+		if (use_ts) {//是否支持完成时间戳
 			if (!attrx.completion_timestamp_mask) {
 				fprintf(stderr, "The device isn't completion timestamp capable\n");
 				goto clean_pd;
 			}
-			ctx->completion_timestamp_mask = attrx.completion_timestamp_mask;
+			ctx->completion_timestamp_mask = attrx.completion_timestamp_mask;//获取完成时间戳掩码
 		}
 
-		if (use_dm) {
+		if (use_dm) {//查看设备内存是否足够？足够则分配设备内存
 			struct ibv_alloc_dm_attr dm_attr = {};
 
 			if (!attrx.max_dm_size) {
@@ -428,7 +429,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 				goto clean_pd;
 			}
 
-			access_flags |= IBV_ACCESS_ZERO_BASED;
+			access_flags |= IBV_ACCESS_ZERO_BASED;//使用设备内存必须使用此标志
 		}
 	}
 
