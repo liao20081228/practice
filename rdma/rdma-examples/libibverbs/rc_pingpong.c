@@ -539,7 +539,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 		struct ibv_qp_attr attr = {
 			.qp_state        = IBV_QPS_INIT,
 			.pkey_index      = 0,
-			.port_num        = port,
+			.port_num        = port,//TCP端口号
 			.qp_access_flags = 0
 		};
 
@@ -999,19 +999,19 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	if (use_event)
+	if (use_event)//如果不使用轮询则使用发出一次完成通知
 		if (ibv_req_notify_cq(pp_cq(ctx), 0)) {
 			fprintf(stderr, "Couldn't request CQ notification\n");
 			return 1;
 		}
 
 
-	if (pp_get_port_info(ctx->context, ib_port, &ctx->portinfo)) {
+	if (pp_get_port_info(ctx->context, ib_port, &ctx->portinfo)) {//获取端口属性
 		fprintf(stderr, "Couldn't get port info\n");
 		return 1;
 	}
 
-	my_dest.lid = ctx->portinfo.lid;
+	my_dest.lid = ctx->portinfo.lid;//获取目标lid
 	if (ctx->portinfo.link_layer != IBV_LINK_LAYER_ETHERNET &&
 							!my_dest.lid) {
 		fprintf(stderr, "Couldn't get local LID\n");
