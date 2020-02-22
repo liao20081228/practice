@@ -98,6 +98,7 @@ struct pingpong_dest {
 	union ibv_gid gid;//gid
 };
 
+//利用收到对方的通信信息来进行进行QP连接
 static int pp_connect_ctx(struct pingpong_context *ctx, int port, int my_psn,
 			  enum ibv_mtu mtu, int sl,
 			  struct pingpong_dest *dest, int sgid_idx)
@@ -1052,7 +1053,8 @@ int main(int argc, char *argv[])
 		if (pp_connect_ctx(ctx, ib_port, my_dest.psn, mtu, sl, rem_dest,
 					gidx))
 			return 1;
-
+	//QP连接终于建立起来了
+	
 	ctx->pending = PINGPONG_RECV_WRID;
 
 	if (servername) {
