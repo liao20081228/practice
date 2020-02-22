@@ -791,15 +791,15 @@ static void usage(const char *argv0)
 
 int main(int argc, char *argv[])
 {
-	struct ibv_device      **dev_list;
-	struct ibv_device	*ib_dev;
-	struct pingpong_context *ctx;
-	struct pingpong_dest     my_dest;
+	struct ibv_device      **dev_list;//主机的RDMA网卡列表
+	struct ibv_device	*ib_dev;//要使用的RDMA网卡
+	struct pingpong_context *ctx;//ping-pong
+	struct pingpong_dest     my_dest;//
 	struct pingpong_dest    *rem_dest;
-	struct timeval           start, end;
-	char                    *ib_devname = NULL;
+	struct timeval           start, end;//起始和结束
+	char                    *ib_devname = NULL;//要使用的RDMA网卡的名字
 	char                    *servername = NULL;
-	unsigned int             port = 18515;
+	unsigned int             port = 18515;//用于同步信息的TCP端口号
 	int                      ib_port = 1;
 	unsigned int             size = 4096;
 	enum ibv_mtu		 mtu = IBV_MTU_1024;
