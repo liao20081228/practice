@@ -317,7 +317,7 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 	gid_to_wire_gid(&my_dest->gid, gid);
 	sprintf(msg, "%04x:%06x:%06x:%s", my_dest->lid, my_dest->qpn,
 							my_dest->psn, gid);
-	if (write(connfd, msg, sizeof msg) != sizeof msg ||
+	if (write(connfd, msg, sizeof msg) != sizeof msg ||//将服务端的lid、qpn、spn、gid发给客户端，并根据done判断是否完成信息交换
 	    read(connfd, msg, sizeof msg) != sizeof "done") {
 		fprintf(stderr, "Couldn't send/recv local address\n");
 		free(rem_dest);
