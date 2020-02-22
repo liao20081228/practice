@@ -345,7 +345,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 	ctx->send_flags = IBV_SEND_SIGNALED;//每个发送WR都会生成CQE
 	ctx->rx_depth   = rx_depth;
 
-	ctx->buf = memalign(page_size, size);
+	ctx->buf = memalign(page_size, size);//分配一个地址是page_size倍数，大小为size的内存块。保证内存对齐
 	if (!ctx->buf) {
 		fprintf(stderr, "Couldn't allocate work buf.\n");
 		goto clean_ctx;
@@ -354,14 +354,14 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 	/* FIXME memset(ctx->buf, 0, size); */
 	memset(ctx->buf, 0x7b, size);
 
-	ctx->context = ibv_open_device(ib_dev);
+	ctx->context = ibv_open_device(ib_dev);//打开设备
 	if (!ctx->context) {
 		fprintf(stderr, "Couldn't get context for %s\n",
 			ibv_get_device_name(ib_dev));
 		goto clean_buffer;
 	}
 
-	if (use_event) {
+	if (use_event) {//如果使用时间通知机制则创建完成通道，使用轮询则不需要
 		ctx->channel = ibv_create_comp_channel(ctx->context);
 		if (!ctx->channel) {
 			fprintf(stderr, "Couldn't create completion channel\n");
