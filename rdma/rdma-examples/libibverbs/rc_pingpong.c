@@ -65,24 +65,24 @@ static int use_dm;//使用设备内存
 static int use_new_send;//使用新的发布发送操作的API
 
 struct pingpong_context {
-	struct ibv_context	*context;
-	struct ibv_comp_channel *channel;
-	struct ibv_pd		*pd;
-	struct ibv_mr		*mr;
-	struct ibv_dm		*dm;
+	struct ibv_context	*context;//打开设备得到的设备上下文
+	struct ibv_comp_channel *channel;//完成通道
+	struct ibv_pd		*pd;//保护域
+	struct ibv_mr		*mr;//注册内存
+	struct ibv_dm		*dm;//设备内存
 	union {
 		struct ibv_cq		*cq;
 		struct ibv_cq_ex	*cq_ex;
-	} cq_s;
-	struct ibv_qp		*qp;
-	struct ibv_qp_ex	*qpx;
-	char			*buf;
-	int			 size;
-	int			 send_flags;
-	int			 rx_depth;
-	int			 pending;
-	struct ibv_port_attr     portinfo;
-	uint64_t		 completion_timestamp_mask;
+	} cq_s;//完成队列，或扩展完成队列
+	struct ibv_qp		*qp;//QPs
+	struct ibv_qp_ex	*qpx;//扩展QP
+	char			*buf;//缓冲区
+	int			 size;//数据大小
+	int			 send_flags;//发送标志
+	int			 rx_depth;//接收WR的数量
+	int			 pending;//挂起
+	struct ibv_port_attr     portinfo;//端口信息
+	uint64_t		 completion_timestamp_mask;//完成时间戳掩码
 };
 
 static struct ibv_cq *pp_cq(struct pingpong_context *ctx)
@@ -92,10 +92,10 @@ static struct ibv_cq *pp_cq(struct pingpong_context *ctx)
 }
 
 struct pingpong_dest {
-	int lid;
-	int qpn;
-	int psn;
-	union ibv_gid gid;
+	int lid;//本地id
+	int qpn;//QP编号
+	int psn;//包序列号
+	union ibv_gid gid;//gid
 };
 
 static int pp_connect_ctx(struct pingpong_context *ctx, int port, int my_psn,
