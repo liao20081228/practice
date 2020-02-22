@@ -335,7 +335,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 					    int use_event)
 {
 	struct pingpong_context *ctx;
-	int access_flags = IBV_ACCESS_LOCAL_WRITE;
+	int access_flags = IBV_ACCESS_LOCAL_WRITE;//内存区访问标志
 
 	ctx = calloc(1, sizeof *ctx);
 	if (!ctx)
