@@ -937,17 +937,17 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	if (use_odp && use_dm) {
+	if (use_odp && use_dm) {//使用设备内存时不能使用按需分配内存页
 		fprintf(stderr, "DM memory region can't be on demand\n");
 		return 1;
 	}
 
-	if (!use_odp && prefetch_mr) {
+	if (!use_odp && prefetch_mr) {//使用需分配内存页必须预先取得内存
 		fprintf(stderr, "prefetch is valid only with on-demand memory region\n");
 		return 1;
 	}
 
-	if (use_ts) {
+	if (use_ts) {//如果使用完成时间戳，则将ts结构体初始化
 		ts.comp_recv_max_time_delta = 0;
 		ts.comp_recv_min_time_delta = 0xffffffff;
 		ts.comp_recv_total_time_delta = 0;
