@@ -1011,9 +1011,9 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	my_dest.lid = ctx->portinfo.lid;//如果L2是以太网则无需lid，否则需要。因为lid的iB网络的
-	if (ctx->portinfo.link_layer != IBV_LINK_LAYER_ETHERNET &&
-							!my_dest.lid) {
+	//设置my_dest
+	my_dest.lid = ctx->portinfo.lid;
+	if (ctx->portinfo.link_layer != IBV_LINK_LAYER_ETHERNET && !my_dest.lid) {//如果L2是以太网则无需lid，否则需要。因为lid的iB网络的
 		fprintf(stderr, "Couldn't get local LID\n");
 		return 1;
 	}
@@ -1028,7 +1028,7 @@ int main(int argc, char *argv[])
 
 	my_dest.qpn = ctx->qp->qp_num;
 	my_dest.psn = lrand48() & 0xffffff;
-	inet_ntop(AF_INET6, &my_dest.gid, gid, sizeof gid);
+	inet_ntop(AF_INET6, &my_dest.gid, gid, sizeof gid);//基于IPv6
 	printf("  local address:  LID 0x%04x, QPN 0x%06x, PSN 0x%06x, GID %s\n",
 	       my_dest.lid, my_dest.qpn, my_dest.psn, gid);
 
