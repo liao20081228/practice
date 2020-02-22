@@ -175,7 +175,7 @@ static struct pingpong_dest *pp_client_exch_dest(const char *servername, int por
 	if (asprintf(&service, "%d", port) < 0)
 		return NULL;
 
-	n = getaddrinfo(servername, service, &hints, &res);
+	n = getaddrinfo(servername, service, &hints, &res);//解析目标地址
 
 	if (n < 0) {
 		fprintf(stderr, "%s for %s:%d\n", gai_strerror(n), servername, port);
@@ -183,7 +183,7 @@ static struct pingpong_dest *pp_client_exch_dest(const char *servername, int por
 		return NULL;
 	}
 
-	for (t = res; t; t = t->ai_next) {
+	for (t = res; t; t = t->ai_next) {//创建套接字、并连接
 		sockfd = socket(t->ai_family, t->ai_socktype, t->ai_protocol);
 		if (sockfd >= 0) {
 			if (!connect(sockfd, t->ai_addr, t->ai_addrlen))
@@ -204,12 +204,12 @@ static struct pingpong_dest *pp_client_exch_dest(const char *servername, int por
 	gid_to_wire_gid(&my_dest->gid, gid);
 	sprintf(msg, "%04x:%06x:%06x:%s", my_dest->lid, my_dest->qpn,
 							my_dest->psn, gid);
-	if (write(sockfd, msg, sizeof msg) != sizeof msg) {
+	if (write(sockfd, msg, sizeof msg) != sizeof msg) {//发送本机的通信信息：lid/qpn/gid/PSN
 		fprintf(stderr, "Couldn't send local address\n");
 		goto out;
 	}
 
-	if (read(sockfd, msg, sizeof msg) != sizeof msg ||
+	if (read(sockfd, msg, sizeof msg) != sizeof msg ||//接收服务端发来的通信消息,并通知对方发送完成
 	    write(sockfd, "done", sizeof "done") != sizeof "done") {
 		perror("client read/write");
 		fprintf(stderr, "Couldn't read/write remote address\n");
@@ -221,7 +221,7 @@ static struct pingpong_dest *pp_client_exch_dest(const char *servername, int por
 		goto out;
 
 	sscanf(msg, "%x:%x:%x:%s", &rem_dest->lid, &rem_dest->qpn,
-						&rem_dest->psn, gid);
+						&rem_dest->psn, gid);//解析服务端发来的通信信息,主要是GID
 	wire_gid_to_gid(gid, &rem_dest->gid);
 
 out:
