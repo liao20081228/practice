@@ -26,10 +26,23 @@ struct mem_pool
 	struct freelist free64;
 };
 
-
+struct mem_pool pool;
 void* my_malloc(int n)
 {
-	int r=0,c=0;
+	double a = log10(n)/log10(2);
+	if(a-)
+		a++;
+	switch(a)
+	{
+		case 2:
+			pthread_mutex_lock(&pool.free2.freelist_mutex);
+			if(pool.free2.free_node!=0)
+			{
+				
+			}
+
+	}
+	
 }
 
 
