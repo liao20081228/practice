@@ -1,5 +1,6 @@
 #include<memory.h>
 #include<pthread.h>
+#include<math.h>
 struct node
 {
 	void * addr;
@@ -28,7 +29,7 @@ struct mem_pool
 
 void* my_malloc(int n)
 {
-	
+	int r=0,c=0;
 }
 
 
