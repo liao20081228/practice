@@ -14,7 +14,11 @@ struct freelist
 	pthread_mutex_t freelist_mutex;
 };
 
-
+struct buf
+{
+	void * buf;
+	struct buf* next;
+};
 struct mem_pool
 {
 	struct freelist free2;
@@ -24,9 +28,18 @@ struct mem_pool
 	struct freelist free16;
 	struct freelist free32;
 	struct freelist free64;
+	struct buf* real_buf;
 };
 
 struct mem_pool pool;
+
+int init_mem_pool()
+{
+	void* buf=malloc(2*128+4*64+6*32+8*16+32*8+64*4);
+
+}
+
+
 void* my_malloc(int n)
 {
 	double a = log10(n)/log10(2);
