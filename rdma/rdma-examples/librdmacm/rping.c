@@ -1276,7 +1276,7 @@ int main(int argc, char *argv[])
 	opterr = 0;
 	while ((op = getopt(argc, argv, "a:I:Pp:C:S:t:scvVdq")) != -1) {
 		switch (op) {
-		case 'a': //remote address to connect on client , local address to bind on server
+		case 'a': //remote address to connect if client , local address to bind if server
 			ret = get_addr(optarg, (struct sockaddr *) &cb->sin);
 			break;
 		case 'I': //local address to bind  on client when existed multiple NICs 
@@ -1285,7 +1285,7 @@ int main(int argc, char *argv[])
 		case 'P': //allow multiple clients to conntect to a server
 			persistent_server = 1;
 			break;
-		case 'p'://listen port number on server
+		case 'p'://listen port number on server, should be transfer to big end 
 			cb->port = htobe16(atoi(optarg));
 			DEBUG_LOG("port %d\n", (int) atoi(optarg));
 			break;
