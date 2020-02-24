@@ -139,7 +139,7 @@ struct rping_cb {
 	struct ibv_mr *start_mr;
 
 	enum test_state state;		/* used for cond/signalling */
-	sem_t sem;
+	sem_t sem;			//信号量
 
 	struct sockaddr_storage sin;      //remote address
 	struct sockaddr_storage ssource;  //local address
