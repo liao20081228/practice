@@ -19,6 +19,7 @@ struct buf
 	void * buf;
 	struct buf* next;
 };
+
 struct mem_pool
 {
 	struct freelist free2;
@@ -33,7 +34,7 @@ struct mem_pool
 
 struct mem_pool pool;
 
-int init_mem_pool()
+int init_mem_pool(struct mem_pool* pool, void* buf)
 {
 	void* buf=malloc(2*128+4*64+6*32+8*16+32*8+64*4);
 
