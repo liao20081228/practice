@@ -9,7 +9,17 @@ struct real_mem
 	struct real_mem*next;
 };
 
-typedef struct real_mem node;
+struct node
+{
+	void* node;
+	length;
+	struct node*next;
+};
+
+struct freelist
+{
+	
+}
 
 struct mempool
 {
