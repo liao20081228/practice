@@ -1345,14 +1345,14 @@ int main(int argc, char *argv[])
 		goto out;
 	}
 	
-	//create event channle
+	//创建事件通道
 	cb->cm_channel = create_first_event_channel();
 	if (!cb->cm_channel) {
 		ret = errno;
 		goto out;
 	}
 
-	//create id
+	//创建id
 	ret = rdma_create_id(cb->cm_channel, &cb->cm_id, cb, RDMA_PS_TCP);//create id
 	if (ret) {
 		perror("rdma_create_id");
