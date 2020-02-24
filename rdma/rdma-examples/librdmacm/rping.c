@@ -108,13 +108,13 @@ struct rping_rdma_info {
  * Control block struct.
  */
 struct rping_cb {
-	int server;			/* 0 iff client */
+	int server;			/* 1为服务器,0为客户端 */
 	pthread_t cqthread;
 	pthread_t persistent_server_thread;
-	struct ibv_comp_channel *channel;
-	struct ibv_cq *cq;
-	struct ibv_pd *pd;
-	struct ibv_qp *qp;
+	struct ibv_comp_channel *channel;//完成事件通道
+	struct ibv_cq *cq;		//CQ
+	struct ibv_pd *pd;		//PD
+	struct ibv_qp *qp;		//QP
 
 	struct ibv_recv_wr rq_wr;	/* recv work request record */
 	struct ibv_sge recv_sgl;	/* recv single SGE */
@@ -1256,10 +1256,10 @@ static void usage(const char *name)
 
 int main(int argc, char *argv[])
 {
-	struct rping_cb *cb;
+	struct rping_cb *cb;//ping-pong上下文
 	int op;
 	int ret = 0;
-	int persistent_server = 0;
+	int persistent_server = 0;//是否执行多个连接
 
 	cb = malloc(sizeof(*cb));
 	if (!cb)
