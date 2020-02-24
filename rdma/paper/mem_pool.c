@@ -9,11 +9,11 @@ struct real_mem
 	struct real_mem*next;
 };
 
+typedef struct real_mem node;
 
 struct mempool
 {
 	struct real_mem realbuf;
-	
 };
 
 
