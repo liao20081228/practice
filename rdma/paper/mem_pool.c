@@ -19,7 +19,7 @@ struct freelist
 
 struct mempool
 {
-	void *relbuf;
+	void *realbuf;
 	int relen;
 	void* (*r_malloc)(int size);
 	void* (*r_free)(int size);
@@ -32,10 +32,11 @@ struct mempool
 
 int create_pool(struct mempool* pool)
 {
-	pool->relbuf= malloc(1024*100);	
-	for(i=0;i<100;i++)
+	pool->realbuf= malloc(1024*100);	
+	for(int i=0;i<100;i++)
 	{
-
+		struct node* rbuf=(void*)malloc(sizeof struct node);
+		rbuf->addr=pool->realbuf;	
 	}
 }
 
