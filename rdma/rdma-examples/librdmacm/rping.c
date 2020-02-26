@@ -553,6 +553,7 @@ static void rping_free_buffers(struct rping_cb *cb)
 	}
 }
 
+//创建QP
 static int rping_create_qp(struct rping_cb *cb)
 {
 	struct ibv_qp_init_attr init_attr;
@@ -594,6 +595,7 @@ static void rping_free_qp(struct rping_cb *cb)
 	ibv_dealloc_pd(cb->pd);
 }
 
+//分配PD、创建CC，CQ、QP
 static int rping_setup_qp(struct rping_cb *cb, struct rdma_cm_id *cm_id)
 {
 	int ret;
@@ -913,7 +915,7 @@ static int rping_run_persistent_server(struct rping_cb *listening_cb)
 	struct rping_cb *cb;
 	pthread_attr_t attr;
 
-	ret = rping_bind_server(listening_cb);
+	ret = rping_bind_server(listening_cb);//解析地址和路由
 	if (ret)
 		return ret;
 
@@ -1123,6 +1125,7 @@ static int rping_connect_client(struct rping_cb *cb)
 	return 0;
 }
 
+//解析地址并等待cmthread获取地址解析完成事件，然后等待cmthread解析路由，并等待路由解析完成事件
 static int rping_bind_client(struct rping_cb *cb)
 {
 	int ret;
@@ -1159,11 +1162,11 @@ static int rping_run_client(struct rping_cb *cb)
 	struct ibv_recv_wr *bad_wr;
 	int ret;
 
-	ret = rping_bind_client(cb);
+	ret = rping_bind_client(cb);//解析地址和路由
 	if (ret)
 		return ret;
 
-	ret = rping_setup_qp(cb, cb->cm_id);
+	ret = rping_setup_qp(cb, cb->cm_id);//
 	if (ret) {
 		fprintf(stderr, "setup_qp failed: %d\n", ret);
 		return ret;
