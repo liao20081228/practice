@@ -23,6 +23,7 @@ struct mempool
 	int relen;
 	int head;
 	int tail;
+	int busy;
 	void* (*r_malloc)(int size);
 	void* (*r_free)(int size);
 	int (*create)(struct mempool);
@@ -37,6 +38,7 @@ int create_pool(struct mempool* pool)
 	pool->realbuf= malloc(2000*100);
 	pool->head=0;
 	pool->tail=0;
+	pool->busy=0;
 	return 0;
 }
 
@@ -52,10 +54,13 @@ int destory (struct mempool* pool)
 	}
 }
 
-void* mymalloc(int size)
+void* mymalloc(struct mempool* pool)
 {
-	int n=size/2000;
-		
+	if(pool->busy==100)
+		return NULL;
+	void* addr=pool->realbuf+pool->head;
+	pool->head=
+	
 }
 
 int main()
