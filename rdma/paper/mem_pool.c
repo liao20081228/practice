@@ -1,7 +1,7 @@
 #include<memory.h>
 #include<pthread.h>
 #include<math.h>
-
+#include<stdlib.h>
 struct node
 {
 	void* addr;
@@ -30,7 +30,14 @@ struct mempool
 
 
 
+int create_pool(struct mempool* pool)
+{
+	pool->relbuf= malloc(1024*100);	
+	for(i=0;i<100;i++)
+	{
 
+	}
+}
 
 
 
