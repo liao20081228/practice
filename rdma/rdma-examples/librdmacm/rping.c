@@ -844,7 +844,7 @@ static struct rping_cb *clone_cb(struct rping_cb *listening_cb)
 		return NULL;
 	memset(cb, 0, sizeof *cb);
 	*cb = *listening_cb;
-	cb->/hild_cm_id->context = cb;
+	cb->child_cm_id->context = cb;
 	return cb;
 }
 
@@ -915,7 +915,7 @@ static int rping_run_persistent_server(struct rping_cb *listening_cb)
 	struct rping_cb *cb;
 	pthread_attr_t attr;
 
-	ret = rping_bind_server(listening_cb);//解析地址和路由
+	ret = rping_bind_server(listening_cb);//bind listen
 	if (ret)
 		return ret;
 
@@ -942,7 +942,7 @@ static int rping_run_persistent_server(struct rping_cb *listening_cb)
 			return -1;
 		}
 
-		cb = clone_cb(listening_cb);
+		cb = clone_cb(listening_cb);//
 		if (!cb)
 			return -1;
 
