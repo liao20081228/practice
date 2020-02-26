@@ -1190,7 +1190,7 @@ static int rping_run_client(struct rping_cb *cb)
 		goto err2;
 	}
 
-	ret = rping_connect_client(cb);
+	ret = rping_connect_client(cb);//连接，如果自己创建QP则使用rdma_establish产生连接事件
 	if (ret) {
 		fprintf(stderr, "connect error %d\n", ret);
 		goto err3;
