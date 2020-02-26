@@ -59,9 +59,22 @@ void* mymalloc(struct mempool* pool)
 	if(pool->busy==100)
 		return NULL;
 	void* addr=pool->realbuf+pool->head;
-	pool->head=
-	
+	pool->head=(pool->head+1)%200;
+	pool->busy++;
+	return addr;
 }
+
+void myfree(struct mempool* pool,void* buf)
+{
+			
+	pool->busy--;
+}
+
+
+
+
+
+
 
 int main()
 {
