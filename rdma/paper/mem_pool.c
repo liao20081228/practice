@@ -2,7 +2,7 @@
 #include<pthread.h>
 #include<math.h>
 #include<stdlib.h>
-
+#include<stdio.h>
 struct mempool
 {
 	void *realbuf;
@@ -20,7 +20,7 @@ struct mempool
 
 int create_pool(struct mempool* pool)
 {
-	pool->realbuf= malloc(2000*100);
+	pool->realbuf= malloc(8*10);
 	pool->head=0;
 	pool->tail=0;
 	pool->busy=0;
@@ -41,10 +41,10 @@ int destory (struct mempool* pool)
 
 void* mymalloc(struct mempool* pool)
 {
-	if(pool->busy==100)
+	if(pool->busy==10)
 		return NULL;
-	void* addr=pool->realbuf+pool->head*2000;
-	pool->head=(pool->head+1)%100;
+	void* addr=pool->realbuf+pool->head*8;
+	pool->head=(pool->head+1)%10;
 	pool->busy++;
 	return addr;
 }
@@ -53,7 +53,7 @@ void myfree(struct mempool* pool)
 {
 	if(pool->busy==0)
 		return;
-	pool->tail=(pool->tail+1)%100;		
+	pool->tail=(pool->tail+1)%10;		
 	pool->busy--;
 }
 
@@ -64,5 +64,16 @@ void myfree(struct mempool* pool)
 
 
 int main()
-{
+{	
+	struct mempool pool;
+	create_pool(&pool);	
+	int i=0;
+	while(i<15)
+	{
+		printf("%p\n",mymalloc(&pool));
+		i++;
+	}
+	myfree(&pool);
+		printf("%p\n",mymalloc(&pool));
+		return 0;
 }
