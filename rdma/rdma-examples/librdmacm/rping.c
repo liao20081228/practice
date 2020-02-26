@@ -1166,7 +1166,7 @@ static int rping_run_client(struct rping_cb *cb)
 	if (ret)
 		return ret;
 
-	ret = rping_setup_qp(cb, cb->cm_id);//
+	ret = rping_setup_qp(cb, cb->cm_id);//创建CC/CQ/QP
 	if (ret) {
 		fprintf(stderr, "setup_qp failed: %d\n", ret);
 		return ret;
