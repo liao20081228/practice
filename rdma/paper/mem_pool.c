@@ -2,8 +2,20 @@
 #include<pthread.h>
 #include<math.h>
 
+struct node
+{
+	void* addr;
+	struct node* next;
+};
 
-
+struct freelist
+{
+	struct node head;
+	struct node tail;
+	int busy;
+	int free; 
+	pthread_mutex_t mutext;
+};
 
 struct mempool
 {
@@ -11,16 +23,14 @@ struct mempool
 	int relen;
 	void* (*r_malloc)(int size);
 	void* (*r_free)(int size);
-	free
+	int (*create)(struct mempool);
+	int (*destory)(struct mempool);
+	struct freelist free;
 };
 
 
 
 
-int create_mem_pool(struct mem_pool *pool)
-{
-	
-}
 
 
 
