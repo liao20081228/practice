@@ -1172,19 +1172,19 @@ static int rping_run_client(struct rping_cb *cb)
 		return ret;
 	}
 
-	ret = rping_setup_buffers(cb);
+	ret = rping_setup_buffers(cb);//注册SEND、WRITE、WRITE、READ MR，并配置WR
 	if (ret) {
 		fprintf(stderr, "rping_setup_buffers failed: %d\n", ret);
 		goto err1;
 	}
 
-	ret = ibv_post_recv(cb->qp, &cb->rq_wr, &bad_wr);
+	ret = ibv_post_recv(cb->qp, &cb->rq_wr, &bad_wr);//发布接收WR
 	if (ret) {
 		fprintf(stderr, "ibv_post_recv failed: %d\n", ret);
 		goto err2;
 	}
 
-	ret = pthread_create(&cb->cqthread, NULL, cq_thread, cb);
+	ret = pthread_create(&cb->cqthread, NULL, cq_thread, cb);//get-hand-ack CQ事件
 	if (ret) {
 		perror("pthread_create");
 		goto err2;
