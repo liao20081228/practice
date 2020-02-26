@@ -2,20 +2,6 @@
 #include<pthread.h>
 #include<math.h>
 #include<stdlib.h>
-struct node
-{
-	void* addr;
-	struct node* next;
-};
-
-struct freelist
-{
-	struct node head;
-	struct node tail;
-	int busy;
-	int free; 
-	pthread_mutex_t mutext;
-};
 
 struct mempool
 {
@@ -28,7 +14,6 @@ struct mempool
 	void* (*r_free)(int size);
 	int (*create)(struct mempool);
 	int (*destory)(struct mempool);
-	struct freelist free;
 };
 
 
@@ -58,15 +43,17 @@ void* mymalloc(struct mempool* pool)
 {
 	if(pool->busy==100)
 		return NULL;
-	void* addr=pool->realbuf+pool->head;
-	pool->head=(pool->head+1)%200;
+	void* addr=pool->realbuf+pool->head*2000;
+	pool->head=(pool->head+1)%100;
 	pool->busy++;
 	return addr;
 }
 
-void myfree(struct mempool* pool,void* buf)
+void myfree(struct mempool* pool)
 {
-			
+	if(pool->busy==0)
+		return;
+	pool->tail=(pool->tail+1)%100;		
 	pool->busy--;
 }
 
