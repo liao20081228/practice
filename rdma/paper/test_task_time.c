@@ -20,7 +20,7 @@ int main()
 		a[i].time = i;
 		a[i].number=i;
 		a[i].kind=1;
-		for(int m=0;i<7;i++)
+		for(int m=1;i<9;i++)
 		{
 			a[i].senerid=m;
 			a[i].data=3.123456+m;
@@ -48,6 +48,7 @@ int main()
 	double arg_500_5;
 	double arg_500_6;
 	double arg_500_7;
+	double arg_500_8;
 	double arg_10_1;
 	double arg_10_2;
 	double arg_10_3;
@@ -55,6 +56,7 @@ int main()
 	double arg_10_5;
 	double arg_10_6;
 	double arg_10_7;
+	double arg_10_8;
 	for(int i=0; i<4080;i++)
 	{
 		switch(a[i].nodeid)
@@ -118,6 +120,130 @@ int main()
 						break;
 					default:break;
 				}
+				break;
+			case 2:
+				switch(a[i].kind)
+				{
+					case 1:
+						switch(a[i].senerid)
+						{
+							case 1:
+								arg_500_1+=a[i].data;
+								break;
+							case 2:
+								arg_500_2+=a[i].data;
+								break;
+							case 3:
+								arg_500_3+=a[i].data;
+								break;
+							case 4:
+								arg_500_4+=a[i].data;
+								break;
+							case 5:
+								arg_500_5+=a[i].data;
+								break;
+							case 6:
+								arg_500_6+=a[i].data;
+								break;
+							case 7:
+								arg_500_7+=a[i].data;
+								break;
+							default:break;
+						}
+						break;
+					case 2:
+						switch(a[i].senerid)
+						{
+							case 1:
+								arg_10_1+=a[i].data;
+								break;
+							case 2:
+								arg_10_2+=a[i].data;
+								break;
+							case 3:
+								arg_10_3+=a[i].data;
+								break;
+							case 4:
+								arg_10_4+=a[i].data;
+								break;
+							case 5:
+								arg_10_5+=a[i].data;
+								break;
+							case 6:
+								arg_10_6+=a[i].data;
+								break;
+							case 7:
+								arg_10_7+=a[i].data;
+								break;
+							default:break;
+						}
+						break;
+					default:break;
+				}
+				break;
+			case 3:
+				switch(a[i].kind)
+				{
+					case 1:
+						switch(a[i].senerid)
+						{
+							case 1:
+								arg_500_1+=a[i].data;
+								break;
+							case 2:
+								arg_500_2+=a[i].data;
+								break;
+							case 3:
+								arg_500_3+=a[i].data;
+								break;
+							case 4:
+								arg_500_4+=a[i].data;
+								break;
+							case 5:
+								arg_500_5+=a[i].data;
+								break;
+							case 6:
+								arg_500_6+=a[i].data;
+								break;
+							case 7:
+								arg_500_7+=a[i].data;
+								break;
+							default:break;
+						}
+						break;
+					case 2:
+						switch(a[i].senerid)
+						{
+							case 1:
+								arg_10_1+=a[i].data;
+								break;
+							case 2:
+								arg_10_2+=a[i].data;
+								break;
+							case 3:
+								arg_10_3+=a[i].data;
+								break;
+							case 4:
+								arg_10_4+=a[i].data;
+								break;
+							case 5:
+								arg_10_5+=a[i].data;
+								break;
+							case 6:
+								arg_10_6+=a[i].data;
+								break;
+							case 7:
+								arg_10_7+=a[i].data;
+								break;
+							default:break;
+						}
+						break;
+					default:break;
+				}
+				break;
+			default:
+				break;
 		}
 	}
+	printf("%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",arg_500_1/500,100);
 }
