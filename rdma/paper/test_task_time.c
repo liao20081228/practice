@@ -273,10 +273,18 @@ for(int k=0;k<100;k++)
 	arg = arg+(e-s)/mhz;
 }
 printf("========     %lf=============\n",arg/100);
-
-for(int i=0;i<4080;++i)
+arg=0;
+for(int i=0;i<100;i++)
 {
-	printf("%lf,%hu,%d,%llu,%d,%llu\n",a[i].data,a[i].nodeid,a[i].kind,a[i].time,a[i].senerid,a[i].number);
-}
+	double mhz=get_cpu_mhz(0);
+	cycles_t s=get_cycles();
+	for(int i=0;i<4080;++i)
+	{
+		printf("%lf,%hu,%d,%llu,%d,%llu\n",a[i].data,a[i].nodeid,a[i].kind,a[i].time,a[i].senerid,a[i].number);
+	}
+	cycles_t e=get_cycles();
+	arg=arg+(e-s)/mhz;
 
+}
+printf("========     %lf=============\n",arg/100);
 }
