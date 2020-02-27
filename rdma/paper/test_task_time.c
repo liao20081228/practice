@@ -123,7 +123,7 @@ for(int k=0;k<100;k++)
 								arg_10_7+=a[i].data;
 								break;
 							case 8:
-								arg_500_8+=a[i].data;
+								arg_10_8+=a[i].data;
 								break;
 							default:break;
 						}
@@ -189,7 +189,7 @@ for(int k=0;k<100;k++)
 								arg_10_7+=a[i].data;
 								break;
 							case 8:
-								arg_500_8+=a[i].data;
+								arg_10_8+=a[i].data;
 								break;
 							default:break;
 						}
@@ -204,28 +204,28 @@ for(int k=0;k<100;k++)
 						switch(a[i].senerid)
 						{
 							case 1:
-								arg_500_1+=a[i].data;
+								/*arg_500_1+=a[i].data;*/
 								break;
 							case 2:
-								arg_500_2+=a[i].data;
+								/*arg_500_2+=a[i].data;*/
 								break;
 							case 3:
-								arg_500_3+=a[i].data;
+								/*arg_500_3+=a[i].data;*/
 								break;
 							case 4:
-								arg_500_4+=a[i].data;
+								/*arg_500_4+=a[i].data;*/
 								break;
 							case 5:
-								arg_500_5+=a[i].data;
+								/*arg_500_5+=a[i].data;*/
 								break;
 							case 6:
-								arg_500_6+=a[i].data;
+								/*arg_500_6+=a[i].data;*/
 								break;
 							case 7:
-								arg_500_7+=a[i].data;
+								/*arg_500_7+=a[i].data;*/
 								break;
 							case 8:
-								arg_500_8+=a[i].data;
+								/*arg_500_8+=a[i].data;*/
 								break;
 							default:break;
 						}
@@ -234,28 +234,28 @@ for(int k=0;k<100;k++)
 						switch(a[i].senerid)
 						{
 							case 1:
-								arg_10_1+=a[i].data;
+								/*arg_10_1+=a[i].data;*/
 								break;
 							case 2:
-								arg_10_2+=a[i].data;
+								/*arg_10_2+=a[i].data;*/
 								break;
 							case 3:
-								arg_10_3+=a[i].data;
+								/*arg_10_3+=a[i].data;*/
 								break;
 							case 4:
-								arg_10_4+=a[i].data;
+								/*arg_10_4+=a[i].data;*/
 								break;
 							case 5:
-								arg_10_5+=a[i].data;
+								/*arg_10_5+=a[i].data;*/
 								break;
 							case 6:
-								arg_10_6+=a[i].data;
+								/*arg_10_6+=a[i].data;*/
 								break;
 							case 7:
-								arg_10_7+=a[i].data;
+								/*arg_10_7+=a[i].data;*/
 								break;
 							case 8:
-								arg_500_8+=a[i].data;
+								/*arg_10_8+=a[i].data;*/
 								break;
 							default:break;
 						}
