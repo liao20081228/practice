@@ -38,25 +38,26 @@ int main()
 			a[i].data=3.123456+m;
 		}
 	}
-
+for(int k=0;k<10000;k++)
+{
+	double arg_500_1=0;
+	double arg_500_2=0;
+	double arg_500_3=0;
+	double arg_500_4=0;
+	double arg_500_5=0;
+	double arg_500_6=0;
+	double arg_500_7=0;
+	double arg_500_8=0;
+	double arg_10_1=0;
+	double arg_10_2=0;
+	double arg_10_3=0;
+	double arg_10_4=0;
+	double arg_10_5=0;
+	double arg_10_6=0;
+	double arg_10_7=0;
+	double arg_10_8=0;
 	double mhz= get_cpu_mhz(0);
 	cycles_t s=get_cycles();
-	double arg_500_1;
-	double arg_500_2;
-	double arg_500_3;
-	double arg_500_4;
-	double arg_500_5;
-	double arg_500_6;
-	double arg_500_7;
-	double arg_500_8;
-	double arg_10_1;
-	double arg_10_2;
-	double arg_10_3;
-	double arg_10_4;
-	double arg_10_5;
-	double arg_10_6;
-	double arg_10_7;
-	double arg_10_8;
 	for(int i=0; i<4080;i++)
 	{
 		switch(a[i].nodeid)
@@ -88,6 +89,9 @@ int main()
 							case 7:
 								arg_500_7+=a[i].data;
 								break;
+							case 8:
+								arg_500_8+=a[i].data;
+								break;
 							default:break;
 						}
 						break;
@@ -114,6 +118,9 @@ int main()
 								break;
 							case 7:
 								arg_10_7+=a[i].data;
+								break;
+							case 8:
+								arg_500_8+=a[i].data;
 								break;
 							default:break;
 						}
@@ -148,6 +155,9 @@ int main()
 							case 7:
 								arg_500_7+=a[i].data;
 								break;
+							case 8:
+								arg_500_8+=a[i].data;
+								break;
 							default:break;
 						}
 						break;
@@ -174,6 +184,9 @@ int main()
 								break;
 							case 7:
 								arg_10_7+=a[i].data;
+								break;
+							case 8:
+								arg_500_8+=a[i].data;
 								break;
 							default:break;
 						}
@@ -208,6 +221,9 @@ int main()
 							case 7:
 								arg_500_7+=a[i].data;
 								break;
+							case 8:
+								arg_500_8+=a[i].data;
+								break;
 							default:break;
 						}
 						break;
@@ -235,6 +251,9 @@ int main()
 							case 7:
 								arg_10_7+=a[i].data;
 								break;
+							case 8:
+								arg_500_8+=a[i].data;
+								break;
 							default:break;
 						}
 						break;
@@ -245,5 +264,8 @@ int main()
 				break;
 		}
 	}
-	printf("%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",arg_500_1/500,100);
+	printf("%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",arg_500_1/500,arg_500_2/500,arg_500_3/500,arg_500_4/500,arg_500_5/500,arg_500_6/500,arg_500_7/500,arg_500_8/500);
+	printf("%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",arg_10_1/80,arg_10_2/80,arg_10_3/80,arg_10_4/80,arg_10_5/80,arg_10_6/80,arg_10_7/80,arg_10_8/80);
+	cycles_t e=get_cycles();
+}
 }
