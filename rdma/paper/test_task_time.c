@@ -60,20 +60,63 @@ int main()
 		switch(a[i].nodeid)
 		{
 			case 1:
-				printf("%d\n",a[i].nodeid);
 				switch(a[i].kind)
 				{
 					case 1:
-						printf("%d\n",a[i].kind);
-						switch(a[i].number)
+						switch(a[i].senerid)
 						{
-							case 1: 
-								switch(a[i].senerid)
-								{
-									case 1:
-
-								}
+							case 1:
+								arg_500_1+=a[i].data;
+								break;
+							case 2:
+								arg_500_2+=a[i].data;
+								break;
+							case 3:
+								arg_500_3+=a[i].data;
+								break;
+							case 4:
+								arg_500_4+=a[i].data;
+								break;
+							case 5:
+								arg_500_5+=a[i].data;
+								break;
+							case 6:
+								arg_500_6+=a[i].data;
+								break;
+							case 7:
+								arg_500_7+=a[i].data;
+								break;
+							default:break;
 						}
+						break;
+					case 2:
+						switch(a[i].senerid)
+						{
+							case 1:
+								arg_10_1+=a[i].data;
+								break;
+							case 2:
+								arg_10_2+=a[i].data;
+								break;
+							case 3:
+								arg_10_3+=a[i].data;
+								break;
+							case 4:
+								arg_10_4+=a[i].data;
+								break;
+							case 5:
+								arg_10_5+=a[i].data;
+								break;
+							case 6:
+								arg_10_6+=a[i].data;
+								break;
+							case 7:
+								arg_10_7+=a[i].data;
+								break;
+							default:break;
+						}
+						break;
+					default:break;
 				}
 		}
 	}
