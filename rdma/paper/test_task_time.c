@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include"get_clock.h"
-
+#include<stdlib.h>
 struct test
 {
 	short int nodeid;
@@ -23,7 +23,7 @@ int main()
 		for(int m=1;i<9;i++)
 		{
 			a[i].senerid=m;
-			a[i].data=3.123456+m;
+			a[i].data=rand()/(double)RAND_MAX+1;
 		}
 	}
 	for(int i = 4000; i < 4080;i++)
