@@ -13,10 +13,10 @@ struct test
 
 int main()
 {
-	struct test a[500*8]={0};
-	for(int i = 0; i < 500*8;i++)
+	struct test a[4080]={0};
+	for(int i = 0; i < 4080;i++)
 	{	
-		a[i].nodeid=1;
+		a[i].nodeid=3;
 		a[i].time = i;
 		a[i].number=i;
 
@@ -27,5 +27,16 @@ int main()
 		}
 	}
 	double mhz= get_cpu_mhz(0);
-
+	cycles_t s=get_cycles();
+	for(int i=0; i<4080;i++)
+	{
+		if(a[i].nodeid==1)
+			printf("%d\n",a[i].nodeid);
+		else if(a[i].nodeid==2)
+			printf("%d\n",a[i].nodeid);
+		else if(a[i].nodeid==3)
+			printf("%d\n",a[i].nodeid);
+		else if(a[i].nodeid==4)
+			printf("%d\n",a[i].nodeid);
+	}
 }
