@@ -38,7 +38,8 @@ int main()
 			a[i].data=3.123456+m;
 		}
 	}
-for(int k=0;k<10000;k++)
+double arg=0;
+for(int k=0;k<1000;k++)
 {
 	double arg_500_1=0;
 	double arg_500_2=0;
@@ -267,5 +268,7 @@ for(int k=0;k<10000;k++)
 	printf("%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",arg_500_1/500,arg_500_2/500,arg_500_3/500,arg_500_4/500,arg_500_5/500,arg_500_6/500,arg_500_7/500,arg_500_8/500);
 	printf("%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",arg_10_1/80,arg_10_2/80,arg_10_3/80,arg_10_4/80,arg_10_5/80,arg_10_6/80,arg_10_7/80,arg_10_8/80);
 	cycles_t e=get_cycles();
+	arg = arg+(e-s)/mhz;
 }
+printf("========     %lf=============\n",arg/1000);
 }
