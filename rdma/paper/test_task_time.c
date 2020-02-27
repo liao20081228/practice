@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include"get_clock.h"
 
-struct data
+struct test
 {
 	short int nodeid;
 	unsigned char senerid;
@@ -13,12 +13,11 @@ struct data
 
 int main()
 {
-	printf("%lu\n",sizeof(char));
-	printf("%lu\n",sizeof(short));
-	printf("%lu\n",sizeof(int));
-	printf("%lu\n",sizeof(long int));
-	printf("%lu\n",sizeof(long long int));
-	printf("%lu\n",sizeof(float));
-	printf("%lu\n",sizeof(double ));
-	printf("%lu\n",sizeof(long double));
+	struct test a[500*8]={0};
+	for(int i = 0; i < 500;i++)
+	{	
+		a[i].nodeid=1;
+		for(m=0;i<7;i++)
+	}
+
 }
