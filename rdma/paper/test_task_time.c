@@ -40,10 +40,12 @@ int main()
 						printf("%d\n",a[i].kind);
 						switch(a[i].number)
 						{
-							case 
-							switch(a[i].senerid)
-							{
-							}
+							case 1: 
+								switch(a[i].senerid)
+								{
+									case 1:
+
+								}
 						}
 				}
 		}
