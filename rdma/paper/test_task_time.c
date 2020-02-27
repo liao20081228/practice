@@ -30,13 +30,22 @@ int main()
 	cycles_t s=get_cycles();
 	for(int i=0; i<4080;i++)
 	{
-		if(a[i].nodeid==1)
-			printf("%d\n",a[i].nodeid);
-		else if(a[i].nodeid==2)
-			printf("%d\n",a[i].nodeid);
-		else if(a[i].nodeid==3)
-			printf("%d\n",a[i].nodeid);
-		else if(a[i].nodeid==4)
-			printf("%d\n",a[i].nodeid);
+		switch(a[i].nodeid)
+		{
+			case 1:
+				printf("%d\n",a[i].nodeid);
+				switch(a[i].kind)
+				{
+					case 1:
+						printf("%d\n",a[i].kind);
+						switch(a[i].number)
+						{
+							case 
+							switch(a[i].senerid)
+							{
+							}
+						}
+				}
+		}
 	}
 }
