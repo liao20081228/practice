@@ -28,6 +28,17 @@ int main()
 	}
 	double mhz= get_cpu_mhz(0);
 	cycles_t s=get_cycles();
+	double arg_500_1;
+	double arg_500_2;
+	double arg_500_3;
+	double arg_500_4;
+	double arg_500_5;
+	double arg_500_6;
+	double arg_500_7;
+	double arg_10_1;
+	double arg_10_1;
+	double arg_10_2;
+	double arg_10_3;
 	for(int i=0; i<4080;i++)
 	{
 		switch(a[i].nodeid)
