@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include"get_clock.h"
 #include<stdlib.h>
+#include<time.h>
 struct test
 {
 	short int nodeid;
@@ -13,6 +14,7 @@ struct test
 
 int main()
 {
+	srand(time(NULL));
 	struct test a[4080]={0};
 	for(int i = 0; i < 4000;i++)
 	{	
