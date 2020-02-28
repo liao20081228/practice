@@ -1,7 +1,14 @@
 #include<iostream>
 #include<mutex>
-
-class mempool
+namespace rfst
 {
+	class mempool
+	{
+	private:
+		void* addr;
+		int length;
 
+		mempool(int length);
+		void* malloc(int n);
+	};
 };
