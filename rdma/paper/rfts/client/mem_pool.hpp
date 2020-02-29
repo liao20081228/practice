@@ -20,7 +20,6 @@ namespace rfts
 		const int length;//长度
 
 		const int elesize;//每个元素的大小
-		const int capacity;//队伍容量
 		int front;//队首指针
 		int rear;//队尾指针
 	public:
