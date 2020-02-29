@@ -13,7 +13,11 @@ semaphore::semaphore(const int pshared, const unsigned int value):sem(new sem_t)
 
 }
 
-semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value)
+semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value):
+		sem(sem_open(name, oflag, mode, value))
 {
-	
+	if(sem == SEM_FAILED)
+	{
+
+	}
 }
