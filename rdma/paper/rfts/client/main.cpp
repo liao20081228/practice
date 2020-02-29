@@ -27,6 +27,7 @@ int main()
 	double mhz = 0;
 	for(int i=0; i<10000;i++)
 	{
+		std::cout << i << std::endl;
 		mhz=get_cpu_mhz(0);
 		s=get_cycles();
 		addr=mempool.rmalloc();
