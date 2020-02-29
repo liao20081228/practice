@@ -21,8 +21,13 @@ class semaphore
 		explicit semaphore(semaphore&& ref);
 		semaphore& operator=(semaphore&& ref);
 		~semaphore(void);
+		
 		void post(void);
 		void wait(void);
+		void trywait(void);
+		void timewait(const struct timespec* abs_timeout);
+		int getvalue(int * val = nullptr);
+		
 };
 
 
