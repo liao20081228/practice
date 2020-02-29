@@ -47,6 +47,17 @@ semaphore::semaphore(semaphore&& ref):sem(ref.sem),name(ref.name)
 	ref.sem = nullptr;
 }
 
+semaphore& semaphore::operator = (semaphore&& ref)
+{
+	if(this == &ref)
+		return *this;
+	sem = ref.sem;
+	name = ref.name;
+	ref.name = nullptr;
+	ref.sem = nullptr;
+	return *this; 
+}
+
 
 semaphore::~semaphore(void)
 {
