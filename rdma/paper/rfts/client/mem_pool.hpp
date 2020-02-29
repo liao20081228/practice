@@ -16,10 +16,10 @@ namespace rfts
 	class mempool
 	{
 	private:
-		void* const addr;//原始地址
+		const int elesize;//每个队列元素的大小
 		const int length;//长度
+		void* const addr;//原始地址
 
-		const int elesize;//每个元素的大小
 		int front;//队首指针
 		int rear;//队尾指针
 	public:
@@ -27,6 +27,7 @@ namespace rfts
 		void* malloc(int) noexcept;
 		int  free(void*) noexcept;
 		const void*  get_real_addr() const noexcept;
+		const void*  get_read_length() const noexcept;
 	};
 }
 
