@@ -28,6 +28,10 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 				throw std::invalid_argument("initial value exceeds SEM_VALUE_MAX");
 			case EMFILE:
 				throw std::invalid_argument("per-process limit on  the number of open fd has been reached");
+			case ENAMETOOLONG:
+				throw std::length_error("name was too long");
+			case ENFILE:
+				throw 
 		}
 	}
 }
