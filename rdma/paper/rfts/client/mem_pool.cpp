@@ -1,5 +1,6 @@
 #include"mem_pool.hpp"
 
-rfts::mempool::mempool(int length, int afreq, int tfreq)
+rfts::mempool::mempool(int afreq, int tfreq, int kind, int nodenum)
 {
+
 }
