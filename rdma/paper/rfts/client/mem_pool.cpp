@@ -31,5 +31,6 @@ int rfts::mempool::get_real_length(void) const noexcept
 
 void* rfts::mempool::rmalloc(void) noexcept
 {
-
+	void* temp = addr + front; 
+	if((rear + 1) %  front)
 }
