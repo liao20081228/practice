@@ -20,8 +20,8 @@ int main()
 
 	void * addr = nullptr;
 	mempool.rfree();
-	double mean1 = 0;
-	double mean2 = 0;
+	long double mean1 = 0;
+	long double mean2 = 0;
 	cycles_t s=0;
 	cycles_t e=0;
 	double mhz = 0;
