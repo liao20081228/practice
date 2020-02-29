@@ -8,7 +8,7 @@ class semaphore
 	private:
 		sem_t sem;
 	public:
-	
+		semaphore(void);
 };
 
 
