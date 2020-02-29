@@ -4,7 +4,7 @@
 #include"get_clock.h"
 int main()
 {
-	const int testnum=100;
+	const int testnum=10;
 	using namespace rfts;
 	struct trans_args transargs=
 	{

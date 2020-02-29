@@ -12,7 +12,10 @@ rfts::mem_pool::mem_pool(const trans_args& transargs) noexcept:
 rfts::mem_pool::~mem_pool(void) noexcept
 {
 	while(front == rear)
+	{
 		delete [] addr;
+		break;
+	}
 }
 
 
