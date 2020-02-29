@@ -4,6 +4,7 @@
 #include"get_clock.h"
 int main()
 {
+	const int testnum=100;
 	using namespace rfts;
 	struct trans_args transargs=
 	{
@@ -25,7 +26,7 @@ int main()
 	cycles_t s=0;
 	cycles_t e=0;
 	double mhz = 0;
-	for(int i=0; i<1000;i++)
+	for(int i=0; i<testnum;i++)
 	{
 		std::cout << i << std::endl;
 		mhz=get_cpu_mhz(0);
@@ -39,6 +40,6 @@ int main()
 		e=get_cycles();
 		mean2= mean2 + ( e-s ) / mhz * 1000;
 	}
-	std::cout << "malloc mean:" << mean1/1000 << "," << "free mean:"<< mean2/1000<<std::endl;
+	std::cout << "malloc mean:" << mean1/testnum << "," << "free mean:"<< mean2/testnum<<std::endl;
 	return 0;
 }
