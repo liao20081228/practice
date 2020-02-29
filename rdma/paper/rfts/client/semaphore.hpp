@@ -7,10 +7,10 @@ class semaphore
 	private:
 		sem_t sem;
 	public:
-		explicit semaphore(const int psharedi = 0, const unsigned int value = 0) noexcept;
-		~semaphore(void) noexcept;
-		void post(void) noexcept;
-		void wait(void) noexcept;
+		explicit semaphore(const int pshared = 0, const unsigned int value = 0);
+		~semaphore(void);
+		void post(void);
+		void wait(void);
 };
 
 
