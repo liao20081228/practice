@@ -41,16 +41,27 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 	}
 }
 
+semaphore::semaphore(semaphore&& ref):sem(ref.sem),name(ref.name)
+{
+	ref.name = nullptr;
+	ref.sem = nullptr;
+}
+
+
 semaphore::~semaphore(void)
 {
-	if (name)
+	if(sem)
 	{
-		sem_close(sem);
-		sem_unlink(name);
-		return;
+		if (name)
+		{
+			sem_close(sem);
+			sem_unlink(name);
+			return;
+		}
+		delete sem;
+		sem_destroy(sem);
+	
 	}
-	delete sem;
-	sem_destroy(sem);
 }
 
 void semaphore::post(void)

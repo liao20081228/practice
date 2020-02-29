@@ -10,7 +10,7 @@
 class semaphore
 {
 	private:
-		sem_t* const sem;
+		sem_t* sem;
 		const  char* name;
 	public:
 		explicit semaphore(int pshared = 0,  unsigned int value = 0);
