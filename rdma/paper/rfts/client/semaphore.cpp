@@ -27,13 +27,16 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 			case EINVAL:
 				throw std::invalid_argument("initial value exceeds SEM_VALUE_MAX");
 			case EMFILE:
-				throw std::invalid_argument("per-process limit on  the number of open fd has been reached");
+				throw std::runtime_error("per-process limit on  the number of open fd has been reached");
 			case ENAMETOOLONG:
 				throw std::length_error("name was too long");
 			case ENFILE:
-				throw
+				throw std::runtime_error("system limit the total number of open files has been reached");
 			case ENOENT:
+				throw std::invalid_argument("semaphore no exists and O_CREAT was not specified, or name was bad");
 			case ENOMEM:
+				throw std::runtime_error("no enough memory"); 
 		}
 	}
 }
+
