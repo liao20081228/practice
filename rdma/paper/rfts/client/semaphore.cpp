@@ -1,6 +1,7 @@
 #include"semaphore.hpp"
 
-semaphore::semaphore(const int pshared, const unsigned int value):sem(new sem_t)
+semaphore::semaphore(const int pshared, const unsigned int value):
+	sem(new sem_t), name(nullptr)
 {
 	if(sem_init(sem, pshared, value))
 	{
@@ -14,7 +15,7 @@ semaphore::semaphore(const int pshared, const unsigned int value):sem(new sem_t)
 }
 
 semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value):
-		sem(sem_open(name, oflag, mode, value))
+		sem(sem_open(name, oflag, mode, value)), name(name)
 {
 	if(sem == SEM_FAILED)
 	{
@@ -39,4 +40,22 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 		}
 	}
 }
+
+semaphore::~semaphore(void)
+{
+	if (name)
+	{
+		sem_close(sem);
+		sem_unlink(name);
+		return;
+	}
+	delete sem;
+	sem_destroy(sem);
+}
+
+void semaphore::post(void)
+{
+	sem_post(sem)
+}
+
 

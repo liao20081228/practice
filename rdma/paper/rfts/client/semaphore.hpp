@@ -11,7 +11,7 @@ class semaphore
 {
 	private:
 		sem_t* const sem;
-		bool name;
+		const  char* name;
 	public:
 		explicit semaphore(int pshared = 0,  unsigned int value = 0);
 		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT, 
