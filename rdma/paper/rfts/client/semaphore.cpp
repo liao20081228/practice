@@ -56,7 +56,7 @@ semaphore::~semaphore(void)
 void semaphore::post(void)
 {
 	if(sem_post(sem))
-			throw std::runtime_error("the value of semaphore exceed SEM_VALUE_MAX");
+		throw std::runtime_error("the value of semaphore exceed SEM_VALUE_MAX");
 }
 
 void semaphore::wait(void)
