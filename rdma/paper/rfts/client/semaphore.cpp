@@ -8,7 +8,7 @@ semaphore::semaphore(const int pshared, const unsigned int value):sem(new sem_t)
 		if(errno == EINVAL)
 			throw std::invalid_argument("initial value exceeds SEM_VALUE_MAX");
 		if(errno == ENOSYS)
-			throw std::system_error(errno, "system not support");
+			throw std::invalid_argument("system not support");
 	}
 
 }
@@ -27,7 +27,7 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 			case EINVAL:
 				throw std::invalid_argument("initial value exceeds SEM_VALUE_MAX");
 			case EMFILE:
-				throw std::system_error(errno, "per-process limit on  the number of open fd has been reached");
+				throw std::invalid_argument("per-process limit on  the number of open fd has been reached");
 		}
 	}
 }
