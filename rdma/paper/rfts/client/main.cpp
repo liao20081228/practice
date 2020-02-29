@@ -25,7 +25,7 @@ int main()
 	cycles_t s=0;
 	cycles_t e=0;
 	double mhz = 0;
-	for(int i=0; i<10000;i++)
+	for(int i=0; i<1000;i++)
 	{
 		std::cout << i << std::endl;
 		mhz=get_cpu_mhz(0);
@@ -39,6 +39,6 @@ int main()
 		e=get_cycles();
 		mean2= mean2 + ( e-s ) / mhz * 1000;
 	}
-	std::cout << "malloc mean:" << mean1/10000 << "," << "free mean:"<< mean2/10000<<std::endl;
+	std::cout << "malloc mean:" << mean1/1000 << "," << "free mean:"<< mean2/1000<<std::endl;
 	return 0;
 }
