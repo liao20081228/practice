@@ -16,6 +16,8 @@ class semaphore
 		explicit semaphore(int pshared = 0,  unsigned int value = 0);
 		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT, 
 				 mode_t mode = 00666, unsigned int value = 0);
+		semaphore(semaphore& ref) = delete;
+		semaphore& operator = (semaphore& ref) = delete;
 		~semaphore(void);
 		void post(void);
 		void wait(void);

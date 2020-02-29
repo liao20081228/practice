@@ -56,13 +56,10 @@ semaphore::~semaphore(void)
 void semaphore::post(void)
 {
 	if(sem_post(sem))
-	{
-		if(errno == EINVAL)
-		if(errno == EOVERFLOW)
-		{
-
-		}
-	}
+			throw std::runtime_error("the value of semaphore exceed SEM_VALUE_MAX");
 }
 
+void semaphore::wait(void)
+{
 
+}
