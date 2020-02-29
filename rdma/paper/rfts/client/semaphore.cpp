@@ -97,3 +97,8 @@ int semaphore::timewait(const struct timespec* abs_timeout)
 {
 	return sem_timedwait(sem,abs_timeout);
 }
+
+int semaphore::getvalue(int * val)
+{
+	return sem_getvalue(sem, val);
+}

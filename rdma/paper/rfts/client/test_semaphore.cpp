@@ -1,14 +1,15 @@
 #include"semaphore.hpp"
+#include<thread>
 
+int fun(semaphore& sem)
+{
 
-
-semaphore sem();
-
+}
 
 
 int main()
 {
-
+	std::thread a();
 }
 
 
