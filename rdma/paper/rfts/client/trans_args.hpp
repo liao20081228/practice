@@ -1,9 +1,9 @@
 #pragma once
-#ifndef RFTS_TRANS_ARG_H
-#define RFTS_TRANS_ARG_H
+#ifndef RFTS_TRANS_ARGS_H
+#define RFTS_TRANS_ARGS_H
 
 
-struct trans_arg
+struct trans_args
 {
 	int afreq;//采集平率
 	int tfreq;//传输频率
