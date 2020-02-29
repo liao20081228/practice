@@ -31,7 +31,9 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 			case ENAMETOOLONG:
 				throw std::length_error("name was too long");
 			case ENFILE:
-				throw 
+				throw
+			case ENOENT:
+			case ENOMEM:
 		}
 	}
 }
