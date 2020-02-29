@@ -1,10 +1,11 @@
-#include<iostream>
-#include<mutex>
-
 #ifndef RFTS_CLIENT
 	#define RFTS_CLIENT
 #endif
-namespace rfst
+
+#include<iostream>
+#include<mutex>
+
+namespace rfts
 {
 	using std::mutex;
 	class mempool
