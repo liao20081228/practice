@@ -5,7 +5,7 @@
 class semaphore
 {
 	private:
-		sem_t sem;
+		sem_t *sem;
 	public:
 		explicit semaphore(const int pshared = 0, const unsigned int value = 0);
 		~semaphore(void);
