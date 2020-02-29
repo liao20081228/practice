@@ -12,15 +12,16 @@ namespace rfst
 	private:
 		void* addr;
 		int length;
+
+		int front;
+		int rear;
 #ifndef RFTS_CLIENT
 		mutex mutext_mem_pool;
 #endif
 	public:
 		mempool(int length);
 		void* malloc(int length);
-		void  free();
+		int  free(void* addr);
 		const void*  get_real_addr() const;
-		int lock();
-		int unlock;
 	};
 }
