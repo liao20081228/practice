@@ -4,7 +4,7 @@ rfts::mempool::mempool(const trans_args& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2),
-	length(elesize * 100),addr(new char[length]()),front(0),rear(0)
+	length(elesize * 100),capacity(length/elesize),addr(new unsigned char[length]()),front(0),rear(0)
 {
 }
 
@@ -12,9 +12,7 @@ rfts::mempool::mempool(const trans_args& transargs) noexcept:
 rfts::mempool::~mempool(void) noexcept
 {
 	while(front == rear)
-	{
-		delete [] static_cast<char*>(addr);
-	}
+		delete [] addr;
 }
 
 
@@ -31,6 +29,9 @@ int rfts::mempool::get_real_length(void) const noexcept
 
 void* rfts::mempool::rmalloc(void) noexcept
 {
-	void* temp = addr + front; 
-	if((rear + 1) %  front)
+	void* temp = addr + front * elesize; 
+	if()
+	{
+
+	}
 }
