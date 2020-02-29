@@ -87,3 +87,12 @@ void semaphore::wait(void)
 		throw std::runtime_error("the call was interrupted by s signal handler");
 }
 
+
+void semaphore::trywait(void)
+{
+	if(sem_trywait(sem))
+	{
+		throw std::runtime_error("the call was interrupted by s signal handler");
+	
+	}
+}
