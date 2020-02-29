@@ -1,10 +1,11 @@
 #pragma once
 #ifndef RFTS_MEM_POOL_H
 	#define RFTS_MEM_POOL_H
+#include"trans_args.hpp"
 #include<iostream>
 #include<mutex>
 #include<atomic>
-#include"trans_args.hpp"
+#include<exception>
 namespace rfts
 {
 	class mempool

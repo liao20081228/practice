@@ -31,7 +31,7 @@ void* rfts::mempool::rmalloc(void)
 {
 	int next = (rear + 1) % capacity;
 	if( next == front)
-		throw std::bad_alloc("no free memory");
+		throw std::bad_alloc();
 	void* temp = addr + rear * elesize;
 	rear = next;
 	return temp;
@@ -39,7 +39,9 @@ void* rfts::mempool::rmalloc(void)
 
 void rfts::mempool::rfree(void)
 {
-i	if(  )
+	if(rear == front)
+		throw std::bad_alloc();
+	front = (front + 1) % capacity;
 }
 
 
