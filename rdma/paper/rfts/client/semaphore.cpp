@@ -55,7 +55,14 @@ semaphore::~semaphore(void)
 
 void semaphore::post(void)
 {
-	sem_post(sem)
+	if(sem_post(sem))
+	{
+		if(errno == EINVAL)
+		if(errno == EOVERFLOW)
+		{
+
+		}
+	}
 }
 
 
