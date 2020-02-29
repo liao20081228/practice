@@ -29,7 +29,22 @@ int rfts::mempool::get_real_length(void) const noexcept
 
 void* rfts::mempool::rmalloc(void)
 {
-	if((rear+1) % capacity == front)
+	int next = (rear + 1) % capacity;
+	if( next == front)
 		throw std::bad_alloc();
-
+	void* temp = addr + rear * elesize;
+	rear = next;
+	return temp;
 }
+
+void rfts::mempool::rfree(void)
+{
+i	if(  )
+}
+
+
+
+
+
+
+

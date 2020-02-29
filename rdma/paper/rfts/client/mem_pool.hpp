@@ -21,7 +21,7 @@ namespace rfts
 		mempool(const trans_args& transargs) noexcept;
 		~mempool(void) noexcept;
 		void*		rmalloc(void);
-		int		rfree(void);
+		void		rfree(void);
 		const void*	get_real_addr(void) const noexcept;
 		int		get_real_length(void) const noexcept;
 	};
