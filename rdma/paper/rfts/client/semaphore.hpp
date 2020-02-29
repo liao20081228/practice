@@ -5,7 +5,7 @@
 #include<fcntl.h>
 #include<sys/stat.h>
 #include<cerrno>
-#include<exception>
+#include<stdexcept>
 class semaphore
 {
 	private:
