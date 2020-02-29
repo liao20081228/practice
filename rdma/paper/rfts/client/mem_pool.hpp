@@ -1,11 +1,6 @@
 #pragma once
 #ifndef RFTS_MEM_POOL_H
 	#define RFTS_MEM_POOL_H
-
-#ifndef RFTS_CLIENT
-	#define RFTS_CLIENT
-#endif
-
 #include<iostream>
 #include<mutex>
 #include<atomic>
@@ -24,8 +19,8 @@ namespace rfts
 	public:
 		mempool(const trans_args& transargs) noexcept;
 		~mempool(void) noexcept;
-		void*		malloc(int) noexcept;
-		int		free(void*) noexcept;
+		void*		rmalloc(void) noexcept;
+		int		rfree(void*) noexcept;
 		const void*	get_real_addr(void) const noexcept;
 		int		get_real_length(void) const noexcept;
 	};

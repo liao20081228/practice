@@ -13,10 +13,9 @@ rfts::mempool::~mempool(void) noexcept
 {
 	while(front == rear)
 	{
-		delete[] static_cast<char*>(addr);
+		delete [] static_cast<char*>(addr);
 	}
 }
-
 
 
 const void* rfts::mempool::get_real_addr(void) const noexcept
@@ -24,7 +23,13 @@ const void* rfts::mempool::get_real_addr(void) const noexcept
 	return addr;
 }
 
+
 int rfts::mempool::get_real_length(void) const noexcept
 {
 	return length;
+}
+
+void* rfts::mempool::rmalloc(void) noexcept
+{
+
 }
