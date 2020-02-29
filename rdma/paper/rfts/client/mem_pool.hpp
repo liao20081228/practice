@@ -11,11 +11,12 @@ namespace rfts
 	class mempool
 	{
 	private:
-		void* addr;
-		int length;
+		void* const addr;
+		const int length;
 
 		int front;
 		int rear;
+		int busy;
 #ifndef RFTS_CLIENT
 		mutex mutext_mem_pool;
 #endif
