@@ -23,10 +23,11 @@ namespace rfts
 		int rear;//队尾指针
 	public:
 		mempool(const trans_args& transargs) noexcept;
-		void* malloc(int) noexcept;
-		int  free(void*) noexcept;
-		const void*  get_real_addr(void) const noexcept;
-		int  get_read_length(void) const noexcept;
+		~mempool(void) noexcept;
+		void*		malloc(int) noexcept;
+		int		free(void*) noexcept;
+		const void*	get_real_addr(void) const noexcept;
+		int		get_real_length(void) const noexcept;
 	};
 }
 

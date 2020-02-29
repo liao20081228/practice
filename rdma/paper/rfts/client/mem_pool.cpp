@@ -8,6 +8,17 @@ rfts::mempool::mempool(const trans_args& transargs) noexcept:
 {
 }
 
+
+rfts::mempool::~mempool(void) noexcept
+{
+	while(front == rear)
+	{
+		delete[] static_cast<char*>(addr);
+	}
+}
+
+
+
 const void* rfts::mempool::get_real_addr(void) const noexcept
 {
 	return addr;
