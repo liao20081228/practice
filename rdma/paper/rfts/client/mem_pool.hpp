@@ -4,7 +4,7 @@
 
 #include<iostream>
 #include<mutex>
-
+#include<atomic>
 namespace rfts
 {
 	using std::mutex;
