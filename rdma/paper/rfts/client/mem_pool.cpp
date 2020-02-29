@@ -29,10 +29,7 @@ int rfts::mempool::get_real_length(void) const noexcept
 
 void* rfts::mempool::rmalloc(void) noexcept
 {
-	if(rear-)
-	void* temp = addr + front * elesize; 
-	if()
-	{
-i		rear = (rear + 1) % capacity;
-	}
+	if((rear+1) % capacity == front)
+		throw(std::bad_alloc);
+
 }
