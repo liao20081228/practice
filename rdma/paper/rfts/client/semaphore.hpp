@@ -18,7 +18,8 @@ class semaphore
 				 mode_t mode = 00666, unsigned int value = 0);
 		semaphore(const semaphore& ref) = delete;
 		semaphore& operator = (const semaphore& ref) = delete;
-		explicit semaphore(semaphore& ref);
+		explicit semaphore(semaphore&& ref);
+		semaphore& operator=(semaphore&& ref);
 		~semaphore(void);
 		void post(void);
 		void wait(void);
