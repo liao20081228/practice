@@ -8,7 +8,10 @@ class semaphore
 	private:
 		sem_t sem;
 	public:
-		semaphore(void);
+		explicit semaphore(void) noexcept;
+		~semaphore(void) noexcept;
+		void post(void) noexcept;
+		void wait(void) noexcept;
 };
 
 
