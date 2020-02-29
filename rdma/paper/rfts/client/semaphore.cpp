@@ -88,11 +88,12 @@ void semaphore::wait(void)
 }
 
 
-void semaphore::trywait(void)
+int semaphore::trywait(void)
 {
-	if(sem_trywait(sem))
-	{
-		throw std::runtime_error("the call was interrupted by s signal handler");
-	
-	}
+	return sem_trywait(sem);
+}
+
+int semaphore::timewait(const struct timespec* abs_timeout)
+{
+	return sem_timedwait(sem,abs_timeout);
 }

@@ -1,6 +1,6 @@
 #pragma once
 #ifndef RFTS_SEMAPHORE_H
-#define RFTS_SEMAPHORE_H
+	#define RFTS_SEMAPHORE_H
 #include<semaphore.h>
 #include<fcntl.h>
 #include<sys/stat.h>
@@ -24,8 +24,8 @@ class semaphore
 		
 		void post(void);
 		void wait(void);
-		void trywait(void);
-		void timewait(const struct timespec* abs_timeout);
+		int trywait(void);
+		int timewait(const struct timespec* abs_timeout);
 		int getvalue(int * val = nullptr);
 		
 };
