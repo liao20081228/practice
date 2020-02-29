@@ -20,9 +20,9 @@ namespace rfts
 		mutex mutext_mem_pool;
 #endif
 	public:
-		mempool(int length);
-		void* malloc(int length);
-		int  free(void* addr);
+		mempool(int afreq, int tfreq, int kind = 1, int nodenum=1);
+		void* malloc(int);
+		int  free(void*);
 		const void*  get_real_addr() const;
 	};
 }
