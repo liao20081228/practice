@@ -8,7 +8,7 @@
 #include<exception>
 namespace rfts
 {
-	class mem_pool
+	class MemPool
 	{
 	private:
 		const int elesize;//每个队列元素的大小
