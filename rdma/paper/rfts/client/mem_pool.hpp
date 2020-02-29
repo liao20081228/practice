@@ -12,7 +12,6 @@
 #include"trans_args.hpp"
 namespace rfts
 {
-	using std::mutex;
 	class mempool
 	{
 	private:
@@ -26,8 +25,8 @@ namespace rfts
 		mempool(const trans_args& transargs) noexcept;
 		void* malloc(int) noexcept;
 		int  free(void*) noexcept;
-		const void*  get_real_addr() const noexcept;
-		const void*  get_read_length() const noexcept;
+		const void*  get_real_addr(void) const noexcept;
+		int  get_read_length(void) const noexcept;
 	};
 }
 
