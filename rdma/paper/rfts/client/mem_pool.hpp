@@ -1,3 +1,7 @@
+#pragma once
+#ifndef RFTS_MEM_POOL_H
+	#define RFTS_MEM_POOL_H
+
 #ifndef RFTS_CLIENT
 	#define RFTS_CLIENT
 #endif
@@ -28,3 +32,5 @@ namespace rfts
 		const void*  get_real_addr() const;
 	};
 }
+
+#endif /* end of include guard: RFTS_MEM_POOL_H */
