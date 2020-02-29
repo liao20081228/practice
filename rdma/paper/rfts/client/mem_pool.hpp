@@ -8,7 +8,7 @@
 #include<exception>
 namespace rfts
 {
-	class mempool
+	class mem_pool
 	{
 	private:
 		const int elesize;//每个队列元素的大小
@@ -19,8 +19,10 @@ namespace rfts
 		int front;//队首指针
 		int rear;//队尾指针
 	public:
-		mempool(const trans_args& transargs) noexcept;
-		~mempool(void) noexcept;
+		mem_pool(const trans_args& transargs) noexcept;
+		mem_pool(const mem_pool & ref) = delete;
+		mem_pool& operator = (const mem_pool & ref) = delete;
+		~mem_pool(void) noexcept;
 		void*		rmalloc(void);
 		void		rfree(void);
 		const void*	get_real_addr(void) const noexcept;
