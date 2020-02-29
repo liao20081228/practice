@@ -18,6 +18,16 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 {
 	if(sem == SEM_FAILED)
 	{
-
+		switch(errno)
+		{
+			case EACCES:
+				throw std::invalid_argument("user have not permission to accsee");
+			case EEXIST:
+				throw std::invalid_argument("semaphore already exists");
+			case EINVAL:
+				throw std::invalid_argument("initial value exceeds SEM_VALUE_MAX");
+			case EMFILE:
+				throw std::system_error(errno, "per-process limit on  the number of open fd has been reached");
+		}
 	}
 }
