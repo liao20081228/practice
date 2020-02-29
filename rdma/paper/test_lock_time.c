@@ -65,7 +65,17 @@ int main()
 	pthread_spinlock_t spin;
 	pthread_spin_init(&spin, PTHREAD_PROCESS_PRIVATE);
 
-
+	pthread_t id[4];
+	for(int i=0;i < 4;i++)
+		pthread_create(&id[i],NULL,fun,(void*)&mutex);
+	for(int i=0;i < 4;i++)
+		pthread_join(id[i],NULL);
+	
+	for(int i=0;i < 4;i++)
+		pthread_create(&id[i],NULL,fun1,(void*)&spin);
+	for(int i=0;i < 4;i++)
+		pthread_join(id[i],NULL);
+	return 0;
 
 
 
