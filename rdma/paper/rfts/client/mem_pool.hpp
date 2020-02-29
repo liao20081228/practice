@@ -7,7 +7,7 @@ namespace rfst
 	private:
 		void* addr;
 		int length;
-
+	public:
 		mempool(int length);
 		void* malloc(int n);
 	};
