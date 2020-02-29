@@ -1,7 +1,6 @@
 #include"semaphore.hpp"
 
-semaphore::semaphore(const int pshared, const unsigned int value)
+semaphore::semaphore(const int pshared, const unsigned int value):sem(new sem_t)
 {
-	int ret = sem_init(&sem, pshared, value);
-
+	sem_init(sem, pshared, value);
 }
