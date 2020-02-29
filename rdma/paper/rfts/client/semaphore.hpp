@@ -1,6 +1,7 @@
 #pragma once
 #ifndef RFTS_SEMAPHORE_H
 #define RFTS_SEMAPHORE_H
+#include<errno.h>
 #include<semaphore.h>
 #include<fcntl.h>
 #include<sys/stat.h>
