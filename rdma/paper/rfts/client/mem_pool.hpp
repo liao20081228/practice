@@ -6,6 +6,8 @@
 #include<mutex>
 #include<atomic>
 #include<exception>
+
+#if define MEM_POOL_SEQ_QUEUE
 namespace rfts
 {
 	class mem_pool
