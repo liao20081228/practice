@@ -13,18 +13,16 @@ namespace rfts
 	class spc_seq_mem_pool
 	{
 	private:
-		int elesize;//每个队列元素的大小
-		int length;//buf长度
-		int capacity;//队列容量
-		unsigned char*  addr;//buf地址
+		const int elesize;//每个队列元素的大小
+		const int length;//buf长度
+		const int capacity = MEM_POOL_CAPACITY;//队列容量
+		unsigned char*  const addr;//buf地址
 		int front;
 		int rear;
 	public:
 		spc_seq_mem_pool(const trans_args& transargs) noexcept;
 		spc_seq_mem_pool(const spc_seq_mem_pool & ref) = delete;
-		spc_seq_mem_pool(spc_seq_mem_pool&& ref) noexcept;
 		spc_seq_mem_pool& operator = (const spc_seq_mem_pool & ref) = delete;
-		spc_seq_mem_pool& operator = (spc_seq_mem_pool&& ref) noexcept;
 		~spc_seq_mem_pool(void) noexcept;
 
 		void*		rmalloc(void);
@@ -50,7 +48,7 @@ namespace rfts
 	public:
 		mpc_link_mem_pool(const trans_args& transargs) noexcept;
 		mpc_link_mem_pool(const mpc_link_mem_pool&) = delete ;
-		mpc_link_mem_pool(mpc_link_mem_pool&& ref) noexcept;
+		mpc_link_mem_pool&  operator = (const mpc_link_mem_pool&) = delete;
 	};
 }
 

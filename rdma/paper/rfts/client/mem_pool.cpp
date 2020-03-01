@@ -10,40 +10,6 @@ rfts::spc_seq_mem_pool::spc_seq_mem_pool(const trans_args& transargs) noexcept:
 {
 }
 
-rfts::spc_seq_mem_pool::spc_seq_mem_pool(spc_seq_mem_pool&& ref) noexcept:
-	elesize(ref.elesize), length(ref.length), capacity(ref.capacity),
-	addr(ref.addr)
-{
-	front = ref.front;
-	rear = ref.rear;
-	ref.elesize = 0;
-	ref.length  = 0;
-	ref.front   = 0;
-	ref.rear    = 0;
-	ref.addr = nullptr;
-	ref.capacity = 0;
-}
-
-
-rfts::spc_seq_mem_pool& rfts::spc_seq_mem_pool::operator = (spc_seq_mem_pool&& ref) noexcept
-{
-	if(this == &ref)
-		return *this;
-	elesize = ref.elesize;
-	length = ref.length;
-	addr = ref.addr;
-	capacity = ref.capacity;
-	front = ref.front;
-	rear = ref.rear;
-
-	ref.elesize = 0;
-	ref.length  = 0;
-	ref.front   = 0;
-	ref.rear    = 0;
-	ref.addr = nullptr;
-	ref.capacity = 0;
-	return *this;
-}
 
 rfts::spc_seq_mem_pool::~spc_seq_mem_pool(void) noexcept
 {
@@ -104,6 +70,11 @@ rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept
 	}
 }
 
+rfts::mpc_link_mem_pool::mpc_link_mem_pool(mpc_link_mem_pool&& ref) noexcept:
+	head(ref.head),tail(ref.tail)
+{
+
+}
 
 
 
