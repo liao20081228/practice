@@ -35,8 +35,14 @@ namespace rfts
 	class mpc_link_mem_pool
 	{
 	private:
-		
-
+		struct node
+		{
+			void* addr;
+			struct node* next;
+		};
+		node head;
+		node tail;
+		unsigned char* addr;//buf地址
 	public:
 	};
 }
