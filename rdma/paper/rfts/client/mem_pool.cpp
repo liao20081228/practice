@@ -92,12 +92,11 @@ rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept
 	,addr(new unsigned char[length]())
 {
 	tail = head = new node;
-	head->next = head->addr = nullptr;
-	
+	head->addr = head->next =  nullptr;
 
 	for(int i = 0; i< capacity; ++i)
 	{
-	
+		
 	}
 }
 
