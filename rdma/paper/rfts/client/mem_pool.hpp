@@ -40,10 +40,13 @@ namespace rfts
 			void* addr;
 			struct node* next;
 		};
-		node head;
-		node tail;
+		node head;//链表头结点
+		node* tail;//链表尾部节点
 		unsigned char* addr;//buf地址
+		int length;//buf长度
+		int capacity;//buf容量
 	public:
+		mpc_link_mem_pool(const trans_args& transargs) noexcept;
 	};
 }
 
