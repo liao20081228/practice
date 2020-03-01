@@ -39,7 +39,7 @@ void* rfts::spc_seq_mem_pool::rmalloc(void)
 	do
 	{
 
-	}while(num.compare_exchange_weak(num,old+1));
+	}while(num.compare_exchange_weak(num,old+1,));
 	void* temp = addr + rear * elesize;
 	
 	rear = (rear+1) % MEM_POOL_CAPACITY;
