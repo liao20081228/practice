@@ -7,9 +7,10 @@
 #include<atomic>
 #include<exception>
 
-#if define MEM_POOL_SEQ_QUEUE
 namespace rfts
 {
+#ifdef MEM_POOL_SEQ_QUEUE
+	template<>
 	class mem_pool
 	{
 	private:
@@ -30,6 +31,19 @@ namespace rfts
 		const void*	get_real_addr(void) const noexcept;
 		int		get_real_length(void) const noexcept;
 	};
-}
+
+#elif defined MEM_POOL_LINK_QUEUE
+	class mem_pool 
+	{
+		private:
+		public:
+	}
+
+
+#endif
+
+
+};
+
 
 #endif /* end of include guard: RFTS_MEM_POOL_H */
