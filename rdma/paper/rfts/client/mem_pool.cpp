@@ -70,23 +70,21 @@ int rfts::seq_mem_pool::get_real_length(void) const noexcept
 
 void* rfts::seq_mem_pool::rmalloc(void)
 {
-	mutex.lock();
+	std::lock_guard<std::mutex> m(mutex);
 	int next = (rear + 1) % capacity;
 	if( next == front)
 		throw std::logic_error("no free mem");
 	void* temp = addr + rear * elesize;
 	rear = next;
-	mutex.lock();
 	return temp;
 }
 
 void rfts::seq_mem_pool::rfree(void)
 {
-	mutex.lock();
+	std::lock_guard<std::mutex> m(mutex);
 	if(rear == front)
 		return;
 	front = (front + 1) % capacity;
-	mutex.lock();
 }
 
 
