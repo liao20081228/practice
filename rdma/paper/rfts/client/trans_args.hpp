@@ -5,7 +5,10 @@
 
 struct data
 {
-	
+	short int nodeid;
+	short int sensorid;
+	short int type;
+
 };
 
 
