@@ -45,8 +45,10 @@ namespace rfts
 		node* tail;//链表尾部节点
 		int elesize;//每个队列元素的大小
 		int length;//buf长度
-		int capacity;//buf容量
+		int capacity = MEM_POOL_CAPACITY;//buf容量
 		unsigned char* addr;//buf地址
+		node  record[MEM_POOL_CAPACITY];
+		int front = 0, rear = 0;
 	public:
 		mpc_link_mem_pool(const trans_args& transargs) noexcept;
 	};
