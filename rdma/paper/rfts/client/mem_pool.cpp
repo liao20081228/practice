@@ -84,7 +84,10 @@ void rfts::spc_seq_mem_pool::rfree(void)
 }
 
 
+rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept
+{
 
+}
 
 
 
