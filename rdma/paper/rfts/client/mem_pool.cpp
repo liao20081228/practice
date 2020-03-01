@@ -12,7 +12,12 @@ rfts::seq_mem_pool::seq_mem_pool(seq_mem_pool&& ref) noexcept:
 	elesize(ref.elesize), length(ref.length), capacity(ref.capacity),
 	addr(ref.addr),front(ref.front), rear(ref.rear)
 {
+	ref.elesize = 0;
+	ref.length  = 0;
+	ref.front   = 0;
+	ref.rear    = 0;
 	ref.addr = nullptr;
+	ref.capacity = 0;
 }
 
 
@@ -21,13 +26,25 @@ rfts::seq_mem_pool& rfts::seq_mem_pool::operator = (seq_mem_pool&& ref) noexcept
 	if(this == &ref)
 		return *this;
 	elesize = ref.elesize;
+	length = ref.length;
+	addr = ref.addr;
+	capacity = ref.capacity;
+	front = ref.front;
+	rear = ref.rear;
 
+	ref.elesize = 0;
+	ref.length  = 0;
+	ref.front   = 0;
+	ref.rear    = 0;
+	ref.addr = nullptr;
+	ref.capacity = 0;
+	return *this;
 }
 
 
 rfts::seq_mem_pool::~seq_mem_pool(void) noexcept
 {
-	while(front == rear)
+	while(front == rear && addr)
 	{
 		delete [] addr;
 		break;

@@ -15,7 +15,7 @@ int main()
 		.sensor_num = 8,
 		.node_num = 1
 	};
-	class mem_pool mempool(transargs);
+	class seq_mem_pool mempool=seq_mem_pool(transargs);
 
 	std::cout << mempool.get_real_length() << std::endl;
 

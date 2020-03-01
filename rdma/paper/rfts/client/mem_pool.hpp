@@ -22,7 +22,7 @@ namespace rfts
 	public:
 		seq_mem_pool(const trans_args& transargs) noexcept;
 		seq_mem_pool(const seq_mem_pool & ref) = delete;
-		seq_mem_pool(seq_mem_pool&& ref) noexcept;
+		//seq_mem_pool(seq_mem_pool&& ref) noexcept;
 		seq_mem_pool& operator = (const seq_mem_pool & ref) = delete;
 		seq_mem_pool& operator = (seq_mem_pool&& ref) noexcept;
 		~seq_mem_pool(void) noexcept;
