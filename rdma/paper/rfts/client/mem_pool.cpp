@@ -3,12 +3,13 @@
 rfts::seq_mem_pool::seq_mem_pool(const trans_args& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
-		transargs.kind * transargs.size * 2),
-	length(elesize * 100),capacity(length/elesize),addr(new unsigned char[length]()),
-	front(0),rear(0)
+		transargs.kind * transargs.size * 2)
+	,length(elesize * 100),capacity(length/elesize)
+	,addr(new unsigned char[length]())
+	,front(0),rear(0)
 {
 }
-
+/*
 rfts::seq_mem_pool::seq_mem_pool(seq_mem_pool&& ref) noexcept:
 	elesize(ref.elesize), length(ref.length), capacity(ref.capacity),
 	addr(ref.addr),front(ref.front), rear(ref.rear)
@@ -42,7 +43,7 @@ rfts::seq_mem_pool& rfts::seq_mem_pool::operator = (seq_mem_pool&& ref) noexcept
 	return *this;
 }
 
-
+*/
 rfts::seq_mem_pool::~seq_mem_pool(void) noexcept
 {
 	while(front == rear && addr)

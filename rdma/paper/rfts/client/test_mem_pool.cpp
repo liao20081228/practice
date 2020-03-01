@@ -6,8 +6,8 @@ int main()
 {
 	const int testnum=10;
 	using namespace rfts;
-	struct trans_args transargs=
-	{
+	trans_args transargs=
+	{	
 		.afreq = 500,
 		.tfreq = 1,
 		.size = 20,
@@ -15,7 +15,8 @@ int main()
 		.sensor_num = 8,
 		.node_num = 1
 	};
-	class seq_mem_pool mempool(transargs);
+
+	seq_mem_pool mempool(transargs);
 
 	std::cout << mempool.get_real_length() << std::endl;
 
