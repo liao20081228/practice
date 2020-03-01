@@ -2,7 +2,7 @@
 #ifndef RFTS_TRANS_ARGS_H
 #define RFTS_TRANS_ARGS_H
 #include<ctime>
-namespace 
+namespace rfts 
 {
 struct data//数据结构
 {

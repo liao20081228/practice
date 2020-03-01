@@ -16,7 +16,7 @@ int main()
 		.node_num = 1
 	};
 
-	seq_mem_pool mempool(transargs);
+	seq_mem_pool mempool=seq_mem_pool(transargs);
 
 	std::cout << mempool.get_real_length() << std::endl;
 
