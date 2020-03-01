@@ -10,14 +10,14 @@
 namespace rfts
 {
 #ifdef MEM_POOL_SEQ_QUEUE
-	template<>
+	template<typename T>
 	class mem_pool
 	{
 	private:
 		const int elesize;//每个队列元素的大小
 		const int length;//buf长度
 		const int capacity;//队列容量
-		unsigned char* const addr;//buf地址
+		T* const addr;//buf地址
 	
 		int front;//队首指针
 		int rear;//队尾指针
