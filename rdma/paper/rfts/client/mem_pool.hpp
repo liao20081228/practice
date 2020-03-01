@@ -6,7 +6,7 @@
 #include<mutex>
 #include<atomic>
 #include<stdexcept>
-
+#include<cstdlib>
 namespace rfts
 {
 	const int MEM_POOL_CAPACITY = 100;
@@ -47,8 +47,6 @@ namespace rfts
 		int length;//buf长度
 		int capacity = MEM_POOL_CAPACITY;//buf容量
 		unsigned char* addr;//buf地址
-		node  record[MEM_POOL_CAPACITY+1];
-		int front = 0, rear = 0;
 	public:
 		mpc_link_mem_pool(const trans_args& transargs) noexcept;
 	};
