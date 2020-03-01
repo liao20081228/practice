@@ -4,7 +4,7 @@ rfts::spc_seq_mem_pool::spc_seq_mem_pool(const trans_args& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2)
-	,length(elesize * MEM_POOL_CAPACITY),capacity(100)
+	,length(elesize * MEM_POOL_CAPACITY)
 	,addr(new unsigned char[length]())
 	,front(0),rear(0)
 {
@@ -36,7 +36,7 @@ int rfts::spc_seq_mem_pool::get_real_length(void) const noexcept
 void* rfts::spc_seq_mem_pool::rmalloc(void)
 {
 	int next = (rear + 1) % capacity;
-	if( next == front)
+	if( capacity )
 		throw std::logic_error("no free mem");
 	void* temp = addr + rear * elesize;
 	rear = next;
@@ -52,7 +52,7 @@ void rfts::spc_seq_mem_pool::rfree(void)
 
 
 rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept:
-	elesize(transargs.afreq / transargs.tfreq * 
+	size(0),elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2)
 	,length(elesize * MEM_POOL_CAPACITY)
@@ -63,7 +63,7 @@ rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept
 
 	for(int i = 0; i< capacity; ++i)
 	{
-		node* temp = (node*)malloc(sizeof(node));
+		node* temp = (node*)malloc(sizeof(node));//new比malloc更加耗时
 		temp->addr = addr + i * elesize;
 		temp->next = nullptr;
 		tail->next = temp;
@@ -73,7 +73,10 @@ rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept
 
 rfts::mpc_link_mem_pool::~mpc_link_mem_pool(void) noexcept
 {
+	while(addr && size == 0)
+	{
 
+	}
 }
 
 
