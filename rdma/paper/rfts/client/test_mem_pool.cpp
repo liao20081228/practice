@@ -2,10 +2,14 @@
 #include"mem_pool.hpp"
 #include<iostream>
 #include"get_clock.h"
+#include<thread>
+
+
+using namespace rfts;
+const int testnum=10;
+void fun(seq_mem_pool&);
 int main()
 {
-	const int testnum=10;
-	using namespace rfts;
 	trans_args transargs=
 	{	
 		.afreq = 500,
@@ -19,7 +23,13 @@ int main()
 	seq_mem_pool mempool=seq_mem_pool(transargs);
 
 	std::cout << mempool.get_real_length() << std::endl;
+	
+	std::thread(fun,mempool);
+	std::thread(fun,mempool);
+}
 
+void fun(seq_mem_pool& mempool)
+{
 	void * addr = nullptr;
 	mempool.rfree();
 	long double mean1 = 0;
@@ -42,5 +52,5 @@ int main()
 		mean2= mean2 + ( e-s ) / mhz * 1000;
 	}
 	std::cout << "malloc mean:" << mean1/testnum << "," << "free mean:"<< mean2/testnum<<std::endl;
-	return 0;
+	return ;
 }
