@@ -68,10 +68,10 @@ int rfts::seq_mem_pool::get_real_length(void) const noexcept
 
 void* rfts::seq_mem_pool::rmalloc(void)
 {
-	int next = (rear + 1) % capacity;
-	if( next == front)
+	int next = (rear.load() + 1) % capacity;
+	if( next == front.load())
 		throw std::logic_error("no free mem");
-	void* temp = addr + rear * elesize;
+	void* temp = addr + rear.load() * elesize;
 	rear = next;
 	return temp;
 }
