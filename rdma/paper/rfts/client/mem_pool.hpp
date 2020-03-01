@@ -49,6 +49,8 @@ namespace rfts
 		unsigned char* addr;//buf地址
 	public:
 		mpc_link_mem_pool(const trans_args& transargs) noexcept;
+		mpc_link_mem_pool(const mpc_link_mem_pool&) = delete ;
+		mpc_link_mem_pool(mpc_link_mem_pool&& ref) noexcept;
 	};
 }
 
