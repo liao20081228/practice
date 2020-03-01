@@ -16,6 +16,13 @@ rfts::seq_mem_pool::seq_mem_pool(seq_mem_pool&& ref) noexcept:
 }
 
 
+rfts::seq_mem_pool& rfts::seq_mem_pool::operator = (seq_mem_pool&& ref) noexcept
+{
+	if(this == &ref)
+		return *this;
+	elesize = ref.elesize;
+
+}
 
 
 rfts::seq_mem_pool::~seq_mem_pool(void) noexcept
