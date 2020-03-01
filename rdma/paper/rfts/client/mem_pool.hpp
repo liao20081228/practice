@@ -32,7 +32,15 @@ namespace rfts
 		int		get_real_length(void) const noexcept;
 	};
 
+	class mpc_link_mem_pool
+	{
+	private:
+		
+
+	public:
+	};
 }
+
 
 
 #endif /* end of include guard: RFTS_MEM_POOL_H */
