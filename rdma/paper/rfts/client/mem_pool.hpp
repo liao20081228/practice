@@ -16,7 +16,7 @@ namespace rfts
 		int length;//buf长度
 		int capacity;//队列容量
 		unsigned char*  addr;//buf地址
-	
+	public:
 		std::atomic_int front;//队首指针
 		std::atomic_int rear;//队尾指针
 	public:

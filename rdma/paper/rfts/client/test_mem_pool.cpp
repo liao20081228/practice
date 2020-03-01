@@ -24,8 +24,12 @@ int main()
 
 	std::cout << mempool.get_real_length() << std::endl;
 	
-	std::thread(fun,mempool);
-	std::thread(fun,mempool);
+	std::thread a(fun,mempool);
+	std::thread b(fun,mempool);
+	std::thread c(fun,mempool);
+	a.join();
+	b.join();
+	c.join();
 }
 
 void fun(seq_mem_pool& mempool)
@@ -50,6 +54,7 @@ void fun(seq_mem_pool& mempool)
 		mempool.rfree();
 		e=get_cycles();
 		mean2= mean2 + ( e-s ) / mhz * 1000;
+		std::cout<<mempool.front<<","<<mempool.rear<<std::endl;
 	}
 	std::cout << "malloc mean:" << mean1/testnum << "," << "free mean:"<< mean2/testnum<<std::endl;
 	return ;
