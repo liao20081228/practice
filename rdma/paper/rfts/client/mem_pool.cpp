@@ -1,6 +1,7 @@
 #include"mem_pool.hpp"
 
-rfts::mem_pool::mem_pool(const trans_args& transargs) noexcept:
+template<typename T>
+rfts::mem_pool<T>::mem_pool(const trans_args& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2),
