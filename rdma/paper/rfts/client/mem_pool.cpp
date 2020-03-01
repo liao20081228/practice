@@ -16,6 +16,7 @@ rfts::spc_seq_mem_pool::~spc_seq_mem_pool(void) noexcept
 	while(front == rear && addr)
 	{
 		delete [] addr;
+		addr=nullptr;
 		break;
 	}
 }
@@ -70,11 +71,6 @@ rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept
 	}
 }
 
-rfts::mpc_link_mem_pool::mpc_link_mem_pool(mpc_link_mem_pool&& ref) noexcept:
-	head(ref.head),tail(ref.tail)
-{
-
-}
 
 
 

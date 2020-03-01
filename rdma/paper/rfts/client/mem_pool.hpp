@@ -16,7 +16,7 @@ namespace rfts
 		const int elesize;//每个队列元素的大小
 		const int length;//buf长度
 		const int capacity = MEM_POOL_CAPACITY;//队列容量
-		unsigned char*  const addr;//buf地址
+		unsigned char* addr;//buf地址
 		int front;
 		int rear;
 	public:
@@ -41,14 +41,15 @@ namespace rfts
 		};
 		node* head;//链表头结点
 		node* tail;//链表尾部节点
-		int elesize;//每个队列元素的大小
-		int length;//buf长度
-		int capacity = MEM_POOL_CAPACITY;//buf容量
+		const int elesize;//每个队列元素的大小
+		const int length;//buf长度
+		const int capacity = MEM_POOL_CAPACITY;//buf容量
 		unsigned char* addr;//buf地址
 	public:
 		mpc_link_mem_pool(const trans_args& transargs) noexcept;
 		mpc_link_mem_pool(const mpc_link_mem_pool&) = delete ;
 		mpc_link_mem_pool&  operator = (const mpc_link_mem_pool&) = delete;
+		~mpc_link_mem_pool(void) noexcept;
 	};
 }
 
