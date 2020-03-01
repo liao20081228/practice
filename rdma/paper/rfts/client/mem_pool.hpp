@@ -5,7 +5,7 @@
 #include<iostream>
 #include<mutex>
 #include<atomic>
-#include<exception>
+#include<stdexcept>
 
 namespace rfts
 {
@@ -17,8 +17,8 @@ namespace rfts
 		int capacity;//队列容量
 		unsigned char*  addr;//buf地址
 	
-		int front;//队首指针
-		int rear;//队尾指针
+		std::atomic_int front;//队首指针
+		std::atomic_int rear;//队尾指针
 	public:
 		seq_mem_pool(const trans_args& transargs) noexcept;
 		seq_mem_pool(const seq_mem_pool & ref) = delete;
