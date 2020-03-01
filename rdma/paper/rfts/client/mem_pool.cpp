@@ -34,7 +34,10 @@ int rfts::spc_seq_mem_pool::get_real_length(void) const noexcept
 
 void* rfts::spc_seq_mem_pool::rmalloc(void)
 {
-	
+	int temp = 0;
+	do
+	{
+	}while()
 
 
 	void* temp = addr + rear * elesize;
