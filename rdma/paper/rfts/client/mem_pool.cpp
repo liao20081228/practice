@@ -96,6 +96,11 @@ rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept
 
 	for(int i = 0; i< capacity; ++i)
 	{
+		node* temp = new node;
+		temp->addr = addr + i * elesize;
+		temp->next = nullptr;
+		tail->next = temp;
+	        tail = temp;
 	}
 }
 
