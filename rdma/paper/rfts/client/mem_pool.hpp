@@ -15,7 +15,7 @@ namespace rfts
 	private:
 		const int elesize;//每个队列元素的大小
 		const int length;//buf长度
-		//int  capacity = MEM_POOL_CAPACITY;//队列容量
+		std::atomic_int  capacity;//队列容量
 		unsigned char* addr;//buf地址
 		int front;
 		int rear;
