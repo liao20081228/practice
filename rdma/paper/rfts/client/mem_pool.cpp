@@ -14,8 +14,6 @@ rfts::seq_mem_pool::seq_mem_pool(seq_mem_pool&& ref) noexcept:
 	elesize(ref.elesize), length(ref.length), capacity(ref.capacity),
 	addr(ref.addr)
 {
-	//front = ref.front.load();
-	//rear = ref.rear.load();
 	front = ref.front;
 	rear = ref.rear;
 	ref.elesize = 0;
@@ -70,7 +68,6 @@ int rfts::seq_mem_pool::get_real_length(void) const noexcept
 
 void* rfts::seq_mem_pool::rmalloc(void)
 {
-	std::lock_guard<std::mutex> m(mutex);
 	int next = (rear + 1) % capacity;
 	if( next == front)
 		throw std::logic_error("no free mem");
@@ -81,7 +78,6 @@ void* rfts::seq_mem_pool::rmalloc(void)
 
 void rfts::seq_mem_pool::rfree(void)
 {
-	std::lock_guard<std::mutex> m(mutex);
 	if(rear == front)
 		return;
 	front = (front + 1) % capacity;

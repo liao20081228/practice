@@ -16,12 +16,8 @@ namespace rfts
 		int length;//buf长度
 		int capacity;//队列容量
 		unsigned char*  addr;//buf地址
-	public:
-		//std::atomic_int front;//队首指针
-		//std::atomic_int rear;//队尾指针
 		int front;
 		int rear;
-		std::mutex mutex;
 	public:
 		seq_mem_pool(const trans_args& transargs) noexcept;
 		seq_mem_pool(const seq_mem_pool & ref) = delete;
