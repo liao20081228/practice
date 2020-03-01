@@ -9,6 +9,7 @@
 
 namespace rfts
 {
+	const int MEM_POOL_CAPACITY = 100;
 	class spc_seq_mem_pool
 	{
 	private:
@@ -42,9 +43,10 @@ namespace rfts
 		};
 		node* head;//链表头结点
 		node* tail;//链表尾部节点
-		unsigned char* addr;//buf地址
+		int elesize;//每个队列元素的大小
 		int length;//buf长度
 		int capacity;//buf容量
+		unsigned char* addr;//buf地址
 	public:
 		mpc_link_mem_pool(const trans_args& transargs) noexcept;
 	};

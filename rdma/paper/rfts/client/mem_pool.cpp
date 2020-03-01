@@ -4,7 +4,7 @@ rfts::spc_seq_mem_pool::spc_seq_mem_pool(const trans_args& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2)
-	,length(elesize * 100),capacity(length/elesize)
+	,length(elesize * MEM_POOL_CAPACITY),capacity(100)
 	,addr(new unsigned char[length]())
 	,front(0),rear(0)
 {
@@ -84,7 +84,12 @@ void rfts::spc_seq_mem_pool::rfree(void)
 }
 
 
-rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept
+rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept:
+	elesize(transargs.afreq / transargs.tfreq * 
+		transargs.node_num * transargs.sensor_num *
+		transargs.kind * transargs.size * 2)
+	,length(elesize * MEM_POOL_CAPACITY),capacity(MEM_POOL_CAPACITY)
+	,addr(new unsigned char[length]())
 {
 
 }
