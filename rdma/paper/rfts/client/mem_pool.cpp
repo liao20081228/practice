@@ -8,6 +8,15 @@ rfts::seq_mem_pool::seq_mem_pool(const trans_args& transargs) noexcept:
 {
 }
 
+rfts::seq_mem_pool::seq_mem_pool(seq_mem_pool&& ref) noexcept:
+	elesize(ref.elesize), length(ref.length), capacity(ref.capacity),
+	addr(ref.addr),front(ref.front), rear(ref.rear)
+{
+	ref.addr = nullptr;
+}
+
+
+
 
 rfts::seq_mem_pool::~seq_mem_pool(void) noexcept
 {
