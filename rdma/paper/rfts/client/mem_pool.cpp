@@ -4,9 +4,8 @@ rfts::spc_seq_mem_pool::spc_seq_mem_pool(const trans_args& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2)
-	,length(elesize * MEM_POOL_CAPACITY)
-	,addr(new unsigned char[length]())
-	,front(0),rear(0)
+	,length(elesize * MEM_POOL_CAPACITY),num(MEM_POOL_CAPACITY)
+	,addr(new unsigned char[length]()),front(0),rear(0)
 {
 }
 
@@ -35,7 +34,14 @@ int rfts::spc_seq_mem_pool::get_real_length(void) const noexcept
 
 void* rfts::spc_seq_mem_pool::rmalloc(void)
 {
+
+	int old = num;
+	do
+	{
+
+	}while(num.compare_exchange_weak(num,old+1));
 	void* temp = addr + rear * elesize;
+	
 	rear = (rear+1) % MEM_POOL_CAPACITY;
 	return temp;
 }
@@ -44,7 +50,7 @@ void rfts::spc_seq_mem_pool::rfree(void)
 {
 	if(rear == front)
 		return;
-	front = (front + 1) % capacity;
+	front = (front + 1) % ;
 }
 
 
