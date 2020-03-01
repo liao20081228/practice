@@ -6,11 +6,11 @@ namespace
 {
 struct data//数据结构
 {
-	short int nodeid;
-	unsigned char sensorid;
-	unsigned char type;
-	struct    timespec time;
-	double    value;
+	short    int nodeid;    //节点ID
+	unsigned char sensorid; //传感器ID
+	unsigned char type;	//数据类型,束流位置？长度？
+	struct   timespec time; //时间
+	double   value;		//值
 };
 
 
