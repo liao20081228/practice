@@ -1,6 +1,6 @@
 #include"mem_pool.hpp"
 
-rfts::seq_mem_pool::seq_mem_pool(const trans_args& transargs) noexcept:
+rfts::spc_seq_mem_pool::spc_seq_mem_pool(const trans_args& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2)
@@ -10,7 +10,7 @@ rfts::seq_mem_pool::seq_mem_pool(const trans_args& transargs) noexcept:
 {
 }
 
-rfts::seq_mem_pool::seq_mem_pool(seq_mem_pool&& ref) noexcept:
+rfts::spc_seq_mem_pool::spc_seq_mem_pool(spc_seq_mem_pool&& ref) noexcept:
 	elesize(ref.elesize), length(ref.length), capacity(ref.capacity),
 	addr(ref.addr)
 {
@@ -25,7 +25,7 @@ rfts::seq_mem_pool::seq_mem_pool(seq_mem_pool&& ref) noexcept:
 }
 
 
-rfts::seq_mem_pool& rfts::seq_mem_pool::operator = (seq_mem_pool&& ref) noexcept
+rfts::spc_seq_mem_pool& rfts::spc_seq_mem_pool::operator = (spc_seq_mem_pool&& ref) noexcept
 {
 	if(this == &ref)
 		return *this;
@@ -45,7 +45,7 @@ rfts::seq_mem_pool& rfts::seq_mem_pool::operator = (seq_mem_pool&& ref) noexcept
 	return *this;
 }
 
-rfts::seq_mem_pool::~seq_mem_pool(void) noexcept
+rfts::spc_seq_mem_pool::~spc_seq_mem_pool(void) noexcept
 {
 	while(front == rear && addr)
 	{
@@ -55,18 +55,18 @@ rfts::seq_mem_pool::~seq_mem_pool(void) noexcept
 }
 
 
-const void* rfts::seq_mem_pool::get_real_addr(void) const noexcept
+const void* rfts::spc_seq_mem_pool::get_real_addr(void) const noexcept
 {
 	return addr;
 }
 
 
-int rfts::seq_mem_pool::get_real_length(void) const noexcept
+int rfts::spc_seq_mem_pool::get_real_length(void) const noexcept
 {
 	return length;
 }
 
-void* rfts::seq_mem_pool::rmalloc(void)
+void* rfts::spc_seq_mem_pool::rmalloc(void)
 {
 	int next = (rear + 1) % capacity;
 	if( next == front)
@@ -76,7 +76,7 @@ void* rfts::seq_mem_pool::rmalloc(void)
 	return temp;
 }
 
-void rfts::seq_mem_pool::rfree(void)
+void rfts::spc_seq_mem_pool::rfree(void)
 {
 	if(rear == front)
 		return;
