@@ -33,8 +33,6 @@ namespace rfts
 		int		get_real_length(void) const noexcept;
 	};
 
-
-
 };
 
 

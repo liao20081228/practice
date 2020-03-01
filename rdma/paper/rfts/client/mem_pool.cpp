@@ -4,7 +4,8 @@ rfts::seq_mem_pool::seq_mem_pool(const trans_args& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2),
-	length(elesize * 100),capacity(length/elesize),addr(new unsigned char[length]()),front(0),rear(0)
+	length(elesize * 100),capacity(length/elesize),addr(new unsigned char[length]()),
+	front(0),rear(0)
 {
 }
 
@@ -50,20 +51,6 @@ rfts::seq_mem_pool::~seq_mem_pool(void) noexcept
 		break;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const void* rfts::seq_mem_pool::get_real_addr(void) const noexcept
