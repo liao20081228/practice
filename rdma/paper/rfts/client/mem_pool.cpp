@@ -14,8 +14,10 @@ rfts::seq_mem_pool::seq_mem_pool(seq_mem_pool&& ref) noexcept:
 	elesize(ref.elesize), length(ref.length), capacity(ref.capacity),
 	addr(ref.addr)
 {
-	front = ref.front.load();
-	rear = ref.rear.load();
+	//front = ref.front.load();
+	//rear = ref.rear.load();
+	front = ref.front;
+	rear = ref.rear;
 	ref.elesize = 0;
 	ref.length  = 0;
 	ref.front   = 0;
@@ -33,8 +35,8 @@ rfts::seq_mem_pool& rfts::seq_mem_pool::operator = (seq_mem_pool&& ref) noexcept
 	length = ref.length;
 	addr = ref.addr;
 	capacity = ref.capacity;
-	front = ref.front.load();
-	rear = ref.rear.load();
+	front = ref.front;
+	rear = ref.rear;
 
 	ref.elesize = 0;
 	ref.length  = 0;
@@ -47,7 +49,7 @@ rfts::seq_mem_pool& rfts::seq_mem_pool::operator = (seq_mem_pool&& ref) noexcept
 
 rfts::seq_mem_pool::~seq_mem_pool(void) noexcept
 {
-	while(front.load() == rear.load() && addr)
+	while(front == rear && addr)
 	{
 		delete [] addr;
 		break;
@@ -68,19 +70,23 @@ int rfts::seq_mem_pool::get_real_length(void) const noexcept
 
 void* rfts::seq_mem_pool::rmalloc(void)
 {
+	mutex.lock();
 	int next = (rear + 1) % capacity;
 	if( next == front)
 		throw std::logic_error("no free mem");
 	void* temp = addr + rear * elesize;
 	rear = next;
+	mutex.lock();
 	return temp;
 }
 
 void rfts::seq_mem_pool::rfree(void)
 {
+	mutex.lock();
 	if(rear == front)
 		return;
 	front = (front + 1) % capacity;
+	mutex.lock();
 }
 
 
