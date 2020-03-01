@@ -43,18 +43,18 @@ void fun(seq_mem_pool& mempool)
 	double mhz = 0;
 	for(int i=0; i<testnum;i++)
 	{ 
-		std::cout << "id: " << std::this_thread::get_id() << ",第几次: "<<i << std::endl;
 		mhz=get_cpu_mhz(0);
 		s=get_cycles();
 		addr=mempool.rmalloc();
 		e=get_cycles();
 		mean1= mean1 + ( e-s ) / mhz * 1000;
+		std::cout<<"malloc======id "<< std::this_thread::get_id()<<","<<mempool.front<<","<<mempool.rear<<std::endl;
 		mhz=get_cpu_mhz(0);
 		s=get_cycles();
 		mempool.rfree();
 		e=get_cycles();
 		mean2= mean2 + ( e-s ) / mhz * 1000;
-		std::cout<<"id "<< std::this_thread::get_id()<<","<<mempool.front<<","<<mempool.rear<<std::endl;
+		std::cout<<"free==id"<< std::this_thread::get_id()<<","<<mempool.front<<","<<mempool.rear<<std::endl;
 	}
 	std::cout << "malloc mean:" << mean1/testnum << "," << "free mean:"<< mean2/testnum<<std::endl;
 	return ;
