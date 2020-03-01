@@ -9,7 +9,6 @@
 
 namespace rfts
 {
-#ifdef MEM_POOL_SEQ_QUEUE
 	class mem_pool
 	{
 	private:
@@ -31,15 +30,8 @@ namespace rfts
 		int		get_real_length(void) const noexcept;
 	};
 
-#elif defined MEM_POOL_LINK_QUEUE
-	class mem_pool 
-	{
-		private:
-		public:
-	}
 
 
-#endif
 
 
 };

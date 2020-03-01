@@ -23,5 +23,7 @@ struct trans_args
 	unsigned short node_num;//总共多少个节点
 };
 
+
+
 }
 #endif /* end of include guard: RFTS_TRANS_ARG_H */
