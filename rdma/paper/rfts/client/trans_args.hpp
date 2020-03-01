@@ -7,10 +7,10 @@ namespace
 struct data//数据结构
 {
 	short int nodeid;
-	short int sensorid;
-	short int type;
-	struct timespec time;
-	double value;
+	unsigned char sensorid;
+	unsigned char type;
+	struct    timespec time;
+	double    value;
 };
 
 
