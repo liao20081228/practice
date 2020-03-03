@@ -6,11 +6,7 @@ semaphore::semaphore(const int pshared, const unsigned int value):
 	if(sem_init(sem, pshared, value))
 	{
 		delete sem;
-		if(errno == EINVAL)
-			throw std::invalid_argument("initial value exceeds SEM_VALUE_MAX");
-		if(errno == ENOSYS)
-			throw std::system_error(std::error_code(errno,std::system_category()),
-					"system don't supprot process-shared semaphores");
+		perror("sem_init failed");
 	}
 
 }
