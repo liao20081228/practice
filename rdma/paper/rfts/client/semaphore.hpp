@@ -17,10 +17,10 @@ class semaphore
 		sem_t* sem;
 		const char* name;
 	public:
-		explicit semaphore(int pshared = 0,  unsigned int value = 0) noexcept;
+		explicit semaphore(int pshared = 0,  unsigned int value = 0) ;
 		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT, 
 				 mode_t mode = LIAOWEIZHI_REGULAR_FILE_MODE,
-				 unsigned int value = 0) noexcept;
+				 unsigned int value = 0) ;
 		explicit semaphore(const semaphore& ref)  noexcept = delete;
 		explicit semaphore(semaphore&& ref) noexcept;
 		~semaphore(void) noexcept;
@@ -28,8 +28,8 @@ class semaphore
 		semaphore& operator = (const semaphore& ref)  noexcept = delete;
 		semaphore& operator=(semaphore&& ref) noexcept;
 		
-		int post(void);
-		int wait(void);
+		int post(void) noexcept;
+		int wait(void) noexcept;
 		int trywait(void) noexcept;
 		int timewait(const struct timespec* abs_timeout) noexcept;
 		int getvalue(int * val = nullptr) noexcept;
