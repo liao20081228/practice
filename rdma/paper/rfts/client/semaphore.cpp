@@ -6,7 +6,7 @@ semaphore::semaphore(const int pshared, const unsigned int value):
 	if(sem_init(sem, pshared, value))
 	{
 		delete sem;
-		throw std::system_error(errno, std::generic_category());
+		throw std::system_error(errno, std::generic_category(),"sem_init()");
 	}
 
 }
