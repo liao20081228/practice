@@ -9,12 +9,16 @@
 #include<sys/stat.h>
 #include<fcntl.h>
 
+#ifndef LIAOWEIZHI_REGULAR_FILE_MODE
+#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
+#endif 
 class shmem
 {
 private:
 	int fd;
 public:
-	shmem(const char *name = "/rfts_shmem", int oflag = O_RDWR | O_CREAT | O_EXCL, mode_t mode  = 00644);
+	shmem(const char *name = "/rfts_shmem", int oflag = O_RDWR | O_CREAT | O_EXCL,
+			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE);
 	~shmem() ;
 };
 

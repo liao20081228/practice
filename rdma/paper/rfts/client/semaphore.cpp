@@ -93,17 +93,17 @@ void semaphore::wait(void)
 }
 
 
-int semaphore::trywait(void)
+int semaphore::trywait(void) noexcept
 {
 	return sem_trywait(sem);
 }
 
-int semaphore::timewait(const struct timespec* abs_timeout)
+int semaphore::timewait(const struct timespec* abs_timeout) noexcept
 {
 	return sem_timedwait(sem,abs_timeout);
 }
 
-int semaphore::getvalue(int * val)
+int semaphore::getvalue(int * val) noexcept
 {
 	int n  = 0;
 	sem_getvalue(sem, &n);
