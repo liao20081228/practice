@@ -1,5 +1,5 @@
 #pragma once
-#ifndef RFTS_SEMAPHORE_H
+#ifndef LIAOWEIZHI_POSIX_SEMAPHORE_H
 	#define RFTS_SEMAPHORE_H
 #include<semaphore.h>
 #include<fcntl.h>
