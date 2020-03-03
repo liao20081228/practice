@@ -42,13 +42,13 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 	}
 }
 
-semaphore::semaphore(semaphore&& ref):sem(ref.sem),name(ref.name)
+semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name) 
 {
 	ref.name = nullptr;
 	ref.sem = nullptr;
 }
 
-semaphore& semaphore::operator = (semaphore&& ref)
+semaphore& semaphore::operator = (semaphore&& ref) noexcept
 {
 	if(this == &ref)
 		return *this;
@@ -60,7 +60,7 @@ semaphore& semaphore::operator = (semaphore&& ref)
 }
 
 
-semaphore::~semaphore(void)
+semaphore::~semaphore(void) noexcept
 {
 	if(sem)
 	{
