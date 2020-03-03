@@ -14,6 +14,7 @@ class semaphore
 	private:
 		sem_t* sem;
 		const char* name;
+		const std::error_category&  _ger =  std::generic_category();
 	public:
 		explicit semaphore(int pshared = 0,  unsigned int value = 0) ;
 		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT, 

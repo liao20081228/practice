@@ -53,22 +53,23 @@ semaphore::~semaphore(void) noexcept
 }
 
 
-void semaphore::post(void) noexcept
+void semaphore::post(void)
 {
 	if(sem_post(sem))
-		throw std::system_error(errno, std::generic_category(), "sem_post");
+		throw std::system_error(errno, std::generic_category(), "sem_post()");
 }
 
 void semaphore::wait(void)
 {
 	if(sem_wait(sem))
-		throw std::runtime_error("the call was interrupted by s signal handler");
+		throw std::system_error(errno, std::generic_category(), "sem_wait()");
 }
 
 
-int semaphore::trywait(void) noexcept
+void semaphore::trywait(void)
 {
-	return sem_trywait(sem);
+	if(sem_trywait(sem))
+		throw std::system_error(errno, std::generic_category(), "sem_trywait()");
 }
 
 int semaphore::timewait(const struct timespec* abs_timeout) noexcept
