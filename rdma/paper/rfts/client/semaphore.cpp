@@ -39,7 +39,8 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 			case ENOENT:
 				throw std::invalid_argument("semaphore no exists and O_CREAT was not specified, or name was bad form");
 			case ENOMEM:
-				throw std::runtime_error("no enough memory"); 
+				throw std::system_error(std::error_code(errno, std::system_category()),
+						"no enough memory"); 
 		}
 	}
 }
