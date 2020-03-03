@@ -72,9 +72,10 @@ void semaphore::trywait(void)
 		throw std::system_error(errno, std::generic_category(), "sem_trywait()");
 }
 
-int semaphore::timewait(const struct timespec* abs_timeout) noexcept
+void semaphore::timewait(const struct timespec* abs_timeout)
 {
-	return sem_timedwait(sem,abs_timeout);
+	if(sem_timedwait(sem,abs_timeout))
+		throw std::system_error(errno, std::generic_category(), "sem_timewait()");
 }
 
 int semaphore::getvalue(int * val) noexcept
