@@ -2,16 +2,16 @@
 #ifndef RFTS_SHARED_MEM_H
 	#define RFTS_SHARED_MEM_H
 
-#include<iostream>
 #include<sys/types.h>
 #include<sys/ipc.h>
 #include<sys/mman.h>
 #include<sys/stat.h>
 #include<fcntl.h>
-#include<system_error>
 #include<cerrno>
 #include<cstdio>
 #include<cstdlib>
+#include<system_error>
+#include<iostream>
 #ifndef LIAOWEIZHI_REGULAR_FILE_MODE
 	#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
