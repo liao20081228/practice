@@ -53,10 +53,10 @@ semaphore::~semaphore(void) noexcept
 }
 
 
-void semaphore::post(void)
+void semaphore::post(void) noexcept
 {
 	if(sem_post(sem))
-		throw std::runtime_error("the value of semaphore exceed SEM_VALUE_MAX");
+		throw std::system_error(errno, std::generic_category(), "sem_post");
 }
 
 void semaphore::wait(void)
