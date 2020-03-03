@@ -7,7 +7,7 @@
 #include<cerrno>
 #include<stdexcept>
 #include<system_error>
-
+#include<string>
 #ifndef LIAOWEIZHI_REGULAR_FILE_MODE
 #define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
@@ -18,7 +18,7 @@ class semaphore
 		const  char* name;
 	public:
 		explicit semaphore(int pshared = 0,  unsigned int value = 0);
-		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT, 
+		explicit semaphore(const std::string name, int oflag = O_RDWR | O_CREAT, 
 				 mode_t mode = LIAOWEIZHI_REGULAR_FILE_MODE,
 				 unsigned int value = 0);
 		explicit semaphore(const semaphore& ref)  noexcept = delete;

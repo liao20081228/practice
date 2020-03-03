@@ -8,7 +8,7 @@
 #include<sys/mman.h>
 #include<sys/stat.h>
 #include<fcntl.h>
-
+#include<string>
 #ifndef LIAOWEIZHI_REGULAR_FILE_MODE
 #define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif 
@@ -17,7 +17,7 @@ class shmem
 private:
 	int fd;
 public:
-	shmem(const char *name = "/rfts_shmem", int oflag = O_RDWR | O_CREAT,
+	shmem(const std::string name = "/rfts_shmem", int oflag = O_RDWR | O_CREAT,
 			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE);
 	~shmem();
 };
