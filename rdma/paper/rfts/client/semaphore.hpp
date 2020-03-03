@@ -9,7 +9,7 @@
 #include<system_error>
 
 #ifndef LIAOWEIZHI_REGULAR_FILE_MODE
-#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP 
+#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 class semaphore
 {
@@ -19,7 +19,8 @@ class semaphore
 	public:
 		explicit semaphore(int pshared = 0,  unsigned int value = 0);
 		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT, 
-				 mode_t mode = , unsigned int value = 0);
+				 mode_t mode = LIAOWEIZHI_REGULAR_FILE_MODE,
+				 unsigned int value = 0);
 		explicit semaphore(const semaphore& ref)  noexcept = delete;
 		explicit semaphore(semaphore&& ref) noexcept;
 		~semaphore(void) noexcept;
