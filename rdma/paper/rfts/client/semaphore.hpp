@@ -5,9 +5,7 @@
 #include<fcntl.h>
 #include<sys/stat.h>
 #include<cerrno>
-#include<stdexcept>
 #include<system_error>
-#include<string>
 #ifndef LIAOWEIZHI_REGULAR_FILE_MODE
 #define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif

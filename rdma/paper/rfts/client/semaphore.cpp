@@ -4,17 +4,18 @@ semaphore::semaphore(const int pshared, const unsigned int value):
 	sem(new sem_t), name(nullptr)
 {
 	if(sem_init(sem, pshared, value))
-		throw; 
+	{
+		delete sem;
+		throw std::system_error(errno, std::generic_category());
+	}
+
 }
 
 semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value):
 		sem(sem_open(name, oflag, mode, value)), name(name)
 {
 	if(sem == SEM_FAILED)
-	{
-		perror("sem_init failed");
-		exir()
-	}
+		throw std::system_error(errno, std::generic_category());
 }
 
 semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name) 
@@ -62,8 +63,6 @@ void semaphore::wait(void)
 {
 	if(sem_wait(sem))
 		throw std::runtime_error("the call was interrupted by s signal handler");
-	std::runtime_error a("A");
-	    a.
 }
 
 
