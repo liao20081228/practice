@@ -15,8 +15,8 @@ semaphore::semaphore(const int pshared, const unsigned int value):
 
 }
 
-semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value):
-		sem(sem_open(name, oflag, mode, value)), name(name)
+semaphore::semaphore(const std::string name, int oflag, mode_t mode, unsigned int value):
+		sem(sem_open(name.c_str(), oflag, mode, value)), name(name)
 {
 	if(sem == SEM_FAILED)
 	{
