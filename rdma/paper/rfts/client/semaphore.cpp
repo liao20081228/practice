@@ -56,13 +56,19 @@ semaphore::~semaphore(void) noexcept
 void semaphore::post(void) noexcept
 {
 	if(sem_post(sem))
-		perror("sem_post");
+	{
+		perror("sem_post()");
+		exit(1);
+	}
 }
 
 void semaphore::wait(void)
 {
 	if(sem_wait(sem))
-		throw std::system_error(errno, std::generic_category(), "sem_wait()");
+	{
+		perror("sem_wait()");
+		exit(1);
+	}
 }
 
 

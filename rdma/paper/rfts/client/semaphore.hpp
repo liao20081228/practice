@@ -1,13 +1,16 @@
 #pragma once
 #ifndef LIAOWEIZHI_POSIX_SEMAPHORE_H
 	#define RFTS_SEMAPHORE_H
+
 #include<semaphore.h>
 #include<fcntl.h>
 #include<sys/stat.h>
 #include<cerrno>
 #include<system_error>
+#include<cstdlib>
+
 #ifndef LIAOWEIZHI_REGULAR_FILE_MODE
-#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
+	#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 class semaphore
 {
@@ -33,8 +36,6 @@ class semaphore
 		int getvalue(int * val = nullptr) noexcept;
 		
 };
-
-
 
 
 
