@@ -4,11 +4,7 @@ semaphore::semaphore(const int pshared, const unsigned int value):
 	sem(new sem_t), name(nullptr)
 {
 	if(sem_init(sem, pshared, value))
-	{
-		delete sem;
-		perror("sem_init failed");
-	}
-
+		throw; 
 }
 
 semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value):
@@ -17,7 +13,7 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 	if(sem == SEM_FAILED)
 	{
 		perror("sem_init failed");
-		exit();
+		exir()
 	}
 }
 
