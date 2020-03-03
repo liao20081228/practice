@@ -28,8 +28,8 @@ class semaphore
 		
 		void post(void) noexcept ;
 		void wait(void) noexcept;
-		int trywait(void);
-		void timewait(const struct timespec* abs_timeout);
+		int trywait(void) noexcept;
+		int timewait(const struct timespec* abs_timeout) noexcept;
 		int getvalue(int * val = nullptr) noexcept;
 		
 };

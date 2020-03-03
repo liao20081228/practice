@@ -53,10 +53,10 @@ semaphore::~semaphore(void) noexcept
 }
 
 
-void semaphore::post(void)
+void semaphore::post(void) noexcept
 {
 	if(sem_post(sem))
-		throw std::system_error(errno, std::generic_category(), "sem_post()");
+		perror("sem_post");
 }
 
 void semaphore::wait(void)
