@@ -9,9 +9,12 @@
 #include<sys/stat.h>
 #include<fcntl.h>
 
-class shm
+class shmem
 {
-
+private:
+	int fd;
+public:
+	shmem()
 };
 
 
