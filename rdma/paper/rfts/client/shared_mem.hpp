@@ -14,7 +14,8 @@ class shmem
 private:
 	int fd;
 public:
-	shmem()
+	shmem(const char *name = "/rfts_shmem", int oflag = O_RDWR | O_CREAT | O_EXCL, mode_t mode  = 00644);
+	~shmem() ;
 };
 
 
