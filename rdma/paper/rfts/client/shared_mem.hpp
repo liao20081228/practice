@@ -17,9 +17,9 @@ class shmem
 private:
 	int fd;
 	const void* buf;
-
+	int length;
 public:
-	shmem(const std::string name = "/rfts_shmem", int size = 1024, int oflag = O_RDWR | O_CREAT,
+	shmem(const char* name = "/rfts_shmem", int size = 1024, int oflag = O_RDWR | O_CREAT,
 			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE);
 	~shmem();
 
