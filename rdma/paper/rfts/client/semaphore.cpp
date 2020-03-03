@@ -25,7 +25,7 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 			case EACCES:
 				throw std::invalid_argument("user have not permission to accsee");
 			case EEXIST:
-				throw std::invalid_argument("semaphore already exists");
+				sem = sem_open(name, oflag & (~O_EXCL), mode,value);
 			case EINVAL:
 				throw std::invalid_argument("initial value exceeds SEM_VALUE_MAX");
 			case EMFILE:
