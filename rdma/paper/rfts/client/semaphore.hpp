@@ -26,10 +26,10 @@ class semaphore
 		semaphore& operator = (const semaphore& ref)  noexcept = delete;
 		semaphore& operator=(semaphore&& ref) noexcept;
 		
-		int post(void) noexcept;
-		int wait(void) noexcept;
-		int trywait(void) noexcept;
-		int timewait(const struct timespec* abs_timeout) noexcept;
+		void post(void) noexcept;
+		void wait(void) noexcept;
+		void trywait(void) noexcept;
+		void timewait(const struct timespec* abs_timeout) noexcept;
 		int getvalue(int * val = nullptr) noexcept;
 		
 };
