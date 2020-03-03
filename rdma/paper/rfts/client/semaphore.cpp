@@ -9,7 +9,7 @@ semaphore::semaphore(const int pshared, const unsigned int value):
 		if(errno == EINVAL)
 			throw std::invalid_argument("initial value exceeds SEM_VALUE_MAX");
 		if(errno == ENOSYS)
-			throw std::invalid_argument("system not support");
+			throw std::system_error("system not support");
 	}
 
 }
