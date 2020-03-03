@@ -15,10 +15,10 @@ class semaphore
 {
 	private:
 		sem_t* sem;
-		std::string name;
+		const char* name;
 	public:
 		explicit semaphore(int pshared = 0,  unsigned int value = 0);
-		explicit semaphore(const std::string name, int oflag = O_RDWR | O_CREAT, 
+		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT, 
 				 mode_t mode = LIAOWEIZHI_REGULAR_FILE_MODE,
 				 unsigned int value = 0);
 		explicit semaphore(const semaphore& ref)  noexcept = delete;
