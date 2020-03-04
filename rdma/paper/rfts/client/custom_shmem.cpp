@@ -11,8 +11,8 @@ pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		close(fd);
 		PERR(pshmem::ftruncate);
 	}
-	buf = mmap(nullptr, size, prot, flags, fd, offset);
-	if (buf == MAP_FAILED)
+	addr = mmap(nullptr, size, prot, flags, fd, offset);
+	if (addr == MAP_FAILED)
 	{
 		close(fd);
 		PERR(pshmem::mmap);
@@ -20,18 +20,18 @@ pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 }
 
 
-pshmem::pshmem(pshmem&& ref) noexcept: fd(ref.fd), buf(ref.buf), length(ref.length)
+pshmem::pshmem(pshmem&& ref) noexcept: fd(ref.fd), addr(ref.addr), length(ref.length)
 {
 	ref.fd = -1;
-	ref.buf = nullptr;
+	ref.addr = nullptr;
 	ref.length = 0;
 }
 
 
 pshmem::~pshmem(void) noexcept
 {
-	if (buf)
-		munmap(buf, length);
+	if (addr)
+		munmap(addr, length);
 	if (fd)
 		close(fd);
 }
@@ -39,12 +39,12 @@ pshmem::~pshmem(void) noexcept
 
 void* pshmem::getaddr(void) const noexcept
 {
-	return buf;
+	return addr;
 }
 
 int pshmem::sync(int flags) const noexcept
 {
-	int ret = msync(buf, length, flags);
+	int ret = msync(addr, length, flags);
 	if (ret && errno == EINVAL)
 		PERR(pshmem::msync);
 	return ret;
