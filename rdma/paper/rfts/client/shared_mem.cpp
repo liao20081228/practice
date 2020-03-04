@@ -7,7 +7,10 @@ shmem::shmem(const char* name, int size, int oflag, mode_t mode):
 		throw std::system_error(errno, std::generic_category(),
 					"call shm_open() failed");
 	if(ftruncate(fd, size))
+	{
+		close(fd);
 		throw std::system_error(errno, std::generic_category(),
 					"call shm_open() failed");
-	buf = mmap(NULL,)
+	}
+	buf = mmap(nullptr, size,  )
 }
