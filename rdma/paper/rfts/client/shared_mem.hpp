@@ -1,6 +1,6 @@
 #pragma once
-#ifndef MY_SHARED_MEM_H
-	#define RFTS_SHARED_MEM_H
+#ifndef CUSTOM_SHARED_MEM_H
+	#define CUSTOM_SHARED_MEM_H
 
 #include<sys/types.h>
 #include<sys/ipc.h>
@@ -13,8 +13,8 @@
 #include<cstdlib>
 #include<system_error>
 #include<iostream>
-#ifndef MY_REGULAR_FILE_MODE
-	#define MY_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
+#ifndef CUSTOM_REGULAR_FILE_MODE
+	#define CUSTOM_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 
 //posix shared memory
@@ -27,7 +27,7 @@ class pshmem
 	public:
 		explicit pshmem(const char* name = "/rfts_pshmem", size_t size = 1024,
 			int oflag = O_RDWR | O_CREAT,
-			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE,
+			mode_t mode  = CUSTOM_REGULAR_FILE_MODE,
 			int prot = PROT_READ | PROT_WRITE, int flags = MAP_SHARED,
 			off_t offset = 0);
 		pshmem(const pshmem& ref) = delete;
@@ -44,6 +44,6 @@ class pshmem
 };
 
 
-#endif /* end of include guard: RFTS_SHARED_MEM_H */
+#endif /* end of include guard: CUSTOM_SHARED_MEM_H */
 
 
