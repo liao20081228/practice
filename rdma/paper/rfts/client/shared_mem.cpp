@@ -52,7 +52,7 @@ int pshmem::sync(int flags) const noexcept
 	int ret = msync(buf, length, flags);
 	if (ret && errno == EINVAL)
 	{
-		PERR(pshmem::sync);
+		PERR(pshmem::msync);
 		exit(errno);
 	}
 	return ret;
@@ -62,5 +62,9 @@ int pshmem::sync(int flags) const noexcept
 ssize_t pshmem::read(void* buf, size_t len, off_t offset) const noexcept
 {
 	if (offset >= static_cast<off_t>(length))
+	{
+		errno = EINVAL;
+		PERR(pshmem::read)
+	}
 
 }
