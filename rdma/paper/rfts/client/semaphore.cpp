@@ -1,34 +1,34 @@
 #include"semaphore.hpp"
 
-semaphore:semaphore(int pshared, unsigned int value) noexcept:
+semaphore::semaphore(int pshared, unsigned int value) noexcept:
 	sem(new sem_t), name(nullptr)
 {
 	if (sem_init(sem, pshared, value))
 	{
 		delete sem;
-		PERR(semaphore:sem_init);
+		PERR(seamphore::sem_init);
 		exit(errno);
 	}
 
 }
 
-semaphore:semaphore(const char* name, int oflag, mode_t mode, unsigned int value) noexcept:
+semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value) noexcept:
 		sem(sem_open(name, oflag, mode, value)), name(name)
 {
 	if (sem == SEM_FAILED)
 	{
-		PERR(semaphore:sem_open);
+		PERR(seamphore::sem_open);
 		exit(errno);
 	}
 }
 
-semaphore:semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)
+semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)
 {
 	ref.name = nullptr;
 	ref.sem = nullptr;
 }
 
-semaphore:~semaphore(void) noexcept
+semaphore::~semaphore(void) noexcept
 {
 	if (sem)
 	{
@@ -44,32 +44,32 @@ semaphore:~semaphore(void) noexcept
 }
 
 
-void semaphore:post(void) noexcept
+void semaphore::post(void) noexcept
 {
 	if (sem_post(sem))
 	{
-		PERR(semaphore:sem_post);
+		PERR(seamphore::sem_post);
 		exit(errno);
 	}
 }
 
-void semaphore:wait(void) noexcept
+void semaphore::wait(void) noexcept
 {
 	if (sem_wait(sem))
 	{
-		PERR(semaphore:sem_wait);
+		PERR(seamphore::sem_wait);
 		exit(errno);
 	}
 }
 
 
-int semaphore:trywait(void) noexcept
+int semaphore::trywait(void) noexcept
 {
 	if (sem_trywait(sem))
 	{
 		if (errno != EAGAIN)
 		{
-			PERR(semaphore:sem_trywait);
+			PERR(seamphore::sem_trywait);
 			exit(errno);
 		}
 		else
@@ -78,13 +78,13 @@ int semaphore:trywait(void) noexcept
 	return 0;
 }
 
-int semaphore:timewait(const struct timespec* abs_timeout) noexcept
+int semaphore::timewait(const struct timespec* abs_timeout) noexcept
 {
 	if (sem_timedwait(sem,abs_timeout))
 	{
 		if (errno != ETIMEDOUT)
 		{
-			PERR(semaphore:sem_trywait);
+			PERR(seamphore::sem_trywait);
 			exit(errno);
 		}
 		else
@@ -93,7 +93,7 @@ int semaphore:timewait(const struct timespec* abs_timeout) noexcept
 	return 0;
 }
 
-int semaphore:getvalue(int* val) noexcept
+int semaphore::getvalue(int* val) noexcept
 {
 	int n  = 0;
 	sem_getvalue(sem, &n);
