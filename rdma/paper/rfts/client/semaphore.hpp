@@ -15,9 +15,9 @@
 	#define REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 
-#ifndef CUSTOM_PRINT_ERROR_INFO
-	#define _PERR(a) perror(#a)
-	#define PERR(a) _PERR(a() failed)
+#ifndef CUSTOM_PRINT_ERROR_INFO_AND_EXIT_WITH_ERRNO
+	#define _PERR(a) perror(#a);exit(errno)
+	#define PERR(c) _PERR(c() failed)
 #endif
 class semaphore
 {

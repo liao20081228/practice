@@ -7,7 +7,6 @@ semaphore::semaphore(int pshared, unsigned int value) noexcept:
 	{
 		delete sem;
 		PERR(seamphore::sem_init);
-		exit(errno);
 	}
 
 }
@@ -18,7 +17,6 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 	if (sem == SEM_FAILED)
 	{
 		PERR(seamphore::sem_open);
-		exit(errno);
 	}
 }
 
