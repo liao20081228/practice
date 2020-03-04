@@ -26,7 +26,7 @@ pshmem::pshmem(const char* name, off_t size, int oflag, mode_t mode, int prot,
 pshmem::pshmem(pshmem&& ref) noexcept: fd(ref.fd), buf(ref.buf), length(ref.length)
 {
 	ref.fd = -1;
-	ref.buf = nullptr;
+	ref.buf = MAP_FAILED;
 	ref.length = 0;
 }
 
@@ -36,5 +36,7 @@ pshmem::pshmem(pshmem&& ref) noexcept: fd(ref.fd), buf(ref.buf), length(ref.leng
 
 pshmem::~pshmem(void) noexcept
 {
-	
+	if (buf)
+	{
+	}
 }

@@ -28,7 +28,7 @@ semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)
 
 semaphore::~semaphore(void) noexcept
 {
-	if (sem)
+	if (sem || sem != SEM_FAILED)
 	{
 		if  (name)
 		{

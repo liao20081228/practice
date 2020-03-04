@@ -1,11 +1,9 @@
-class test
-{
-	int a;
-};
+#include<iostream>
 
-int main()
-{
-	test a;
-	test a=test();
 
+class  test
+{
+	int a = 10;
+	public:
+	tes
 }
