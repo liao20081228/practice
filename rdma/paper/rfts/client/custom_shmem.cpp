@@ -2,7 +2,7 @@
 
 pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		int flags, off_t offset) noexcept:
-	fd(shm_open(name, oflag, mode)), offset(0), flag(0)
+	fd(shm_open(name, oflag, mode)), cur(0)
 {
 	if (fd < 0)
 		PERR(pshmem::shm_open);
@@ -51,7 +51,10 @@ int pshmem::sync(int flags) const noexcept
 	return ret;
 }
 
-int lseek
+bool seek(off_t offset, int whence) noexcept
+{
+	
+}
 
 ssize_t pshmem::read(void* buf, size_t buf_len, size_t len, off_t offset) const noexcept
 {
