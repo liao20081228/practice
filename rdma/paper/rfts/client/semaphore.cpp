@@ -15,9 +15,7 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 		sem(sem_open(name, oflag, mode, value)), name(name)
 {
 	if (sem == SEM_FAILED)
-	{
 		PERR(seamphore::sem_open);
-	}
 }
 
 semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)
@@ -45,19 +43,13 @@ semaphore::~semaphore(void) noexcept
 void semaphore::post(void) noexcept
 {
 	if (sem_post(sem))
-	{
 		PERR(seamphore::sem_post);
-		exit(errno);
-	}
 }
 
 void semaphore::wait(void) noexcept
 {
 	if (sem_wait(sem))
-	{
 		PERR(seamphore::sem_wait);
-		exit(errno);
-	}
 }
 
 
