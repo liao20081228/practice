@@ -6,20 +6,21 @@ pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 {
 	if (fd < 0)
 	{
-		perror("call shm_open() failed");
+		perror("pshmem::shm_open() failed");
 		exit(errno);
 	}
 	if (ftruncate(fd, size))
 	{
 		close(fd);
-		throw std::system_error(errno, std::generic_category("call ftruncate failed");
+		perror("pshmem::ftruncate() failed");
+		exit(errno);
 	}
 	buf = mmap(nullptr, size, prot, flags, fd, offset);
 	if (buf == MAP_FAILED)
 	{
 		close(fd);
-		throw std::system_error(errno, std::generic_category(),
-					"call ftruncate failed");
+		perror("pshmem::mmap() failed");
+		exit(errno);
 	}
 }
 

@@ -17,6 +17,9 @@
 	#define CUSTOM_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 
+#ifndef CUSTOM_PRINT_ERR_INFO
+	#define PERR() 
+#endif /* ifndef macro */
 //posix shared memory
 class pshmem
 {
