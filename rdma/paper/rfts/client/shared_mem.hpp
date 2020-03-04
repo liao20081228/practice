@@ -23,7 +23,7 @@ class pshmem
 	private:
 		int fd;
 		const void *buf;
-		int length;
+		size_t length;
 	public:
 		explicit pshmem(const char* name = "/rfts_pshmem", off_t size = 1024,
 			int oflag = O_RDWR | O_CREAT,

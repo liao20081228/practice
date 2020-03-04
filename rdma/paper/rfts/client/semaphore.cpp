@@ -20,7 +20,7 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 				"class semaphore::sem_open()");
 }
 
-semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name) 
+semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)
 {
 	ref.name = nullptr;
 	ref.sem = nullptr;
@@ -38,7 +38,6 @@ semaphore::~semaphore(void) noexcept
 		}
 		delete sem;
 		sem_destroy(sem);
-	
 	}
 }
 
