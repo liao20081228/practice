@@ -11,8 +11,10 @@
 #include<cerrno>
 #include<cstdio>
 #include<cstdlib>
+#include<cstring>
 #include<system_error>
 #include<iostream>
+
 #ifndef CUSTOM_REGULAR_FILE_MODE
 	#define REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
@@ -44,7 +46,7 @@ class pshmem
 
 		void* getaddr(void ) const noexcept;
 		int sync(int flags = MS_SYNC) const noexcept;
-		ssize_t read(void* buf, size_t len, uint64_t offset) const noexcept;
+		ssize_t read(void* buf, size_t buf_len, size_t len, uint64_t offset) const noexcept;
 		ssize_t write(const void* buf, size_t length, off_t offset) const noexcept;
 };
 
