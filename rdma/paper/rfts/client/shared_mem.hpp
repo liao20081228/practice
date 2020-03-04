@@ -25,19 +25,20 @@ class pshmem
 		const void *buf;
 		size_t length;
 	public:
-		explicit pshmem(const char* name = "/rfts_pshmem", off_t size = 1024,
+		explicit pshmem(const char* name = "/rfts_pshmem", size_t size = 1024,
 			int oflag = O_RDWR | O_CREAT,
 			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE,
-			int prot = PROT_READ | PROT_WRITE,int flags = MAP_SHARED,
+			int prot = PROT_READ | PROT_WRITE, int flags = MAP_SHARED,
 			off_t offset = 0);
 		pshmem(const pshmem& ref) = delete;
 		pshmem(pshmem&& ref) noexcept;
-
+		~pshmem(void) noexcept;
+		
 		pshmem& operator = (const pshmem& ref) = delete;
 		pshmem& operator = (const pshmem&& ref) = delete;
-		
-		~pshmem(void) noexcept;
 
+		void* getaddr(void ) const noexcept ;
+		
 
 	
 };

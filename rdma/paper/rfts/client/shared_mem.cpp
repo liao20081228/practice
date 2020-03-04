@@ -13,7 +13,7 @@ pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		throw std::system_error(errno, std::generic_category(),
 					"call ftruncate failed");
 	}
-	buf = mmap(nullptr, size, prot, flags,fd, offset);
+	buf = mmap(nullptr, size, prot, flags, fd, offset);
 	if (buf == MAP_FAILED)
 	{
 		close(fd);
@@ -39,5 +39,6 @@ pshmem::~pshmem(void) noexcept
 	if (buf)
 	{
 		munmap(buf, length);
+		close(fd);
 	}
 }
