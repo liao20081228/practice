@@ -6,7 +6,8 @@ semaphore::semaphore(const int pshared, const unsigned int value):
 	if (sem_init(sem, pshared, value))
 	{
 		delete sem;
-		throw std::system_error(errno, std::generic_category(), "sem_init()");
+		throw std::system_error(errno, std::generic_category(),
+				"class semaphore::sem_init()");
 	}
 
 }
@@ -15,7 +16,8 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 		sem(sem_open(name, oflag, mode, value)), name(name)
 {
 	if (sem == SEM_FAILED)
-		throw std::system_error(errno, std::generic_category(), "sem_open()");
+		throw std::system_error(errno, std::generic_category(),
+				"class semaphore::sem_open()");
 }
 
 semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name) 

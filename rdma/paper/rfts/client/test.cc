@@ -1,9 +1,11 @@
-#include"semaphore.hpp"
+class test
+{
+	int a;
+};
 
 int main()
 {
-	semaphore a;
-	semaphore b= semaphore(1,2);
-	a=b;
-	a=semaphore(1,2);
+	test a;
+	test a=test();
+
 }
