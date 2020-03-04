@@ -51,17 +51,16 @@ int pshmem::sync(int flags) const noexcept
 }
 
 
-ssize_t pshmem::read(void* buf, size_t len, off_t offset) const noexcept
+ssize_t pshmem::read(void* buf, size_t len, uint64_t offset) const noexcept
 {
 	if (!buf)
 	{
 		errno =  EINVAL;
 		PERR(pshmem::read);
 	}
-	if (offset >= static_cast<off_t>(length))
+	if (offset == static_cast<off_t>(length))
 	{
-		errno = EINVAL;
-		PERR(pshmem::read)
+		
 	}
 
 }
