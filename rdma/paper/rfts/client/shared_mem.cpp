@@ -31,14 +31,12 @@ pshmem::pshmem(pshmem&& ref) noexcept: fd(ref.fd), buf(ref.buf), length(ref.leng
 }
 
 
-
-
-
 pshmem::~pshmem(void) noexcept
 {
 	if (buf)
-	{
 		munmap(buf, length);
+	if(fd)
 		close(fd);
-	}
 }
+
+

@@ -22,7 +22,7 @@ class pshmem
 {
 	private:
 		int fd;
-		const void *buf;
+		void *buf;
 		size_t length;
 	public:
 		explicit pshmem(const char* name = "/rfts_pshmem", size_t size = 1024,
@@ -38,9 +38,8 @@ class pshmem
 		pshmem& operator = (const pshmem&& ref) = delete;
 
 		void* getaddr(void ) const noexcept ;
-		
-
-	
+		int read(void* buf, size_t length, off_t offset) const noexcept;
+		int write(const void* buf, size_t length, off_t offset) const noexcept;
 };
 
 
