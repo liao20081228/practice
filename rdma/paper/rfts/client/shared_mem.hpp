@@ -17,28 +17,29 @@
 	#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 
-class shmem
+//posix shared memory
+class pshmem
 {
 	private:
 		int fd;
 		const void *buf;
 		int length;
 	public:
-		explicit shmem(const char* name = "/rfts_shmem", off_t size = 1024,
+		explicit pshmem(const char* name = "/rfts_pshmem", off_t size = 1024,
 			int oflag = O_RDWR | O_CREAT,
 			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE,
 			int prot = PROT_READ | PROT_WRITE,int flags = MAP_SHARED,
 			off_t offset = 0);
 
-		shmem(const shmem& ref) = delete;
-		shmem(shmem&& ref) noexcept;
+		pshmem(const pshmem& ref) = delete;
+		pshmem(pshmem&& ref) noexcept;
 
-		shmem& operator = (const shmem& ref) = delete;
+		pshmem& operator = (const pshmem& ref) = delete;
 		
 		
 		
-		shmem(shmem&& ref) noexcept;
-		~shmem();
+		pshmem(pshmem&& ref) noexcept;
+		~pshmem();
 
 
 	
