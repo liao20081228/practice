@@ -6,20 +6,20 @@ pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 {
 	if (fd < 0)
 	{
-		perror("pshmem::shm_open() failed");
+		PERR(pshmem::shm_open);
 		exit(errno);
 	}
 	if (ftruncate(fd, size))
 	{
 		close(fd);
-		perror("pshmem::ftruncate() failed");
+		PERR(pshmem::ftruncate);
 		exit(errno);
 	}
 	buf = mmap(nullptr, size, prot, flags, fd, offset);
 	if (buf == MAP_FAILED)
 	{
 		close(fd);
-		perror("pshmem::mmap() failed");
+		PERR(pshmem::mmap);
 		exit(errno);
 	}
 }
@@ -52,7 +52,7 @@ int pshmem::sync(int flags) const noexcept
 	int ret = msync(buf, length, flags);
 	if (ret && errno == EINVAL)
 	{
-		perror("class pshmem::sync");
+		PERR(pshmem::sync);
 		exit(errno);
 	}
 	return ret;
