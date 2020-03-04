@@ -1,5 +1,5 @@
 #pragma once
-#ifndef RFTS_SHARED_MEM_H
+#ifndef MY_SHARED_MEM_H
 	#define RFTS_SHARED_MEM_H
 
 #include<sys/types.h>
@@ -13,8 +13,8 @@
 #include<cstdlib>
 #include<system_error>
 #include<iostream>
-#ifndef LIAOWEIZHI_REGULAR_FILE_MODE
-	#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
+#ifndef MY_REGULAR_FILE_MODE
+	#define MY_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 
 //posix shared memory
