@@ -51,12 +51,12 @@ int pshmem::sync(int flags) const noexcept
 	return ret;
 }
 
-size_t seek(off_t offset, int whence) noexcept
+size_t pshmem::seek(off_t offset, int whence) noexcept
 {
+	std::atomic_uint64_t temp(0);
 	switch(whence)
 	{
 		case SEEK_SET:
-
 		case SEEK_CUR:
 		case SEEK_END:
 		default:
