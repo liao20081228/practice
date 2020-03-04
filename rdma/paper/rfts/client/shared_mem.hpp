@@ -30,16 +30,13 @@ class pshmem
 			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE,
 			int prot = PROT_READ | PROT_WRITE,int flags = MAP_SHARED,
 			off_t offset = 0);
-
 		pshmem(const pshmem& ref) = delete;
 		pshmem(pshmem&& ref) noexcept;
 
 		pshmem& operator = (const pshmem& ref) = delete;
+		pshmem& operator = (const pshmem&& ref) = delete;
 		
-		
-		
-		pshmem(pshmem&& ref) noexcept;
-		~pshmem();
+		~pshmem(void) noexcept;
 
 
 	
