@@ -17,9 +17,11 @@
 	#define CUSTOM_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 
-#ifndef CUSTOM_PRINT_ERR_INFO
-	#define PERR() 
-#endif /* ifndef macro */
+#ifndef CUSTOM_PRINT_ERROR_INFO
+	#define _PERR(a) perror(#a)
+	#define PERR(a) _PERR(a() failed)
+#endif /* ifndef CUSTOM_PRINT_ERROR_INFO */
+
 //posix shared memory
 class pshmem
 {
