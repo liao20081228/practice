@@ -35,7 +35,7 @@ pshmem::~pshmem(void) noexcept
 {
 	if (buf)
 		munmap(buf, length);
-	if(fd)
+	if (fd)
 		close(fd);
 }
 
@@ -47,7 +47,13 @@ void* pshmem::getaddr(void) const noexcept
 
 int pshmem::sync(int flags) const noexcept
 {
-	return msync(buf, length, flags);
+	int ret = msync(buf, length, flags);
+	if (ret && errno == EINVAL)
+	{
+		perror("class pshmem::sync");
+		exit(errno);
+	}
+	return ret;
 }
 
 

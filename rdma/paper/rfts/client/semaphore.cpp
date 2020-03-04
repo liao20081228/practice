@@ -63,7 +63,7 @@ void semaphore::wait(void) noexcept
 
 int semaphore::trywait(void) noexcept
 {
-	if (sem_trywait(sem) || errno != EAGAIN)
+	if (sem_trywait(sem) && errno != EAGAIN)
 	{
 		perror("class semaphore::sem_trywait()");
 		exit(errno);
@@ -73,7 +73,7 @@ int semaphore::trywait(void) noexcept
 
 int semaphore::timewait(const struct timespec* abs_timeout) noexcept
 {
-	if (sem_timedwait(sem,abs_timeout) || errno != ETIMEDOUT)
+	if (sem_timedwait(sem,abs_timeout) && errno != ETIMEDOUT)
 	{
 		perror("class semaphore::sem_trywait()");
 		exit(errno);
