@@ -28,7 +28,7 @@ semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)
 
 semaphore::~semaphore(void) noexcept
 {
-	if (sem || sem != SEM_FAILED)
+	if (sem)
 	{
 		if  (name)
 		{
@@ -63,12 +63,17 @@ void semaphore::wait(void) noexcept
 
 int semaphore::trywait(void) noexcept
 {
-	if (sem_trywait(sem) && errno != EAGAIN)
+	if (sem_trywait(sem))
 	{
-		perror("class semaphore::sem_trywait()");
-		exit(errno);
+		if (errno != EAGAIN)
+		{
+			perror("class semaphore::sem_trywait()");
+			exit(errno);
+		}
+		else
+			return EAGAIN;
 	}
-	return EAGAIN;
+	return 0;
 }
 
 int semaphore::timewait(const struct timespec* abs_timeout) noexcept
