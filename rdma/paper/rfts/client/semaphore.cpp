@@ -1,13 +1,13 @@
 #include"semaphore.hpp"
 
-semaphore::semaphore(const int pshared, const unsigned int value):
+semaphore::semaphore(int pshared, unsigned int value):
 	sem(new sem_t), name(nullptr)
 {
 	if (sem_init(sem, pshared, value))
 	{
 		delete sem;
-		throw std::system_error(errno, std::generic_category(),
-				"class semaphore::sem_init()");
+		perror("class semaphore::sem_init()");
+		exit(EXIT_FAILURE);
 	}
 
 }
