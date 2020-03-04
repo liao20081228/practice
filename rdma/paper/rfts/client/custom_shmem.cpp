@@ -56,6 +56,7 @@ size_t seek(off_t offset, int whence) noexcept
 	switch(whence)
 	{
 		case SEEK_SET:
+
 		case SEEK_CUR:
 		case SEEK_END:
 		default:
