@@ -2,6 +2,7 @@
 
 class animal
 {
+private:
 	int age;
 	char name[100]={};
 	
@@ -10,6 +11,9 @@ public:
 	{
 		std::cout << "action" << std::endl;
 	}
+protected:
+	int leg;
+
 };
 
 

@@ -51,13 +51,13 @@ const int & fun5(int &a )
 	return a;
 }
 
-//第六种：C++要求常量字符串必须使用const
-const char* pt="test";
 
 
 class bird
 {
+	
 	int wing;
+	//第六中：将变量变为常变量
 	const int leg;	//const 数据成员必须用初始化表达式 或者 就地初始化，
 			//c++11只有静态非常量成员才需要类外初始化
 			//c++98只有静态整形常量成员可以就地初始化
@@ -71,7 +71,7 @@ class bird
 	{
 		wing =10;
 	}
-
+	//第七种：const修饰成员函数
 	void fun() const//只能读不能修改数据成员，只能调用const成员函数，
 	{
 		fun();
@@ -82,6 +82,8 @@ class bird
 
 int main(void)
 {
+	//第六种：C++要求常量字符串必须使用const
+	const char* pt="test";
 	const int* p = fun3();
 	 int* q = fun3(); //常量不能转为非常量,非常量可以自动转为常量
 	int a=10;
