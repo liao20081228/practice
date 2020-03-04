@@ -1,10 +1,11 @@
 #include<iostream>
+//const常见用法
 
-//const代替宏
+//第一种：const代替宏
 #define TEST1 1000
 const int TEST2=1000; 
 
-//const 修饰传入指针，防止指针或指针的内容被修改
+//第二种：const 修饰传入指针，防止指针或指针的内容被修改
 void fun1(const int* p, int* const p1, const int* const p2)
 {//常量指针和指针敞亮的区别
 	int a=10;
@@ -19,36 +20,39 @@ void fun1(const int* p, int* const p1, const int* const p2)
 }
 
 
-//第二种： const修视传入引用，防止实参被修改，主要用于传入非内部基本类型时，防止拷贝析构临时变量的开销
+//第三种： const修视传入引用，防止实参被修改，主要用于传入非内部基本类型时，防止拷贝析构临时变量的开销
 void fun2(const int & ref )   //c++没有  int& const ref ,因为引用本身就是不可改变,)
 {
 
 	ref=10; //报错
 }
 
-//const修饰函数返回值,传值形式，没有作用
+//const修饰函数返回值,传值形式，没有作用,因为会自动产生一个返回值的临时拷贝
 const int funn()
 {
 	return 3;
 }
-//返回常量指针，只能白指针赋值给同样的常量指针
+//第四种：返回常量指针，只能赋值给常量指针
 const int * fun3()
 {
 	int * a= new int;
-	return a;
+	return a;//返回非常量的指针，会自动转为常量指针
 }
 
-int * const fun4() //const 没有意义
+int * const fun4() //const 没有意义，因为传指针实际是传值
 {
 	int * a =new int;
        return a;	
 }
 
-//返回常量引用，一般用于类的成员函数(传入了引用)
+//第五种：返回常量引用，一般用于类的成员函数(传入了引用)
 const int & fun5(int &a )
 {
 	return a;
 }
+
+//第六种：C++要求常量字符串必须使用const
+const char* pt="test";
 
 
 class bird
