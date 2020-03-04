@@ -1,6 +1,6 @@
-#include"semaphore.hpp"
+#include"custom_sem.hpp"
 
-semaphore::semaphore(int pshared, unsigned int value) noexcept:
+psem::psem(int pshared, unsigned int value) noexcept:
 	sem(new sem_t), name(nullptr)
 {
 	if (sem_init(sem, pshared, value))
@@ -11,20 +11,20 @@ semaphore::semaphore(int pshared, unsigned int value) noexcept:
 
 }
 
-semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value) noexcept:
+psem::psem(const char* name, int oflag, mode_t mode, unsigned int value) noexcept:
 		sem(sem_open(name, oflag, mode, value)), name(name)
 {
 	if (sem == SEM_FAILED)
 		PERR(seamphore::sem_open);
 }
 
-semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)
+psem::psem(psem&& ref) noexcept:sem(ref.sem),name(ref.name)
 {
 	ref.name = nullptr;
 	ref.sem = nullptr;
 }
 
-semaphore::~semaphore(void) noexcept
+psem::~psem(void) noexcept
 {
 	if (sem)
 	{
@@ -40,27 +40,26 @@ semaphore::~semaphore(void) noexcept
 }
 
 
-void semaphore::post(void) noexcept
+void psem::post(void) noexcept
 {
 	if (sem_post(sem))
 		PERR(seamphore::sem_post);
 }
 
-void semaphore::wait(void) noexcept
+void psem::wait(void) noexcept
 {
 	if (sem_wait(sem))
 		PERR(seamphore::sem_wait);
 }
 
 
-int semaphore::trywait(void) noexcept
+int psem::trywait(void) noexcept
 {
 	if (sem_trywait(sem))
 	{
 		if (errno != EAGAIN)
 		{
 			PERR(seamphore::sem_trywait);
-			exit(errno);
 		}
 		else
 			return EAGAIN;
@@ -68,14 +67,13 @@ int semaphore::trywait(void) noexcept
 	return 0;
 }
 
-int semaphore::timewait(const struct timespec* abs_timeout) noexcept
+int psem::timewait(const struct timespec* abs_timeout) noexcept
 {
 	if (sem_timedwait(sem,abs_timeout))
 	{
 		if (errno != ETIMEDOUT)
 		{
 			PERR(seamphore::sem_trywait);
-			exit(errno);
 		}
 		else
 			return ETIMEDOUT;
@@ -83,7 +81,7 @@ int semaphore::timewait(const struct timespec* abs_timeout) noexcept
 	return 0;
 }
 
-int semaphore::getvalue(int* val) noexcept
+int psem::getvalue(int* val) noexcept
 {
 	int n  = 0;
 	sem_getvalue(sem, &n);

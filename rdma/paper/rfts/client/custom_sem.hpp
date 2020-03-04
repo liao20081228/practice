@@ -19,22 +19,22 @@
 	#define _PERR(a) {perror(#a);exit(errno);}
 	#define PERR(c) _PERR(c() failed)
 #endif
-class semaphore
+class psem
 {
 	private:
 		sem_t* sem;
 		const char* name;
 	public:
-		explicit semaphore(int pshared = 0,  unsigned int value = 0) noexcept;
-		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT,
+		explicit psem(int pshared = 0,  unsigned int value = 0) noexcept;
+		explicit psem(const char* name, int oflag = O_RDWR | O_CREAT,
 				 mode_t mode = REGULAR_FILE_MODE,
 				 unsigned int value = 0) noexcept;
-		semaphore(const semaphore& ref) = delete;
-		semaphore(semaphore&& ref) noexcept;
-		~semaphore(void) noexcept;
+		psem(const psem& ref) = delete;
+		psem(psem&& ref) noexcept;
+		~psem(void) noexcept;
 		
-		semaphore& operator = (semaphore& ref) = delete;
-		semaphore& operator = (semaphore&& ref) = delete;
+		psem& operator = (psem& ref) = delete;
+		psem& operator = (psem&& ref) = delete;
 		
 		void post(void) noexcept ;
 		void wait(void) noexcept;
