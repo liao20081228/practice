@@ -26,8 +26,10 @@ class semaphore
 				 unsigned int value = 0) ;
 		semaphore(const semaphore& ref) = delete;
 		semaphore(semaphore&& ref) noexcept;
-		semaphore& (const semaphore&& ref) = delete;
 		~semaphore(void) noexcept;
+		
+		semaphore& operator = (semaphore& ref) = delete;
+		semaphore& operator = (semaphore&& ref) = delete;
 		
 		void post(void) noexcept ;
 		void wait(void) noexcept;
