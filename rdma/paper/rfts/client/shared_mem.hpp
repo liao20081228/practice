@@ -21,7 +21,7 @@ class shmem
 {
 private:
 	int fd;
-	const void* buf;
+	const void *buf;
 	int length;
 public:
 	shmem(const char* name = "/rfts_shmem", off_t size = 1024,
