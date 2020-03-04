@@ -61,7 +61,9 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t len, off_t offset) const 
 	memset(buf, 0, len);
 	if (!buf_len || !len)
 		return 0;
-	if (offset > static_cast<off_t>(length - 1) || offset < 0)
-
-
+	if (offset > static_cast<off_t>(length - 1) || offset < 0 )
+	{
+		errno =  EINVAL;
+		PERR(pshmem::read);
+	}
 }
