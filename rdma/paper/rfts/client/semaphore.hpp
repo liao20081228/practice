@@ -20,10 +20,10 @@ class semaphore
 		sem_t* sem;
 		const char* name;
 	public:
-		explicit semaphore(int pshared = 0,  unsigned int value = 0);
+		explicit semaphore(int pshared = 0,  unsigned int value = 0) noexcept;
 		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT,
 				 mode_t mode = LIAOWEIZHI_REGULAR_FILE_MODE,
-				 unsigned int value = 0) ;
+				 unsigned int value = 0) noexcept;
 		semaphore(const semaphore& ref) = delete;
 		semaphore(semaphore&& ref) noexcept;
 		~semaphore(void) noexcept;
