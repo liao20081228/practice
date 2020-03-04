@@ -1,6 +1,6 @@
 #pragma once
-#ifndef CUSTOM_SEMAPHORE_HPP
-	#define RFTS_SEMAPHORE_H
+#ifndef HPP_CUSTOM_SEMAPHORE_HPP
+	#define HPP_CUSTOM_SEMAPHORE_HPP
 
 #include<semaphore.h>
 #include<fcntl.h>
@@ -11,8 +11,13 @@
 #include<system_error>
 #include<iostream>
 
-#ifndef LIAOWEIZHI_REGULAR_FILE_MODE
-	#define LIAOWEIZHI_REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
+#ifndef CUSTOM_REGULAR_FILE_MODE
+	#define REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
+#endif
+
+#ifndef CUSTOM_PRINT_ERROR_INFO
+	#define _PERR(a) perror(#a)
+	#define PERR(a) _PERR(a() failed)
 #endif
 class semaphore
 {
@@ -22,7 +27,7 @@ class semaphore
 	public:
 		explicit semaphore(int pshared = 0,  unsigned int value = 0) noexcept;
 		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT,
-				 mode_t mode = LIAOWEIZHI_REGULAR_FILE_MODE,
+				 mode_t mode = REGULAR_FILE_MODE,
 				 unsigned int value = 0) noexcept;
 		semaphore(const semaphore& ref) = delete;
 		semaphore(semaphore&& ref) noexcept;

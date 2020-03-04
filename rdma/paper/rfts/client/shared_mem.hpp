@@ -1,6 +1,6 @@
 #pragma once
-#ifndef CUSTOM_SHARED_MEM_HPP
-	#define CUSTOM_SHARED_MEM_HPP
+#ifndef HPP_CUSTOM_SHARED_MEM_HPP
+	#define HPP_CUSTOM_SHARED_MEM_HPP
 
 #include<sys/types.h>
 #include<sys/ipc.h>
@@ -49,6 +49,6 @@ class pshmem
 };
 
 
-#endif /* end of include guard: CUSTOM_SHARED_MEM_H */
+#endif /* end of include guard: HPP_CUSTOM_SHARED_MEM_H */
 
 

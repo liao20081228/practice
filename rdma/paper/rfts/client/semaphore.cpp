@@ -6,7 +6,7 @@ semaphore::semaphore(int pshared, unsigned int value) noexcept:
 	if (sem_init(sem, pshared, value))
 	{
 		delete sem;
-		perror("semaphore::sem_init() failed");
+		PERR(semaphore::sem_init);
 		exit(errno);
 	}
 
@@ -17,7 +17,7 @@ semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int valu
 {
 	if (sem == SEM_FAILED)
 	{
-		perror("semaphore::sem_open() failed");
+		PERR(semaphore::sem_open);
 		exit(errno);
 	}
 }
@@ -48,7 +48,7 @@ void semaphore::post(void) noexcept
 {
 	if (sem_post(sem))
 	{
-		perror("semaphore::sem_post() failed");
+		PERR(semaphore::sem_post);
 		exit(errno);
 	}
 }
@@ -57,7 +57,7 @@ void semaphore::wait(void) noexcept
 {
 	if (sem_wait(sem))
 	{
-		perror("semaphore::sem_wait() failed");
+		PERR(semaphore::sem_wait);
 		exit(errno);
 	}
 }
@@ -69,7 +69,7 @@ int semaphore::trywait(void) noexcept
 	{
 		if (errno != EAGAIN)
 		{
-			perror("semaphore::sem_trywait() failed");
+			PERR(semaphore::sem_trywait);
 			exit(errno);
 		}
 		else
@@ -84,7 +84,7 @@ int semaphore::timewait(const struct timespec* abs_timeout) noexcept
 	{
 		if (errno != ETIMEDOUT)
 		{
-			perror("semaphore::sem_trywait() failed");
+			PERR(semaphore::sem_trywait);
 			exit(errno);
 		}
 		else
