@@ -29,6 +29,7 @@ class semaphore
 		
 		~semaphore(void) noexcept;
 		
+	
 		void post(void) noexcept ;
 		void wait(void) noexcept;
 		int  trywait(void) noexcept;
