@@ -1,6 +1,7 @@
 #include"shared_mem.hpp"
 
-shmem::shmem(const char* name, int size, int oflag, mode_t mode):
+shmem::shmem(const char* name, off_t size, int oflag, mode_t mode, int prot,
+		int flags, off_t offset):
 	fd(shm_open(name, oflag, mode))
 {
 	if(fd < 0)

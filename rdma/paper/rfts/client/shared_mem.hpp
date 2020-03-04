@@ -24,9 +24,11 @@ private:
 	const void* buf;
 	int length;
 public:
-	shmem(const char* name = "/rfts_shmem", int size = 1024,
+	shmem(const char* name = "/rfts_shmem", off_t size = 1024,
 			int oflag = O_RDWR | O_CREAT,
-			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE);
+			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE,
+			int prot = PROT_READ | PROT_WRITE,int flags = MAP_SHARED,
+			off_t offset = 0);
 	~shmem();
 
 	
