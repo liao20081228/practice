@@ -1,23 +1,25 @@
 #include"semaphore.hpp"
 
-semaphore::semaphore(int pshared, unsigned int value):
+semaphore::semaphore(int pshared, unsigned int value) noexcept:
 	sem(new sem_t), name(nullptr)
 {
 	if (sem_init(sem, pshared, value))
 	{
 		delete sem;
 		perror("class semaphore::sem_init()");
-		exit(EXIT_FAILURE);
+		exit(errno);
 	}
 
 }
 
-semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value):
+semaphore::semaphore(const char* name, int oflag, mode_t mode, unsigned int value) noexcept:
 		sem(sem_open(name, oflag, mode, value)), name(name)
 {
 	if (sem == SEM_FAILED)
-		throw std::system_error(errno, std::generic_category(),
-				"class semaphore::sem_open()");
+	{
+		perror("class semaphore::sem_open()");
+		exit(errno);
+	}
 }
 
 semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)

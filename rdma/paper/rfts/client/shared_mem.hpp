@@ -29,7 +29,7 @@ class pshmem
 			int oflag = O_RDWR | O_CREAT,
 			mode_t mode  = CUSTOM_REGULAR_FILE_MODE,
 			int prot = PROT_READ | PROT_WRITE, int flags = MAP_SHARED,
-			off_t offset = 0);
+			off_t offset = 0) noexcept;
 		pshmem(const pshmem& ref) = delete;
 		pshmem(pshmem&& ref) noexcept;
 		~pshmem(void) noexcept;

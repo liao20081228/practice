@@ -1,17 +1,18 @@
 #include"shared_mem.hpp"
 
 pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
-		int flags, off_t offset):
+		int flags, off_t offset) noexcept:
 	fd(shm_open(name, oflag, mode))
 {
 	if (fd < 0)
-		throw std::system_error(errno, std::generic_category(),
-					"call shm_open() failed");
+	{
+		perror("call shm_open() failed");
+		exit(errno);
+	}
 	if (ftruncate(fd, size))
 	{
 		close(fd);
-		throw std::system_error(errno, std::generic_category(),
-					"call ftruncate failed");
+		throw std::system_error(errno, std::generic_category("call ftruncate failed");
 	}
 	buf = mmap(nullptr, size, prot, flags, fd, offset);
 	if (buf == MAP_FAILED)
