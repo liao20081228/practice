@@ -64,7 +64,7 @@ class bird
 int main(void)
 {
 	const int* p = fun3();
-	 int* q = fun3(); //常量不能转为非常量
+	 int* q = fun3(); //常量不能转为非常量,非常量可以自动转为常量
 	int a=10;
 	int b = fun5(a);
 
