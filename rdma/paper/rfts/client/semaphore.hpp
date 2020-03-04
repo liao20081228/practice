@@ -24,18 +24,16 @@ class semaphore
 		explicit semaphore(const char* name, int oflag = O_RDWR | O_CREAT,
 				 mode_t mode = LIAOWEIZHI_REGULAR_FILE_MODE,
 				 unsigned int value = 0) ;
-		explicit semaphore(const semaphore& ref)  noexcept = delete;
-		explicit semaphore(semaphore&& ref) noexcept;
+		semaphore(const semaphore& ref) = delete;
+		semaphore(semaphore&& ref) noexcept;
+		
 		~semaphore(void) noexcept;
 		
-		semaphore& operator = (const semaphore& ref)  noexcept = delete;
-		semaphore& operator=(semaphore&& ref) noexcept;
-	
 		void post(void) noexcept ;
 		void wait(void) noexcept;
-		int trywait(void) noexcept;
-		int timewait(const struct timespec* abs_timeout) noexcept;
-		int getvalue(int * val = nullptr) noexcept;
+		int  trywait(void) noexcept;
+		int  timewait(const struct timespec* abs_timeout) noexcept;
+		int  getvalue(int* val = nullptr) noexcept;
 };
 
 

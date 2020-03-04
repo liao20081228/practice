@@ -29,7 +29,11 @@ class shmem
 			mode_t mode  = LIAOWEIZHI_REGULAR_FILE_MODE,
 			int prot = PROT_READ | PROT_WRITE,int flags = MAP_SHARED,
 			off_t offset = 0);
-	~shmem();
+		shmem(const shmem& ref) = delete;
+		shmem& operator = (const shmem& ref) = delete;
+		shmem(shmem&& ref) noexcept;
+		~shmem();
+
 
 	
 };
