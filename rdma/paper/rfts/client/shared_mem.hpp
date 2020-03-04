@@ -1,5 +1,5 @@
 #pragma once
-#ifndef HPP_CUSTOM_SHARED_MEM_HPP
+#ifndef HPP_CUSTOM_SHMEM_HPP
 	#define HPP_CUSTOM_SHARED_MEM_HPP
 
 #include<sys/types.h>
