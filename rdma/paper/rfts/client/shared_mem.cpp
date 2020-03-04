@@ -45,7 +45,10 @@ void* pshmem::getaddr(void) const noexcept
 	return buf;
 }
 
-
+int pshmem::sync(int flags) const noexcept
+{
+	return msync(buf, length, flags);
+}
 
 
 

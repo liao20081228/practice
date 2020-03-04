@@ -38,7 +38,6 @@ class pshmem
 		pshmem& operator = (const pshmem&& ref) = delete;
 
 		void* getaddr(void ) const noexcept;
-		int sync(void* addr, size_t len, int flags = MS_SYNC) const noexcept;
 		int sync(int flags = MS_SYNC) const noexcept;
 		int read(void* buf, size_t len, off_t offset) const noexcept;
 		int write(const void* buf, size_t length, off_t offset) const noexcept;

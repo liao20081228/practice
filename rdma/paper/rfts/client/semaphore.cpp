@@ -46,7 +46,7 @@ void semaphore::post(void) noexcept
 {
 	if (sem_post(sem))
 	{
-		perror("sem_post()");
+		perror("class semaphore::sem_post()");
 		exit(errno);
 	}
 }
@@ -55,7 +55,7 @@ void semaphore::wait(void) noexcept
 {
 	if (sem_wait(sem))
 	{
-		perror("sem_wait()");
+		perror("class semaphore::sem_wait()");
 		exit(errno);
 	}
 }
@@ -65,7 +65,7 @@ int semaphore::trywait(void) noexcept
 {
 	if (sem_trywait(sem) || errno != EAGAIN)
 	{
-		perror("sem_trywait()");
+		perror("class semaphore::sem_trywait()");
 		exit(errno);
 	}
 	return EAGAIN;
@@ -75,7 +75,7 @@ int semaphore::timewait(const struct timespec* abs_timeout) noexcept
 {
 	if (sem_timedwait(sem,abs_timeout) || errno != ETIMEDOUT)
 	{
-		perror("sem_trywait()");
+		perror("class semaphore::sem_trywait()");
 		exit(errno);
 	}
 	return ETIMEDOUT;
