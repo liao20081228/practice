@@ -51,9 +51,17 @@ int pshmem::sync(int flags) const noexcept
 	return ret;
 }
 
-bool seek(off_t offset, int whence) noexcept
+size_t seek(off_t offset, int whence) noexcept
 {
-	
+	switch(whence)
+	{
+		case SEEK_SET:
+		case SEEK_CUR:
+		case SEEK_END:
+		default:
+			errno = EINVAL;
+			PERR(pshmem::seek);
+	}
 }
 
 ssize_t pshmem::read(void* buf, size_t buf_len, size_t len, off_t offset) const noexcept
