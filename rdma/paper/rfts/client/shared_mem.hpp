@@ -37,7 +37,8 @@ class pshmem
 		pshmem& operator = (const pshmem& ref) = delete;
 		pshmem& operator = (const pshmem&& ref) = delete;
 
-		void* getaddr(void ) const noexcept ;
+		void* getaddr(void ) const noexcept;
+		int sync(flags) const noexcept;
 		int read(void* buf, size_t len, off_t offset) const noexcept;
 		int write(const void* buf, size_t length, off_t offset) const noexcept;
 };
