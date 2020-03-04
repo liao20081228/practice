@@ -14,7 +14,7 @@
 #include<cstring>
 #include<system_error>
 #include<iostream>
-
+#include<atomic>
 #ifndef CUSTOM_REGULAR_FILE_MODE
 	#define REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
@@ -31,7 +31,7 @@ class pshmem
 		int fd;
 		void *addr;
 		size_t length;
-		size_t cur;
+		std::atomic_uint64_t cur;
 	public:
 		explicit pshmem(const char* name = "/rfts_pshmem",
 				size_t size = 1024,int oflag = O_RDWR | O_CREAT,
