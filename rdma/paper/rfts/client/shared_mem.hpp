@@ -39,8 +39,8 @@ class pshmem
 
 		void* getaddr(void ) const noexcept;
 		int sync(int flags = MS_SYNC) const noexcept;
-		int read(void* buf, size_t len, off_t offset) const noexcept;
-		int write(const void* buf, size_t length, off_t offset) const noexcept;
+		ssize_t read(void* buf, size_t len, off_t offset) const noexcept;
+		ssize_t write(const void* buf, size_t length, off_t offset) const noexcept;
 };
 
 

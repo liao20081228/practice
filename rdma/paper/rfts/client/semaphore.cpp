@@ -78,12 +78,17 @@ int semaphore::trywait(void) noexcept
 
 int semaphore::timewait(const struct timespec* abs_timeout) noexcept
 {
-	if (sem_timedwait(sem,abs_timeout) && errno != ETIMEDOUT)
+	if (sem_timedwait(sem,abs_timeout))
 	{
-		perror("class semaphore::sem_trywait()");
-		exit(errno);
+		if (errno != ETIMEDOUT)
+		{
+			perror("class semaphore::sem_trywait()");
+			exit(errno);
+		}
+		else
+			return ETIMEDOUT;
 	}
-	return ETIMEDOUT;
+	return 0;
 }
 
 int semaphore::getvalue(int* val) noexcept
