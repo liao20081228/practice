@@ -1,26 +1,21 @@
-#include"shared_mem.hpp"
+#include"custom_shmem.hpp"
 
 pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		int flags, off_t offset) noexcept:
 	fd(shm_open(name, oflag, mode))
 {
 	if (fd < 0)
-	{
 		PERR(pshmem::shm_open);
-		exit(errno);
-	}
 	if (ftruncate(fd, size))
 	{
 		close(fd);
 		PERR(pshmem::ftruncate);
-		exit(errno);
 	}
 	buf = mmap(nullptr, size, prot, flags, fd, offset);
 	if (buf == MAP_FAILED)
 	{
 		close(fd);
 		PERR(pshmem::mmap);
-		exit(errno);
 	}
 }
 
@@ -51,10 +46,7 @@ int pshmem::sync(int flags) const noexcept
 {
 	int ret = msync(buf, length, flags);
 	if (ret && errno == EINVAL)
-	{
 		PERR(pshmem::msync);
-		exit(errno);
-	}
 	return ret;
 }
 

@@ -1,4 +1,4 @@
-#include"custom_semaphore.hpp"
+#include"custom_sem.hpp"
 
 psem::psem(int pshared, unsigned int value) noexcept:
 	sem(new sem_t), name(nullptr)

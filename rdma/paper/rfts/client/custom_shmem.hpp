@@ -17,9 +17,9 @@
 	#define REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
 
-#ifndef CUSTOM_PRINT_ERROR_INFO
-	#define _PERR(a) perror(#a)
-	#define PERR(a) _PERR(a() failed)
+#ifndef CUSTOM_PRINT_ERROR_INFO_AND_EXIT_WITH_ERRNO
+	#define _PERR(a) {perror(#a);exit(errno);}
+	#define PERR(c) _PERR(c() failed)
 #endif /* ifndef CUSTOM_PRINT_ERROR_INFO */
 
 //posix shared memory
@@ -27,7 +27,7 @@ class pshmem
 {
 	private:
 		int fd;
-		void *buf;
+		void *addr;
 		size_t length;
 	public:
 		explicit pshmem(const char* name = "/rfts_pshmem", size_t size = 1024,
@@ -49,6 +49,6 @@ class pshmem
 };
 
 
-#endif /* end of include guard: HPP_CUSTOM_SHARED_MEM_H */
+#endif /* end of include guard: HPP_CUSTOM_SHMEM_H */
 
 
