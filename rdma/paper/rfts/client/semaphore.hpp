@@ -26,7 +26,9 @@ class semaphore
 				 unsigned int value = 0) ;
 		semaphore(const semaphore& ref) = delete;
 		semaphore(semaphore&& ref) noexcept;
+
 		
+
 		~semaphore(void) noexcept;
 		
 	
