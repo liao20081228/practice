@@ -14,5 +14,10 @@ shmem::shmem(const char* name, off_t size, int oflag, mode_t mode, int prot,
 					"call ftruncate failed");
 	}
 	buf = mmap(nullptr, size, prot, flags,fd, offset);
-	if (buf)
+	if (buf == MAP_FAILED)
+	{
+		close(fd);
+		throw std::system_error(errno, std::generic_category(),
+					"call ftruncate failed");
+	}
 }
