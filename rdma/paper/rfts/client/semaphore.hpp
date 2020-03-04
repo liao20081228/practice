@@ -27,11 +27,8 @@ class semaphore
 		semaphore(const semaphore& ref) = delete;
 		semaphore(semaphore&& ref) noexcept;
 
-		
-
 		~semaphore(void) noexcept;
 		
-	
 		void post(void) noexcept ;
 		void wait(void) noexcept;
 		int  trywait(void) noexcept;
