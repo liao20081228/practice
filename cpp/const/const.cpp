@@ -50,12 +50,23 @@ const int & fun5(int &a )
 class bird
 {
 	int wing;
-	int leg;
+	const int leg;	//const 数据成员必须用初始化表达式 或者 就地初始化，
+			//c++11只有静态非常量成员才需要类外初始化
+			//c++98只有静态整形常量成员可以就地初始化
 
 	public:
 		bird(int wing, int leg):wing(wing),leg(leg)
 	{
 
+	}
+	void fun()
+	{
+		wing =10;
+	}
+
+	void fun() const
+	{
+		fun();
 	}
 
 
