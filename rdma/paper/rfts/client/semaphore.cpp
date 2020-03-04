@@ -24,18 +24,6 @@ semaphore::semaphore(semaphore&& ref) noexcept:sem(ref.sem),name(ref.name)
 	ref.sem = nullptr;
 }
 
-semaphore& semaphore::operator = (semaphore&& ref) noexcept
-{
-	if (this == &ref)
-		return *this;
-	sem = ref.sem;
-	name = ref.name;
-	ref.name = nullptr;
-	ref.sem = nullptr;
-	return *this; 
-}
-
-
 semaphore::~semaphore(void) noexcept
 {
 	if (sem)
