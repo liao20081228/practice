@@ -31,7 +31,8 @@ pshmem::pshmem(pshmem&& ref) noexcept: fd(ref.fd), addr(ref.addr), length(ref.le
 pshmem::~pshmem(void) noexcept
 {
 	if (addr)
-		munmap(addr, length);
+		if(munmap(addr, length))
+			PERR(pshmem::munmap);
 	if (fd)
 		close(fd);
 }
@@ -50,6 +51,7 @@ int pshmem::sync(int flags) const noexcept
 	return ret;
 }
 
+int lseek
 
 ssize_t pshmem::read(void* buf, size_t buf_len, size_t len, off_t offset) const noexcept
 {
