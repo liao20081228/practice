@@ -45,7 +45,14 @@ void* pshmem::getaddr(void) const noexcept
 	return buf;
 }
 
-int pshmem::read(void* buf,size_t len, off_t offset) const noexcept
-{
 
+
+
+
+
+
+
+int pshmem::read(void* buf, size_t len, off_t offset) const noexcept
+{
+	if(offset)
 }
