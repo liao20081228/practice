@@ -2,7 +2,7 @@
 
 pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		int flags, off_t offset) noexcept:
-	fd(shm_open(name, oflag, mode))
+	fd(shm_open(name, oflag, mode)), offset(0), flag(0)
 {
 	if (fd < 0)
 		PERR(pshmem::shm_open);
