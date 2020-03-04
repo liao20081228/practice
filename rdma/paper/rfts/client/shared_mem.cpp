@@ -11,7 +11,10 @@ shmem::shmem(const char* name, off_t size, int oflag, mode_t mode, int prot,
 	{
 		close(fd);
 		throw std::system_error(errno, std::generic_category(),
-					"call shm_open() failed");
+					"call ftruncate failed");
 	}
-	buf = mmap(nullptr, size,  )
+	buf = mmap(nullptr, size, prot, flags,fd, offset);
+	{
+
+	}
 }
