@@ -51,7 +51,7 @@ int pshmem::sync(int flags) const noexcept
 }
 
 
-ssize_t pshmem::read(void* buf, size_t buf_len, size_t len,  uint64_t offset) const noexcept
+ssize_t pshmem::read(void* buf, size_t buf_len, size_t len, off_t offset) const noexcept
 {
 	if (!buf)
 	{
@@ -59,10 +59,9 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t len,  uint64_t offset) co
 		PERR(pshmem::read);
 	}
 	memset(buf, 0, len);
-
 	if (!buf_len || !len)
 		return 0;
-	if (offset > static())
+	if (offset > static_cast<off_t>(length - 1) || offset < 0)
 
 
 }

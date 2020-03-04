@@ -32,11 +32,11 @@ class pshmem
 		void *addr;
 		size_t length;
 	public:
-		explicit pshmem(const char* name = "/rfts_pshmem", size_t size = 1024,
-			int oflag = O_RDWR | O_CREAT,
-			mode_t mode  = REGULAR_FILE_MODE,
-			int prot = PROT_READ | PROT_WRITE, int flags = MAP_SHARED,
-			off_t offset = 0) noexcept;
+		explicit pshmem(const char* name = "/rfts_pshmem",
+				size_t size = 1024,int oflag = O_RDWR | O_CREAT,
+				mode_t mode  = REGULAR_FILE_MODE,
+				int prot = PROT_READ | PROT_WRITE, 
+				int flags = MAP_SHARED,off_t offset = 0) noexcept;
 		pshmem(const pshmem& ref) = delete;
 		pshmem(pshmem&& ref) noexcept;
 		~pshmem(void) noexcept;
@@ -46,8 +46,10 @@ class pshmem
 
 		void* getaddr(void ) const noexcept;
 		int sync(int flags = MS_SYNC) const noexcept;
-		ssize_t read(void* buf, size_t buf_len, size_t len, uint64_t offset) const noexcept;
-		ssize_t write(const void* buf, size_t length, off_t offset) const noexcept;
+		ssize_t read(void* buf, size_t buf_len, size_t len,
+				off_t offset) const noexcept;
+		ssize_t write(const void* buf, size_t length, 
+				off_t offset) const noexcept;
 };
 
 
