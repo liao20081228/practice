@@ -86,21 +86,21 @@ protected:
         return ret;
     }
 
-    size_t read_available(size_t max_size) const
+    size_t read_available(size_t max_size) const//消费线程，才会关心可读的数量
     {
-        size_t write_index = write_index_.load(memory_order_acquire);
-        const size_t read_index  = read_index_.load(memory_order_relaxed);
+        size_t write_index = write_index_.load(memory_order_acquire);//禁止后面的读写排到本操作前，生产者释放的同一变量的变化在本线程可见
+        const size_t read_index  = read_index_.load(memory_order_relaxed);//这是本线程，只需保证原子即可
         return read_available(write_index, read_index, max_size);
     }
 
-    size_t write_available(size_t max_size) const
+    size_t write_available(size_t max_size) const//生产线程，才会关心可写的数量
     {
-        size_t write_index = write_index_.load(memory_order_relaxed);
-        const size_t read_index  = read_index_.load(memory_order_acquire);
+        size_t write_index = write_index_.load(memory_order_relaxed);//本线程内，保证原子即可
+        const size_t read_index  = read_index_.load(memory_order_acquire);//禁止后面的读写排到本操作前，消费者释放的同一变量的变化在本线程可见
         return write_available(write_index, read_index, max_size);
     }
 
-    bool push(T const & t, T * buffer, size_t max_size)
+    bool push(T const & t, T * buffer, size_t max_size)//只有一个写线程
     {
         const size_t write_index = write_index_.load(memory_order_relaxed);  // only written from push thread
         const size_t next = next_index(write_index, max_size);
