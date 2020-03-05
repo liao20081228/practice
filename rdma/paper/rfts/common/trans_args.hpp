@@ -22,14 +22,14 @@ struct transargs
 	unsigned char  kind;//每个节点要测试几种
 	unsigned char sensor_num;//每个节点有几个探头
 	unsigned short node_num;//总共多少个节点
-	std::ostream& operator<< (std::ostream& out)
+	friend std::ostream& operator << (std::ostream& out, const transargs& ref)
 	{
-		out << "afreq : " << afreq << std::endl
-		<< "tfreq : " << tfreq << std::endl
-		<< "size : " << size << std::endl
-		<< "kind : " << kind << std::endl
-		<< "sensor_num : " << sensor_num << std::endl
-		<< "node_num : " << node_num << std::endl;
+		out << "afreq : " << ref.afreq << std::endl
+		<< "tfreq : " << ref.tfreq << std::endl
+		<< "size : " << ref.size << std::endl
+		<< "kind : " << ref.kind << std::endl
+		<< "sensor_num : " << ref.sensor_num << std::endl
+		<< "node_num : " << ref.node_num << std::endl;
 		return out;
 	}
 };
