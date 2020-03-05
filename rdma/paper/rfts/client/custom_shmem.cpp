@@ -113,8 +113,8 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 	do
 	{
 		memcpy(buf, static_cast<unsigned char*>(addr) + cur,
-			temp + nbytes > length ? length - temp : nbytes);
+			(temp + nbytes) > length ? (length - temp) : nbytes);
 
 	}while(!cur.compare_exchange_weak(temp,
-		(temp + nbytes > nbytes ? length -1 : cur + nbytes)));
+		(temp + nbytes) > length ? (length - 1) : (temp + nbytes)));
 }
