@@ -7,29 +7,29 @@ namespace rfts
 {
 struct data//数据结构
 {
-	unsigned short int nodeid;    //节点ID
-	unsigned char sensorid; //传感器ID
-	unsigned char type;	//数据类型,束流位置？长度？
-	struct   timespec time; //时间
-	double   value;		//值
+	unsigned short int	nodeid;		//节点ID
+	unsigned char		sensorid;	//传感器ID
+	unsigned char		type;		//数据类型,束流位置？长度？
+	struct   timespec	time;		//时间
+	double			value;		//值
 };
 
 struct transargs
 {
-	unsigned int afreq;//采集平率
-	unsigned int tfreq;//传输频率
-	unsigned int size;//每个物理量数据的大小
-	unsigned int  kind;//每个节点要测试几种
-	unsigned int sensor_num;//每个节点有几个探头
-	unsigned int node_num;//总共多少个节点
+	unsigned int afreq;			//采集平率
+	unsigned int tfreq;			//传输频率
+	unsigned int size_per_data;		//每个物理量数据的大小
+	unsigned int kind_per_sensor;		//一个探头产生几种数据
+	unsigned int sensor_num_per_node;	//每个节点有几个探头
+	unsigned int node_num;			//总共多少个节点
 	friend std::ostream& operator << (std::ostream& out, transargs& ref)
 	{
-		out << "afreq : " << ref.afreq << "\n"
-		    << "tfreq : " << ref.tfreq << "\n"
-		    << "size  : " << ref.size << "\n"
-		    << "kind  : " << ref.kind << "\n"
-		    << "sensor_num  : " << ref.sensor_num << "\n"
-		    << "node_num  : " << ref.node_num << "\n" << std::endl;
+		out << "afreq : "		<< ref.afreq			<< "\n"
+		    << "tfreq : "		<< ref.tfreq			<< "\n"
+		    << "size_per_data  : "	<< ref.size_per_data		<< "\n"
+		    << "kind_per_sensor: "	<< ref.kind_per_sensor		<< "\n"
+		    << "sensor_num_per_node: "	<< ref.sensor_num_per_node	<< "\n"
+		    << "node_num  : "		<< ref.node_num			<< "\n";
 		return out;
 	}
 };
