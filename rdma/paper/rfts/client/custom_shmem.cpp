@@ -65,9 +65,18 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 			cur.store(offset, std::memory_order_release);
 			return cur.load(std::memory_order_acquire);
 		case SEEK_CUR:
-			temp = cur.load(std::memory_order_acquire);
-			if((static_cast<off_t>(temp) + offset) >= static_cast<off_t>(length) ||
-				(temp + offset) < 0)
+			do
+			{
+				temp = cur.load(std::memory_order_acquire);
+				if((static_cast<off_t>(temp) + offset)
+					>= static_cast<off_t>(length) 
+					||(temp + offset) < 0)
+				{
+					errno = EINVAL;
+					PERR(pshmem::seek);
+				}
+			}while(!cur.compare_exchange_weak(temp, temp + offset));
+			return temp + offset;
 		case SEEK_END:
 			if (offset > 0 || offset <= static_cast<off_t>(-length))
 			{
