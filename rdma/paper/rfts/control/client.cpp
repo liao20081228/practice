@@ -13,8 +13,7 @@ int main()
 	pshmem shmem("/rfts_pshmem", sysconf(_SC_PAGESIZE), O_RDWR | O_CREAT,
 			REGULAR_FILE_MODE, PROT_WRITE);
 	psem ct_sem("/rfts_psem");
+	shmem.mclear();
 	shmem.mwrite(&shmem, sizeof(tsas), sizeof(tsas) );
 	ct_sem.post();
-	std::cout << tsas;
-	ct_sem.wait();
 }
