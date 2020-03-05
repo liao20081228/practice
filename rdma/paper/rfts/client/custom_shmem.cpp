@@ -28,6 +28,9 @@ pshmem::pshmem(pshmem&& ref) noexcept: name(ref.name),fd(ref.fd), addr(ref.addr)
 	ref.fd = -1;
 	ref.addr = nullptr;
 	ref.length = 0;
+	ref.name = nullptr;
+	ref.protect = 0;
+	ref.cur = 0;
 }
 
 
@@ -38,7 +41,8 @@ pshmem::~pshmem(void) noexcept
 			PERR(pshmem::munmap);
 	if (fd)
 		close(fd);
-	shm_unlink(name);
+	if (name)
+		shm_unlink(name);
 }
 
 
