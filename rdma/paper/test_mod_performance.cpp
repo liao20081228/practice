@@ -2,12 +2,12 @@
 #include<iostream>
 int main()
 {
-	double  mhz,arg1{0},arg2{0};
+	long double  mhz,arg1{0},arg2{0};
 	cycles_t s,e;
 	int rear = 9, maxsize = 10;
 
 	mhz = get_cpu_mhz(0);
-	for(int i = 1; i< 1000000; i++)
+	for(int i = 1; i< 10000000; i++)
 	{
 		s=get_cycles();
 		rear= (i+1)% maxsize;
@@ -21,6 +21,6 @@ int main()
 		e=get_cycles();
 		arg2+=(e-s)/mhz;
 	}
-	std::cout<<"mod : "<<arg1<<",add-sub:"<< arg2 <<std::endl;
+	std::cout<<"mod : "<<arg1/10000<<",add-sub:"<< arg2/10000<<std::endl;
 
 }
