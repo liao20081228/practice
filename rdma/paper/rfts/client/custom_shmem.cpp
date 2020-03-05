@@ -101,7 +101,12 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 	}
 }
 
-ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) noexcept
+size_t pshmem::mtell(void) const noexcept
+{
+	return cur.load(std::memory_order_acquire);
+}
+
+ssize_t pshmem::mread(void* buf, size_t buf_len, size_t nbytes) noexcept
 {
 	if ((protect & PROT_READ) == 0)
 	{
