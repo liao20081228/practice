@@ -75,7 +75,7 @@ size_t pshmem::mseek(off_t offset, int whence) noexcept
 			if (offset < 0 || offset >= static_cast<off_t>(length))
 			{
 				errno = EINVAL;
-				PERR(pshmem::seek);
+				PERR(pshmem::mseek);
 			}
 			cur.store(offset, std::memory_order_release);
 			return cur.load(std::memory_order_acquire);
@@ -88,7 +88,7 @@ size_t pshmem::mseek(off_t offset, int whence) noexcept
 					|| (temp + offset) < 0)
 				{
 					errno = EINVAL;
-					PERR(pshmem::seek);
+					PERR(pshmem::mseek);
 				}
 			}while (!cur.compare_exchange_weak(temp, temp + offset,
 							std::memory_order_acq_rel,
@@ -98,13 +98,13 @@ size_t pshmem::mseek(off_t offset, int whence) noexcept
 			if (offset > 0 || offset <= static_cast<off_t>(-length))
 			{
 				errno = EINVAL;
-				PERR(pshmem::seek);
+				PERR(pshmem::mseek);
 			}
 			cur.store(length - 1  + offset, std::memory_order_release);
 			return cur.load(std::memory_order_acquire);
 		default:
 			errno = EINVAL;
-			PERR(pshmem::seek);
+			PERR(pshmem::mseek);
 			break;
 	}
 }
@@ -117,12 +117,13 @@ size_t pshmem::mtell(void) const noexcept
 void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset, 
 		bool is_read) noexcept
 {
-	if (is_read && (protect & PROT_READ) == 0)
+	if ((is_read && !(protect & PROT_READ)) || (!is_read && !(protect & PROT_WRITE)))
 	{
 		errno = EPERM;
-		PERR(pshmem::read);
+		if (is_read)
+			PERR(pshmem::mread);
+		PERR()
 	}
-
 
 	if (!buf || buf_len < nbytes)
 	{
@@ -131,7 +132,8 @@ void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset,
 	}
 	if (!nbytes)
 		return;
-	memset(buf, 0, buf_len);
+	if (is_read)
+		memset(buf, 0, buf_len);
 	if (reset)
 		mseek(0, SEEK_SET);
 	uint64_t temp = cur.load(std::memory_order_acquire);
@@ -142,67 +144,20 @@ void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset,
 			errno =  EINVAL;
 			PERR(pshmem::read);
 		}
-		memcpy(buf, static_cast<unsigned char*>(addr) + cur, nbytes);
+		if (is_read)
+			memcpy(buf, static_cast<unsigned char*>(addr) + cur, nbytes);
+		else
+			memcpy(static_cast<unsigned char*>(addr) + temp, buf, nbytes);
 	}while (!cur.compare_exchange_weak(temp, temp +nbytes, std::memory_order_acq_rel,
 			std::memory_order_acquire));
 }
 
 void pshmem::mread(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
-	if ((protect & PROT_READ) == 0)
-	{
-		errno = EPERM;
-		PERR(pshmem::read);
-	}
-	if (!buf || buf_len < nbytes)
-	{
-		errno =  EINVAL;
-		PERR(pshmem::read);
-	}
-	if (!nbytes)
-		return;
-	memset(buf, 0, buf_len);
-	if (reset)
-		mseek(0, SEEK_SET);
-	uint64_t temp = cur.load(std::memory_order_acquire);
-	do
-	{
-		if (temp + nbytes > length)
-		{
-			errno =  EINVAL;
-			PERR(pshmem::read);
-		}
-		memcpy(buf, static_cast<unsigned char*>(addr) + cur, nbytes);
-	}while (!cur.compare_exchange_weak(temp, temp +nbytes, std::memory_order_acq_rel,
-			std::memory_order_acquire));
+	maccess(buf, buf_len, nbytes,)
 }
 
 void pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
-	if ((protect & PROT_WRITE) == 0)
-	{
-		errno = EPERM;
-		PERR(pshmem::read);
-	}
-	if (!buf || buf_len < nbytes)
-	{
-		errno =  EINVAL;
-		PERR(pshmem::read);
-	}
-	if (!nbytes)
-		return;
-	if (reset)
-		mseek(0, SEEK_SET);
-	uint64_t temp = cur.load(std::memory_order_acquire);
-	do
-	{
-		if (temp + nbytes > length)
-		{
-			errno =  EINVAL;
-			PERR(pshmem::read);
-		}
-		memcpy(static_cast<unsigned char*>(addr) + temp, buf, nbytes);
-	} while (cur.compare_exchange_weak(temp, temp + nbytes,
-			std::memory_order_acq_rel, std::memory_order_acquire));
 }
 
