@@ -51,7 +51,7 @@ int pshmem::sync(int flags) const noexcept
 	return ret;
 }
 
-size_t pshmem::seek(off_t offset, int whence) noexcept
+bool pshmem::seek(off_t offset, int whence) noexcept
 {
 	uint64_t temp = 0;
 	switch(whence)
@@ -62,7 +62,9 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 			do
 			{
 				temp = cur.load(std::memory_order_acquire);
-				if()
+				if(offset >= length)
+					PERR(pshmem::seek);
+
 
 
 			}
