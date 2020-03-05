@@ -64,7 +64,7 @@ protected:
     static size_t next_index(size_t arg, size_t max_size)
     {
         size_t ret = arg + 1;
-        while (BOOST_UNLIKELY(ret >= max_size))
+        while (BOOST_UNLIKELY(ret >= max_size)) // rear =  (rear+1)% MaxSize,因为取模运算花费的时间非常高
             ret -= max_size;
         return ret;
     }
