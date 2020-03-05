@@ -152,14 +152,16 @@ ssize_t pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes, bool rese
 	if (reset)
 		mseek(0, SEEK_SET);
 	uint64_t temp = cur.load(std::memory_order_acquire);
-	if (temp + nbytes > length)
-	{
-		errno =  EINVAL;
-		PERR(pshmem::read);
-	}
 	do
 	{
+		if (temp + nbytes > length)
+		{
+			errno =  EINVAL;
+			PERR(pshmem::read);
+		}
 		memcpy(static_cast<unsigned char*>(addr) + temp, buf, nbytes);
-	} while ();
+	} while (cur.compare_exchange_weak(temp, temp + nbytes,
+			std::memory_order_acq_rel, std::memory_order_acquire));
+	return nbytes;
 }
 
