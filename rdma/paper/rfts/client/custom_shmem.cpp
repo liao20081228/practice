@@ -43,22 +43,22 @@ void* pshmem::getaddr(void) const noexcept
 	return addr;
 }
 
-void pshmem::clear(void) noexcept
+void pshmem::mclear(void) noexcept
 {
 	memset(addr, 0, length);
 	cur.store(0, std::memory_order_release);
 }
 
 
-int pshmem::sync(int flags) const noexcept
+int pshmem::msync(int flags) const noexcept
 {
-	int ret = msync(addr, length, flags);
+	int ret = ::msync(addr, length, flags);
 	if (ret && errno == EINVAL)
 		PERR(pshmem::msync);
 	return ret;
 }
 
-size_t pshmem::seek(off_t offset, int whence) noexcept
+size_t pshmem::mseek(off_t offset, int whence) noexcept
 {
 	uint64_t temp = 0;
 	switch(whence)
@@ -133,7 +133,7 @@ ssize_t pshmem::mread(void* buf, size_t buf_len, size_t nbytes) noexcept
 	return realread;
 }
 
-ssize_t pshmem::write(const void* buf, size_t buf_len, size_t nbytes) noexcept
+ssize_t pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes) noexcept
 {
 	if ((protect & PROT_WRITE) == 0)
 	{
@@ -148,10 +148,14 @@ ssize_t pshmem::write(const void* buf, size_t buf_len, size_t nbytes) noexcept
 	if (!nbytes)
 		return 0;
 	uint64_t temp = cur.load(std::memory_order_acquire);
+	if (temp + nbytes > length)
+	{
+		errno =  EINVAL;
+		PERR(pshmem::read);
+	}
+	do
+	{
 
-	
-
+	} while ();
 }
-
-
 
