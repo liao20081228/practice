@@ -16,17 +16,16 @@ namespace rfts
 		const int		elesize;	//每个队列元素的大小
 		const int		length;		//buf长度
 		unsigned char*		addr;		//buf地址
-		std::atomic_int32_t	capacity;	//队列容量
 		std::atomic_int32_t	front, rear;
 	public:
-		spsc_seq_mem_pool(const transargs& transargs) noexcept;
-		
-		spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
-		spsc_seq_mem_pool(spsc_seq_mem_pool && ref) noexcept;
-		
-		spsc_seq_mem_pool& operator = (const spsc_seq_mem_pool & ref) = delete;
+		explicit spsc_seq_mem_pool(const transargs& transargs) noexcept;
+		explicit spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
+		explicit spsc_seq_mem_pool(spsc_seq_mem_pool &&ref) noexcept;
+
 		~spsc_seq_mem_pool(void) noexcept;
 
+		spsc_seq_mem_pool& operator = (const spsc_seq_mem_pool & ref) = delete;
+		spsc_seq_mem_pool& operator = ( spsc_seq_mem_pool&& ref) = delete;
 		void*		rmalloc(void);
 		void		rfree(void);
 		const void*	get_mempool_addr(void) const noexcept;
