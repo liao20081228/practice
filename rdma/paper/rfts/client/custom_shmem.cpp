@@ -75,7 +75,7 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 					errno = EINVAL;
 					PERR(pshmem::seek);
 				}
-			}while(!cur.compare_exchange_weak(temp, temp + offset,
+			}while (!cur.compare_exchange_weak(temp, temp + offset,
 							std::memory_order_acq_rel,
 							std::memory_order_acquire));
 			return temp;
@@ -94,7 +94,7 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 	}
 }
 
-ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
+ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) noexcept
 {
 	if ((protect & PROT_READ) == 0)
 	{
@@ -117,6 +117,6 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 		reallen  =  (temp + nbytes) > length ? (length - temp) : nbytes;
 		memcpy(buf, static_cast<unsigned char*>(addr) + cur, reallen);
 		temp0 =( temp + nbytes) > length ? length - 1 : temp + nbytes;
-	}while(!cur.compare_exchange_weak(temp, temp0));
+	}while (cur.compare_exchange_weak(temp, temp0));
 	return reallen;
 }
