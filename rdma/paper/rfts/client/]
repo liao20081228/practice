@@ -43,14 +43,6 @@ void* pshmem::getaddr(void) const noexcept
 	return addr;
 }
 
-void pshmem::clear(void) noexcept
-{
-
-}
-
-
-
-
 int pshmem::sync(int flags) const noexcept
 {
 	int ret = msync(addr, length, flags);
@@ -143,7 +135,6 @@ ssize_t pshmem::write(const void* buf, size_t buf_len, size_t nbytes) noexcept
 	}
 	if (!nbytes)
 		return 0;
-	
 
 }
 
