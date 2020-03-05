@@ -114,7 +114,7 @@ size_t pshmem::mtell(void) const noexcept
 	return cur.load(std::memory_order_acquire);
 }
 
-void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset, 
+void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset,
 		bool is_read) noexcept
 {
 	if ((is_read && !(protect & PROT_READ)) || (!is_read && !(protect & PROT_WRITE)))
@@ -122,13 +122,15 @@ void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset,
 		errno = EPERM;
 		if (is_read)
 			PERR(pshmem::mread);
-		PERR()
+		PERR(pshmem::mwrite);
 	}
 
 	if (!buf || buf_len < nbytes)
 	{
 		errno =  EINVAL;
-		PERR(pshmem::read);
+		if (is_read)
+			PERR(pshmem::mread);
+		PERR(pshmem::mwrite);
 	}
 	if (!nbytes)
 		return;
@@ -142,7 +144,9 @@ void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset,
 		if (temp + nbytes > length)
 		{
 			errno =  EINVAL;
-			PERR(pshmem::read);
+			if (is_read)
+				PERR(pshmem::mread);
+			PERR(pshmem::mwrite);
 		}
 		if (is_read)
 			memcpy(buf, static_cast<unsigned char*>(addr) + cur, nbytes);
@@ -154,10 +158,11 @@ void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset,
 
 void pshmem::mread(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
-	maccess(buf, buf_len, nbytes,)
+	maccess(buf, buf_len, nbytes, reset, true);
 }
 
-void pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
+void pshmem::mwrite(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
+	maccess(buf, buf_len, nbytes, reset, false);
 }
 

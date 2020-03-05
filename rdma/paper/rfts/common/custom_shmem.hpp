@@ -35,7 +35,7 @@ class pshmem
 		std::atomic_uint64_t cur;
 		int protect;
 	private:
-		void maccess(const void* buf, size_t buf_len, size_t nbytes,
+		void maccess(void* buf, size_t buf_len, size_t nbytes,
 				bool reset, bool is_read) noexcept;
 
 	public:
@@ -57,7 +57,7 @@ class pshmem
 		size_t mseek(off_t offset = 0, int whence = SEEK_SET) noexcept;
 		size_t mtell(void) const noexcept;
 		void mread(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
-		void mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+		void mwrite(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
 };
 
 
