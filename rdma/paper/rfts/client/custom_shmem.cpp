@@ -109,14 +109,14 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 	if (!buf_len || !nbytes)
 		return 0;
 	memset(buf, 0, buf_len);
-	std::uint64_t temp = cur.load(std::memory_order_acquire),
+	uint64_t temp = cur.load(std::memory_order_acquire),
 		 temp0 = 0,
 		reallen = 0;
 	do
 	{
 		reallen  =  (temp + nbytes) > length ? (length - temp) : nbytes;
 		memcpy(buf, static_cast<unsigned char*>(addr) + cur, reallen);
-		temp0 = temp + nbytes > length ? length - 1 : temp + nbytes;
+		temp0 =( temp + nbytes) > length ? length - 1 : temp + nbytes;
 	}while(!cur.compare_exchange_weak(temp, temp0));
 	return reallen;
 }
