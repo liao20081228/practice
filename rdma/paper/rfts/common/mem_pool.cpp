@@ -1,6 +1,6 @@
 #include"mem_pool.hpp"
 
-rfts::spc_seq_mem_pool::spc_seq_mem_pool(const trans_args& transargs) noexcept:
+rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2)
@@ -10,7 +10,7 @@ rfts::spc_seq_mem_pool::spc_seq_mem_pool(const trans_args& transargs) noexcept:
 }
 
 
-rfts::spc_seq_mem_pool::~spc_seq_mem_pool(void) noexcept
+rfts::spsc_seq_mem_pool::~spsc_seq_mem_pool(void) noexcept
 {
 	while(front == rear && addr)
 	{
@@ -21,18 +21,18 @@ rfts::spc_seq_mem_pool::~spc_seq_mem_pool(void) noexcept
 }
 
 
-const void* rfts::spc_seq_mem_pool::get_real_addr(void) const noexcept
+const void* rfts::spsc_seq_mem_pool::get_real_addr(void) const noexcept
 {
 	return addr;
 }
 
 
-int rfts::spc_seq_mem_pool::get_real_length(void) const noexcept
+int rfts::spsc_seq_mem_pool::get_real_length(void) const noexcept
 {
 	return length;
 }
 
-void* rfts::spc_seq_mem_pool::rmalloc(void)
+void* rfts::spsc_seq_mem_pool::rmalloc(void)
 {
 	int temp = 0;
 
@@ -48,7 +48,7 @@ void* rfts::spc_seq_mem_pool::rmalloc(void)
 	return temp;
 }
 
-void rfts::spc_seq_mem_pool::rfree(void)
+void rfts::spsc_seq_mem_pool::rfree(void)
 {
 	if(rear == front)
 		return;
