@@ -64,12 +64,12 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 			cur.store(offset, std::memory_order_release);
 			return cur.load(std::memory_order_acquire);
 		case SEEK_CUR:
-			volatile uint64_t temp = cur.load(std::memory_order_acquire);
+			uint64_t temp = cur.load(std::memory_order_acquire);
 			do
 			{
 				if((static_cast<off_t>(temp) + offset)
-					>= static_cast<off_t>(length) 
-					||(temp + offset) < 0)
+					>= static_cast<off_t>(length)
+					|| (temp + offset) < 0)
 				{
 					errno = EINVAL;
 					PERR(pshmem::seek);
@@ -89,6 +89,7 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 		default:
 			errno = EINVAL;
 			PERR(pshmem::seek);
+			break;
 	}
 }
 
@@ -102,7 +103,7 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 	if (!buf_len || !nbytes)
 		return 0;
 	memset(buf, 0, buf_len);
-	temp = cur.load(std::memory_order_acquire)
+	uint64_t temp = cur.load(std::memory_order_acquire);
 	do
 	{
 
