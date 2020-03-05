@@ -59,15 +59,13 @@ bool pshmem::seek(off_t offset, int whence) noexcept
 		case SEEK_SET:
 			if (offset < 0)
 				PERR(pshmem::seek);
-			do
+			if(offset >= static_cast<off_t>(length))
 			{
-				temp = cur.load(std::memory_order_acquire);
-				if(offset >= length)
-					PERR(pshmem::seek);
-
-
-
+				errno = EINVAL;
+				PERR(pshmem::seek);
 			}
+			temp = cur.load(std::memory_order_acquire);
+			cur.store(offset, std::memory_order_release);
 		case SEEK_CUR:
 		case SEEK_END:
 		default:
