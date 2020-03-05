@@ -34,6 +34,9 @@ class pshmem
 		size_t length;
 		std::atomic_uint64_t cur;
 		int protect;
+	private:
+		void mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+
 	public:
 		explicit pshmem(const char* name, size_t size = sysconf(_SC_PAGESIZE),
 				int oflag = O_RDWR | O_CREAT,
@@ -52,8 +55,8 @@ class pshmem
 		int msync(int flags = MS_SYNC) const noexcept;
 		size_t mseek(off_t offset = 0, int whence = SEEK_SET) noexcept;
 		size_t mtell(void) const noexcept;
-		bool mread(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
-		bool mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+		void mread(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+		void mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
 };
 
 
