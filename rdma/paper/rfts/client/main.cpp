@@ -13,5 +13,6 @@ int main()
 	
 	rfts::transargs tsas;
 	shmem.mread(&tsas, sizeof(tsas), sizeof(tsas));
+	tsas << std::cout;
 	
 }
