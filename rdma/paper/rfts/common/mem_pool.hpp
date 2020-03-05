@@ -9,14 +9,14 @@
 #include<cstdlib>
 namespace rfts
 {
-	const int MEM_POOL_CAPACITY = 100;
+	const int MEM_POOL_CAPACITY = 1000;//1000次传输
 	class spsc_seq_mem_pool
 	{
 	private:
-		const int		elesize; //每个队列元素的大小
-		const int		length; //buf长度
-		unsigned char*		addr; //buf地址
-		std::atomic_int32_t	size; //队列容量
+		const int		elesize;	//每个队列元素的大小
+		const int		length;		//buf长度
+		unsigned char*		addr;		//buf地址
+		std::atomic_int32_t	capacity;	//队列容量
 		std::atomic_int32_t	front, rear;
 	public:
 		spsc_seq_mem_pool(const transargs& transargs) noexcept;
@@ -27,8 +27,8 @@ namespace rfts
 
 		void*		rmalloc(void);
 		void		rfree(void);
-		const void*	get_real_addr(void) const noexcept;
-		int		get_real_length(void) const noexcept;
+		const void*	get_mempool_addr(void) const noexcept;
+		int		get_mempool_length(void) const noexcept;
 	};
 
 
