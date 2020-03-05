@@ -2,7 +2,7 @@
 
 pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		int flags, off_t offset) noexcept:
-	fd(shm_open(name, oflag, mode)), cur(0)
+	fd(shm_open(name, oflag, mode)), cur(0),protect(prot)
 {
 	if (fd < 0)
 		PERR(pshmem::shm_open);
@@ -96,6 +96,10 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 
 ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 {
+	if ((protect & PROT_READ) == 0)
+	{
+
+	}
 	if (!buf || buf_len < nbytes)
 	{
 		errno =  EINVAL;
