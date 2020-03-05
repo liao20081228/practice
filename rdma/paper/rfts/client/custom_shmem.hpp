@@ -32,6 +32,7 @@ class pshmem
 		void *addr;
 		size_t length;
 		std::atomic_uint64_t cur;
+		int prot;
 	public:
 		explicit pshmem(const char* name = "/rfts_pshmem",
 				size_t size = sysconf(_SC_PAGESIZE),int oflag = O_RDWR | O_CREAT,
