@@ -14,6 +14,7 @@ int main()
 			REGULAR_FILE_MODE, PROT_WRITE);
 	psem ct_sem("/rfts_psem");
 	shmem.mclear();
-	shmem.mwrite(&shmem, sizeof(tsas), sizeof(tsas) );
+	shmem.mwrite(&tsas, sizeof(tsas), sizeof(tsas) );
+	std::cout << tsas;
 	ct_sem.post();
 }
