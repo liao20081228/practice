@@ -35,6 +35,7 @@ pshmem::~pshmem(void) noexcept
 			PERR(pshmem::munmap);
 	if (fd)
 		close(fd);
+	shm_unlink(name);
 }
 
 
