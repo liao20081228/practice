@@ -112,6 +112,6 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 	uint64_t temp = cur.load(std::memory_order_acquire);
 	do
 	{
-	
+		memcpy(buf, static_cast<unsigned char*>(addr) + cur, temp);
 	}while(1);
 }
