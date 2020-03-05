@@ -10,8 +10,9 @@ struct data//数据结构
 	uint16_t		nodeid;		//节点ID
 	uint8_t			sensorid;	//传感器ID
 	uint8_t			type;		//数据类型,束流位置？长度？
-	struct timespec	time;		//时间
-	long double		value;		//
+	struct timespec		time;		//时间
+	uint64_t		number;		//编号
+	long double		value;		//数据值
 };
 
 struct transargs
