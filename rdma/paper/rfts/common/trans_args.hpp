@@ -13,7 +13,7 @@ struct data//数据结构
 	double   value;		//值
 };
 
-struct trans_args
+struct transargs
 {
 	unsigned int afreq;//采集平率
 	unsigned int tfreq;//传输频率
