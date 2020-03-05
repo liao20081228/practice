@@ -1,8 +1,8 @@
 #include"custom_shmem.hpp"
 
 pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
-		int flags, off_t offset) noexcept:
-	fd(shm_open(name, oflag, mode)), cur(0),protect(prot)
+		int flags, off_t offset) noexcept: name(name)
+	, fd(shm_open(name, oflag, mode)),length(size), cur(0),protect(prot)
 {
 	if (fd < 0)
 		PERR(pshmem::shm_open);
@@ -20,8 +20,11 @@ pshmem::pshmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 }
 
 
-pshmem::pshmem(pshmem&& ref) noexcept: fd(ref.fd), addr(ref.addr), length(ref.length)
+pshmem::pshmem(pshmem&& ref) noexcept: name(ref.name),fd(ref.fd), addr(ref.addr)
+	, length(ref.length),cur(ref.cur.load(std::memory_order_acquire))
+	, protect(ref.protect)
 {
+
 	ref.fd = -1;
 	ref.addr = nullptr;
 	ref.length = 0;

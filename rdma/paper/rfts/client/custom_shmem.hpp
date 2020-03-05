@@ -28,6 +28,7 @@
 class pshmem
 {
 	private:
+		const char* name;
 		int fd;
 		void *addr;
 		size_t length;
