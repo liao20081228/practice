@@ -53,6 +53,7 @@ int pshmem::sync(int flags) const noexcept
 
 size_t pshmem::seek(off_t offset, int whence) noexcept
 {
+	uint64_t temp = 0;
 	switch(whence)
 	{
 		case SEEK_SET:
@@ -64,7 +65,7 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 			cur.store(offset, std::memory_order_release);
 			return cur.load(std::memory_order_acquire);
 		case SEEK_CUR:
-			uint64_t temp = cur.load(std::memory_order_acquire);
+			temp = cur.load(std::memory_order_acquire);
 			do
 			{
 				if((static_cast<off_t>(temp) + offset)
@@ -106,6 +107,6 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 	uint64_t temp = cur.load(std::memory_order_acquire);
 	do
 	{
-
+	
 	}while(1);
 }
