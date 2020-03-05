@@ -22,6 +22,8 @@ namespace rfts
 		spsc_seq_mem_pool(const transargs& transargs) noexcept;
 		
 		spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
+		spsc_seq_mem_pool(spsc_seq_mem_pool && ref) noexcept;
+		
 		spsc_seq_mem_pool& operator = (const spsc_seq_mem_pool & ref) = delete;
 		~spsc_seq_mem_pool(void) noexcept;
 

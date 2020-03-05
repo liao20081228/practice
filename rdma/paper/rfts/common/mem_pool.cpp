@@ -4,7 +4,7 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept:
 	elesize(transargs.afreq / transargs.tfreq * 
 		transargs.node_num * transargs.sensor_num *
 		transargs.kind * transargs.size * 2)
-	,length(elesize * MEM_POOL_CAPACITY), size(MEM_POOL_CAPACITY)
+	,length(elesize * MEM_POOL_CAPACITY), capacity(MEM_POOL_CAPACITY)
 	,addr(new unsigned char[length]()),front(0),rear(0)
 {
 }
