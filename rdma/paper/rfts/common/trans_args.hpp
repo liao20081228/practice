@@ -22,6 +22,15 @@ struct transargs
 	unsigned char  kind;//每个节点要测试几种
 	unsigned char sensor_num;//每个节点有几个探头
 	unsigned short node_num;//总共多少个节点
+	friend std::ostream& operator << (std::ofstream& out, transargs& ref)
+	{
+		out << "afreq : " << ref.afreq << "\n"
+		    << "tfreq : " << ref.tfreq << "\n"
+		    << "size  : " << static_cast<int>(ref.size) << "\n"
+		    << "kind  : " << static_cast<int>(ref.kind) << "\n"
+		    << "sensor_num  : " << static_cast<int>(ref.sensor_num) << "\n"
+		    << "node_num  : " << static_cast<int>(ref.node_num) << "\n"
+	}
 };
 
 
