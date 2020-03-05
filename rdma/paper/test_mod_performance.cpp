@@ -6,9 +6,9 @@ int main()
 	cycles_t s,e;
 	int rear = 9, maxsize = 10;
 
-	for(int i = 1; i< 1000; i++)
+	mhz = get_cpu_mhz(0);
+	for(int i = 1; i< 1000000; i++)
 	{
-		mhz = get_cpu_mhz(0);
 		s=get_cycles();
 		rear= (i+1)% maxsize;
 		e=get_cycles();
