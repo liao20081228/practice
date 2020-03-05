@@ -51,7 +51,7 @@ int pshmem::sync(int flags) const noexcept
 	return ret;
 }
 
-bool pshmem::seek(off_t offset, int whence) noexcept
+size_t pshmem::seek(off_t offset, int whence) noexcept
 {
 	uint64_t temp = 0;
 	switch(whence)
@@ -63,6 +63,7 @@ bool pshmem::seek(off_t offset, int whence) noexcept
 				PERR(pshmem::seek);
 			}
 			cur.store(offset, std::memory_order_release);
+			return cur.load(std::memory_order_acquire);
 		case SEEK_CUR:
 		case SEEK_END:
 			if (offset > 0 || offset <= static_cast<off_t>(-length))
@@ -70,6 +71,8 @@ bool pshmem::seek(off_t offset, int whence) noexcept
 				errno = EINVAL;
 				PERR(pshmem::seek);
 			}
+			cur.store(length - 1  + offset, std::memory_order_release);
+			return cur.load(std::memory_order_acquire);
 		default:
 			errno = EINVAL;
 			PERR(pshmem::seek);
