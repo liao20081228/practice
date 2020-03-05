@@ -35,8 +35,8 @@ class pshmem
 		std::atomic_uint64_t cur;
 		int protect;
 	public:
-		explicit pshmem(const char* name = "/rfts_pshmem",
-				size_t size = sysconf(_SC_PAGESIZE),int oflag = O_RDWR | O_CREAT,
+		explicit pshmem(const char* name, size_t size = sysconf(_SC_PAGESIZE),
+				int oflag = O_RDWR | O_CREAT,
 				mode_t mode  = REGULAR_FILE_MODE,
 				int prot = PROT_READ | PROT_WRITE,
 				int flags = MAP_SHARED, off_t offset = 0) noexcept;
