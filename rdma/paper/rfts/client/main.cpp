@@ -14,7 +14,7 @@ int main()
 	rfts::transargs tsas;
 	if (sizeof(tsas) != shmem.mread(&tsas, sizeof(tsas), sizeof(tsas))
 	{
-		
+		operator
 	}
 
 }

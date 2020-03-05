@@ -114,7 +114,7 @@ size_t pshmem::mtell(void) const noexcept
 	return cur.load(std::memory_order_acquire);
 }
 
-ssize_t pshmem::mread(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
+bool pshmem::mread(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
 	if ((protect & PROT_READ) == 0)
 	{
@@ -127,7 +127,7 @@ ssize_t pshmem::mread(void* buf, size_t buf_len, size_t nbytes, bool reset) noex
 		PERR(pshmem::read);
 	}
 	if (!nbytes)
-		return 0;
+		return true;
 	memset(buf, 0, buf_len);
 	if (reset)
 		mseek(0, SEEK_SET);
@@ -140,10 +140,10 @@ ssize_t pshmem::mread(void* buf, size_t buf_len, size_t nbytes, bool reset) noex
 	}while (!cur.compare_exchange_weak(temp, temp + nbytes > length ?
 			length -1 : temp +nbytes, std::memory_order_acq_rel,
 			std::memory_order_acquire));
-	return realread;
+	return true;
 }
 
-ssize_t pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
+bool pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
 	if ((protect & PROT_WRITE) == 0)
 	{
@@ -156,7 +156,7 @@ ssize_t pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes, bool rese
 		PERR(pshmem::read);
 	}
 	if (!nbytes)
-		return 0;
+		return true;
 	if (reset)
 		mseek(0, SEEK_SET);
 	uint64_t temp = cur.load(std::memory_order_acquire);
@@ -170,6 +170,6 @@ ssize_t pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes, bool rese
 		memcpy(static_cast<unsigned char*>(addr) + temp, buf, nbytes);
 	} while (cur.compare_exchange_weak(temp, temp + nbytes,
 			std::memory_order_acq_rel, std::memory_order_acquire));
-	return nbytes;
+	return true;
 }
 
