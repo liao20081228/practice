@@ -108,7 +108,7 @@ protected:
         if (next == read_index_.load(memory_order_acquire))//可能变化的是read_index，它会被消费者修改
             return false; /* ringbuffer is full */
 
-        new (buffer + write_index) T(t); // copy-construct
+        new (buffer + write_index) T(t); // copy-construct, placement new用法
 
         write_index_.store(next, memory_order_release); //生产线程会修改write_index，而消费者线程关心，因此这个变量要保证其变化其他线程可见
 
