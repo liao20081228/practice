@@ -47,11 +47,11 @@ class pshmem
 		pshmem& operator = (const pshmem&& ref) = delete;
 
 		void* getaddr(void ) const noexcept;
-		void clear(void) noexcept;
-		int sync(int flags = MS_SYNC) const noexcept;
-		size_t seek(off_t offset = 0, int whence = SEEK_SET) noexcept;
-		ssize_t read(void* buf, size_t buf_len, size_t nbytes) noexcept;
-		ssize_t write(const void* buf, size_t buf_len, size_t nbytes) noexcept;
+		void mclear(void) noexcept;
+		int msync(int flags = MS_SYNC) const noexcept;
+		size_t mseek(off_t offset = 0, int whence = SEEK_SET) noexcept;
+		ssize_t mread(void* buf, size_t buf_len, size_t nbytes) noexcept;
+		ssize_t mwrite(const void* buf, size_t buf_len, size_t nbytes) noexcept;
 };
 
 

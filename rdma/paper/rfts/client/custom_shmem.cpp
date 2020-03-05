@@ -45,10 +45,9 @@ void* pshmem::getaddr(void) const noexcept
 
 void pshmem::clear(void) noexcept
 {
-
+	memset(addr, 0, length);
+	cur.store(0, std::memory_order_release);
 }
-
-
 
 
 int pshmem::sync(int flags) const noexcept
@@ -143,6 +142,8 @@ ssize_t pshmem::write(const void* buf, size_t buf_len, size_t nbytes) noexcept
 	}
 	if (!nbytes)
 		return 0;
+	uint64_t temp = cur.load(std::memory_order_acquire);
+
 	
 
 }
