@@ -127,7 +127,7 @@ ssize_t pshmem::mread(void* buf, size_t buf_len, size_t nbytes) noexcept
 	{
 		realread  =  temp + nbytes > length ? length - temp : nbytes;
 		memcpy(buf, static_cast<unsigned char*>(addr) + cur, realread);
-	}while (cur.compare_exchange_weak(temp, temp + nbytes > length ?
+	}while (!cur.compare_exchange_weak(temp, temp + nbytes > length ?
 			length -1 : temp +nbytes, std::memory_order_acq_rel,
 			std::memory_order_acquire));
 	return realread;
@@ -155,7 +155,7 @@ ssize_t pshmem::mwrite(const void* buf, size_t buf_len, size_t nbytes) noexcept
 	}
 	do
 	{
-
+		memcpy(static_cast<unsigned char*>(addr) + temp,)
 	} while ();
 }
 
