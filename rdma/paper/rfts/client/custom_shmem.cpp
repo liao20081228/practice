@@ -98,7 +98,8 @@ ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 {
 	if ((protect & PROT_READ) == 0)
 	{
-
+		errno = EPERM;
+		PERR(pshmem::read);
 	}
 	if (!buf || buf_len < nbytes)
 	{
