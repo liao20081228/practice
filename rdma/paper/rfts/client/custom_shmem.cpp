@@ -65,9 +65,9 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 			cur.store(offset, std::memory_order_release);
 			return cur.load(std::memory_order_acquire);
 		case SEEK_CUR:
+			temp = cur.load(std::memory_order_acquire);
 			do
 			{
-				temp = cur.load(std::memory_order_acquire);
 				if((static_cast<off_t>(temp) + offset)
 					>= static_cast<off_t>(length) 
 					||(temp + offset) < 0)
@@ -75,8 +75,10 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 					errno = EINVAL;
 					PERR(pshmem::seek);
 				}
-			}while(!cur.compare_exchange_weak(temp, temp + offset));
-			return temp + offset;
+			}while(!cur.compare_exchange_weak(temp, temp + offset,
+							std::memory_order_acq_rel,
+							std::memory_order_acquire));
+			return temp;
 		case SEEK_END:
 			if (offset > 0 || offset <= static_cast<off_t>(-length))
 			{
@@ -91,19 +93,14 @@ size_t pshmem::seek(off_t offset, int whence) noexcept
 	}
 }
 
-ssize_t pshmem::read(void* buf, size_t buf_len, size_t len, off_t offset) const noexcept
+ssize_t pshmem::read(void* buf, size_t buf_len, size_t nbytes) const noexcept
 {
 	if (!buf)
 	{
 		errno =  EINVAL;
 		PERR(pshmem::read);
 	}
-	memset(buf, 0, len);
-	if (!buf_len || !len)
+	if (!buf_len || !nbytes)
 		return 0;
-	if (offset > static_cast<off_t>(length - 1) || offset < 0 )
-	{
-		errno =  EINVAL;
-		PERR(pshmem::read);
-	}
+	memset(buf, 0, buf_len);
 }
