@@ -100,17 +100,17 @@ protected:
         return write_available(write_index, read_index, max_size);
     }
 
-    bool push(T const & t, T * buffer, size_t max_size)//只有一个写线程
+    bool push(T const & t, T * buffer, size_t max_size)//只有一个生产者线程
     {
         const size_t write_index = write_index_.load(memory_order_relaxed);  // only written from push thread
         const size_t next = next_index(write_index, max_size);
 
-        if (next == read_index_.load(memory_order_acquire))
+        if (next == read_index_.load(memory_order_acquire))//可能变化的是read_index，它会被消费者修改
             return false; /* ringbuffer is full */
 
         new (buffer + write_index) T(t); // copy-construct
 
-        write_index_.store(next, memory_order_release);
+        write_index_.store(next, memory_order_release); //生产线程会修改write_index，而消费者线程关心，因此这个变量要保证其变化其他线程可见
 
         return true;
     }
