@@ -53,10 +53,19 @@ int pshmem::sync(int flags) const noexcept
 
 size_t pshmem::seek(off_t offset, int whence) noexcept
 {
-	std::atomic_uint64_t temp(0);
+	uint64_t temp = 0;
 	switch(whence)
 	{
 		case SEEK_SET:
+			if (offset < 0)
+				PERR(pshmem::seek);
+			do
+			{
+				temp = cur.load(std::memory_order_acquire);
+				if()
+
+
+			}
 		case SEEK_CUR:
 		case SEEK_END:
 		default:
