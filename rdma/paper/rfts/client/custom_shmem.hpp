@@ -50,6 +50,7 @@ class pshmem
 		void mclear(void) noexcept;
 		int msync(int flags = MS_SYNC) const noexcept;
 		size_t mseek(off_t offset = 0, int whence = SEEK_SET) noexcept;
+		size_t mtell(void) const noexcept;
 		ssize_t mread(void* buf, size_t buf_len, size_t nbytes) noexcept;
 		ssize_t mwrite(const void* buf, size_t buf_len, size_t nbytes) noexcept;
 };
