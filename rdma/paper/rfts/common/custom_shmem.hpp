@@ -27,37 +27,36 @@
 //posix shared memory
 class pshmem
 {
-	private:
-		const char* name;
-		int fd;
-		void *addr;
-		size_t length;
-		std::atomic_uint64_t cur;
-		int protect;
-	private:
-		void maccess(void* buf, size_t buf_len, size_t nbytes,
-				bool reset, bool is_read) noexcept;
+private:
+	const char*		name;
+	int			fd;
+	void*			addr;
+	size_t			length;
+	std::atomic_uint64_t	cur;
+	int			protect;
+private:
+	void maccess(void* buf, size_t buf_len, size_t nbytes,
+			bool reset, bool is_read) noexcept;
 
-	public:
-		explicit pshmem(const char* name, size_t size = sysconf(_SC_PAGESIZE),
-				int oflag = O_RDWR | O_CREAT,
-				mode_t mode  = REGULAR_FILE_MODE,
-				int prot = PROT_READ | PROT_WRITE,
-				int flags = MAP_SHARED, off_t offset = 0) noexcept;
-		pshmem(const pshmem& ref) = delete;
-		pshmem(pshmem&& ref) noexcept;
-		~pshmem(void) noexcept;
-		
-		pshmem& operator = (const pshmem& ref) = delete;
-		pshmem& operator = (const pshmem&& ref) = delete;
+public:
+	explicit pshmem(const char* name, size_t size = sysconf(_SC_PAGESIZE),
+			int oflag = O_RDWR | O_CREAT, mode_t mode  = REGULAR_FILE_MODE,
+			int prot = PROT_READ | PROT_WRITE,
+			int flags = MAP_SHARED, off_t offset = 0) noexcept;
+	pshmem(const pshmem& ref) = delete;
+	pshmem(pshmem&& ref) noexcept;
+	~pshmem(void) noexcept;
 
-		void* getaddr(void ) const noexcept;
-		void mclear(void) noexcept;
-		int msync(int flags = MS_SYNC) const noexcept;
-		size_t mseek(off_t offset = 0, int whence = SEEK_SET) noexcept;
-		size_t mtell(void) const noexcept;
-		void mread(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
-		void mwrite(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+	pshmem& operator = (const pshmem& ref) = delete;
+	pshmem& operator = (const pshmem&& ref) = delete;
+
+	void*	getaddr(void ) const noexcept;
+	void	mclear(void) noexcept;
+	int	msync(int flags = MS_SYNC) const noexcept;
+	size_t	mseek(off_t offset = 0, int whence = SEEK_SET) noexcept;
+	size_t	mtell(void) const noexcept;
+	void	mread(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+	void	mwrite(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
 };
 
 

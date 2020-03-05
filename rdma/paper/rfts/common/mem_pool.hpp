@@ -13,12 +13,11 @@ namespace rfts
 	class spsc_seq_mem_pool
 	{
 	private:
-		const int elesize; //每个队列元素的大小
-		const int length; //buf长度
-		std::atomic_int  size; //队列容量
-		unsigned char* addr; //buf地址
-		std::atomic_int32_t front;
-		std::atomic_int32_t rear;
+		const int		elesize; //每个队列元素的大小
+		const int		length; //buf长度
+		unsigned char*		addr; //buf地址
+		std::atomic_int32_t	size; //队列容量
+		std::atomic_int32_t	front, rear;
 	public:
 		spsc_seq_mem_pool(const transargs& transargs) noexcept;
 		
@@ -31,6 +30,8 @@ namespace rfts
 		const void*	get_real_addr(void) const noexcept;
 		int		get_real_length(void) const noexcept;
 	};
+
+
 
 	class mpc_link_mem_pool
 	{

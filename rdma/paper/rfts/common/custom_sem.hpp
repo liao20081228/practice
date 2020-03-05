@@ -21,26 +21,26 @@
 #endif
 class psem
 {
-	private:
-		sem_t* sem;
-		const char* name;
-	public:
-		explicit psem(int pshared = 0,  unsigned int value = 0) noexcept;
-		explicit psem(const char* name, int oflag = O_RDWR | O_CREAT,
-				 mode_t mode = REGULAR_FILE_MODE,
-				 unsigned int value = 0) noexcept;
-		psem(const psem& ref) = delete;
-		psem(psem&& ref) noexcept;
-		~psem(void) noexcept;
-		
-		psem& operator = (psem& ref) = delete;
-		psem& operator = (psem&& ref) = delete;
-		
-		void post(void) noexcept ;
-		void wait(void) noexcept;
-		int  trywait(void) noexcept;
-		int  timewait(const struct timespec* abs_timeout) noexcept;
-		int  getvalue(int* val = nullptr) noexcept;
+private:
+	sem_t* sem;
+	const char* name;
+public:
+	explicit psem(int pshared = 0,  unsigned int value = 0) noexcept;
+	explicit psem(const char* name, int oflag = O_RDWR | O_CREAT,
+			mode_t mode = REGULAR_FILE_MODE,
+			unsigned int value = 0) noexcept;
+	psem(const psem& ref) = delete;
+	psem(psem&& ref) noexcept;
+	~psem(void) noexcept;
+
+	psem& operator = (psem& ref) = delete;
+	psem& operator = (psem&& ref) = delete;
+
+	void post(void) noexcept ;
+	void wait(void) noexcept;
+	int  trywait(void) noexcept;
+	int  timewait(const struct timespec* abs_timeout) noexcept;
+	int  getvalue(int* val = nullptr) noexcept;
 };
 
 
