@@ -35,7 +35,8 @@ class pshmem
 		std::atomic_uint64_t cur;
 		int protect;
 	private:
-		void mwrite(const void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+		void maccess(const void* buf, size_t buf_len, size_t nbytes,
+				bool reset, bool is_read) noexcept;
 
 	public:
 		explicit pshmem(const char* name, size_t size = sysconf(_SC_PAGESIZE),

@@ -114,6 +114,39 @@ size_t pshmem::mtell(void) const noexcept
 	return cur.load(std::memory_order_acquire);
 }
 
+void pshmem::maccess(void* buf, size_t buf_len, size_t nbytes, bool reset, 
+		bool is_read) noexcept
+{
+	if (is_read && (protect & PROT_READ) == 0)
+	{
+		errno = EPERM;
+		PERR(pshmem::read);
+	}
+
+
+	if (!buf || buf_len < nbytes)
+	{
+		errno =  EINVAL;
+		PERR(pshmem::read);
+	}
+	if (!nbytes)
+		return;
+	memset(buf, 0, buf_len);
+	if (reset)
+		mseek(0, SEEK_SET);
+	uint64_t temp = cur.load(std::memory_order_acquire);
+	do
+	{
+		if (temp + nbytes > length)
+		{
+			errno =  EINVAL;
+			PERR(pshmem::read);
+		}
+		memcpy(buf, static_cast<unsigned char*>(addr) + cur, nbytes);
+	}while (!cur.compare_exchange_weak(temp, temp +nbytes, std::memory_order_acq_rel,
+			std::memory_order_acquire));
+}
+
 void pshmem::mread(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
 	if ((protect & PROT_READ) == 0)
