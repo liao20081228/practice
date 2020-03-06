@@ -86,6 +86,7 @@ posix_shm::~posix_shm(void) noexcept
 		shm_unlink(__name.c_str());
 }
 
+const char*
 
 void* posix_shm::getaddr(void) const noexcept
 {
