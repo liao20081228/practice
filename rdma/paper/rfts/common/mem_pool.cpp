@@ -56,11 +56,15 @@ int rfts::spsc_seq_mem_pool::get_mempool_length(void) const noexcept
 
 ibv_send_wr* rfts::spsc_seq_mem_pool::malloc(void) noexcept
 {
-	int front = __front.load(std::memory_order_acquire);
-	int rear  = __rear.load(std::memory_order_relaxed);
-	if (++rear >= MEM_POOL_CAPACITY)
-		rear -= MEM_POOL_CAPACITY;
-	if (rear == front)
+	int front = 0, rear = 0;
+	do
+	{
+		front = __front.load(std::memory_order_acquire);
+		rear  = __rear.load(std::memory_order_relaxed);
+		if (++rear >= MEM_POOL_CAPACITY)
+			rear -= MEM_POOL_CAPACITY;
+	}while(rear == front);
+
 }
 
 void rfts::spsc_seq_mem_pool::free(void) noexcept
