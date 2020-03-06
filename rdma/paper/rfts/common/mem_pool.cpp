@@ -10,6 +10,7 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 	, __rear(0)
 	, __ringqueue(new ibv_send_wr [MEM_POOL_CAPACITY]())
 	, __sg_list(new ibv_sge [MEM_POOL_CAPACITY]())
+	, __wr_id(1)
 {
 	for(int i{0}; i < MEM_POOL_CAPACITY; ++i)
 	{
@@ -53,56 +54,12 @@ int rfts::spsc_seq_mem_pool::get_mempool_length(void) const noexcept
 	return __length;
 }
 
-void* rfts::spsc_seq_mem_pool::rmalloc(void)
+ibv_send_wr* rfts::spsc_seq_mem_pool::malloc(void) noexcept
 {
-	int temp = 0;
-
-	do
-	{
-		temp = size;
-	}while(cas())
-
-
-	void* temp = addr + rear * elesize;
-	
-	rear = (rear+1) % MEM_POOL_CAPACITY;
-	return temp;
 }
 
-void rfts::spsc_seq_mem_pool::rfree(void)
+void rfts::spsc_seq_mem_pool::free(void) noexcept
 {
-	if(rear == front)
-		return;
-	front = (front + 1) % MEM_POOL_CAPACITY;
-}
-
-
-rfts::mpc_link_mem_pool::mpc_link_mem_pool(const trans_args& transargs) noexcept:
-	size(0),elesize(transargs.afreq / transargs.tfreq * 
-		transargs.node_num * transargs.sensor_num *
-		transargs.kind * transargs.size * 2)
-	,length(elesize * MEM_POOL_CAPACITY)
-	,addr(new unsigned char[length]())
-{
-	tail = head = (node*)malloc(sizeof(node));//头结点
-	head->addr = head->next =  nullptr;
-
-	for(int i = 0; i< capacity; ++i)
-	{
-		node* temp = (node*)malloc(sizeof(node));//new比malloc更加耗时
-		temp->addr = addr + i * elesize;
-		temp->next = nullptr;
-		tail->next = temp;
-	        tail = temp;
-	}
-}
-
-rfts::mpc_link_mem_pool::~mpc_link_mem_pool(void) noexcept
-{
-	while(addr && size == 0)
-	{
-
-	}
 }
 
 

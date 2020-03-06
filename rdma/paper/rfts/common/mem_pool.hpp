@@ -27,6 +27,7 @@ private:
 	std::atomic_int32_t	__front, __rear; //队首、队尾标记
 	ibv_send_wr*		__ringqueue;
 	ibv_sge*		__sg_list;
+	uint64_t		__wr_id;
 public:
 	explicit spsc_seq_mem_pool(const transargs& transargs) noexcept;
 	explicit spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
@@ -36,8 +37,8 @@ public:
 
 	spsc_seq_mem_pool& operator = (const spsc_seq_mem_pool & ref) = delete;
 	spsc_seq_mem_pool& operator = ( spsc_seq_mem_pool&& ref) = delete;
-	void*		rmalloc(void);
-	void		rfree(void);
+	void*		malloc(void);
+	void		free(void);
 	const void*	get_mempool_addr(void) const noexcept;
 	int		get_mempool_length(void) const noexcept;
 };
