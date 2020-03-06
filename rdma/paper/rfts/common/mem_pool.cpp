@@ -60,7 +60,7 @@ ibv_send_wr* rfts::spsc_seq_mem_pool::malloc(void) noexcept
 	int rear  = __rear.load(std::memory_order_relaxed);
 	if (++rear >= MEM_POOL_CAPACITY)
 		rear -= MEM_POOL_CAPACITY;
-
+	if (rear == front)
 }
 
 void rfts::spsc_seq_mem_pool::free(void) noexcept
