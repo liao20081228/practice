@@ -10,7 +10,7 @@
 #include<cstdio>
 #include<system_error>
 #include<iostream>
-
+#include<string>
 #ifndef CUSTOM_REGULAR_FILE_MODE
 	#define REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
@@ -29,6 +29,12 @@ public:
 	explicit posix_sem(const char* name, int oflag = O_RDWR | O_CREAT,
 			mode_t mode = REGULAR_FILE_MODE,
 			unsigned int value = 0) noexcept;
+	explicit posix_sem(const std::string& name, int oflag = O_RDWR | O_CREAT,
+			mode_t mode = REGULAR_FILE_MODE,
+			unsigned int value = 0) noexcept;
+	explicit posix_sem(const std::string* name, int oflag = O_RDWR | O_CREAT,
+			mode_t mode = REGULAR_FILE_MODE,
+			unsigned int value = 0) noexcept;
 	posix_sem(const posix_sem& ref) = delete;
 	posix_sem(posix_sem&& ref) noexcept;
 	~posix_sem(void) noexcept;
@@ -40,7 +46,7 @@ public:
 	void wait(void) noexcept;
 	int  trywait(void) noexcept;
 	int  timewait(const struct timespec* abs_timeout) noexcept;
-	int  getvalue(int* val = nullptr) noexcept;
+	int  getvalue(int* const val = nullptr) noexcept;
 };
 
 
