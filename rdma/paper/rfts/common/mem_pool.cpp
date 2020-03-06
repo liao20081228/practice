@@ -1,6 +1,6 @@
 #include"mem_pool.hpp"
 
-rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
+rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const trans_args& transargs) noexcept
 	: __elesize(transargs.afreq / transargs.tfreq * transargs.node_num *
 		transargs.sensor_num_per_node * transargs.kind_per_sensor *
 		transargs.size_per_data * 2)

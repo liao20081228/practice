@@ -15,7 +15,7 @@ struct data//数据结构
 	long double		value;		//数据值
 };
 
-struct transargs
+struct trans_args
 {
 	unsigned int afreq;			//采集平率
 	unsigned int tfreq;			//传输频率
@@ -23,7 +23,7 @@ struct transargs
 	unsigned int kind_per_sensor;		//一个探头产生几种数据
 	unsigned int sensor_num_per_node;	//每个节点有几个探头
 	unsigned int node_num;			//总共多少个节点
-	friend std::ostream& operator << (std::ostream& out, transargs& ref)
+	friend std::ostream& operator << (std::ostream& out, trans_args& ref)
 	{
 		out << "afreq : "		<< ref.afreq			<< "\n"
 		    << "tfreq : "		<< ref.tfreq			<< "\n"

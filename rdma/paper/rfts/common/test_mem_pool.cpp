@@ -10,7 +10,7 @@ const int testnum=10;
 void fun(spsc_seq_mem_pool&);
 int main()
 {
-	transargs transargs=
+	trans_args transargs=
 	{	
 		.afreq = 500,
 		.tfreq = 1,
@@ -20,7 +20,7 @@ int main()
 		.node_num = 1
 	};
 
-	spsc_seq_mem_pool mempool=spsc_seq_mem_pool(transargs);
+	class spsc_seq_mem_pool mempool=spsc_seq_mem_pool(transargs);
 
 	std::cout << mempool.get_real_length() << std::endl;
 	
