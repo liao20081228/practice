@@ -38,7 +38,6 @@ private:
 private:
 	void __access(void* buf, size_t buf_len, size_t nbytes,
 			bool reset, bool is_read) noexcept;
-
 public:
 	explicit posix_shm(const char* name, size_t size = sysconf(_SC_PAGESIZE),
 			int oflag = O_RDWR | O_CREAT, mode_t mode  = REGULAR_FILE_MODE,
