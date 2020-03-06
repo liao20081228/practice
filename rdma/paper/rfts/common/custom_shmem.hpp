@@ -1,16 +1,17 @@
 /*!@file
  *******************************************************************************
  <PRE>
- 模块名:
- 文件名:
- 相关文件:
- 作 者:
- 版 本:
+ 模块名:共享内存
+ 文件名:custom_shmem.hpp
+ 相关文件:custom_shmem.cpp
+ 作 者:廖伟志
+ 版 本:v1
  -------------------------------------------------------------------------------
  备注：
  -------------------------------------------------------------------------------
  修改记录:
  日期          版本       修改人              修改内容
+ 2020/03/06    v1         廖伟志
 </PRE>
  ******************************************************************************/
 
@@ -41,17 +42,17 @@
 #endif /* ifndef CUSTOM_PRINT_ERROR_INFO */
 
 //posix shared memory
-class pshmem
+class posix_shmem
 {
 private:
-	const char*		_name;
-	int			fd;
-	void*			addr;
-	size_t			length;
-	std::atomic_uint64_t	cur;
-	int			protect;
+	const char*		__name;
+	int			__fd;
+	void*			__addr;
+	size_t			__length;
+	std::atomic_uint64_t	__cur;
+	int			__protect;
 private:
-	void maccess(void* buf, size_t buf_len, size_t nbytes,
+	void __maccess(void* buf, size_t buf_len, size_t nbytes,
 			bool reset, bool is_read) noexcept;
 
 public:
