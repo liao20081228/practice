@@ -22,7 +22,7 @@
 class posix_sem
 {
 private:
-	sem_t			__sem;
+	sem_t*			__sem;
 	const std::string	__name;
 public:
 	explicit posix_sem(int pshared = 0,  unsigned int value = 0) noexcept;
@@ -42,10 +42,10 @@ public:
 	posix_sem& operator = (posix_sem& ref) = delete;
 	posix_sem& operator = (posix_sem&& ref) = delete;
 
-	void post(void) noexcept ;
-	void wait(void) noexcept;
-	int  trywait(void) noexcept;
-	int  timewait(const struct timespec* abs_timeout) noexcept;
+	void post(void) const noexcept ;
+	void wait(void) const noexcept;
+	int  trywait(void) const noexcept;
+	int  timewait(const struct timespec* abs_timeout) const noexcept;
 	int  getvalue(int* val = nullptr) const noexcept;
 };
 

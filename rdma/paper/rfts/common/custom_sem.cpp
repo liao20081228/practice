@@ -41,7 +41,7 @@ posix_sem::~posix_sem(void) noexcept
 {
 	if (__sem)
 	{
-		if  (__name.size())
+		if (__name.size())
 		{
 			sem_close(__sem);
 			sem_unlink(__name.c_str());
@@ -59,14 +59,14 @@ void posix_sem::post(void) const noexcept
 		PERR(posix_sem::sem_post);
 }
 
-void posix_sem::wait(void) noexcept
+void posix_sem::wait(void) const noexcept
 {
 	if (sem_wait(__sem))
 		PERR(posix_sem::sem_wait);
 }
 
 
-int posix_sem::trywait(void) noexcept
+int posix_sem::trywait(void) const noexcept
 {
 	if (sem_trywait(__sem))
 	{
@@ -80,7 +80,7 @@ int posix_sem::trywait(void) noexcept
 	return 0;
 }
 
-int posix_sem::timewait(const struct timespec* abs_timeout) noexcept
+int posix_sem::timewait(const struct timespec* abs_timeout) const noexcept
 {
 	if (sem_timedwait(__sem,abs_timeout))
 	{
