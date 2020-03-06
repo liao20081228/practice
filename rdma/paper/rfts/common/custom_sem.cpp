@@ -18,6 +18,20 @@ posix_sem::posix_sem(const char* name, int oflag, mode_t mode, unsigned int valu
 		PERR(seamphore::sem_open);
 }
 
+posix_sem::posix_sem(const std::string& name, int oflag, mode_t mode, unsigned int value) noexcept:
+		__sem(sem_open(name.c_str(), oflag, mode, value)), __name(name.c_str())
+{
+	if (__sem == SEM_FAILED)
+		PERR(seamphore::sem_open);
+}
+
+posix_sem::posix_sem(const std::string* name, int oflag, mode_t mode, unsigned int value) noexcept:
+		__sem(sem_open(name->c_str(), oflag, mode, value)), __name(name->c_str())
+{
+	if (__sem == SEM_FAILED)
+		PERR(seamphore::sem_open);
+}
+
 posix_sem::posix_sem(posix_sem&& ref) noexcept:__sem(ref.__sem), __name(ref.__name)
 {
 	ref.__name = nullptr;
@@ -81,7 +95,7 @@ int posix_sem::timewait(const struct timespec* abs_timeout) noexcept
 	return 0;
 }
 
-int posix_sem::getvalue(int* val) noexcept
+int posix_sem::getvalue(int* const val) noexcept
 {
 	int n  = 0;
 	sem_getvalue(__sem, &n);
