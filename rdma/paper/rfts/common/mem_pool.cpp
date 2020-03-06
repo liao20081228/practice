@@ -33,10 +33,10 @@ rfts::spsc_seq_mem_pool::~spsc_seq_mem_pool(void) noexcept
 			== __rear.load(std::memory_order_relaxed))
 	{
 		delete [] __addr;
-		delete [] __ringqueue;
-		delete [] __sg_list;
 		__addr = nullptr;
+		delete [] __ringqueue;
 		__ringqueue = nullptr;
+		delete [] __sg_list;
 		__sg_list = nullptr;
 		break;
 	}
@@ -58,10 +58,9 @@ ibv_send_wr* rfts::spsc_seq_mem_pool::malloc(void) noexcept
 {
 	int front = __front.load(std::memory_order_acquire);
 	int rear  = __rear.load(std::memory_order_relaxed);
-	++rear;
-	if (rear => )
-	{
-	}
+	if (++rear >= MEM_POOL_CAPACITY)
+		rear -= MEM_POOL_CAPACITY;
+
 }
 
 void rfts::spsc_seq_mem_pool::free(void) noexcept
