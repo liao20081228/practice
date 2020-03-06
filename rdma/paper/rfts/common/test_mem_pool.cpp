@@ -6,7 +6,7 @@
 
 
 using namespace rfts;
-const int testnum=10;
+const int testnum=100;
 void fun(spsc_seq_mem_pool&);
 int main()
 {
@@ -30,12 +30,11 @@ int main()
 	b.join();
 }
 
-void fun(spsc_seq_mem_pool& mempool)
+void fun1(spsc_seq_mem_pool& mempool)
 {
-	void * addr = nullptr;
+	ibv_send_wr* addr = nullptr;
 	mempool.free();
 	long double mean1 = 0;
-	long double mean2 = 0;
 	cycles_t s=0;
 	cycles_t e=0;
 	double mhz = 0;
@@ -45,14 +44,28 @@ void fun(spsc_seq_mem_pool& mempool)
 		s=get_cycles();
 		addr=mempool.malloc();
 		e=get_cycles();
+		std::cout<<addr->wr_id << std::endl;
 		mean1= mean1 + ( e-s ) / mhz * 1000;
-		
+	}
+	std::cout << "malloc mean:" << mean1/testnum <<std::endl;
+	return ;
+}
+void fun2(spsc_seq_mem_pool& mempool)
+{
+	long double mean1 = 0;
+	cycles_t s=0;
+	cycles_t e=0;
+	double mhz = 0;
+	for(int i=0; i<testnum;i++)
+	{ 
 		mhz=get_cpu_mhz(0);
 		s=get_cycles();
 		mempool.free();
 		e=get_cycles();
-		mean2= mean2 + ( e-s ) / mhz * 1000;
+		std::cout<<addr->wr_id << std::endl;
+		mean1= mean1 + ( e-s ) / mhz * 1000;
 	}
-	std::cout << "malloc mean:" << mean1/testnum << "," << "free mean:"<< mean2/testnum<<std::endl;
+	std::cout << "malloc mean:" << mean1/testnum <<std::endl;
 	return ;
 }
+
