@@ -13,11 +13,11 @@ namespace rfts
 	class spsc_seq_mem_pool
 	{
 	private:
-		const int		elesize;	//每个队列元素的大小
-		const int		length;		//buf长度
-		unsigned char*		addr;		//buf地址
-		std::atomic_int32_t	front,
-					rear;
+		const int		__elesize;	//每个队列元素的大小
+		const int		__length;	//buf长度
+		unsigned char*		__addr;		//buf地址
+		std::atomic_int32_t	__front,
+					__rear;
 	public:
 		explicit spsc_seq_mem_pool(const transargs& transargs) noexcept;
 		explicit spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
