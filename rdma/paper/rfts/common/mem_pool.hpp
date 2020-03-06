@@ -18,7 +18,7 @@ private:
 	const int		__elesize;	//每个队列元素的大小
 	const int		__length;	//buf长度
 	unsigned char*		__addr;		//buf地址
-	std::atomic_int32_t	__front,__rear; //队首、队尾标记
+	std::atomic_int32_t	__front, __rear; //队首、队尾标记
 	ibv_send_wr*		__ringqueue;
 	ibv_sge*		__sg_list;
 public:
