@@ -19,6 +19,24 @@ posix_shm::posix_shm(const char* name, size_t size, int oflag, mode_t mode, int 
 	}
 }
 
+posix_shm::posix_shm(const std::string& name, size_t size, int oflag, mode_t mode, int prot,
+		int flags, off_t offset) noexcept: __name(name)
+	, __fd(shm_open(__name.c_str(), oflag, mode)),__length(size), __cur(0), __protect(prot)
+{
+	if (__fd < 0)
+		PERR(posix_shm::shm_open);
+	if (ftruncate(__fd, size))
+	{
+		close(__fd);
+		PERR(posix_shm::ftruncate);
+	}
+	__addr = mmap(nullptr, size, prot, flags, __fd, offset);
+	if (__addr == MAP_FAILED)
+	{
+		close(__fd);
+		PERR(posix_shm::mmap);
+	}
+}
 
 posix_shm::posix_shm(posix_shm&& ref) noexcept: __name(ref.__name),__fd(ref.__fd), __addr(ref.__addr)
 	, __length(ref.__length),__cur(ref.__cur.load(std::memory_order_acquire))
@@ -28,7 +46,7 @@ posix_shm::posix_shm(posix_shm&& ref) noexcept: __name(ref.__name),__fd(ref.__fd
 	ref.__fd = -1;
 	ref.__addr = nullptr;
 	ref.__length = 0;
-	ref.__name = nullptr;
+	ref.__name.clear();
 	ref.__protect = 0;
 	ref.__cur = 0;
 }
