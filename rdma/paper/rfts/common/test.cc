@@ -1,5 +1,10 @@
 #include"custom_shm.hpp"
 int main()
 {
-	posix_shm a(std::string("/test"));
+	std::string name("/test");
+	posix_shm a(name);
+	posix_shm b(&name);
+	posix_shm c = posix_shm(name);
+	name.~basic_string();
+
 }
