@@ -37,9 +37,9 @@ void fun1(spsc_seq_mem_pool& mempool)
 	cycles_t s=0;
 	cycles_t e=0;
 	double mhz = 0;
+		mhz=get_cpu_mhz(0);
 	for(int i=0; i<testnum;i++)
 	{ 
-		mhz=get_cpu_mhz(0);
 		s=get_cycles();
 		addr=mempool.malloc();
 		e=get_cycles();
@@ -54,9 +54,9 @@ void fun2(spsc_seq_mem_pool& mempool)
 	cycles_t s=0;
 	cycles_t e=0;
 	double mhz = 0;
+		mhz=get_cpu_mhz(0);
 	for(int i=0; i<testnum;i++)
 	{ 
-		mhz=get_cpu_mhz(0);
 		s=get_cycles();
 		mempool.free();
 		e=get_cycles();
