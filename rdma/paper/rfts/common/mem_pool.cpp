@@ -31,7 +31,7 @@ rfts::spsc_seq_mem_pool::~spsc_seq_mem_pool(void) noexcept
 	while( __addr && __front.load(std::memory_order_relaxed)
 			== __rear.load(std::memory_order_relaxed))
 	{
-		delete [] addr;
+		delete [] __addr, __ringqueue,  __rear;
 		addr = nullptr;
 		break;
 	}
