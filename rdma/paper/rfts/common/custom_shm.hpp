@@ -29,8 +29,8 @@
 class posix_shm
 {
 private:
-	std::string		__name;
-	int			__fd;
+	const std::string	__name;
+	const int		__fd;
 	void*			__addr;
 	size_t			__length;
 	std::atomic_uint64_t	__cur;
