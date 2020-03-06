@@ -31,22 +31,26 @@ rfts::spsc_seq_mem_pool::~spsc_seq_mem_pool(void) noexcept
 	while( __addr && __front.load(std::memory_order_relaxed)
 			== __rear.load(std::memory_order_relaxed))
 	{
-		delete [] __addr, __ringqueue,  __rear;
-		addr = nullptr;
+		delete [] __addr;
+		delete [] __ringqueue;
+		delete [] __sg_list;
+		__addr = nullptr;
+		__ringqueue = nullptr;
+		__sg_list = nullptr;
 		break;
 	}
 }
 
 
-const void* rfts::spsc_seq_mem_pool::get_real_addr(void) const noexcept
+const void* rfts::spsc_seq_mem_pool::get_mempool_addr(void) const noexcept
 {
-	return addr;
+	return __addr;
 }
 
 
-int rfts::spsc_seq_mem_pool::get_real_length(void) const noexcept
+int rfts::spsc_seq_mem_pool::get_mempool_length(void) const noexcept
 {
-	return length;
+	return __length;
 }
 
 void* rfts::spsc_seq_mem_pool::rmalloc(void)
