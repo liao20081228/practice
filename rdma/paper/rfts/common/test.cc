@@ -10,5 +10,7 @@ int main()
 {
 	std::string a("i love you");
 	fun(a)="test";
-	std::cout << a;
+	std::cout <<(void*)a.c_str();
+	a.clear();
+	std::cout <<(void*)a.c_str();
 }

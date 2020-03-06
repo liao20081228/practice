@@ -86,7 +86,12 @@ posix_shm::~posix_shm(void) noexcept
 		shm_unlink(__name.c_str());
 }
 
-const char*
+const char* posix_shm::get_shm_filename() const noexcept
+{
+	if (__name.size())
+		return __name.c_str();
+	return nullptr;
+}
 
 void* posix_shm::getaddr(void) const noexcept
 {
