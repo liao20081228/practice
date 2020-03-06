@@ -1,23 +1,6 @@
-/*!@file
- *******************************************************************************
- <PRE>
- 模块名:共享内存
- 文件名:custom_shmem.hpp
- 相关文件:custom_shmem.cpp
- 作 者:廖伟志
- 版 本:v1
- -------------------------------------------------------------------------------
- 备注：
- -------------------------------------------------------------------------------
- 修改记录:
- 日期          版本       修改人              修改内容
- 2020/03/06    v1         廖伟志
-</PRE>
- ******************************************************************************/
-
 #pragma once
-#ifndef HPP_CUSTOM_SHMEM_HPP
-	#define HPP_CUSTOM_SHARED_MEM_HPP
+#ifndef HPP_CUSTOM_SHM_HPP
+	#define HPP_CUSTOM_SHM_HPP
 
 #include<sys/types.h>
 #include<sys/ipc.h>
@@ -42,7 +25,7 @@
 #endif /* ifndef CUSTOM_PRINT_ERROR_INFO */
 
 //posix shared memory
-class posix_shmem
+class posix_shm
 {
 private:
 	const char*		__name;
@@ -56,16 +39,16 @@ private:
 			bool reset, bool is_read) noexcept;
 
 public:
-	explicit posix_shmem(const char* name, size_t size = sysconf(_SC_PAGESIZE),
+	explicit posix_shm(const char* name, size_t size = sysconf(_SC_PAGESIZE),
 			int oflag = O_RDWR | O_CREAT, mode_t mode  = REGULAR_FILE_MODE,
 			int prot = PROT_READ | PROT_WRITE,
 			int flags = MAP_SHARED, off_t offset = 0) noexcept;
-	posix_shmem(const posix_shmem& ref) = delete;
-	posix_shmem(posix_shmem&& ref) noexcept;
-	~posix_shmem(void) noexcept;
+	posix_shm(const posix_shm& ref) = delete;
+	posix_shm(posix_shm&& ref) noexcept;
+	~posix_shm(void) noexcept;
 
-	posix_shmem& operator = (const posix_shmem& ref) = delete;
-	posix_shmem& operator = (const posix_shmem&& ref) = delete;
+	posix_shm& operator = (const posix_shm& ref) = delete;
+	posix_shm& operator = (const posix_shm&& ref) = delete;
 
 	void*	get_addr(void ) const noexcept;
 	void	clear(void) noexcept;
@@ -77,6 +60,6 @@ public:
 };
 
 
-#endif /* end of include guard: HPP_CUSTOM_SHMEM_H */
+#endif /* end of include guard: HPP_CUSTOM_SHM_H */
 
 

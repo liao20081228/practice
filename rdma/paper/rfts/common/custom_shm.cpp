@@ -1,4 +1,4 @@
-#include"custom_shmem.hpp"
+#include"custom_shm.hpp"
 
 posix_shmem::posix_shmem(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		int flags, off_t offset) noexcept: __name(name)
@@ -62,7 +62,7 @@ int posix_shmem::sync(int flags) const noexcept
 {
 	int ret = ::msync(__addr, __length, flags);
 	if (ret && errno == EINVAL)
-		PERR(posix_shmem::msync);
+		PERR(posix_shmem::sync);
 	return ret;
 }
 
@@ -75,7 +75,7 @@ size_t posix_shmem::seek(off_t offset, int whence) noexcept
 			if (offset < 0 || offset >= static_cast<off_t>(__length))
 			{
 				errno = EINVAL;
-				PERR(posix_shmem::mseek);
+				PERR(posix_shmem::seek);
 			}
 			__cur.store(offset, std::memory_order_release);
 			return __cur.load(std::memory_order_acquire);
@@ -98,13 +98,13 @@ size_t posix_shmem::seek(off_t offset, int whence) noexcept
 			if (offset > 0 || offset <= static_cast<off_t>(-__length))
 			{
 				errno = EINVAL;
-				PERR(posix_shmem::mseek);
+				PERR(posix_shmem::seek);
 			}
 			__cur.store(__length - 1  + offset, std::memory_order_release);
 			return __cur.load(std::memory_order_acquire);
 		default:
 			errno = EINVAL;
-			PERR(posix_shmem::mseek);
+			PERR(posix_shmem::seek);
 			break;
 	}
 }
@@ -121,7 +121,7 @@ void posix_shmem::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 	{
 		errno = EPERM;
 		if (is_read)
-			PERR(posix_shmem::mread);
+			PERR(posix_shmem::read);
 		PERR(posix_shmem::mwrite);
 	}
 
@@ -129,7 +129,7 @@ void posix_shmem::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 	{
 		errno =  EINVAL;
 		if (is_read)
-			PERR(posix_shmem::mread);
+			PERR(posix_shmem::read);
 		PERR(posix_shmem::mwrite);
 	}
 	if (!nbytes)
@@ -137,7 +137,7 @@ void posix_shmem::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 	if (is_read)
 		memset(buf, 0, buf_len);
 	if (reset)
-		mseek(0, SEEK_SET);
+		seek(0, SEEK_SET);
 	uint64_t temp = __cur.load(std::memory_order_acquire);
 	do
 	{
@@ -156,13 +156,13 @@ void posix_shmem::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 			std::memory_order_acquire));
 }
 
-void posix_shmem::mread(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
+void posix_shmem::read(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
-	maccess(buf, buf_len, nbytes, reset, true);
+	__access(buf, buf_len, nbytes, reset, true);
 }
 
-void posix_shmem::mwrite(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
+void posix_shmem::write(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
-	maccess(buf, buf_len, nbytes, reset, false);
+	__access(buf, buf_len, nbytes, reset, false);
 }
 
