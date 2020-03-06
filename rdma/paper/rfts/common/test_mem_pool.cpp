@@ -1,8 +1,8 @@
 #include"trans_args.hpp"
 #include"mem_pool.hpp"
-#include<iostream>
 #include"get_clock.h"
 #include<thread>
+#include<iostream>
 
 
 using namespace rfts;
@@ -26,16 +26,14 @@ int main()
 	
 	std::thread a(fun,std::ref(mempool));
 	std::thread b(fun,std::ref(mempool));
-	std::thread c(fun,std::ref(mempool));
 	a.join();
 	b.join();
-	c.join();
 }
 
-void fun(spc_seq_mem_pool& mempool)
+void fun(spsc_seq_mem_pool& mempool)
 {
 	void * addr = nullptr;
-	mempool.rfree();
+	mempool.free();
 	long double mean1 = 0;
 	long double mean2 = 0;
 	cycles_t s=0;
@@ -45,12 +43,13 @@ void fun(spc_seq_mem_pool& mempool)
 	{ 
 		mhz=get_cpu_mhz(0);
 		s=get_cycles();
-		addr=mempool.rmalloc();
+		addr=mempool.malloc();
 		e=get_cycles();
 		mean1= mean1 + ( e-s ) / mhz * 1000;
+		
 		mhz=get_cpu_mhz(0);
 		s=get_cycles();
-		mempool.rfree();
+		mempool.free();
 		e=get_cycles();
 		mean2= mean2 + ( e-s ) / mhz * 1000;
 	}
