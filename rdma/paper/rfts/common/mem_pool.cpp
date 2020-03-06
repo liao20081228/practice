@@ -2,9 +2,12 @@
 
 rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 	: __elesize(transargs.afreq / transargs.tfreq * transargs.node_num *
-		transargs.sensor_num * transargs.kind * transargs.size * 2)
-	, __length(elesize * MEM_POOL_CAPACITY)
-	, __addr(new unsigned char[length]()),front(0),rear(0)
+		transargs.sensor_num_per_node * transargs.kind_per_sensor *
+		transargs.size_per_data * 2)
+	, __length(__elesize * MEM_POOL_CAPACITY)
+	, __addr(new unsigned char[__length]())
+	,__front(0)
+	,__rear(0)
 {
 }
 
