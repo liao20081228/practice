@@ -42,30 +42,30 @@
 #endif /* ifndef CUSTOM_PRINT_ERROR_INFO */
 
 //posix shared memory
-class c_posix_shmem
+class posix_shmem
 {
 private:
-	const char*		__cm_cchp_name;
-	int			__cm_n_fd;
-	void*			__cm_p_addr;
-	size_t			__cm_uln_length;
-	std::atomic_uint64_t	__cm_at_cur;
-	int			__cm_n_protect;
+	const char*		__name;
+	int			__fd;
+	void*			__addr;
+	size_t			__length;
+	std::atomic_uint64_t	__cur;
+	int			__protect;
 private:
 	void __maccess(void* buf, size_t buf_len, size_t nbytes,
 			bool reset, bool is_read) noexcept;
 
 public:
-	explicit c_posix_shmem(const char* name, size_t size = sysconf(_SC_PAGESIZE),
+	explicit posix_shmem(const char* name, size_t size = sysconf(_SC_PAGESIZE),
 			int oflag = O_RDWR | O_CREAT, mode_t mode  = REGULAR_FILE_MODE,
 			int prot = PROT_READ | PROT_WRITE,
 			int flags = MAP_SHARED, off_t offset = 0) noexcept;
-	c_posix_shmem(const c_posix_shmem& ref) = delete;
-	c_posix_shmem(c_posix_shmem&& ref) noexcept;
-	~c_posix_shmem(void) noexcept;
+	posix_shmem(const posix_shmem& ref) = delete;
+	posix_shmem(posix_shmem&& ref) noexcept;
+	~posix_shmem(void) noexcept;
 
-	c_posix_shmem& operator = (const c_posix_shmem& ref) = delete;
-	c_posix_shmem& operator = (const c_posix_shmem&& ref) = delete;
+	posix_shmem& operator = (const posix_shmem& ref) = delete;
+	posix_shmem& operator = (const posix_shmem&& ref) = delete;
 
 	void*	getaddr(void ) const noexcept;
 	void	mclear(void) noexcept;
