@@ -2,7 +2,7 @@
 
 posix_shm::posix_shm(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		int flags, off_t offset) noexcept: __name(name)
-	, __fd(shm_open(__name, oflag, mode)),__length(size), __cur(0), __protect(prot)
+	, __fd(shm_open(__name.c_str(), oflag, mode)),__length(size), __cur(0), __protect(prot)
 {
 	if (__fd < 0)
 		PERR(posix_shm::shm_open);
