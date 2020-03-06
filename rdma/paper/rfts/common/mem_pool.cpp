@@ -32,9 +32,11 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(spsc_seq_mem_pool&& ref) noexcept
 	, __addr(ref.__addr)
 	, __front(ref.__front.load(std::memory_order_relaxed))
 	, __rear(ref.__rear.load(std::memory_order_relaxed))
-
+	, __ringqueue(ref.__ringqueue)
+	, __sg_list(ref.__sg_list)
+	, __wr_id(ref.__wr_id)
 {
-
+	__addr = nullptr;
 }
 
 rfts::spsc_seq_mem_pool::~spsc_seq_mem_pool(void) noexcept

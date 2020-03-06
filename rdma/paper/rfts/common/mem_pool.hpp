@@ -29,7 +29,7 @@ private:
 	ibv_sge*		__sg_list;
 	uint64_t		__wr_id;
 public:
-	explicit spsc_seq_mem_pool(const transargs& transargs) noexcept;
+	explicit spsc_seq_mem_pool(const transargs& tsas) noexcept;
 	explicit spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
 	explicit spsc_seq_mem_pool(spsc_seq_mem_pool&& ref) noexcept;
 
