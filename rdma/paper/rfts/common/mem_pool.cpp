@@ -7,8 +7,12 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 	, __length(__elesize * MEM_POOL_CAPACITY)
 	, __addr{new unsigned char[__length]()}
 	, __front(0)
-	, __rear{0}
+	, __rear(0)
 {
+	for(int i{0}; i < MEM_POOL_CAPACITY; ++i)
+	{
+
+	}
 }
 
 
