@@ -18,7 +18,8 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 			.next = nullptr,
 			.sg_list = &(__sg_list.at(i)),
 			.num_sge = 1,
-			.opcode  = 
+			.opcode  = IBV_WR_SEND,
+			.send_flags = IBV_SEND_SIGNALED
 		};
 	}
 }
