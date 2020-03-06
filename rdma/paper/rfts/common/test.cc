@@ -1,6 +1,6 @@
 #include<iostream>
 #include<string>
-const std::string& fun(const std::string& a)
+std::string& fun( std::string& a)
 {
 	return a;
 }
@@ -9,8 +9,6 @@ const std::string& fun(const std::string& a)
 int main()
 {
 	std::string a("i love you");
-	std::string b(fun(a));
-	b="test";
+	fun(a)="test";
 	std::cout << a;
-	std::cout << b;
 }
