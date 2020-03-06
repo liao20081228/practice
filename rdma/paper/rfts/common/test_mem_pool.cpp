@@ -7,20 +7,20 @@
 
 using namespace rfts;
 const int testnum=10;
-void fun(spc_seq_mem_pool&);
+void fun(spsc_seq_mem_pool&);
 int main()
 {
-	trans_args transargs=
+	transargs transargs=
 	{	
 		.afreq = 500,
 		.tfreq = 1,
-		.size = 20,
-		.kind = 1,
-		.sensor_num = 8,
+		.size_per_data = 20,
+		.kind_per_sensor = 1,
+		.sensor_num_per_node = 8,
 		.node_num = 1
 	};
 
-	spc_seq_mem_pool mempool=spc_seq_mem_pool(transargs);
+	spsc_seq_mem_pool mempool=spsc_seq_mem_pool(transargs);
 
 	std::cout << mempool.get_real_length() << std::endl;
 	
