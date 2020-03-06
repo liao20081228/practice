@@ -11,7 +11,7 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 {
 	for(int i{0}; i < MEM_POOL_CAPACITY; ++i)
 	{
-
+		__BUF.at(i)
 	}
 }
 
