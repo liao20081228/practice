@@ -37,8 +37,8 @@ public:
 
 	spsc_seq_mem_pool& operator = (const spsc_seq_mem_pool & ref) = delete;
 	spsc_seq_mem_pool& operator = ( spsc_seq_mem_pool&& ref) = delete;
-	void*		malloc(void);
-	void		free(void);
+	ibv_send_wr*	malloc(void) noexcept;
+	void		free(void) noexcept;
 	const void*	get_mempool_addr(void) const noexcept;
 	int		get_mempool_length(void) const noexcept;
 };
