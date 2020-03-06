@@ -13,12 +13,12 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 {
 	for(int i{0}; i < MEM_POOL_CAPACITY; ++i)
 	{
-		__sg_list.at(i).addr = (uint64_t)(__addr + i * __elesize);
-		__sg_list.at(i).length = __elesize;
-		__ringqueue.at(i) =
+		__sg_list->at(i).addr = (uint64_t)(__addr + i * __elesize);
+		__sg_list->at(i).length = __elesize;
+		__ringqueue->at(i) =
 		{
 			.next = nullptr,
-			.sg_list = &(__sg_list.at(i)),
+			.sg_list = &(__sg_list->at(i)),
 			.num_sge = 1,
 			.opcode  = IBV_WR_SEND,
 			.send_flags = IBV_SEND_SIGNALED
