@@ -19,8 +19,8 @@ private:
 	const int		__length;	//buf长度
 	unsigned char*		__addr;		//buf地址
 	std::atomic_int32_t	__front,__rear; //队首、队尾标记
-	std::array<struct ibv_send_wr, MEM_POOL_CAPACITY>* __ringqueue;
-	std::array<struct ibv_sge, MEM_POOL_CAPACITY>* __sg_list;
+	ibv_send_wr*		__ring_buf;
+	ibv_sge*		__sg_list;
 public:
 	explicit spsc_seq_mem_pool(const transargs& transargs) noexcept;
 	explicit spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
