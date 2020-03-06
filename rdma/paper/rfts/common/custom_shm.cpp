@@ -73,6 +73,7 @@ posix_shm::posix_shm(posix_shm&& ref) noexcept: __name(ref.__name),__fd(ref.__fd
 
 posix_shm::~posix_shm(void) noexcept
 {
+	std::cout<<"tessaasas" << __name<<std::endl;
 	if (__addr)
 		if(munmap(__addr, __length))
 			PERR(posix_shm::munmap);
