@@ -9,6 +9,12 @@
 #include<cstdlib>
 #include<infiniband/verbs.h>
 #include<array>
+
+
+#ifndef CUSTOM_PRINT_ERROR_INFO_AND_EXIT_WITH_ERRNO
+	#define _PERR(a) {perror(#a);exit(errno);}
+	#define PERR(c) _PERR(c() failed)
+#endif
 namespace rfts
 {
 const int MEM_POOL_CAPACITY = 1000;//1000次传输
