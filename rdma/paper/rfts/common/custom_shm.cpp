@@ -2,7 +2,7 @@
 
 posix_shm::posix_shm(const char* name, size_t size, int oflag, mode_t mode, int prot,
 		int flags, off_t offset) noexcept: __name(name)
-	, __fd(shm_open(__name, oflag, mode)),__length(size), __cur(0), __protect(prot)
+	, __fd(shm_open(__name.c_str(), oflag, mode)),__length(size), __cur(0), __protect(prot)
 {
 	if (__fd < 0)
 		PERR(posix_shm::shm_open);
@@ -20,8 +20,8 @@ posix_shm::posix_shm(const char* name, size_t size, int oflag, mode_t mode, int 
 }
 
 posix_shm::posix_shm(const std::string& name, size_t size, int oflag, mode_t mode, int prot,
-		int flags, off_t offset) noexcept: __name(name.c_str())
-	, __fd(shm_open(__name, oflag, mode)),__length(size), __cur(0), __protect(prot)
+		int flags, off_t offset) noexcept: __name(name)
+	, __fd(shm_open(__name.c_str(), oflag, mode)),__length(size), __cur(0), __protect(prot)
 {
 	if (__fd < 0)
 		PERR(posix_shm::shm_open);
@@ -39,8 +39,8 @@ posix_shm::posix_shm(const std::string& name, size_t size, int oflag, mode_t mod
 }
 
 posix_shm::posix_shm(const std::string* name, size_t size, int oflag, mode_t mode, int prot,
-		int flags, off_t offset) noexcept: __name(name->c_str())
-	, __fd(shm_open(__name, oflag, mode)),__length(size), __cur(0), __protect(prot)
+		int flags, off_t offset) noexcept: __name(*name)
+	, __fd(shm_open(__name.c_str(), oflag, mode)),__length(size), __cur(0), __protect(prot)
 {
 	if (__fd < 0)
 		PERR(posix_shm::shm_open);
@@ -65,7 +65,7 @@ posix_shm::posix_shm(posix_shm&& ref) noexcept: __name(ref.__name),__fd(ref.__fd
 	ref.__fd = -1;
 	ref.__addr = nullptr;
 	ref.__length = 0;
-	ref.__name = nullptr;
+	ref.__name.clear();
 	ref.__protect = 0;
 	ref.__cur = 0;
 }
@@ -73,14 +73,13 @@ posix_shm::posix_shm(posix_shm&& ref) noexcept: __name(ref.__name),__fd(ref.__fd
 
 posix_shm::~posix_shm(void) noexcept
 {
-	std::cout<<"tessaasas" << __name<<std::endl;
 	if (__addr)
 		if(munmap(__addr, __length))
 			PERR(posix_shm::munmap);
 	if (__fd)
 		close(__fd);
-	if (__name)
-		shm_unlink(__name);
+	if (__name.size())
+		shm_unlink(__name.c_str());
 }
 
 

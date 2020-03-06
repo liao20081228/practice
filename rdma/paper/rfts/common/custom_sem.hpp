@@ -22,8 +22,8 @@
 class posix_sem
 {
 private:
-	sem_t* __sem;
-	const char* __name;
+	sem_t*		__sem;
+	std::string	__name;
 public:
 	explicit posix_sem(int pshared = 0,  unsigned int value = 0) noexcept;
 	explicit posix_sem(const char* name, int oflag = O_RDWR | O_CREAT,
