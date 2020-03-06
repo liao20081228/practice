@@ -59,7 +59,8 @@ public:
 
 	posix_shm& operator = (const posix_shm& ref) = delete;
 	posix_shm& operator = (const posix_shm&& ref) = delete;
-
+	
+	const char* get_shm_filename(void) const noexcept;
 	void*	getaddr(void) const noexcept;
 	void	clear(void) noexcept;
 	int	sync(int flags = MS_SYNC) const noexcept;
