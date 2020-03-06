@@ -22,7 +22,7 @@
 class posix_sem
 {
 private:
-	sem_t*			__sem;
+	sem_t			__sem;
 	const std::string	__name;
 public:
 	explicit posix_sem(int pshared = 0,  unsigned int value = 0) noexcept;

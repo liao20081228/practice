@@ -34,7 +34,6 @@ posix_sem::posix_sem(const std::string* name, int oflag, mode_t mode, unsigned i
 posix_sem::posix_sem(posix_sem&& ref) noexcept
 	:__sem(ref.__sem), __name(ref.__name)
 {
-	ref.__name = nullptr;
 	ref.__sem = nullptr;
 }
 
