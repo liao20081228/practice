@@ -21,7 +21,7 @@ int main()
 		.node_num = 1
 	};
 
-	spsc_seq_mem_pool mempool = spsc_seq_mem_pool(transargs);
+	spsc_seq_mem_pool mempool(transargs);
 	std::cout << mempool.get_mempool_length() << std::endl;
 	
 	std::thread a(fun1,std::ref(mempool));
@@ -33,7 +33,6 @@ int main()
 void fun1(spsc_seq_mem_pool& mempool)
 {
 	ibv_send_wr* addr = nullptr;
-	mempool.free();
 	long double mean1 = 0;
 	cycles_t s=0;
 	cycles_t e=0;
