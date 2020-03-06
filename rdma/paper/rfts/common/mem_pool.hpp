@@ -44,7 +44,7 @@ public:
 };
 
 
-
+/*
 class mpc_link_mem_pool
 {
 private:
@@ -65,9 +65,8 @@ public:
 	mpc_link_mem_pool(const mpc_link_mem_pool&) = delete ;
 	mpc_link_mem_pool&  operator = (const mpc_link_mem_pool&) = delete;
 	~mpc_link_mem_pool(void) noexcept;
-};
+};*/
 } //namespace rfts
-
 
 
 
