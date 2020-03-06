@@ -23,7 +23,7 @@ int main()
 
 	spsc_seq_mem_pool mempool(transargs);
 	std::cout << mempool.get_mempool_length() << std::endl;
-	
+
 	std::thread a(fun1,std::ref(mempool));
 	std::thread b(fun2,std::ref(mempool));
 	a.join();
@@ -43,7 +43,7 @@ void fun1(spsc_seq_mem_pool& mempool)
 		s=get_cycles();
 		addr=mempool.malloc();
 		e=get_cycles();
-		std::cout<<addr->wr_id << std::endl;
+		std::cout<<addr->wr_id << "," << addr->sg_list->addr<< std::endl;
 		mean1= mean1 + ( e-s ) / mhz * 1000;
 	}
 	std::cout << "malloc mean:" << mean1/testnum <<std::endl;

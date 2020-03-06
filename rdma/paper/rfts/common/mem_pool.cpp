@@ -89,8 +89,11 @@ void rfts::spsc_seq_mem_pool::free(void) noexcept
 	front = __front.load(std::memory_order_relaxed);
 	rear = __rear.load(std::memory_order_acquire);
 	if (rear == front)
+	{
+		std::cout << "outof" <<std::endl;
 		return;
-	if (++front >= MEM_POOL_CAPACITY)
+	}
+		if (++front >= MEM_POOL_CAPACITY)
 		front -= MEM_POOL_CAPACITY;
 	__front.store(front, std::memory_order_release);
 }
