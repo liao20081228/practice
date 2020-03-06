@@ -54,7 +54,7 @@ posix_sem::~posix_sem(void) noexcept
 }
 
 
-void posix_sem::post(void) noexcept
+void posix_sem::post(void) const noexcept
 {
 	if (sem_post(__sem))
 		PERR(posix_sem::sem_post);
@@ -95,7 +95,7 @@ int posix_sem::timewait(const struct timespec* abs_timeout) noexcept
 	return 0;
 }
 
-int posix_sem::getvalue(int* const val) noexcept
+int posix_sem::getvalue(int* const val) const noexcept
 {
 	int n  = 0;
 	sem_getvalue(__sem, &n);
