@@ -1,12 +1,12 @@
 #include"custom_sem.hpp"
 
 posix_sem::posix_sem(int pshared, unsigned int value) noexcept:
-	__sem(new sem_t), __name(nullptr)
+	__sem(new sem_t), __name("")
 {
 	if (sem_init(__sem, pshared, value))
 	{
 		delete __sem;
-		PERR(seamphore::sem_init);
+		PERR(posix_sem::sem_init);
 	}
 
 }
@@ -15,21 +15,21 @@ posix_sem::posix_sem(const char* name, int oflag, mode_t mode, unsigned int valu
 		__sem(sem_open(name, oflag, mode, value)), __name(name)
 {
 	if (__sem == SEM_FAILED)
-		PERR(seamphore::sem_open);
+		PERR(posix_sem::sem_open);
 }
 
 posix_sem::posix_sem(const std::string& name, int oflag, mode_t mode, unsigned int value) noexcept:
 		__sem(sem_open(name.c_str(), oflag, mode, value)), __name(name.c_str())
 {
 	if (__sem == SEM_FAILED)
-		PERR(seamphore::sem_open);
+		PERR(posix_sem::sem_open);
 }
 
 posix_sem::posix_sem(const std::string* name, int oflag, mode_t mode, unsigned int value) noexcept:
 		__sem(sem_open(name->c_str(), oflag, mode, value)), __name(name->c_str())
 {
 	if (__sem == SEM_FAILED)
-		PERR(seamphore::sem_open);
+		PERR(posix_sem::sem_open);
 }
 
 posix_sem::posix_sem(posix_sem&& ref) noexcept:__sem(ref.__sem), __name(ref.__name)
@@ -57,13 +57,13 @@ posix_sem::~posix_sem(void) noexcept
 void posix_sem::post(void) noexcept
 {
 	if (sem_post(__sem))
-		PERR(seamphore::sem_post);
+		PERR(posix_sem::sem_post);
 }
 
 void posix_sem::wait(void) noexcept
 {
 	if (sem_wait(__sem))
-		PERR(seamphore::sem_wait);
+		PERR(posix_sem::sem_wait);
 }
 
 
@@ -73,7 +73,7 @@ int posix_sem::trywait(void) noexcept
 	{
 		if (errno != EAGAIN)
 		{
-			PERR(seamphore::sem_trywait);
+			PERR(posix_sem::sem_trywait);
 		}
 		else
 			return EAGAIN;
@@ -87,7 +87,7 @@ int posix_sem::timewait(const struct timespec* abs_timeout) noexcept
 	{
 		if (errno != ETIMEDOUT)
 		{
-			PERR(seamphore::sem_trywait);
+			PERR(posix_sem::sem_trywait);
 		}
 		else
 			return ETIMEDOUT;

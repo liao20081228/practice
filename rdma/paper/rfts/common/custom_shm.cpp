@@ -57,9 +57,9 @@ posix_shm::posix_shm(const std::string* name, size_t size, int oflag, mode_t mod
 	}
 }
 
-posix_shm::posix_shm(posix_shm&& ref) noexcept: __name(ref.__name),__fd(ref.__fd), __addr(ref.__addr)
-	, __length(ref.__length),__cur(ref.__cur.load(std::memory_order_acquire))
-	, __protect(ref.__protect)
+posix_shm::posix_shm(posix_shm&& ref) noexcept
+	: __name(ref.__name),__fd(ref.__fd), __addr(ref.__addr), __length(ref.__length)
+	, __cur(ref.__cur.load(std::memory_order_acquire)), __protect(ref.__protect)
 {
 
 	ref.__fd = -1;
