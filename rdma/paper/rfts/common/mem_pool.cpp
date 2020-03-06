@@ -13,6 +13,13 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 	{
 		__sg_list.at(i).addr = (uint64_t)(__addr + i * __elesize);
 		__sg_list.at(i).length = __elesize;
+		__ringqueue.at(i) =
+		{
+			.next = nullptr,
+			.sg_list = &(__sg_list.at(i)),
+			.num_sge = 1,
+			.opcode  = 
+		};
 	}
 }
 
