@@ -1,6 +1,6 @@
 #pragma once
-#ifndef RFTS_MEM_POOL_H
-	#define RFTS_MEM_POOL_H
+#ifndef HPP_RFTS_MEM_POOL_HPP
+	#define HPP_RFTS_MEM_POOL_HPP
 #include"trans_args.hpp"
 #include<iostream>
 #include<mutex>
@@ -70,4 +70,4 @@ public:
 
 
 
-#endif /* end of include guard: RFTS_MEM_POOL_H */
+#endif /* end of include guard: HPP_RFTS_MEM_POOL_HPP */

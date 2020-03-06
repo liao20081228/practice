@@ -21,8 +21,7 @@ int main()
 		.node_num = 1
 	};
 
-	class spsc_seq_mem_pool mempool = spsc_seq_mem_pool(transargs);
-
+	spsc_seq_mem_pool mempool = spsc_seq_mem_pool(transargs);
 	std::cout << mempool.get_mempool_length() << std::endl;
 	
 	std::thread a(fun1,std::ref(mempool));

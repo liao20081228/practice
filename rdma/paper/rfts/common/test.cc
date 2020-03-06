@@ -13,26 +13,32 @@ class test
 	{
 		std::cout<<"move constructor" <<std::endl;
 	}
-	test (const test & ref):a(ref.a), b(ref.b)
+	test(const test & ref) = delete;
+	/*
 	{
 		  	  std::cout<<"copy constructor" <<std::endl;
 	
 	}
+	*/
 
-	test & operator = (const test& ref)
+	test & operator = (const test& ref) = delete;
+	/*
 	{
 		a=ref.a;
 		b=ref.b;
 		  	  std::cout<<"copy assign" <<std::endl;
 		return *this;
 	}
-	test & operator = (test&& ref)
+	*/
+	test & operator = (test&& ref) = delete;
+	/*
 	{
 		a=ref.a;
 		b=ref.b;
 		  	  std::cout<<"move assign" <<std::endl;
 		return *this;
 	}
+	*/
 
 	~test()
 	{
@@ -47,10 +53,6 @@ int main(void)
 	test a(x);
 	std::cout<<"------------\n";
 	test b = test(x);
-	std::cout<<"------------\n";
-	test c(a);
-	std::cout<<"------------\n";
-	a = b;
 	std::cout<<"------------\n";
 	return 0;
 }
