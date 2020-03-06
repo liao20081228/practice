@@ -52,7 +52,7 @@ private:
 	std::atomic_uint64_t	__cur;
 	int			__protect;
 private:
-	void __maccess(void* buf, size_t buf_len, size_t nbytes,
+	void __access(void* buf, size_t buf_len, size_t nbytes,
 			bool reset, bool is_read) noexcept;
 
 public:
@@ -67,13 +67,13 @@ public:
 	posix_shmem& operator = (const posix_shmem& ref) = delete;
 	posix_shmem& operator = (const posix_shmem&& ref) = delete;
 
-	void*	getaddr(void ) const noexcept;
-	void	mclear(void) noexcept;
-	int	msync(int flags = MS_SYNC) const noexcept;
-	size_t	mseek(off_t offset = 0, int whence = SEEK_SET) noexcept;
-	size_t	mtell(void) const noexcept;
-	void	mread(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
-	void	mwrite(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+	void*	get_addr(void ) const noexcept;
+	void	clear(void) noexcept;
+	int	sync(int flags = MS_SYNC) const noexcept;
+	size_t	seek(off_t offset = 0, int whence = SEEK_SET) noexcept;
+	size_t	tell(void) const noexcept;
+	void	read(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
+	void	write(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
 };
 
 
