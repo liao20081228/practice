@@ -35,7 +35,7 @@ public:
 
 	~spsc_seq_mem_pool(void) noexcept;
 
-	spsc_seq_mem_pool& operator = (const spsc_seq_mem_pool & ref) = delete;
+	spsc_seq_mem_pool& operator = (const spsc_seq_mem_pool& ref) = delete;
 	spsc_seq_mem_pool& operator = ( spsc_seq_mem_pool&& ref) = delete;
 	ibv_send_wr*	malloc(void) noexcept;
 	void		free(void) noexcept;
