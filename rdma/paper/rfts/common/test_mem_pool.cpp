@@ -7,7 +7,8 @@
 
 using namespace rfts;
 const int testnum=100;
-void fun(spsc_seq_mem_pool&);
+void fun1(spsc_seq_mem_pool&);
+void fun2(spsc_seq_mem_pool&);
 int main()
 {
 	trans_args transargs=
@@ -22,10 +23,10 @@ int main()
 
 	class spsc_seq_mem_pool mempool=spsc_seq_mem_pool(transargs);
 
-	std::cout << mempool.get_real_length() << std::endl;
+	std::cout << mempool.get_mempool_length() << std::endl;
 	
-	std::thread a(fun,std::ref(mempool));
-	std::thread b(fun,std::ref(mempool));
+	std::thread a(fun1,std::ref(mempool));
+	std::thread b(fun2,std::ref(mempool));
 	a.join();
 	b.join();
 }
@@ -48,7 +49,6 @@ void fun1(spsc_seq_mem_pool& mempool)
 		mean1= mean1 + ( e-s ) / mhz * 1000;
 	}
 	std::cout << "malloc mean:" << mean1/testnum <<std::endl;
-	return ;
 }
 void fun2(spsc_seq_mem_pool& mempool)
 {
@@ -62,10 +62,8 @@ void fun2(spsc_seq_mem_pool& mempool)
 		s=get_cycles();
 		mempool.free();
 		e=get_cycles();
-		std::cout<<addr->wr_id << std::endl;
 		mean1= mean1 + ( e-s ) / mhz * 1000;
 	}
-	std::cout << "malloc mean:" << mean1/testnum <<std::endl;
-	return ;
+	std::cout << "free mean:" << mean1/testnum <<std::endl;
 }
 

@@ -7,9 +7,9 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const trans_args& transargs) noexcept
 	, __length(__elesize * MEM_POOL_CAPACITY)
 	, __addr{new unsigned char[__length]()}
 	, __front(0)
-	, __rear(0)
+	, __rear(0) /*
 	, __ringqueue(new ibv_send_wr [MEM_POOL_CAPACITY]())
-	, __sg_list(new ibv_sge [MEM_POOL_CAPACITY]())
+	, __sg_list(new ibv_sge [MEM_POOL_CAPACITY]()) */
 	, __wr_id(1)
 {
 	for(int i{0}; i < MEM_POOL_CAPACITY; ++i)
@@ -79,6 +79,7 @@ ibv_send_wr* rfts::spsc_seq_mem_pool::malloc(void) noexcept
 			rear -= MEM_POOL_CAPACITY;
 	}while(rear == front);
 	__rear.store(rear, std::memory_order_release);
+	__ringqueue[temp].wr_id = __wr_id++;
 	return &__ringqueue[temp];
 }
 
