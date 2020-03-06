@@ -2,8 +2,11 @@
 
 posix_shm::posix_shm(const char* name, size_t size, int oflag, mode_t mode,
 		int prot, int flags, off_t offset) noexcept
-	: __name(name), __fd(shm_open(__name.c_str(), oflag, mode)), __length(size)
-	, __cur(0), __protect(prot)
+	: __name(name)
+	, __fd(shm_open(__name.c_str(), oflag, mode))
+	, __length(size)
+	, __cur(0)
+	, __protect(prot)
 {
 	if (__fd < 0)
 		PERR(posix_shm::shm_open);
@@ -22,8 +25,11 @@ posix_shm::posix_shm(const char* name, size_t size, int oflag, mode_t mode,
 
 posix_shm::posix_shm(const std::string& name, size_t size, int oflag, mode_t mode
 		, int prot, int flags, off_t offset) noexcept
-	: __name(name), __fd(shm_open(__name.c_str(), oflag, mode)), __length(size)
-	, __cur(0), __protect(prot)
+	: __name(name)
+	, __fd(shm_open(__name.c_str(), oflag, mode))
+	, __length(size)
+	, __cur(0)
+	, __protect(prot)
 {
 	if (__fd < 0)
 		PERR(posix_shm::shm_open);
@@ -42,8 +48,11 @@ posix_shm::posix_shm(const std::string& name, size_t size, int oflag, mode_t mod
 
 posix_shm::posix_shm(const std::string* name, size_t size, int oflag, mode_t mode,
 		int prot, int flags, off_t offset) noexcept
-	: __name(*name)	, __fd(shm_open(__name.c_str(), oflag, mode))
-	, __length(size), __cur(0), __protect(prot)
+	: __name(*name)
+	, __fd(shm_open(__name.c_str(), oflag, mode))
+	, __length(size)
+	, __cur(0)
+	, __protect(prot)
 {
 	if (__fd < 0)
 		PERR(posix_shm::shm_open);
@@ -65,25 +74,18 @@ posix_shm::posix_shm(posix_shm&& ref) noexcept
 	, __length(ref.__length), __cur(ref.__cur.load(std::memory_order_acquire))
 	, __protect(ref.__protect)
 {
-
-	ref.__fd = -1;
 	ref.__addr = nullptr;
-	ref.__length = 0;
-	ref.__name.clear();
-	ref.__protect = 0;
-	ref.__cur = 0;
 }
 
 
 posix_shm::~posix_shm(void) noexcept
 {
-	if (__addr)
-		if(munmap(__addr, __length))
-			PERR(posix_shm::munmap);
-	if (__fd)
-		close(__fd);
-	if (__name.size())
-		shm_unlink(__name.c_str());
+	if (!__addr)
+		return;
+	if(munmap(__addr, __length))
+		PERR(posix_shm::munmap);
+	close(__fd);
+	shm_unlink(__name.c_str());
 }
 
 
