@@ -17,8 +17,8 @@ private:
 	const int		__elesize;	//每个队列元素的大小
 	const int		__length;	//buf长度
 	unsigned char*		__addr;		//buf地址
-	std::atomic_int32_t	__front,
-				__rear;
+	std::atomic_int32_t	__front,__rear; //队首、队尾标记
+	struct ibv_send_wr	__ringqueue[MEM_POOL_CAPACITY];
 public:
 	explicit spsc_seq_mem_pool(const transargs& transargs) noexcept;
 	explicit spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
