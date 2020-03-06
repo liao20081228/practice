@@ -11,6 +11,8 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 {
 	for(int i{0}; i < MEM_POOL_CAPACITY; ++i)
 	{
+		__sg_list.at(i).addr = (uint64_t)(__addr + i * __elesize);
+		__sg_list.at(i).length = __elesize;
 	}
 }
 
