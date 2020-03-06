@@ -29,7 +29,7 @@
 class posix_shm
 {
 private:
-	const char*		__name;
+	std::string		__name;
 	int			__fd;
 	void*			__addr;
 	size_t			__length;
