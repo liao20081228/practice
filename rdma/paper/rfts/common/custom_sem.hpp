@@ -42,7 +42,7 @@ public:
 	posix_sem& operator = (posix_sem& ref) = delete;
 	posix_sem& operator = (posix_sem&& ref) = delete;
 
-	void post(void) noexcept ;
+	void post(void) noexcept;
 	void wait(void) noexcept;
 	int  trywait(void) noexcept;
 	int  timewait(const struct timespec* abs_timeout) noexcept;
