@@ -15,6 +15,7 @@
 #include<system_error>
 #include<iostream>
 #include<atomic>
+#include<string>
 #ifndef CUSTOM_REGULAR_FILE_MODE
 	#define REGULAR_FILE_MODE S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #endif
@@ -28,7 +29,7 @@
 class posix_shm
 {
 private:
-	const char*		__name;
+	std::string 		__name;
 	int			__fd;
 	void*			__addr;
 	size_t			__length;
@@ -43,6 +44,11 @@ public:
 			int oflag = O_RDWR | O_CREAT, mode_t mode  = REGULAR_FILE_MODE,
 			int prot = PROT_READ | PROT_WRITE,
 			int flags = MAP_SHARED, off_t offset = 0) noexcept;
+	explicit posix_shm(const std::string& name, size_t size = sysconf(_SC_PAGESIZE),
+			int oflag = O_RDWR | O_CREAT, mode_t mode  = REGULAR_FILE_MODE,
+			int prot = PROT_READ | PROT_WRITE,
+			int flags = MAP_SHARED, off_t offset = 0) noexcept;
+	
 	posix_shm(const posix_shm& ref) = delete;
 	posix_shm(posix_shm&& ref) noexcept;
 	~posix_shm(void) noexcept;
