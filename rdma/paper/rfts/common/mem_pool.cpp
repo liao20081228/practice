@@ -5,9 +5,9 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const transargs& transargs) noexcept
 		transargs.sensor_num_per_node * transargs.kind_per_sensor *
 		transargs.size_per_data * 2)
 	, __length(__elesize * MEM_POOL_CAPACITY)
-	, __addr(new unsigned char[__length]())
+	, __addr{new unsigned char[__length]()}
 	, __front(0)
-	, __rear(0)
+	, __rear{0}
 {
 }
 
