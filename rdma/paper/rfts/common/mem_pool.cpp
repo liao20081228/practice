@@ -31,7 +31,7 @@ rfts::spsc_seq_mem_pool::~spsc_seq_mem_pool(void) noexcept
 	while(__front.load() == __rear.load && addr)
 	{
 		delete [] addr;
-		addr=nullptr;
+		addr = nullptr;
 		break;
 	}
 }
