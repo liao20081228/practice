@@ -46,11 +46,11 @@ class c_posix_shmem
 {
 private:
 	const char*		__cm_cchp_name;
-	int			__cm_fd;
-	void*			__cm_addr;
-	size_t			__cm_length;
-	std::atomic_uint64_t	__cm_cur;
-	int			__cm_protect;
+	int			__cm_n_fd;
+	void*			__cm_p_addr;
+	size_t			__cm_uln_length;
+	std::atomic_uint64_t	__cm_at_cur;
+	int			__cm_n_protect;
 private:
 	void __maccess(void* buf, size_t buf_len, size_t nbytes,
 			bool reset, bool is_read) noexcept;
