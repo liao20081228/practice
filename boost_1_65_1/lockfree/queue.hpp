@@ -87,7 +87,7 @@ private:
 #endif
 
 #ifdef BOOST_HAS_TRIVIAL_ASSIGN
-    BOOST_STATIC_ASSERT((boost::has_trivial_assign<T>::value));
+    BOOST_STATIC_ASSERT((boost::has_trivial_assign<T>::value));//
 #endif
 
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES //可变参数模板
