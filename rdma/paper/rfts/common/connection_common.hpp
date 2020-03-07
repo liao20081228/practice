@@ -8,7 +8,8 @@
 #include<cerrno>
 
 #ifndef CUSTOM_PRINT_ERROR_INFO_AND_EXIT_WITH_ERRNO
-#define CUSTOM_PRINT_ERROR_INFO_AND_EXIT_WITH_ERRNO
+	#define _PERR(a) {perror(#a);exit(errno);}
+	#define PERR(c) _PERR(c() failed) 
 #endif /* ifndef CUSTOM_PRINT_ERROR_INFO_AND_EXIT_WITH_ERRNO */
 
 
@@ -22,6 +23,7 @@ private:
 public:
 	cm_event_channel(void) noexcept;
 	~cm_event_channel(void) noexcept;
+	const rdma_event_channel* get_cm_channel(void) const noexcept;
 };
 
 
@@ -31,7 +33,7 @@ class cm_id
 private:
 	rdma_cm_id* id;
 public:
-	cm_id() noexcept;
+	cm_id(cm_event_channel& cm_e_ch, void* context, rdma_port_space ps) noexcept;
 	~cm_id() noexcept;
 };
 
