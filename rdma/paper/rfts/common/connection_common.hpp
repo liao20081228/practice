@@ -26,14 +26,12 @@ public:
 	const rdma_event_channel* get_cm_channel(void) const noexcept;
 };
 
-
-
 class cm_id
 {
 private:
 	rdma_cm_id* id;
 public:
-	cm_id(cm_event_channel& cm_e_ch, void* context, rdma_port_space ps) noexcept;
+	cm_id(cm_event_channel& cm_e_ch, void* context = nullptr, rdma_port_space ps) noexcept;
 	~cm_id() noexcept;
 };
 
