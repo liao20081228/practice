@@ -83,11 +83,11 @@ private:
 #ifndef BOOST_DOXYGEN_INVOKED
 
 #ifdef BOOST_HAS_TRIVIAL_DESTRUCTOR
-    BOOST_STATIC_ASSERT((boost::has_trivial_destructor<T>::value));//has_trivial_assign继承自intergral_constant常量
+    BOOST_STATIC_ASSERT((boost::has_trivial_destructor<T>::value));//has_trivial_assign,如有简单的析构则为真
 #endif
 
 #ifdef BOOST_HAS_TRIVIAL_ASSIGN
-    BOOST_STATIC_ASSERT((boost::has_trivial_assign<T>::value));//
+    BOOST_STATIC_ASSERT((boost::has_trivial_assign<T>::value));//has_trivial_assign,如有简单的=则为真
 #endif
 
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES //可变参数模板
