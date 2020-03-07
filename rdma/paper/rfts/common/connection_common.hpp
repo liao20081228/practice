@@ -20,8 +20,8 @@ class cm_event_channel
 private:
 	rdma_event_channel* cm_channel;
 public:
-	cm_event_channel() noexcept;
-	~cm_event_channel() noexcept;
+	cm_event_channel(void) noexcept;
+	~cm_event_channel(void) noexcept;
 };
 
 
