@@ -90,7 +90,7 @@ private:
     BOOST_STATIC_ASSERT((boost::has_trivial_assign<T>::value));
 #endif
 
-#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES //可变参数模板
     typedef typename detail::queue_signature::bind<A0, A1, A2>::type bound_args;
 #else
     typedef typename detail::queue_signature::bind<Options...>::type bound_args;
