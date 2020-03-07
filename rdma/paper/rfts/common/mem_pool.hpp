@@ -21,8 +21,8 @@ const int MEM_POOL_CAPACITY = 1000;//1000次传输
 class spsc_seq_mem_pool
 {
 private:
-	int		__elesize;	//每个队列元素的大小
-	int		__length;	//buf长度
+	const int		__elesize;	//每个队列元素的大小
+	const int		__length;	//buf长度
 	unsigned char*		__addr;		//buf地址
 	std::atomic_int32_t	__front, __rear; //队首、队尾标记
 	ibv_send_wr*		__ringqueue;
