@@ -24,6 +24,17 @@ public:
 	~cm_event_channel() noexcept;
 };
 
-} // rfts
 
+
+class cm_id
+{
+private:
+	rdma_cm_id* id;
+public:
+	cm_id() noexcept;
+	~cm_id() noexcept;
+};
+
+
+} // rfts
 #endif /* end of include guard: HPP_CONNECTION_HPP */
