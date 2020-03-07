@@ -30,8 +30,8 @@ private:
 	uint64_t		__wr_id;
 public:
 	explicit spsc_seq_mem_pool(const trans_args& transargs) noexcept;
-	explicit spsc_seq_mem_pool(spsc_seq_mem_pool & ref) = delete;
-	explicit spsc_seq_mem_pool(spsc_seq_mem_pool&& ref) noexcept;
+		 spsc_seq_mem_pool(const spsc_seq_mem_pool & ref) = delete;
+		 spsc_seq_mem_pool(spsc_seq_mem_pool&& ref) noexcept;
 
 	~spsc_seq_mem_pool(void) noexcept;
 
