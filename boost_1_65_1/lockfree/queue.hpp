@@ -83,7 +83,7 @@ private:
 #ifndef BOOST_DOXYGEN_INVOKED
 
 #ifdef BOOST_HAS_TRIVIAL_DESTRUCTOR
-    BOOST_STATIC_ASSERT((boost::has_trivial_destructor<T>::value));
+    BOOST_STATIC_ASSERT((boost::has_trivial_destructor<T>::value));//has_trivial_assign继承自intergral_constant常量
 #endif
 
 #ifdef BOOST_HAS_TRIVIAL_ASSIGN
