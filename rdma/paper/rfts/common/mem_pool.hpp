@@ -25,8 +25,8 @@ private:
 	const int		__length;	//buf长度
 	unsigned char*		__addr;		//buf地址
 	std::atomic_int32_t	__front, __rear; //队首、队尾标记
-	ibv_send_wr*		__ringqueue;
-	ibv_sge*		__sg_list;
+	//ibv_send_wr*		__ringqueue;
+	//ibv_sge*		__sg_list;
 	uint64_t		__wr_id;
 public:
 	explicit spsc_seq_mem_pool(const trans_args& transargs) noexcept;
