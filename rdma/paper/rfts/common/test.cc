@@ -1,58 +1,10 @@
 #include<iostream>
-
-class test
-{
-	int a;
-	int b;
-	public:
-	test(int c) :a(c), b(c)
-	{
-		std::cout<<"constructor" <<std::endl;
-	}
-	test (test && ref):a(ref.a), b(ref.b)
-	{
-		std::cout<<"move constructor" <<std::endl;
-	}
-	test(const test & ref) = delete;
-	/*
-	{
-		  	  std::cout<<"copy constructor" <<std::endl;
-	
-	}
-	*/
-
-	test & operator = (const test& ref) = delete;
-	/*
-	{
-		a=ref.a;
-		b=ref.b;
-		  	  std::cout<<"copy assign" <<std::endl;
-		return *this;
-	}
-	*/
-	test & operator = (test&& ref) = delete;
-	/*
-	{
-		a=ref.a;
-		b=ref.b;
-		  	  std::cout<<"move assign" <<std::endl;
-		return *this;
-	}
-	*/
-
-	~test()
-	{
-		  	  std::cout<<"deconstructor" <<std::endl;
-	}
-};
-
+#include"mem_pool.hpp"
 
 int main(void)
 {
-	int x= 10;
-	test a(x);
-	std::cout<<"------------\n";
-	test b = test(x);
-	std::cout<<"------------\n";
+
+	rfts::trans_args c;
+	rfts::spsc_seq_mem_pool a = rfts::spsc_seq_mem_pool(c);
 	return 0;
 }
