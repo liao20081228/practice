@@ -25,7 +25,11 @@ public:
 	cm_event_channel(void) noexcept;
 	~cm_event_channel(void) noexcept;
 	const rdma_event_channel* get_cm_event_channel(void) const noexcept;
-};
+	cm_event_channel(const cm_event_channel&) = delete;
+	cm_event_channel(cm_event_channel&& ref)  noexcept;
+	cm_event_channel& operator = (const cm_event_channel&) = delete;
+	cm_event_channel& operator = (cm_event_channel&&) = delete;
+};	
 
 class cm_id
 {
