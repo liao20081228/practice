@@ -6,7 +6,8 @@
 #include<rdma/rdma_cma.h>
 #include<rdma/rdma_verbs.h>
 #include<cerrno>
-
+#include<cstdio>
+#include<cstdlib>
 #ifndef CUSTOM_PRINT_ERROR_INFO_AND_EXIT_WITH_ERRNO
 	#define _PERR(a) {perror(#a);exit(errno);}
 	#define PERR(c) _PERR(c() failed) 
@@ -19,7 +20,7 @@ namespace rfts
 class cm_event_channel
 {
 private:
-	rdma_event_channel* cm_channel;
+	const rdma_event_channel* cm_channel;
 public:
 	cm_event_channel(void) noexcept;
 	~cm_event_channel(void) noexcept;
