@@ -36,7 +36,7 @@ class cm_id
 private:
 	rdma_cm_id* id;
 public:
-	cm_id(const cm_event_channel& cm_e_ch, void* context = nullptr, 
+	cm_id(const cm_event_channel* cm_e_ch, void* context = nullptr, 
 			rdma_port_space ps = RDMA_PS_TCP ) noexcept;
 	~cm_id() noexcept;
 };
