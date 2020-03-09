@@ -9,12 +9,12 @@ rfts::cm_event_channel::cm_event_channel(void) noexcept
 
 rfts::cm_event_channel::~cm_event_channel(void) noexcept
 {
-	if (cm_channel)
-		rdma_destroy_event_channel(cm_channel);
-	cm_channel = nullptr;
+	if (__cm_event_channel)
+		rdma_destroy_event_channel(__cm_event_channel);
+	__cm_event_channel = nullptr;
 }
 
-const rdma_event_channel* rfts::cm_event_channel::get_cm_channel(void) const noexcept
+const rdma_event_channel* rfts::cm_event_channel::get_cm_event_channel(void) const noexcept
 {
-	return cm_channel;
+	return __cm_event_channel;
 }
