@@ -20,11 +20,11 @@ namespace rfts
 class cm_event_channel
 {
 private:
-	rdma_event_channel* cm_channel;
+	rdma_event_channel* __cm_event_channel;
 public:
 	cm_event_channel(void) noexcept;
 	~cm_event_channel(void) noexcept;
-	const rdma_event_channel* get_cm_channel(void) const noexcept;
+	const rdma_event_channel* get_cm_event_channel(void) const noexcept;
 };
 
 class cm_id
