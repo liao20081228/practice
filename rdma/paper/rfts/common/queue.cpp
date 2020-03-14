@@ -15,6 +15,7 @@ rfts::spsc_queue<T>::~spsc_queue(void) noexcept
 {
 	delete [] __queue;
 }
+
 template<typename T>
 T rfts::spsc_queue<T>::put(T e) noexcept
 {
