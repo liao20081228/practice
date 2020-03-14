@@ -4,11 +4,12 @@
 #include<thread>
 #include<iostream>
 #include<unistd.h>
-
+#include"../queue.hpp"
 using namespace rfts;
 const int testnum=1000;
-void fun1(spsc_seq_mem_pool&);
-void fun2(spsc_seq_mem_pool&);
+
+void fun1(spsc_fix_mem_pool&);
+void fun2(spsc_fix_mem_pool&);
 int main()
 {
 	trans_args transargs=
@@ -21,7 +22,7 @@ int main()
 		.node_num = 1
 	};
 
-	spsc_seq_mem_pool mempool(transargs);
+	spsc_fix_mem_pool mempool(transargs);
 	std::cout << mempool.get_mempool_length() << std::endl;
 
 	std::thread b(fun2,std::ref(mempool));
@@ -30,7 +31,7 @@ int main()
 	b.join();
 }
 
-void fun1(spsc_seq_mem_pool& mempool)
+void fun1(spsc_fix_mem_pool& mempool)
 {
 	ibv_send_wr* addr = nullptr;
 	long double mean1 = 0;
@@ -46,7 +47,7 @@ void fun1(spsc_seq_mem_pool& mempool)
 		std::cout << "malloc mean:" << mean1/(i+1) <<std::endl;
 	}
 }
-void fun2(spsc_seq_mem_pool& mempool)
+void fun2(spsc_fix_mem_pool& mempool)
 {
 	long double mean1 = 0;
 	cycles_t s=0;
