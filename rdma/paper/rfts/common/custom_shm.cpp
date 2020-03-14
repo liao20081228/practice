@@ -159,12 +159,12 @@ size_t custom::posix_shm::seek(off_t offset, int whence) noexcept
 	}
 }
 
-size_t posix_shm::tell(void) const noexcept
+size_t custom::posix_shm::tell(void) const noexcept
 {
 	return __cur.load(std::memory_order_acquire);
 }
 
-void posix_shm::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
+void custom::posix_shm::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 		bool is_read) noexcept
 {
 	if ((is_read && !(__protect & PROT_READ)) || (!is_read && !(__protect & PROT_WRITE)))
@@ -172,7 +172,7 @@ void posix_shm::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 		errno = EPERM;
 		if (is_read)
 			PERR(posix_shm::read);
-		PERR(posix_shm::mwrite);
+		PERR(posix_shm::write);
 	}
 
 	if (!buf || buf_len < nbytes)
@@ -180,7 +180,7 @@ void posix_shm::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 		errno =  EINVAL;
 		if (is_read)
 			PERR(posix_shm::read);
-		PERR(posix_shm::mwrite);
+		PERR(posix_shm::write);
 	}
 	if (!nbytes)
 		return;
@@ -195,8 +195,8 @@ void posix_shm::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 		{
 			errno =  EINVAL;
 			if (is_read)
-				PERR(posix_shm::mread);
-			PERR(posix_shm::mwrite);
+				PERR(posix_shm::read);
+			PERR(posix_shm::write);
 		}
 		if (is_read)
 			memcpy(buf, static_cast<unsigned char*>(__addr) + __cur, nbytes);
@@ -206,12 +206,12 @@ void posix_shm::__access(void* buf, size_t buf_len, size_t nbytes, bool reset,
 			std::memory_order_acquire));
 }
 
-void posix_shm::read(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
+void custom::posix_shm::read(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
 	__access(buf, buf_len, nbytes, reset, true);
 }
 
-void posix_shm::write(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
+void custom::posix_shm::write(void* buf, size_t buf_len, size_t nbytes, bool reset) noexcept
 {
 	__access(buf, buf_len, nbytes, reset, false);
 }
