@@ -6,7 +6,7 @@
 #include<unistd.h>
 #include"../queue.hpp"
 using namespace rfts;
-const int testnum=1000;
+const int testnum=10;
 rfts::spsc_queue<ibv_send_wr*> queue(MEM_POOL_CAPACITY);
 
 void fun1(spsc_fix_mem_pool&);
@@ -17,7 +17,7 @@ int main()
 	{	
 		.afreq = 500,
 		.tfreq = 1,
-		.size_per_data = 20,
+		.size_per_data = sizeof(data),
 		.kind_per_sensor = 1,
 		.sensor_num_per_node = 8,
 		.node_num = 1
