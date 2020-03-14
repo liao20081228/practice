@@ -4,6 +4,7 @@
 
 #include"custom_sem.hpp"
 
+namespace {
 template<typename T>
 class spsc_queue
 {
@@ -22,7 +23,7 @@ public:
 	T get(T e) noexcept;
 };
 
-
+}
 
 
 
