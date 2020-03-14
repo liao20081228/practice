@@ -1,12 +1,7 @@
 #include<iostream>
+#include"trans_args.hpp"
 
-const int* fun()
+int main()
 {
-	return new int;
-}
-
-int main(void)
-{
-
-	return 0;
+	std::cout << sizeof(rfts::data) ;
 }
