@@ -19,6 +19,7 @@
 	#define _PERR(a) {perror(#a);exit(errno);}
 	#define PERR(c) _PERR(c() failed)
 #endif
+namespace custom{
 class posix_sem
 {
 private:
@@ -49,6 +50,6 @@ public:
 	int  getvalue(int* val = nullptr) const noexcept;
 };
 
-
+}
 
 #endif /* end of include guard: HPP_CUSTOM_SEM_HPP */

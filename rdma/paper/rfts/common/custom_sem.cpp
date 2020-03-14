@@ -1,6 +1,6 @@
 #include"custom_sem.hpp"
 
-posix_sem::posix_sem(int pshared, unsigned int value) noexcept
+custom::posix_sem::posix_sem(int pshared, unsigned int value) noexcept
 	: __sem(new sem_t), __name("")
 {
 	if (sem_init(__sem, pshared, value))
