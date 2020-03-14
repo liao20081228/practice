@@ -1,18 +1,18 @@
 #pragma once
-#ifndef HPP_CUSTOM_QUEUE_HPP
+#ifndef HPP_QUEUE_HPP
 	#define HPP_CUSTOM_QUEUE_HPP
 
 #include"custom_sem.hpp"
 
-namespace custom
+namespace rtfs
 {
 template<typename T>
-class spsc_fix_queue
+class spsc_queue
 {
 private:
 	T* queue;
 	unsigned int __front,__rear;
-	posix_sem __count;
+	custom::posix_sem __count;
 public:
 	explicit spsc_queue(unsigned int size) noexcept;
 	~spsc_queue(void) noexcept;
