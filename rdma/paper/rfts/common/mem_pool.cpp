@@ -95,12 +95,12 @@ rfts::spsc_fix_mem_pool::spsc_fix_mem_pool(const trans_args& transargs) noexcept
 {
 	for(int i = 0; i < MEM_POOL_CAPACITY; ++i)
 	{
-		__sg_list[i].addr = (uint64_t)(__addr + i * __elesize);
-		__sg_list[i].length = __elesize;
-		__ringqueue[i].next = nullptr,
-		__ringqueue[i].sg_list = &__sg_list[i],
-		__ringqueue[i].num_sge = 1,
-		__ringqueue[i].opcode  = IBV_WR_SEND;
+		__sg_lists[i].addr = (uint64_t)(__addr + i * __elesize);
+		__sg_lists[i].length = __elesize;
+		__wrs[i].next = nullptr,
+		__wrs[i].sg_list = &__sg_lists[i],
+		__wrs[i].num_sge = 1,
+		__wrs[i].opcode  = IBV_WR_SEND;
 	}
 }
 
