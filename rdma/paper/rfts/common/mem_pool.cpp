@@ -92,6 +92,7 @@ rfts::spsc_fix_mem_pool::spsc_fix_mem_pool(const trans_args& transargs) noexcept
 	, __sg_lists(new ibv_sge [MEM_POOL_CAPACITY])
 	, __wr_id(1)
 	, __ringqueue(new ibv_send_wr*[MEM_POOL_CAPACITY])
+	, __count(0, 0)
 {
 	for(int i = 0; i < MEM_POOL_CAPACITY; ++i)
 	{
@@ -101,6 +102,8 @@ rfts::spsc_fix_mem_pool::spsc_fix_mem_pool(const trans_args& transargs) noexcept
 		__wrs[i].sg_list = &__sg_lists[i],
 		__wrs[i].num_sge = 1,
 		__wrs[i].opcode  = IBV_WR_SEND;
+		__ringqueue[i] = &__wrs[i];
+		__count.post();
 	}
 }
 

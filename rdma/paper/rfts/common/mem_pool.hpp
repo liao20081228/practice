@@ -55,6 +55,7 @@ private:
 	ibv_sge*		__sg_lists;
 	uint64_t		__wr_id;
 	ibv_send_wr**		__ringqueue;
+	custom::posix_sem	__count;
 
 public:
 	explicit spsc_fix_mem_pool(const trans_args& transargs) noexcept;
