@@ -1,6 +1,6 @@
 #pragma once
 #ifndef HPP_QUEUE_HPP
-	#define HPP_CUSTOM_QUEUE_HPP
+	#define HPP_QUEUE_HPP
 
 #include"custom_sem.hpp"
 
