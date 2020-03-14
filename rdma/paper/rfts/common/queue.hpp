@@ -6,6 +6,7 @@
 
 namespace rfts
 {
+extern const unsigned int MEM_POOL_CAPACITY;
 template<typename T>
 class spsc_queue
 {
@@ -15,7 +16,7 @@ private:
 	unsigned int		__front,__rear;
 	custom::posix_sem	__count;
 public:
-	explicit spsc_queue(unsigned int size) noexcept;
+	explicit spsc_queue(unsigned int size = MEM_POOL_CAPACITY) noexcept;
 	~spsc_queue(void) noexcept;
 	spsc_queue(const spsc_queue&) = delete;
 	spsc_queue(const spsc_queue&&) = delete;
