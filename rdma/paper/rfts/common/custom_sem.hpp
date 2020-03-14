@@ -26,8 +26,8 @@ private:
 	sem_t*			__sem;
 	const std::string	__name;
 public:
-	explicit posix_sem(int pshared = 0,  unsigned int value = 0) noexcept;
-	explicit posix_sem(const char* name, int oflag = O_RDWR | O_CREAT,
+	explicit posix_sem(int pshared,  unsigned int value) noexcept;
+	explicit posix_sem(const std::string name, int oflag = O_RDWR | O_CREAT,
 			mode_t mode = REGULAR_FILE_MODE,
 			unsigned int value = 0) noexcept;
 	explicit posix_sem(const std::string& name, int oflag = O_RDWR | O_CREAT,
