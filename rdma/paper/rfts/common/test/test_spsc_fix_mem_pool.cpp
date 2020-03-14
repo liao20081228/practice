@@ -6,7 +6,7 @@
 #include<unistd.h>
 #include"../queue.hpp"
 using namespace rfts;
-const int testnum=10;
+const int testnum=20;
 rfts::spsc_queue<ibv_send_wr*> queue(MEM_POOL_CAPACITY);
 
 void fun1(spsc_fix_mem_pool&);
@@ -25,7 +25,7 @@ int main()
 
 	spsc_fix_mem_pool mempool(transargs);
 	std::cout << mempool.get_mempool_length() << std::endl;
-
+	std::cout << sizeof(ibv_send_wr*) << "," << sizeof(ibv_send_wr) <<"\n";
 	std::thread b(fun2,std::ref(mempool));
 	std::thread a(fun1,std::ref(mempool));
 	a.join();
@@ -38,9 +38,10 @@ void fun1(spsc_fix_mem_pool& mempool)
 	long double mean1 = 0;
 	cycles_t s=0;
 	cycles_t e=0;
-	double mhz = get_cpu_mhz(0);
+	double mhz;
 	for(int i=0; i<testnum;i++)
 	{ 
+		mhz = get_cpu_mhz(0);
 		s=get_cycles();
 		addr=mempool.malloc();
 		e=get_cycles();
@@ -54,9 +55,10 @@ void fun2(spsc_fix_mem_pool& mempool)
 	long double mean1 = 0;
 	cycles_t s=0;
 	cycles_t e=0;
-	double mhz = get_cpu_mhz(0);
+	double mhz =0;
 	for(int i=0; i<testnum;i++)
 	{ 
+		mhz = get_cpu_mhz(0);
 		ibv_send_wr* temp = queue.get();
 		s=get_cycles();
 		mempool.free(temp);
