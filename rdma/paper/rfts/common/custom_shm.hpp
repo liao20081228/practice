@@ -31,12 +31,12 @@ namespace custom
 class posix_shm
 {
 private:
-	const std::string	__name;
-	const int		__fd;
-	void*			__addr;
-	size_t			__length;
-	std::atomic_uint64_t	__cur;
-	int			__protect;
+	const std::string	__name;		//shm对应文件名
+	const int		__fd;		//shm对应的fd
+	void*			__addr;		//shm起始地址
+	size_t			__length;	//shm长度
+	std::atomic_uint64_t	__cur;		//shm当前读写位置
+	int			__protect;	//shm保护模式
 private:
 	void __access(void* buf, size_t buf_len, size_t nbytes,
 			bool reset, bool is_read) noexcept;
