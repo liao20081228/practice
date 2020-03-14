@@ -23,19 +23,6 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const trans_args& transargs) noexcept
 	}
 }
 
-rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(spsc_seq_mem_pool&& ref) noexcept
-	: __elesize(ref.__elesize)
-	, __length(ref.__length)
-	, __addr(ref.__addr)
-	, __front(ref.__front.load(std::memory_order_relaxed))
-	, __rear(ref.__rear.load(std::memory_order_relaxed))
-	, __ringqueue(ref.__ringqueue)
-	, __sg_list(ref.__sg_list)
-	, __wr_id(ref.__wr_id)
-{
-	__addr = nullptr;
-}
-
 rfts::spsc_seq_mem_pool::~spsc_seq_mem_pool(void) noexcept
 {
 	while( __addr && __front.load(std::memory_order_relaxed)

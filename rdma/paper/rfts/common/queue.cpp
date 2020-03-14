@@ -22,9 +22,10 @@ void rfts::spsc_queue<T>::put(T e) noexcept
 	__queue[__rear++] = e;
 	__count.post();
 }
+
 template<typename T>
 T rfts::spsc_queue<T>::get(void) noexcept
 {
-	__queue[__rear++] = e;
-	__count.post();
+	__count.wait();
+	return __queue[__front++];
 }
