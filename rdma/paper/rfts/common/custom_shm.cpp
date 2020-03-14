@@ -97,22 +97,26 @@ void* custom::posix_shm::getaddr(void) const noexcept
 	return __addr;
 }
 
-void posix_shm::clear(void) noexcept
+size_t custom::posix_shm::getlength(void) const noexcept
+{
+	return  __length;
+}
+void custom::posix_shm::clear(void) noexcept
 {
 	memset(__addr, 0, __length);
 	__cur.store(0, std::memory_order_release);
 }
 
 
-int posix_shm::sync(int flags) const noexcept
+int custom::posix_shm::sync(int flags) const noexcept
 {
-	int ret = ::msync(__addr, __length, flags);
+	int ret = msync(__addr, __length, flags);
 	if (ret && errno == EINVAL)
 		PERR(posix_shm::sync);
 	return ret;
 }
 
-size_t posix_shm::seek(off_t offset, int whence) noexcept
+size_t custom::posix_shm::seek(off_t offset, int whence) noexcept
 {
 	uint64_t temp = 0;
 	switch(whence)

@@ -62,6 +62,7 @@ public:
 	posix_shm& operator = (const posix_shm&& ref) = delete;
 	
 	void*	getaddr(void) const noexcept;
+	size_t	getlength(void) const noexcept;
 	void	clear(void) noexcept;
 	int	sync(int flags = MS_SYNC) const noexcept;
 	size_t	seek(off_t offset = 0, int whence = SEEK_SET) noexcept;
