@@ -10,9 +10,10 @@ template<typename T>
 class spsc_queue
 {
 private:
-	T* __queue;
-	unsigned int __front,__rear;
-	custom::posix_sem __count;
+	T*			__queue;
+	size_t			__size;
+	unsigned int		__front,__rear;
+	custom::posix_sem	__count;
 public:
 	explicit spsc_queue(unsigned int size) noexcept;
 	~spsc_queue(void) noexcept;
