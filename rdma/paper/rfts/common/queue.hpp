@@ -22,7 +22,7 @@ public:
 	spsc_queue& operator=(const spsc_queue&) = delete;
 	spsc_queue& operator=(spsc_queue&&) = delete;
 	void put(T e) noexcept;
-	T get(T e) noexcept;
+	T get(void) noexcept;
 };
 
 }
