@@ -109,14 +109,15 @@ rfts::spsc_fix_mem_pool::spsc_fix_mem_pool(const trans_args& transargs) noexcept
 
 rfts::spsc_fix_mem_pool::~spsc_fix_mem_pool(void) noexcept
 {
-	while( __addr && __count.getvalue() != MEM_POOL_CAPACITY)
-	{};
-	delete [] __addr;
-	__addr = nullptr;
+	while( __addr && __count.getvalue() != MEM_POOL_CAPACITY){};
 	delete [] __ringqueue;
 	__ringqueue = nullptr;
 	delete [] __sg_lists;
 	__sg_lists = nullptr;
+	delete [] __wrs;
+	__wrs = nullptr;
+	delete [] __addr;
+	__addr = nullptr;
 }
 
 
