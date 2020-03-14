@@ -4,13 +4,13 @@
 
 #include"custom_sem.hpp"
 
-namespace rtfs
+namespace rfts
 {
 template<typename T>
 class spsc_queue
 {
 private:
-	T* queue;
+	T* __queue;
 	unsigned int __front,__rear;
 	custom::posix_sem __count;
 public:
