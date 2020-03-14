@@ -79,7 +79,7 @@ void rfts::spsc_seq_mem_pool::free(void) noexcept
 	__front.store(front, std::memory_order_release);
 }
 
-
+//--------------------------
 rfts::spsc_fix_mem_pool::spsc_fix_mem_pool(const trans_args& transargs) noexcept
 	: __elesize(transargs.afreq / transargs.tfreq * transargs.node_num *
 		transargs.sensor_num_per_node * transargs.kind_per_sensor *
@@ -88,9 +88,10 @@ rfts::spsc_fix_mem_pool::spsc_fix_mem_pool(const trans_args& transargs) noexcept
 	, __addr{new unsigned char[__length]()}
 	, __front(0)
 	, __rear(0)
-	, __wr(new ibv_send_wr [MEM_POOL_CAPACITY])
-	, __sg_list(new ibv_sge [MEM_POOL_CAPACITY])
+	, __wrs(new ibv_send_wr [MEM_POOL_CAPACITY])
+	, __sg_lists(new ibv_sge [MEM_POOL_CAPACITY])
 	, __wr_id(1)
+	, __ringqueue(new ibv_send_wr*[MEM_POOL_CAPACITY])
 {
 	for(int i = 0; i < MEM_POOL_CAPACITY; ++i)
 	{
