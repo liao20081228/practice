@@ -136,19 +136,14 @@ int rfts::spsc_fix_mem_pool::get_mempool_length(void) const noexcept
 
 ibv_send_wr* rfts::spsc_fix_mem_pool::malloc(void) noexcept
 {
-	int front = 0, rear = 0, temp = 0;
-
+	__count.wait();
+	ibv_send_wr* temp = __ringqueue[__front++];
+	if(__front  >= MEM_POOL_CAPACITY)
+		__front -= MEM_POOL_CAPACITY;
+	return temp;
 }
 
-void rfts::spsc_seq_mem_pool::free(void) noexcept
+void rfts::spsc_seq_mem_pool::free(ibv_send_wr* e) noexcept
 {
-	int front = 0, rear = 0;
-	front = __front.load(std::memory_order_relaxed);
-	rear = __rear.load(std::memory_order_acquire);
-	if (rear == front)
-		return;
-	if (++front >= MEM_POOL_CAPACITY)
-		front -= MEM_POOL_CAPACITY;
-	__front.store(front, std::memory_order_release);
 }
 
