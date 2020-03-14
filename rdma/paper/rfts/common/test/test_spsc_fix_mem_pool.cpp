@@ -6,7 +6,7 @@
 #include<unistd.h>
 
 using namespace rfts;
-const int testnum=100;
+const int testnum=1000;
 void fun1(spsc_seq_mem_pool&);
 void fun2(spsc_seq_mem_pool&);
 int main()
@@ -36,8 +36,7 @@ void fun1(spsc_seq_mem_pool& mempool)
 	long double mean1 = 0;
 	cycles_t s=0;
 	cycles_t e=0;
-	double mhz = 0;
-		mhz=get_cpu_mhz(0);
+	double mhz = get_cpu_mhz(0);
 	for(int i=0; i<testnum;i++)
 	{ 
 		s=get_cycles();
@@ -52,8 +51,7 @@ void fun2(spsc_seq_mem_pool& mempool)
 	long double mean1 = 0;
 	cycles_t s=0;
 	cycles_t e=0;
-	double mhz = 0;
-		mhz=get_cpu_mhz(0);
+	double mhz = get_cpu_mhz(0);
 	for(int i=0; i<testnum;i++)
 	{ 
 		s=get_cycles();
