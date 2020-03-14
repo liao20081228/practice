@@ -20,7 +20,7 @@ public:
 	spsc_queue(const spsc_queue&&) = delete;
 	spsc_queue& operator=(const spsc_queue&) = delete;
 	spsc_queue& operator=(spsc_queue&&) = delete;
-	T put(T e) noexcept;
+	void put(T e) noexcept;
 	T get(T e) noexcept;
 };
 
