@@ -68,7 +68,7 @@ public:
 	spsc_fix_mem_pool& operator = (spsc_fix_mem_pool&& ref) = delete;
 	
 	ibv_send_wr*	malloc(void) noexcept;
-	void		free(void) noexcept;
+	void		free(ibv_send_wr* e) noexcept;
 	const void*	get_mempool_addr(void) const noexcept;
 	int		get_mempool_length(void) const noexcept;
 };

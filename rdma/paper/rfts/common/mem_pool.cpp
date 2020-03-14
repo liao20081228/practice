@@ -138,12 +138,16 @@ ibv_send_wr* rfts::spsc_fix_mem_pool::malloc(void) noexcept
 {
 	__count.wait();
 	ibv_send_wr* temp = __ringqueue[__front++];
-	if(__front  >= MEM_POOL_CAPACITY)
+	if (__front  >= MEM_POOL_CAPACITY)
 		__front -= MEM_POOL_CAPACITY;
 	return temp;
 }
 
-void rfts::spsc_seq_mem_pool::free(ibv_send_wr* e) noexcept
+void rfts::spsc_fix_mem_pool::free(ibv_send_wr* e) noexcept
 {
+	__ringqueue[__rear++] = e;
+	if (__rear >= MEM_POOL_CAPACITY)
+		__rear -=  MEM_POOL_CAPACITY;
+	__count.post();
 }
 
