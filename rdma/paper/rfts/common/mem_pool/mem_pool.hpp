@@ -2,6 +2,7 @@
 #ifndef HPP_RFTS_MEM_POOL_HPP
 	#define HPP_RFTS_MEM_POOL_HPP
 #include"trans_args.hpp"
+#include"custom_sem.hpp"
 #include<iostream>
 #include<mutex>
 #include<atomic>
@@ -25,6 +26,7 @@ private:
 	const int		__length;	//buf长度
 	unsigned char*		__addr;		//buf地址
 	unsigned int		__front, __rear; //队首、队尾标记
+	posix_sem		__count;
 	ibv_send_wr*		__ringqueue;
 	ibv_sge*		__sg_list;
 	uint64_t		__wr_id;

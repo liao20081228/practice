@@ -8,8 +8,8 @@ rfts::spsc_seq_mem_pool::spsc_seq_mem_pool(const trans_args& transargs) noexcept
 	, __addr{new unsigned char[__length]()}
 	, __front(0)
 	, __rear(0)
-	, __ringqueue(new ibv_send_wr [MEM_POOL_CAPACITY])
-	, __sg_list(new ibv_sge [MEM_POOL_CAPACITY])
+	, __ringqueue(new ibv_send_wr [MEM_POOL_CAPACITY]())
+	, __sg_list(new ibv_sge [MEM_POOL_CAPACITY]())
 	, __wr_id(1)
 {
 	for(int i = 0; i < MEM_POOL_CAPACITY; ++i)
