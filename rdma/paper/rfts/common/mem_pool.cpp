@@ -104,6 +104,7 @@ rfts::spsc_fix_mem_pool::spsc_fix_mem_pool(const trans_args& transargs) noexcept
 		__wrs[i].opcode  = IBV_WR_SEND;
 		__ringqueue[i] = &__wrs[i];
 		__count.post();
+		__rear += 1;
 	}
 }
 
@@ -122,31 +123,21 @@ rfts::spsc_fix_mem_pool::~spsc_fix_mem_pool(void) noexcept
 
 
 
-const void* rfts::spsc_seq_mem_pool::get_mempool_addr(void) const noexcept
+const void* rfts::spsc_fix_mem_pool::get_mempool_addr(void) const noexcept
 {
 	return __addr;
 }
 
 
-int rfts::spsc_seq_mem_pool::get_mempool_length(void) const noexcept
+int rfts::spsc_fix_mem_pool::get_mempool_length(void) const noexcept
 {
 	return __length;
 }
 
-ibv_send_wr* rfts::spsc_seq_mem_pool::malloc(void) noexcept
+ibv_send_wr* rfts::spsc_fix_mem_pool::malloc(void) noexcept
 {
 	int front = 0, rear = 0, temp = 0;
-	do
-	{
-		front = __front.load(std::memory_order_acquire);
-		temp = rear  = __rear.load(std::memory_order_relaxed);
-		
-		if (++rear >= MEM_POOL_CAPACITY)
-			rear -= MEM_POOL_CAPACITY;
-	}while(rear == front);
-	__rear.store(rear, std::memory_order_release);
-	__ringqueue[temp].wr_id = __wr_id++;
-	return &__ringqueue[temp];
+
 }
 
 void rfts::spsc_seq_mem_pool::free(void) noexcept
