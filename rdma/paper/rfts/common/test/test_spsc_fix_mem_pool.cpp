@@ -7,6 +7,7 @@
 #include"../queue.hpp"
 using namespace rfts;
 const int testnum=1000;
+rfts::spsc_queue<ibv_send_wr*> queue(MEM_POOL_CAPACITY);
 
 void fun1(spsc_fix_mem_pool&);
 void fun2(spsc_fix_mem_pool&);
@@ -44,7 +45,8 @@ void fun1(spsc_fix_mem_pool& mempool)
 		addr=mempool.malloc();
 		e=get_cycles();
 		mean1= mean1 + ( e-s ) / mhz * 1000;
-		std::cout << "malloc mean:" << mean1/(i+1) <<std::endl;
+		std::cout << addr <<", malloc mean:" << mean1/(i+1) <<std::endl;
+		queue.put(addr);
 	}
 }
 void fun2(spsc_fix_mem_pool& mempool)
@@ -55,11 +57,12 @@ void fun2(spsc_fix_mem_pool& mempool)
 	double mhz = get_cpu_mhz(0);
 	for(int i=0; i<testnum;i++)
 	{ 
+		ibv_send_wr* temp = queue.get();
 		s=get_cycles();
-		mempool.free();
+		mempool.free(temp);
 		e=get_cycles();
 		mean1= mean1 + ( e-s ) / mhz * 1000;
-		std::cout << "free mean:" << mean1/(i+1)<<std::endl;
+		std::cout << temp << ",free mean:" << mean1/(i+1)<<std::endl;
 	}
 }
 
