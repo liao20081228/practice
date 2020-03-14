@@ -1,12 +1,13 @@
 #pragma once
 #ifndef HPP_CUSTOM_QUEUE_HPP
-#define HPP_CUSTOM_QUEUE_HPP
+	#define HPP_CUSTOM_QUEUE_HPP
 
 #include"custom_sem.hpp"
 
-namespace {
+namespace custom
+{
 template<typename T>
-class spsc_queue
+class spsc_fix_queue
 {
 private:
 	T* queue;
