@@ -92,7 +92,7 @@ custom::posix_shm::~posix_shm(void) noexcept
 }
 
 
-void* posix_shm::getaddr(void) const noexcept
+void* custom::posix_shm::getaddr(void) const noexcept
 {
 	return __addr;
 }
