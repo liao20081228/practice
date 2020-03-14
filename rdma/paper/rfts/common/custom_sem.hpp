@@ -26,15 +26,12 @@ private:
 	sem_t*			__sem;
 	const std::string	__name;
 public:
-	explicit posix_sem(int pshared = 0,  unsigned int value= 0) noexcept;
-	explicit posix_sem(const char* name, int oflag = O_RDWR | O_CREAT,
-			mode_t mode = REGULAR_FILE_MODE,
+	explicit posix_sem(int pshared = 0,  unsigned int value = 0) noexcept;
+	explicit posix_sem(const char* name, int oflag, mode_t mode,
 			unsigned int value = 0) noexcept;
-	explicit posix_sem(const std::string& name, int oflag = O_RDWR | O_CREAT,
-			mode_t mode = REGULAR_FILE_MODE,
+	explicit posix_sem(const std::string& name, int oflag, mode_t mode,
 			unsigned int value = 0) noexcept;
-	explicit posix_sem(const std::string* name, int oflag = O_RDWR | O_CREAT,
-			mode_t mode = REGULAR_FILE_MODE,
+	explicit posix_sem(const std::string* name, int oflag, mode_t mode,
 			unsigned int value = 0) noexcept;
 	posix_sem(const posix_sem& ref) = delete;
 	posix_sem(posix_sem&& ref) noexcept;

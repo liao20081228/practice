@@ -51,10 +51,10 @@ private:
 	const int		__length;	//buf长度
 	unsigned char*		__addr;		//buf地址
 	size_t			__front, __rear; //队首、队尾标记
-	ibv_send_wr*		__wr;
-	ibv_sge*		__sg_list;
+	ibv_send_wr*		__wrs;
+	ibv_sge*		__sg_lists;
 	uint64_t		__wr_id;
-	ibv_send_wr**		__ringqueue
+	ibv_send_wr**		__ringqueue;
 
 public:
 	explicit spsc_fix_mem_pool(const trans_args& transargs) noexcept;
