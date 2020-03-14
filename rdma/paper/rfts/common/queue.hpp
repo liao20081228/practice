@@ -13,7 +13,7 @@ class spsc_queue
 private:
 	T*			__queue;
 	size_t			__size;
-	unsigned int		__front,__rear;
+	unsigned int		__front, __rear;
 	custom::posix_sem	__count;
 public:
 	explicit spsc_queue(unsigned int size = MEM_POOL_CAPACITY) noexcept;
