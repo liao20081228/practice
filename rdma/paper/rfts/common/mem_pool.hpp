@@ -2,6 +2,7 @@
 #ifndef HPP_RFTS_MEM_POOL_HPP
 	#define HPP_RFTS_MEM_POOL_HPP
 #include"trans_args.hpp"
+#include"custom_sem.hpp"
 #include<iostream>
 #include<mutex>
 #include<atomic>
@@ -49,10 +50,12 @@ private:
 	const int		__elesize;	//每个队列元素的大小
 	const int		__length;	//buf长度
 	unsigned char*		__addr;		//buf地址
-	std::atomic_int32_t	__front, __rear; //队首、队尾标记
-	ibv_send_wr*		__ringqueue;
+	size_t			__front, __rear; //队首、队尾标记
+	ibv_send_wr*		__wr;
 	ibv_sge*		__sg_list;
 	uint64_t		__wr_id;
+	ibv_send_wr**		__ringqueue
+
 public:
 	explicit spsc_fix_mem_pool(const trans_args& transargs) noexcept;
 		 spsc_fix_mem_pool(const spsc_fix_mem_pool & ref) = delete;
