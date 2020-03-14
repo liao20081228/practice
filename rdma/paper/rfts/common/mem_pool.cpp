@@ -107,19 +107,16 @@ rfts::spsc_fix_mem_pool::spsc_fix_mem_pool(const trans_args& transargs) noexcept
 	}
 }
 
-rfts::spsc_seq_mem_pool::~spsc_seq_mem_pool(void) noexcept
+rfts::spsc_fix_mem_pool::~spsc_fix_mem_pool(void) noexcept
 {
-	while( __addr && __front.load(std::memory_order_relaxed)
-			== __rear.load(std::memory_order_relaxed))
-	{
-		delete [] __addr;
-		__addr = nullptr;
-		delete [] __ringqueue;
-		__ringqueue = nullptr;
-		delete [] __sg_list;
-		__sg_list = nullptr;
-		break;
-	}
+	while( __addr && __count.getvalue() != MEM_POOL_CAPACITY)
+	{};
+	delete [] __addr;
+	__addr = nullptr;
+	delete [] __ringqueue;
+	__ringqueue = nullptr;
+	delete [] __sg_lists;
+	__sg_lists = nullptr;
 }
 
 
