@@ -26,6 +26,8 @@
 #endif /* ifndef CUSTOM_PRINT_ERROR_INFO */
 
 //posix shared memory
+namespace custom
+{
 class posix_shm
 {
 private:
@@ -67,7 +69,7 @@ public:
 	void	read(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
 	void	write(void* buf, size_t buf_len, size_t nbytes, bool reset = true) noexcept;
 };
-
+}
 
 #endif /* end of include guard: HPP_CUSTOM_SHM_H */
 
