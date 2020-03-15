@@ -73,30 +73,34 @@ public:
 	int		get_mempool_length(void) const noexcept;
 };
 
-/*
-class mpc_link_mem_pool
+class mpsc_fix_mem_pool
 {
 private:
-	struct node
-	{
-		void* addr;
-		struct node* next;
-	};
-	node* head;//链表头结点
-	node* tail;//链表尾部节点
-	std::atomic_int size;//已经使用的元素
-	const int elesize;//每个队列元素的大小
-	const int length;//buf长度
-	const int capacity = MEM_POOL_CAPACITY;//buf容量
-	unsigned char* addr;//buf地址
-public:
-	mpc_link_mem_pool(const transargs& transargs) noexcept;
-	mpc_link_mem_pool(const mpc_link_mem_pool&) = delete ;
-	mpc_link_mem_pool&  operator = (const mpc_link_mem_pool&) = delete;
-	~mpc_link_mem_pool(void) noexcept;
-};*/
-} //namespace rfts
+	const int		__elesize;	//每个队列元素的大小
+	const int		__length;	//buf长度
+	unsigned char*		__addr;		//buf地址
+	size_t			__front, __rear; //队首、队尾标记
+	ibv_send_wr*		__wrs;
+	ibv_sge*		__sg_lists;
+	uint64_t		__wr_id;
+	ibv_send_wr**		__ringqueue;
+	custom::posix_sem	__count;
 
+public:
+	explicit spsc_fix_mem_pool(const trans_args& transargs) noexcept;
+		 spsc_fix_mem_pool(const spsc_fix_mem_pool & ref) = delete;
+		 spsc_fix_mem_pool(spsc_fix_mem_pool&& ref) = delete;
+
+		~spsc_fix_mem_pool(void) noexcept;
+
+	spsc_fix_mem_pool& operator = (spsc_fix_mem_pool& ref) = delete;
+	spsc_fix_mem_pool& operator = (spsc_fix_mem_pool&& ref) = delete;
+	
+	ibv_send_wr*	malloc(void) noexcept;
+	void		free(ibv_send_wr* e) noexcept;
+	const void*	get_mempool_addr(void) const noexcept;
+	int		get_mempool_length(void) const noexcept;
+};
 
 
 #endif /* end of include guard: HPP_RFTS_MEM_POOL_HPP */
