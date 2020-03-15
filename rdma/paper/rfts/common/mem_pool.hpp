@@ -87,11 +87,11 @@ private:
 	custom::posix_sem	__count;
 
 public:
-	explicit spsc_fix_mem_pool(const trans_args& transargs) noexcept;
-		 spsc_fix_mem_pool(const spsc_fix_mem_pool & ref) = delete;
-		 spsc_fix_mem_pool(spsc_fix_mem_pool&& ref) = delete;
+	explicit mpsc_fix_mem_pool(const trans_args& transargs) noexcept;
+		 mpsc_fix_mem_pool(const spsc_fix_mem_pool & ref) = delete;
+		 mpsc_fix_mem_pool(spsc_fix_mem_pool&& ref) = delete;
 
-		~spsc_fix_mem_pool(void) noexcept;
+		~mpsc_fix_mem_pool(void) noexcept;
 
 	spsc_fix_mem_pool& operator = (spsc_fix_mem_pool& ref) = delete;
 	spsc_fix_mem_pool& operator = (spsc_fix_mem_pool&& ref) = delete;
