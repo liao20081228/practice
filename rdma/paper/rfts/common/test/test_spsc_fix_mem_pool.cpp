@@ -39,9 +39,10 @@ void fun1(spsc_fix_mem_pool& mempool)
 	cycles_t s=0;
 	cycles_t e=0;
 	double mhz;
+		mhz = get_cpu_mhz(0);
 	for(int i=0; i<testnum;i++)
 	{ 
-		mhz = get_cpu_mhz(0);
+		//mhz = get_cpu_mhz(0);
 		s=get_cycles();
 		addr=mempool.malloc();
 		e=get_cycles();
@@ -56,9 +57,10 @@ void fun2(spsc_fix_mem_pool& mempool)
 	cycles_t s=0;
 	cycles_t e=0;
 	double mhz =0;
+		mhz = get_cpu_mhz(0);
 	for(int i=0; i<testnum;i++)
 	{ 
-		mhz = get_cpu_mhz(0);
+		//mhz = get_cpu_mhz(0);
 		ibv_send_wr* temp = queue.get();
 		s=get_cycles();
 		mempool.free(temp);
