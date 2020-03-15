@@ -6,7 +6,7 @@
 #include<unistd.h>
 #include"../queue.hpp"
 using namespace rfts;
-const int testnum=20;
+const int testnum=1000;
 rfts::spsc_queue<ibv_send_wr*> queue(MEM_POOL_CAPACITY);
 
 void fun1(spsc_fix_mem_pool&);

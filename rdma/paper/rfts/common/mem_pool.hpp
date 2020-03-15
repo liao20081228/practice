@@ -18,7 +18,7 @@
 #endif
 namespace rfts
 {
-const unsigned int MEM_POOL_CAPACITY = 10;
+const unsigned int MEM_POOL_CAPACITY = 1000;
 class spsc_seq_mem_pool
 {
 private:
