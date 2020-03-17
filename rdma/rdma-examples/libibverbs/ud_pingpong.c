@@ -48,12 +48,12 @@
 #include "pingpong.h"
 
 enum {
-	PINGPONG_RECV_WRID = 1,
-	PINGPONG_SEND_WRID = 2,
+	PINGPONG_RECV_WRID = 1,		//接收WR 的 ID
+	PINGPONG_SEND_WRID = 2,		//发送WR 的 ID
 };
 
-static int page_size;
-static int validate_buf;
+static int page_size;		//页大小
+static int validate_buf;	//验证buf
 
 struct pingpong_context {
 	struct ibv_context	*context;	//设备上下文
@@ -72,10 +72,10 @@ struct pingpong_context {
 };
 
 struct pingpong_dest {
-	int lid;
-	int qpn;
-	int psn;
-	union ibv_gid gid;
+	int lid;		//lid
+	int qpn;		//QP编号
+	int psn;		//包序列号
+	union ibv_gid gid;	//GID
 };
 
 static int pp_connect_ctx(struct pingpong_context *ctx, int port, int my_psn,
