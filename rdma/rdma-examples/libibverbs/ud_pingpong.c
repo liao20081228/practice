@@ -555,23 +555,23 @@ int main(int argc, char *argv[])
 {
 	struct ibv_device      **dev_list;		//设备列表
 	struct ibv_device	*ib_dev;		//设备
-	struct pingpong_context *ctx;
-	struct pingpong_dest     my_dest;
-	struct pingpong_dest    *rem_dest;
-	struct timeval           start, end;
-	char                    *ib_devname = NULL;
-	char                    *servername = NULL;
-	unsigned int             port = 18515;
-	int                      ib_port = 1;
-	unsigned int             size = 2048;
-	unsigned int             rx_depth = 500;
-	unsigned int             iters = 1000;
-	int                      use_event = 0;
-	int                      routs;
-	int                      rcnt, scnt;
-	int                      num_cq_events = 0;
-	int                      sl = 0;
-	int			 gidx = -1;
+	struct pingpong_context *ctx;			//pingpong上下文，设备上下文、CC、CQ、QP、AH、buf info、send flag
+	struct pingpong_dest     my_dest;		//本地端信息
+	struct pingpong_dest    *rem_dest;		//远程端信息
+	struct timeval           start, end;		//即时
+	char                    *ib_devname = NULL;	//设备名
+	char                    *servername = NULL;	//服务名
+	unsigned int             port = 18515;		//交换信息的端口号
+	int                      ib_port = 1;		//IB设备的物理端口
+	unsigned int             size = 2048;		//信息大小
+	unsigned int             rx_depth = 500;	//接收工作请求大小
+	unsigned int             iters = 1000;		//重复试验的次数
+	int                      use_event = 0;		//轮询或事件机制
+	int                      routs;			//路由
+	int                      rcnt, scnt;		//计数器
+	int                      num_cq_events = 0;	//CQ完成数
+	int                      sl = 0;		//服务级别
+	int			 gidx = -1;		//gid
 	char			 gid[33];
 
 	srand48(getpid() * time(NULL));
