@@ -599,7 +599,7 @@ int main(int argc, char *argv[])
 			break;
 
 		switch (c) {
-		case 'p':
+		case 'p'://交换信息的端口号
 			port = strtol(optarg, NULL, 0);
 			if (port > 65535) {
 				usage(argv[0]);
@@ -607,11 +607,11 @@ int main(int argc, char *argv[])
 			}
 			break;
 
-		case 'd':
+		case 'd'://ib设备名
 			ib_devname = strdupa(optarg);
 			break;
 
-		case 'i':
+		case 'i'://ib设备的物理端口号
 			ib_port = strtol(optarg, NULL, 0);
 			if (ib_port < 1) {
 				usage(argv[0]);
@@ -619,31 +619,31 @@ int main(int argc, char *argv[])
 			}
 			break;
 
-		case 's':
+		case 's'://数据大小
 			size = strtoul(optarg, NULL, 0);
 			break;
 
-		case 'r':
+		case 'r'://接收深度
 			rx_depth = strtoul(optarg, NULL, 0);
 			break;
 
-		case 'n':
+		case 'n'://重复次数
 			iters = strtoul(optarg, NULL, 0);
 			break;
 
-		case 'l':
+		case 'l'://服务级别
 			sl = strtol(optarg, NULL, 0);
 			break;
 
-		case 'e':
+		case 'e'://事件机制
 			++use_event;
 			break;
 
-		case 'g':
+		case 'g'://gid索引
 			gidx = strtol(optarg, NULL, 0);
 			break;
 
-		case 'c':
+		case 'c'://验证
 			validate_buf = 1;
 			break;
 
@@ -654,7 +654,7 @@ int main(int argc, char *argv[])
 	}
 
 	if (optind == argc - 1)
-		servername = strdupa(argv[optind]);
+		servername = strdupa(argv[optind]);//服务器ip地址
 	else if (optind < argc) {
 		usage(argv[0]);
 		return 1;
@@ -662,13 +662,13 @@ int main(int argc, char *argv[])
 
 	page_size = sysconf(_SC_PAGESIZE);
 
-	dev_list = ibv_get_device_list(NULL);
+	dev_list = ibv_get_device_list(NULL);//获取设别列表
 	if (!dev_list) {
 		perror("Failed to get IB devices list");
 		return 1;
 	}
 
-	if (!ib_devname) {
+	if (!ib_devname) {//打开指定的Ib设备
 		ib_dev = *dev_list;
 		if (!ib_dev) {
 			fprintf(stderr, "No IB devices found\n");
