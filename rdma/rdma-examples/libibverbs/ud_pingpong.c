@@ -690,14 +690,14 @@ int main(int argc, char *argv[])
 	if (!ctx)
 		return 1;
 
-	routs = pp_post_recv(ctx, ctx->rx_depth);
+	routs = pp_post_recv(ctx, ctx->rx_depth);//发送一个信息
 	if (routs < ctx->rx_depth) {
 		fprintf(stderr, "Couldn't post receive (%d)\n", routs);
 		return 1;
 	}
 
 	if (use_event)
-		if (ibv_req_notify_cq(ctx->cq, 0)) {
+		if (ibv_req_notify_cq(ctx->cq, 0)) {//如果使用事件机制则请求通知CQ
 			fprintf(stderr, "Couldn't request CQ notification\n");
 			return 1;
 		}
@@ -706,10 +706,10 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Couldn't get port info\n");
 		return 1;
 	}
-	my_dest.lid = ctx->portinfo.lid;
+	my_dest.lid = ctx->portinfo.lid;//lid
 
-	my_dest.qpn = ctx->qp->qp_num;
-	my_dest.psn = lrand48() & 0xffffff;
+	my_dest.qpn = ctx->qp->qp_num;//QP编号
+	my_dest.psn = lrand48() & 0xffffff;//包序列号
 
 	if (gidx >= 0) {
 		if (ibv_query_gid(ctx->context, ib_port, gidx, &my_dest.gid)) {
@@ -718,7 +718,7 @@ int main(int argc, char *argv[])
 			return 1;
 		}
 	} else
-		memset(&my_dest.gid, 0, sizeof my_dest.gid);
+		memset(&my_dest.gid, 0, sizeof my_dest.gid);//gid
 
 	inet_ntop(AF_INET6, &my_dest.gid, gid, sizeof gid);
 	printf("  local address:  LID 0x%04x, QPN 0x%06x, PSN 0x%06x: GID %s\n",
