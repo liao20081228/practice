@@ -315,7 +315,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 	/* FIXME memset(ctx->buf, 0, size + 40); */
 	memset(ctx->buf, 0x7b, size + 40);
 
-	ctx->context = ibv_open_device(ib_dev);
+	ctx->context = ibv_open_device(ib_dev);//获取设备上下文
 	if (!ctx->context) {
 		fprintf(stderr, "Couldn't get context for %s\n",
 			ibv_get_device_name(ib_dev));
@@ -323,7 +323,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 	}
 
 	{
-		struct ibv_port_attr port_info = {};
+		struct ibv_port_attr port_info = {};//获取端口信息
 		int mtu;
 
 		if (ibv_query_port(ctx->context, port, &port_info)) {
@@ -337,7 +337,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 		}
 	}
 
-	if (use_event) {
+	if (use_event) {//使用事件机制
 		ctx->channel = ibv_create_comp_channel(ctx->context);
 		if (!ctx->channel) {
 			fprintf(stderr, "Couldn't create completion channel\n");
@@ -346,20 +346,20 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 	} else
 		ctx->channel = NULL;
 
-	ctx->pd = ibv_alloc_pd(ctx->context);
+	ctx->pd = ibv_alloc_pd(ctx->context);//创建PD
 	if (!ctx->pd) {
 		fprintf(stderr, "Couldn't allocate PD\n");
 		goto clean_comp_channel;
 	}
 
-	ctx->mr = ibv_reg_mr(ctx->pd, ctx->buf, size + 40, IBV_ACCESS_LOCAL_WRITE);
+	ctx->mr = ibv_reg_mr(ctx->pd, ctx->buf, size + 40, IBV_ACCESS_LOCAL_WRITE);//创建MR
 	if (!ctx->mr) {
 		fprintf(stderr, "Couldn't register MR\n");
 		goto clean_pd;
 	}
 
 	ctx->cq = ibv_create_cq(ctx->context, rx_depth + 1, NULL,
-				ctx->channel, 0);
+				ctx->channel, 0);//创建CQ
 	if (!ctx->cq) {
 		fprintf(stderr, "Couldn't create CQ\n");
 		goto clean_mr;
@@ -379,13 +379,13 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 			.qp_type = IBV_QPT_UD,
 		};
 
-		ctx->qp = ibv_create_qp(ctx->pd, &init_attr);
+		ctx->qp = ibv_create_qp(ctx->pd, &init_attr);//创建QP
 		if (!ctx->qp)  {
 			fprintf(stderr, "Couldn't create QP\n");
 			goto clean_cq;
 		}
 
-		ibv_query_qp(ctx->qp, &attr, IBV_QP_CAP, &init_attr);
+		ibv_query_qp(ctx->qp, &attr, IBV_QP_CAP, &init_attr);//是否使用内联发送
 		if (init_attr.cap.max_inline_data >= size) {
 			ctx->send_flags |= IBV_SEND_INLINE;
 		}
@@ -406,7 +406,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 				  IBV_QP_QKEY)) {
 			fprintf(stderr, "Failed to modify QP to INIT\n");
 			goto clean_qp;
-		}
+		}//修改QP状态
 	}
 
 	return ctx;
@@ -686,7 +686,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	ctx = pp_init_ctx(ib_dev, size, rx_depth, ib_port, use_event);
+	ctx = pp_init_ctx(ib_dev, size, rx_depth, ib_port, use_event);//创建CC、CQ、QP、并置于INIT状态
 	if (!ctx)
 		return 1;
 
