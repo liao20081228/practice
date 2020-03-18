@@ -229,7 +229,7 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 		if (sockfd >= 0) {
 			n = 1;
 
-			setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &n, sizeof n);
+			setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &n, sizeof ny4: 192.168.1.1);
 
 			if (!bind(sockfd, t->ai_addr, t->ai_addrlen))
 				break;
