@@ -269,7 +269,7 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 
 	sscanf(msg, "%x:%x:%x:%s", &rem_dest->lid, &rem_dest->qpn,
 							&rem_dest->psn, gid);//从msg中获取客户端的lid、qpn、psn、gid
-	wire_gid_to_gid(gid, &rem_dest->gid);//将wire_gid转为gid
+	wire_gid_to_gid(gid, &rem_dest->gid);//将客户端wire_gid转为gid
 
 	if (pp_connect_ctx(ctx, ib_port, my_dest->psn, sl, rem_dest,//将QP从INIT->RTR->RTS
 								sgid_idx)) {
@@ -279,10 +279,10 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 		goto out;
 	}
 
-	gid_to_wire_gid(&my_dest->gid, gid);
+	gid_to_wire_gid(&my_dest->gid, gid);//将服务端的gid转为wire_gid
 	sprintf(msg, "%04x:%06x:%06x:%s", my_dest->lid, my_dest->qpn,
-							my_dest->psn, gid);
-	if (write(connfd, msg, sizeof msg) != sizeof msg ||
+							my_dest->psn, gid);//将服务端的lid、qpn、psn、wire_gid转为msg
+	if (write(connfd, msg, sizeof msg) != sizeof msg ||//发送服务的msg给客户端
 	    read(connfd, msg, sizeof msg) != sizeof "done") {
 		fprintf(stderr, "Couldn't send/recv local address\n");
 		free(rem_dest);
@@ -730,19 +730,19 @@ int main(int argc, char *argv[])
 	       my_dest.lid, my_dest.qpn, my_dest.psn, gid);
 
 	if (servername)
-		rem_dest = pp_client_exch_dest(servername, port, &my_dest);
+		rem_dest = pp_client_exch_dest(servername, port, &my_dest);//客户端交换信息
 	else
 		rem_dest = pp_server_exch_dest(ctx, ib_port, port, sl,
-							&my_dest, gidx);
+							&my_dest, gidx);//服务端交换信息
 
-	if (!rem_dest)
+	if (!rem_dest)//如果rem_dest为空，则说明没有收到远端的信息
 		return 1;
 
-	inet_ntop(AF_INET6, &rem_dest->gid, gid, sizeof gid);
+	inet_ntop(AF_INET6, &rem_dest->gid, gid, sizeof gid);//打印远端的信息
 	printf("  remote address: LID 0x%04x, QPN 0x%06x, PSN 0x%06x, GID %s\n",
 	       rem_dest->lid, rem_dest->qpn, rem_dest->psn, gid);
 
-	if (servername)
+	if (servername)//客户端开始连接
 		if (pp_connect_ctx(ctx, ib_port, my_dest.psn, sl, rem_dest,
 									gidx))
 			return 1;
