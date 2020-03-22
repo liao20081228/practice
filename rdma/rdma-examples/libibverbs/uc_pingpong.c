@@ -48,26 +48,26 @@
 #include "pingpong.h"
 
 enum {
-	PINGPONG_RECV_WRID = 1,
-	PINGPONG_SEND_WRID = 2,
+	PINGPONG_RECV_WRID = 1,//工作请求ID
+	PINGPONG_SEND_WRID = 2,//
 };
 
-static int page_size;
-static int validate_buf;
+static int page_size;		//页面大小，通过sysconf获取
+static int validate_buf;	//数据验证buf
 
 struct pingpong_context {
-	struct ibv_context	*context;
-	struct ibv_comp_channel *channel;
-	struct ibv_pd		*pd;
-	struct ibv_mr		*mr;
-	struct ibv_cq		*cq;
-	struct ibv_qp		*qp;
-	char			*buf;
-	int			 size;
-	int			 send_flags;
-	int			 rx_depth;
-	int			 pending;
-	struct ibv_port_attr     portinfo;
+	struct ibv_context	*context;	//设备上下文
+	struct ibv_comp_channel *channel;	//完成通道
+	struct ibv_pd		*pd;		//保护域
+	struct ibv_mr		*mr;		//注册内存
+	struct ibv_cq		*cq;		//完成队列
+	struct ibv_qp		*qp;		//QP
+	char			*buf;		//数据缓冲区
+	int			 size;		//大小
+	int			 send_flags;	//发送标志
+	int			 rx_depth;	//接收队列大小
+	int			 pending;	//挂起
+	struct ibv_port_attr     portinfo;	//端口信息
 };
 
 struct pingpong_dest {
