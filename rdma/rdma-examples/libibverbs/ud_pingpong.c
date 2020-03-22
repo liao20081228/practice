@@ -599,7 +599,7 @@ int main(int argc, char *argv[])
 			break;
 
 		switch (c) {
-		case 'p'://交换信息的端口号
+		case 'p'://交换信息的端口号, 默认18515
 			port = strtol(optarg, NULL, 0);
 			if (port > 65535) {
 				usage(argv[0]);
@@ -623,7 +623,7 @@ int main(int argc, char *argv[])
 			size = strtoul(optarg, NULL, 0);
 			break;
 
-		case 'r'://接收深度
+		case 'r'://接收队列深度
 			rx_depth = strtoul(optarg, NULL, 0);
 			break;
 
@@ -635,7 +635,7 @@ int main(int argc, char *argv[])
 			sl = strtol(optarg, NULL, 0);
 			break;
 
-		case 'e'://事件机制
+		case 'e'://使用事件机制，默认同步机制
 			++use_event;
 			break;
 

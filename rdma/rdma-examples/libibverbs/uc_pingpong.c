@@ -530,27 +530,27 @@ static void usage(const char *argv0)
 
 int main(int argc, char *argv[])
 {
-	struct ibv_device      **dev_list;		//
-	struct ibv_device	*ib_dev;		//
-	struct pingpong_context *ctx;			//
-	struct pingpong_dest     my_dest;		//
-	struct pingpong_dest    *rem_dest;		//
-	struct timeval           start, end;		//
-	char                    *ib_devname = NULL;	//
-	char                    *servername = NULL;	//
-	unsigned int             port = 18515;		//
-	int                      ib_port = 1;		//
-	unsigned int             size = 4096;		//
-	enum ibv_mtu		 mtu = IBV_MTU_1024;	//
-	unsigned int             rx_depth = 500;	//
-	unsigned int             iters = 1000;		//
-	int                      use_event = 0;		//
-	int                      routs;			//
-	int                      rcnt, scnt;		//
-	int                      num_cq_events = 0;	//
-	int                      sl = 0;		//
-	int			 gidx = -1;		//
-	char			 gid[33];		//
+	struct ibv_device      **dev_list;		//设备列表
+	struct ibv_device	*ib_dev;		//设备
+	struct pingpong_context *ctx;			//ping-pong背景
+	struct pingpong_dest     my_dest;		//本地信息，需要发送到远端
+	struct pingpong_dest    *rem_dest;		//远端信息
+	struct timeval           start, end;		//计时
+	char                    *ib_devname = NULL;	//ib设备名
+	char                    *servername = NULL;	//服务器地址
+	unsigned int             port = 18515;		//tcp端口号
+	int                      ib_port = 1;		//ib设备的物理端口
+	unsigned int             size = 4096;		//数据包大小
+	enum ibv_mtu		 mtu = IBV_MTU_1024;	//mtu
+	unsigned int             rx_depth = 500;	//接收队列的大小
+	unsigned int             iters = 1000;		//重复次数
+	int                      use_event = 0;		//同步或异步
+	int                      routs;			//路由次
+	int                      rcnt, scnt;		//计数
+	int                      num_cq_events = 0;	//完成事件数
+	int                      sl = 0;		//服务级别
+	int			 gidx = -1;		//gid索引
+	char			 gid[33];		//gid
 
 	srand48(getpid() * time(NULL));
 
