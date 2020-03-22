@@ -71,10 +71,10 @@ struct pingpong_context {
 };
 
 struct pingpong_dest {
-	int lid;
-	int qpn;
-	int psn;
-	union ibv_gid gid;
+	int lid;		//lid
+	int qpn;		//QP编号
+	int psn;		//包序列号
+	union ibv_gid gid;	//gid
 };
 
 static int pp_connect_ctx(struct pingpong_context *ctx, int port, int my_psn,
@@ -530,27 +530,27 @@ static void usage(const char *argv0)
 
 int main(int argc, char *argv[])
 {
-	struct ibv_device      **dev_list;
-	struct ibv_device	*ib_dev;
-	struct pingpong_context *ctx;
-	struct pingpong_dest     my_dest;
-	struct pingpong_dest    *rem_dest;
-	struct timeval           start, end;
-	char                    *ib_devname = NULL;
-	char                    *servername = NULL;
-	unsigned int             port = 18515;
-	int                      ib_port = 1;
-	unsigned int             size = 4096;
-	enum ibv_mtu		 mtu = IBV_MTU_1024;
-	unsigned int             rx_depth = 500;
-	unsigned int             iters = 1000;
-	int                      use_event = 0;
-	int                      routs;
-	int                      rcnt, scnt;
-	int                      num_cq_events = 0;
-	int                      sl = 0;
-	int			 gidx = -1;
-	char			 gid[33];
+	struct ibv_device      **dev_list;		//
+	struct ibv_device	*ib_dev;		//
+	struct pingpong_context *ctx;			//
+	struct pingpong_dest     my_dest;		//
+	struct pingpong_dest    *rem_dest;		//
+	struct timeval           start, end;		//
+	char                    *ib_devname = NULL;	//
+	char                    *servername = NULL;	//
+	unsigned int             port = 18515;		//
+	int                      ib_port = 1;		//
+	unsigned int             size = 4096;		//
+	enum ibv_mtu		 mtu = IBV_MTU_1024;	//
+	unsigned int             rx_depth = 500;	//
+	unsigned int             iters = 1000;		//
+	int                      use_event = 0;		//
+	int                      routs;			//
+	int                      rcnt, scnt;		//
+	int                      num_cq_events = 0;	//
+	int                      sl = 0;		//
+	int			 gidx = -1;		//
+	char			 gid[33];		//
 
 	srand48(getpid() * time(NULL));
 
