@@ -574,8 +574,8 @@ int main(int argc, char *argv[])
 	int                      rcnt, scnt;		//计数器
 	int                      num_cq_events = 0;	//CQ完成数
 	int                      sl = 0;		//服务级别
-	int			 gidx = -1;		//gid
-	char			 gid[33];
+	int			 gidx = -1;		//gid索引
+	char			 gid[33];		//gid
 
 	srand48(getpid() * time(NULL));
 
@@ -714,16 +714,16 @@ int main(int argc, char *argv[])
 	my_dest.qpn = ctx->qp->qp_num;
 	my_dest.psn = lrand48() & 0xffffff;
 
-	if (gidx >= 0) {//获取指定gid索引对应的gid，否则使用默认的gid
+	if (gidx >= 0) {//如果指定了gid索引，则获取指定gid索引对应的gid
 		if (ibv_query_gid(ctx->context, ib_port, gidx, &my_dest.gid)) {
 			fprintf(stderr, "Could not get local gid for gid index "
 								"%d\n", gidx);
 			return 1;
 		}
-	} else
+	} else//否则gid为空
 		memset(&my_dest.gid, 0, sizeof my_dest.gid);
 
-	inet_ntop(AF_INET6, &my_dest.gid, gid, sizeof gid);
+	inet_ntop(AF_INET6, &my_dest.gid, gid, sizeof gid);//将二进制的gid转为字符串
 	printf("  local address:  LID 0x%04x, QPN 0x%06x, PSN 0x%06x: GID %s\n",
 	       my_dest.lid, my_dest.qpn, my_dest.psn, gid);
 
