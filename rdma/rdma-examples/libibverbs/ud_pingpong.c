@@ -674,7 +674,7 @@ int main(int argc, char *argv[])
 			fprintf(stderr, "No IB devices found\n");
 			return 1;
 		}
-	} else {
+	} else {//或者打开一个IB设备
 		int i;
 		for (i = 0; dev_list[i]; ++i)
 			if (!strcmp(ibv_get_device_name(dev_list[i]), ib_devname))
