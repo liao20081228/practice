@@ -484,6 +484,7 @@ static int pp_close_ctx(struct pingpong_context *ctx)
 	return 0;
 }
 
+//发布n个接收工作请求到接收队列中，返回值表示成功发布的接收请求数量
 static int pp_post_recv(struct pingpong_context *ctx, int n)
 {
 	struct ibv_sge list = {
@@ -567,7 +568,7 @@ int main(int argc, char *argv[])
 	unsigned int             rx_depth = 500;	//接收工作请求大小
 	unsigned int             iters = 1000;		//重复试验的次数
 	int                      use_event = 0;		//轮询或事件机制
-	int                      routs;			//路由
+	int                      routs;			//发布成功的接收请求的数量，如果小于rx_depth则出错
 	int                      rcnt, scnt;		//计数器
 	int                      num_cq_events = 0;	//CQ完成数
 	int                      sl = 0;		//服务级别
@@ -690,14 +691,23 @@ int main(int argc, char *argv[])
 	if (!ctx)
 		return 1;
 
+<<<<<<< HEAD
 	routs = pp_post_recv(ctx, ctx->rx_depth);//发送一个信息
+=======
+	routs = pp_post_recv(ctx, ctx->rx_depth);//发布rx_depth个接收请求到接收队列中,routs为成功发布的wr的数量
+>>>>>>> e55d85d108a385c92ee2a12df028672516e052da
 	if (routs < ctx->rx_depth) {
 		fprintf(stderr, "Couldn't post receive (%d)\n", routs);
 		return 1;
 	}
 
+<<<<<<< HEAD
 	if (use_event)
 		if (ibv_req_notify_cq(ctx->cq, 0)) {//如果使用事件机制则请求通知CQ
+=======
+	if (use_event)//如果使用事件机制,则发出请求通知
+		if (ibv_req_notify_cq(ctx->cq, 0)) {
+>>>>>>> e55d85d108a385c92ee2a12df028672516e052da
 			fprintf(stderr, "Couldn't request CQ notification\n");
 			return 1;
 		}
