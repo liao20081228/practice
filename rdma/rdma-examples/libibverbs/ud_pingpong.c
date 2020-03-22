@@ -123,6 +123,7 @@ static int pp_connect_ctx(struct pingpong_context *ctx, int port, int my_psn,
 	return 0;
 }
 
+//客户端将my_dest发送给服务端,并接受来自服务端的信息
 static struct pingpong_dest *pp_client_exch_dest(const char *servername, int port,
 						 const struct pingpong_dest *my_dest)
 {
@@ -195,6 +196,7 @@ out:
 	return rem_dest;
 }
 
+//服务端将my_dest发送给客户端，并接受客户端传来的数据
 static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 						 int ib_port, int port, int sl,
 						 const struct pingpong_dest *my_dest,
@@ -229,7 +231,7 @@ static struct pingpong_dest *pp_server_exch_dest(struct pingpong_context *ctx,
 		if (sockfd >= 0) {
 			n = 1;
 
-			setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &n, sizeof ny4: 192.168.1.1);
+			setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &n, sizeof n);
 
 			if (!bind(sockfd, t->ai_addr, t->ai_addrlen))
 				break;
@@ -693,23 +695,14 @@ int main(int argc, char *argv[])
 	if (!ctx)
 		return 1;
 
-<<<<<<< HEAD
-	routs = pp_post_recv(ctx, ctx->rx_depth);//发送一个信息
-=======
 	routs = pp_post_recv(ctx, ctx->rx_depth);//发布rx_depth个接收请求到接收队列中,routs为成功发布的wr的数量
->>>>>>> e55d85d108a385c92ee2a12df028672516e052da
 	if (routs < ctx->rx_depth) {
 		fprintf(stderr, "Couldn't post receive (%d)\n", routs);
 		return 1;
 	}
 
-<<<<<<< HEAD
-	if (use_event)
-		if (ibv_req_notify_cq(ctx->cq, 0)) {//如果使用事件机制则请求通知CQ
-=======
 	if (use_event)//如果使用事件机制,则发出请求通知
 		if (ibv_req_notify_cq(ctx->cq, 0)) {
->>>>>>> e55d85d108a385c92ee2a12df028672516e052da
 			fprintf(stderr, "Couldn't request CQ notification\n");
 			return 1;
 		}
@@ -718,14 +711,10 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Couldn't get port info\n");
 		return 1;
 	}
-<<<<<<< HEAD
 	my_dest.lid = ctx->portinfo.lid;//设置my_dest用于带外交换到远端
-=======
-	my_dest.lid = ctx->portinfo.lid;//lid
->>>>>>> a922d21fc96c9288a60628f51db7b180eb51b8b9
 
-	my_dest.qpn = ctx->qp->qp_num;//QP编号
-	my_dest.psn = lrand48() & 0xffffff;//包序列号
+	my_dest.qpn = ctx->qp->qp_num;
+	my_dest.psn = lrand48() & 0xffffff;
 
 	if (gidx >= 0) {//如果指定了gid索引，则获取指定gid索引对应的gid
 		if (ibv_query_gid(ctx->context, ib_port, gidx, &my_dest.gid)) {
@@ -733,19 +722,14 @@ int main(int argc, char *argv[])
 								"%d\n", gidx);
 			return 1;
 		}
-<<<<<<< HEAD
 	} else//否则gid为空
 		memset(&my_dest.gid, 0, sizeof my_dest.gid);
-=======
-	} else
-		memset(&my_dest.gid, 0, sizeof my_dest.gid);//gid
->>>>>>> a922d21fc96c9288a60628f51db7b180eb51b8b9
 
 	inet_ntop(AF_INET6, &my_dest.gid, gid, sizeof gid);//将二进制的gid转为字符串,为了打印输出
 	printf("  local address:  LID 0x%04x, QPN 0x%06x, PSN 0x%06x: GID %s\n",
 	       my_dest.lid, my_dest.qpn, my_dest.psn, gid);
 
-	if (servername)//判断是服务端还是客户端,为真则是客户端
+	if (servername)
 		rem_dest = pp_client_exch_dest(servername, port, &my_dest);
 	else
 		rem_dest = pp_server_exch_dest(ctx, ib_port, port, sl,
