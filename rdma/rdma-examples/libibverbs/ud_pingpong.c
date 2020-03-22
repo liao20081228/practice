@@ -723,7 +723,7 @@ int main(int argc, char *argv[])
 	} else//否则gid为空
 		memset(&my_dest.gid, 0, sizeof my_dest.gid);
 
-	inet_ntop(AF_INET6, &my_dest.gid, gid, sizeof gid);//将二进制的gid转为字符串
+	inet_ntop(AF_INET6, &my_dest.gid, gid, sizeof gid);//将二进制的gid转为字符串,为了打印输出
 	printf("  local address:  LID 0x%04x, QPN 0x%06x, PSN 0x%06x: GID %s\n",
 	       my_dest.lid, my_dest.qpn, my_dest.psn, gid);
 
