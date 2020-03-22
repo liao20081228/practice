@@ -747,14 +747,15 @@ int main(int argc, char *argv[])
 									gidx))
 			return 1;
 
+//致此为止，两端RDMA UD 通信已经建立
 	ctx->pending = PINGPONG_RECV_WRID;
 
-	if (servername) {
+	if (servername) {//如果时客户端
 		if (validate_buf)
 			for (int i = 0; i < size; i += page_size)
 				ctx->buf[i + 40] = i / page_size % sizeof(char);
 
-		if (pp_post_send(ctx, rem_dest->qpn)) {
+		if (pp_post_send(ctx, rem_dest->qpn)) {//发布一个发送请求
 			fprintf(stderr, "Couldn't post send\n");
 			return 1;
 		}
