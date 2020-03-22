@@ -748,7 +748,7 @@ int main(int argc, char *argv[])
 			return 1;
 
 //致此为止，两端RDMA UD 通信已经建立
-	ctx->pending = PINGPONG_RECV_WRID;
+	ctx->pending = PINGPONG_RECV_WRID;//=1
 
 	if (servername) {//如果时客户端
 		if (validate_buf)
@@ -759,33 +759,33 @@ int main(int argc, char *argv[])
 			fprintf(stderr, "Couldn't post send\n");
 			return 1;
 		}
-		ctx->pending |= PINGPONG_SEND_WRID;
+		ctx->pending |= PINGPONG_SEND_WRID;//=3
 	}
 
-	if (gettimeofday(&start, NULL)) {
+	if (gettimeofday(&start, NULL)) {//获取开始时间
 		perror("gettimeofday");
 		return 1;
 	}
 
 	rcnt = scnt = 0;
-	while (rcnt < iters || scnt < iters) {
-		if (use_event) {
+	while (rcnt < iters || scnt < iters) {//接收或发送的次数小于指定的重复次数
+		if (use_event) {//如果使用事件机制
 			struct ibv_cq *ev_cq;
 			void          *ev_ctx;
 
-			if (ibv_get_cq_event(ctx->channel, &ev_cq, &ev_ctx)) {
+			if (ibv_get_cq_event(ctx->channel, &ev_cq, &ev_ctx)) {//获取事件
 				fprintf(stderr, "Failed to get cq_event\n");
 				return 1;
 			}
 
-			++num_cq_events;
+			++num_cq_events;//事件计数+1
 
 			if (ev_cq != ctx->cq) {
 				fprintf(stderr, "CQ event for unknown CQ %p\n", ev_cq);
 				return 1;
 			}
 
-			if (ibv_req_notify_cq(ctx->cq, 0)) {
+			if (ibv_req_notify_cq(ctx->cq, 0)) {//请求CQ通知
 				fprintf(stderr, "Couldn't request CQ notification\n");
 				return 1;
 			}
@@ -801,10 +801,10 @@ int main(int argc, char *argv[])
 					fprintf(stderr, "poll CQ failed %d\n", ne);
 					return 1;
 				}
-			} while (!use_event && ne < 1);
+			} while (!use_event && ne < 1);//获取WC，由于每一次发送一个，接收一个发送了一个验证消息，所以这里第一次要取出两个完成,
 
 			for (i = 0; i < ne; ++i) {
-				if (wc[i].status != IBV_WC_SUCCESS) {
+				if (wc[i].status != IBV_WC_SUCCESS) {//如果wc不为成功，则输出wc位于什么状态，以及wc的wr_id
 					fprintf(stderr, "Failed status %s (%d) for wr_id %d\n",
 						ibv_wc_status_str(wc[i].status),
 						wc[i].status, (int) wc[i].wr_id);
