@@ -330,7 +330,7 @@ static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 			fprintf(stderr, "Unable to query port info for port %d\n", port);
 			goto clean_device;
 		}
-		mtu = 1 << (port_info.active_mtu + 7);
+		mtu = 1 << (port_info.active_mtu + 7);//判断MTU大小
 		if (size > mtu) {
 			fprintf(stderr, "Requested size larger than port MTU (%d)\n", mtu);
 			goto clean_device;
