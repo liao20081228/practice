@@ -811,7 +811,7 @@ int main(int argc, char *argv[])
 					return 1;
 				}
 
-				switch ((int) wc[i].wr_id) {
+				switch ((int) wc[i].wr_id) {//根据工作id来判断哪个成功了,成功就+1
 				case PINGPONG_SEND_WRID:
 					++scnt;
 					break;
