@@ -816,7 +816,7 @@ int main(int argc, char *argv[])
 					++scnt;
 					break;
 
-				case PINGPONG_RECV_WRID:
+				case PINGPONG_RECV_WRID://如果是接收成功则补上一个接收wr
 					if (--routs <= 1) {
 						routs += pp_post_recv(ctx, ctx->rx_depth - routs);
 						if (routs < ctx->rx_depth) {
