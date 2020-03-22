@@ -292,6 +292,8 @@ out:
 	return rem_dest;
 }
 
+
+//创建pingpong上下文，创建buf，创建设备上下文，判断MTU，创建CC、PD、MR、CQ、QP、并且置于INIT
 static struct pingpong_context *pp_init_ctx(struct ibv_device *ib_dev, int size,
 					    int rx_depth, int port,
 					    int use_event)
@@ -707,12 +709,12 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Couldn't get port info\n");
 		return 1;
 	}
-	my_dest.lid = ctx->portinfo.lid;
+	my_dest.lid = ctx->portinfo.lid;//设置my_dest用于带外交换到远端
 
 	my_dest.qpn = ctx->qp->qp_num;
 	my_dest.psn = lrand48() & 0xffffff;
 
-	if (gidx >= 0) {
+	if (gidx >= 0) {//获取指定gid索引对应的gid，否则使用默认的gid
 		if (ibv_query_gid(ctx->context, ib_port, gidx, &my_dest.gid)) {
 			fprintf(stderr, "Could not get local gid for gid index "
 								"%d\n", gidx);
