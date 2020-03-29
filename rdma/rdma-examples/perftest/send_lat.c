@@ -163,7 +163,7 @@ static int send_destroy_ctx(struct pingpong_context *ctx,
 int main(int argc, char *argv[])
 {
 	int                        i = 0, rc;
-	int                        size_max_pow = 24;
+	int                        size_max_pow = 24;//最大消息为16MB
 	int			   ret_val;
 	struct report_options      report;
 	struct pingpong_context    ctx;
