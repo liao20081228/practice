@@ -26,7 +26,21 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(device->transport_type, transport type, d, 30s);
 	FPRT(ibv_get_device_name(device), ibv_get_device_name, s, 30s);
 	FPRT(ibv_get_device_guid(device), GUID, llX, 30s);
+	
+	struct ibv_context* context = ibv_open_device(device);
+	if (!context)
+	{
+		perror("ibv_open_device failed");
+		return 1;
+	}
+
+
+
+
 	return 0;
+close_device:
+	ibv_close_device(context);
+	return 1;
 }
 
 int main(int argc , char* argv[])
