@@ -12,23 +12,20 @@
 #endif /* ifndef OUTPUT */
 
 #ifndef FPR
-	#define _FPR(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define FPR(a, b, c) _FPR(%-c:%s\n ,b, a)
-	
 	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define FPRT(a, b, c) _FPRT(\t%-c : %-s\n,b, a)
+	#define FPRT(a, b, c, d) _FPRT(\t%-d : %-c\n,b, a)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 int get_attr(struct ibv_device* device, int port)
 {
-	FPR(device->name, kernel name:, s);
-	FPRT(device->dev_name, uverb name:, s);
-	/*FPR(device->dev_path, infiniband verbs in sysfs,  %-50s);*/
-	/*FPR(device->ibdev_path, infiniband in sysfs: %-50s);*/
-	/*FPR(device->node_type, node type: %d);*/
-	/*FPR(device->transport_type, transporttype: %d);*/
-	/*FPR(ibv_get_device_name(device), ibv_get_device_name: %s);*/
-	/*FPR(ibv_get_device_guid(device), GUID: %llX);*/
+	fprintf(OUTPUT, "name : %-s\n", device->name);
+	FPRT(device->dev_name, uverb name, s, 30s);
+	FPRT(device->dev_path, infiniband verbs in sysfs, s, 30s);
+	FPRT(device->ibdev_path, infiniband in sysfs, s, 30s);
+	FPRT(device->node_type, node type, d, 30s);
+	FPRT(device->transport_type, transporttype: %d);
+	FPR(ibv_get_device_name(device), ibv_get_device_name: %s);
+	FPR(ibv_get_device_guid(device), GUID: %llX);
 	return 0;
 }
 
