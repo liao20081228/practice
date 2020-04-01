@@ -5,10 +5,18 @@
 #include<assert.h>
 #include<getopt.h>
 #include<unistd.h>
-int get_attr(struct ibv_device* device)
-{
-	
 
+
+
+
+int get_attr(struct ibv_device* device, const char* devname)
+{
+	if (strlen(devname) != 0)
+	{
+
+	}
+	
+}
 
 
 
@@ -47,7 +55,7 @@ int main(int argc , char* argv[])
 	}
 	for (int i = 0; i < num; ++i)
 	{
-		if (get_attr(dev_list[i]))
+		if (get_attr(dev_list[i], devname))
 		{
 			goto err;
 		}
