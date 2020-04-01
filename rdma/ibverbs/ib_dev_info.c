@@ -28,7 +28,8 @@
 int get_attr(struct ibv_device* device, int port)
 {
 	FPR(device->name, %s);
-	FPRT(device->dev_path, device_path:%s);
+	FPRT(device->dev_path, device_path : %s);
+	FPRT(device->ibdev_path, ib device pata : %s);
 	return 0;
 }
 
