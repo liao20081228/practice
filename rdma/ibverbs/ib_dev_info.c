@@ -58,7 +58,7 @@ int main(int argc , char* argv[])
 	}
 	else if (num == 0)
 	{
-		FPR("no rdma device was found", "", %s);
+		fprintf(OUTPUT, "no rdma device was found\n");
 		goto err;
 	}
 
@@ -77,7 +77,7 @@ int main(int argc , char* argv[])
 		}
 		if (i == num)
 		{
-			printf("not find the rdma device: %s\n", devname);
+			fprintf(OUTPUT, "not find the rdma device: %s\n", devname);
 			goto err;
 		}
 	}
