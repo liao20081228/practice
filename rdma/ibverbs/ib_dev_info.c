@@ -18,11 +18,15 @@ int get_attr(struct ibv_device* device)
 	return 0;
 }
 
-int main(void)
+int main(int argc , char* argv[])
 {
 	char devname[512] = {0};
 	int  port = 1;
-	while(getopt(argc, argv, "d:p:"))
+	int ch = 0;
+	while((ch = getopt(argc, argv, "d:p:") != -1)
+	{
+
+	}
 
 	ibv_fork_init();
 	int num = 0;
