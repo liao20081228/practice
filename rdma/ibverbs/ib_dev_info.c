@@ -30,7 +30,7 @@ int get_attr(struct ibv_device* device, int port)
 	char* GUID="xxxx:xxxx:xxxx:xxxx";
 	uint64_t guid_temp = ibv_get_device_guid(device);
 	uint16_t guid[4]= {0,0,0,0};
-	memcpy(guid, guid_temp, 8);
+	memcpy(guid, &guid_temp, 8);
 	sprintf(GUID, "%4X:%4X:%4X:%4X", guid[0],guid[1],guid[2],guid[3]);
 	FPRT(GUID, GUID, s, 30s);
 	
