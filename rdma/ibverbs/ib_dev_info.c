@@ -14,6 +14,8 @@
 #ifndef FPR
 	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define FPRT(a, b, c, d) _FPRT(\t%-d : %-c\n,b, a)
+	#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 int get_attr(struct ibv_device* device, int port)
@@ -41,7 +43,9 @@ int get_attr(struct ibv_device* device, int port)
 		perror("ibv_query_device_ex failed");
 		goto close_device;
 	}
-
+	fprintf(OUTPUT,"\t%-30s\n", "device attr:");
+	FPRT2(dev_attr_ex.orig_attr.fw_ver, firmware version, s, 30s);
+	
 
 	return 0;
 close_device:
