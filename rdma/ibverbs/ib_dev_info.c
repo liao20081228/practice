@@ -7,7 +7,7 @@
 #include<unistd.h>
 int get_attr(struct ibv_device* device)
 {
-
+	
 
 
 
@@ -23,9 +23,18 @@ int main(int argc , char* argv[])
 	char devname[512] = {0};
 	int  port = 1;
 	int ch = 0;
-	while((ch = getopt(argc, argv, "d:p:") != -1)
+	while((ch = getopt(argc, argv, "d:p:") != -1))
 	{
-
+		switch (ch)
+		{
+			case 'd':
+				strncpy(devname, optarg, 512);
+				break;
+			case 'p':
+				port = atoi(optarg);
+			default:
+				break;
+		}
 	}
 
 	ibv_fork_init();
