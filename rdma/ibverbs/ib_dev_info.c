@@ -18,14 +18,16 @@
 	#define FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
-void be64tolestr(int64_t bigend, char* buf)
+void* be64tolestr(int64_t bigend, char* buf)
 {
 	uint16_t guid[4]= {0,0,0,0};
 	memcpy(guid, &bigend, 8);
-	sprintf(buf, "%0hX:%04hX:%04hX:%04hX", (uint16_t)(guid[0] << 8 | guid[0] >> 8),
-						(uint16_t)(guid[1] << 8  | guid[1] >> 8),
-						(uint16_t)(guid[2] << 8  | guid[2] >> 8),
-						(uint16_t)(guid[3] << 8  | guid[3] >> 8),
+	sprintf(buf, "%0hX:%04hX:%04hX:%04hX",
+			(uint16_t)(guid[0] << 8 | guid[0] >> 8),
+			(uint16_t)(guid[1] << 8  | guid[1] >> 8),
+			(uint16_t)(guid[2] << 8  | guid[2] >> 8),
+			(uint16_t)(guid[3] << 8  | guid[3] >> 8));
+	return buf;
 }
 
 int get_attr(struct ibv_device* device, int port)
@@ -38,15 +40,13 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(device->transport_type, transport type, d, 30s);
 	FPRT(ibv_get_device_name(device), ibv_get_device_name, s, 30s);
 	char GUID[] ="xxxx:xxxx:xxxx:xxxx";
-	uint64_t guid_temp = ibv_get_device_guid(device);
-	FPRT(GUID, GUID, s, 30s);
+	FPRT(be64tolestr(ibv_get_device_guid(device), GUID), GUID, s, 30s);
 	struct ibv_context* context = ibv_open_device(device);
 	if (!context)
 	{
 		perror("ibv_open_device failed");
 		return 1;
 	}
-
 	struct ibv_device_attr_ex dev_attr_ex;
 	memset(&dev_attr_ex, 0, sizeof(struct ibv_device_attr_ex));
 	if(ibv_query_device_ex(context, NULL, &dev_attr_ex))
