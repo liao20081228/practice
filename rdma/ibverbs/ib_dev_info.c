@@ -26,8 +26,8 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(device->transport_type, transport type, d, 30s);
 	FPRT(ibv_get_device_name(device), ibv_get_device_name, s, 30s);
 	char* GUID="xxxx:xxxx:xxxx:xxxx";
-	uint64_t guid = ibv_get_device_guid(device);
-	sprintf(guid, "%4X:%4X:%4X:%4X", guid)
+	uint64_t guid =  be64toh(ibv_get_device_guid(device));
+	sprintf(guid, "%4X:%4X:%4X:%4X",)
 	FPRT(GUID, GUID, s, 30s);
 	
 	struct ibv_context* context = ibv_open_device(device);
