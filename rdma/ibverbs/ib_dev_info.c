@@ -44,7 +44,7 @@ int get_attr(struct ibv_device* device, int port)
 		goto close_device;
 	}
 	fprintf(OUTPUT,"\t%-30s\n", "device attr:");
-	FPRT2(dev_attr_ex.orig_attr.fw_ver, firmware version, s, 30s);
+	FPRT(dev_attr_ex.orig_attr.fw_ver, firmware version, s, 30s);
 	
 
 	return 0;
