@@ -27,7 +27,7 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(device->node_type, node type, d, 30s);
 	FPRT(device->transport_type, transport type, d, 30s);
 	FPRT(ibv_get_device_name(device), ibv_get_device_name, s, 30s);
-	char* GUID="xxxx:xxxx:xxxx:xxxx";
+	char GUID[] ="xxxx:xxxx:xxxx:xxxx";
 	uint64_t guid_temp = ibv_get_device_guid(device);
 	uint16_t guid[4]= {0,0,0,0};
 	memcpy(guid, &guid_temp, 8);
