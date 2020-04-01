@@ -31,7 +31,7 @@ int get_attr(struct ibv_device* device, int port)
 	uint64_t guid_temp = ibv_get_device_guid(device);
 	uint16_t guid[4]= {0,0,0,0};
 	memcpy(guid, &guid_temp, 8);
-	sprintf(GUID, "%-4X:%-4X:%-4X:%-4X", guid[0] << 8 | guid[0] >> 8,
+	sprintf(GUID, "%0hX:%04hX:%04hX:%04hX", guid[0] << 8 | guid[0] >> 8,
 					guid[1] << 8  | guid[1] >> 8,
 					guid[2] << 8  | guid[2] >> 8,
 					guid[3] << 8  | guid[3] >> 8);
