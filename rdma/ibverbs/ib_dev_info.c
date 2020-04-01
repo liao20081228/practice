@@ -7,11 +7,27 @@
 #include<unistd.h>
 
 
+#ifndef OUTPUT
+#define OUTPUT stdout
+#endif /* ifndef OUTPUT */
 
+#ifndef FPR
+#define __FPR(a,b) fprintf(OUTPUT, #a, b)
+#define FPR(a,b) __FPR(a\n ,b)
+
+#define __FPRT(a,b) fprintf(OUTPUT, #a, b)
+#define FPRT(a,b) __FPRT(\ta\n ,b)
+
+#define __FPRT2(a,b) fprintf(OUTPUT, #a, b)
+#define FPRT2(a,b) __FPRT2(\ta\n ,b)
+
+#define __FPRT3(a,b) fprintf(OUTPUT, #a, b)
+#define FPRT3(a,b) __FPRT3(\t\ta\n ,b)
+#endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 int get_attr(struct ibv_device* device, int port)
 {
-	printf("%s\n", device->dev_name);
+	FPR(%s, device->name);
 	return 0;
 }
 
@@ -40,7 +56,6 @@ int main(int argc , char* argv[])
 	if (!dev_list)
 	{
 		perror("ibv_get_device_list");
-		exit(errno);
 	}
 
 	if (strlen(devname) != 0)
