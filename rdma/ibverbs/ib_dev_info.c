@@ -33,6 +33,8 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(device->ibdev_path, infiniband in sysfs: %-50s);
 	FPRT(device->node_type, node type: %d);
 	FPRT(device->transport_type, transporttype: %d);
+	FPRT(ibv_get_device_name(device), ibv_get_device_name: %s);
+	FPRT(ibv_get_device_guid(device), GUID: %llX);
 	return 0;
 }
 
