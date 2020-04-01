@@ -9,23 +9,16 @@
 
 
 
-int get_attr(struct ibv_device* device)
+int get_attr(struct ibv_device* device, int port)
 {
-	
-}
-
-
-
-
-
-
+	printf("%s\n", device->dev_name);
 	return 0;
 }
 
 int main(int argc , char* argv[])
 {
 	char devname[512] = {0};
-	int  port = 1;
+	int  port = -1;
 	int ch = 0;
 	while((ch = getopt(argc, argv, "d:p:") != -1))
 	{
@@ -59,7 +52,7 @@ int main(int argc , char* argv[])
 				continue;
 			else
 			{
-				get_attr(dev_list[i]);
+				get_attr(dev_list[i], port);
 				goto err;
 			}
 		}
@@ -72,10 +65,8 @@ int main(int argc , char* argv[])
 	else
 		for (int i = 0; i < num; ++i)
 		{
-			if (get_attr(dev_list[i]))
-			{
+			get_attr(dev_list[i], port);
 				goto err;
-			}
 		}
 err:
 	ibv_free_device_list(dev_list);
