@@ -18,6 +18,16 @@
 	#define FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
+void be64tolestr(int64_t bigend, char* buf)
+{
+	uint16_t guid[4]= {0,0,0,0};
+	memcpy(guid, &bigend, 8);
+	sprintf(buf, "%0hX:%04hX:%04hX:%04hX", (uint16_t)(guid[0] << 8 | guid[0] >> 8),
+						(uint16_t)(guid[1] << 8  | guid[1] >> 8),
+						(uint16_t)(guid[2] << 8  | guid[2] >> 8),
+						(uint16_t)(guid[3] << 8  | guid[3] >> 8),
+}
+
 int get_attr(struct ibv_device* device, int port)
 {
 	fprintf(OUTPUT, "name : %-s\n", device->name);
@@ -29,12 +39,6 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(ibv_get_device_name(device), ibv_get_device_name, s, 30s);
 	char GUID[] ="xxxx:xxxx:xxxx:xxxx";
 	uint64_t guid_temp = ibv_get_device_guid(device);
-	uint16_t guid[4]= {0,0,0,0};
-	memcpy(guid, &guid_temp, 8);
-	sprintf(GUID, "%0hX:%04hX:%04hX:%04hX", guid[0] << 8 | guid[0] >> 8,
-					guid[1] << 8  | guid[1] >> 8,
-					guid[2] << 8  | guid[2] >> 8,
-					guid[3] << 8  | guid[3] >> 8);
 	FPRT(GUID, GUID, s, 30s);
 	struct ibv_context* context = ibv_open_device(device);
 	if (!context)
