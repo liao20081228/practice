@@ -9,12 +9,8 @@
 
 
 
-int get_attr(struct ibv_device* device, const char* devname)
+int get_attr(struct ibv_device* device)
 {
-	if (strlen(devname) != 0)
-	{
-
-	}
 	
 }
 
@@ -53,13 +49,34 @@ int main(int argc , char* argv[])
 		perror("ibv_get_device_list");
 		exit(errno);
 	}
-	for (int i = 0; i < num; ++i)
+
+	if (strlen(devname) != 0)
 	{
-		if (get_attr(dev_list[i], devname))
+		int i = 0;
+		for (; i < num; ++i)
 		{
+			if (strcmp(devname, ibv_get_device_name(dev_list[i])))
+				continue;
+			else
+			{
+				get_attr(dev_list[i]);
+				goto err;
+			}
+		}
+		if (i == num)
+		{
+			printf("not find the rdma device: %s\n", devname);
 			goto err;
 		}
 	}
+	else
+		for (int i = 0; i < num; ++i)
+		{
+			if (get_attr(dev_list[i]))
+			{
+				goto err;
+			}
+		}
 err:
 	ibv_free_device_list(dev_list);
 }
