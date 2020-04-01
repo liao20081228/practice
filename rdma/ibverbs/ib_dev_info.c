@@ -18,7 +18,7 @@
 	#define FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
-void* be64tolestr(int64_t bigend, char* buf)
+char* be64tolestr(int64_t bigend, char* buf)
 {
 	uint16_t guid[4]= {0,0,0,0};
 	memcpy(guid, &bigend, 8);
