@@ -56,6 +56,12 @@ int main(int argc , char* argv[])
 	if (!dev_list)
 	{
 		perror("ibv_get_device_list");
+		exit(1);
+	}
+	else if (num == 0)
+	{
+		FPR(%s, "no rdma device was found");
+		goto err;
 	}
 
 	if (strlen(devname) != 0)
