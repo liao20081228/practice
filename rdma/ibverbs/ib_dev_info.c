@@ -1,12 +1,15 @@
-#include<infiniband/verbs.h>
 #include<errno.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
 #include<getopt.h>
 #include<unistd.h>
+#include<string.h>
+#include<memory.h>
+#include<infiniband/verbs.h>
+
 #ifndef OUTPUT
-#define OUTPUT stdout
+	#define OUTPUT stdout
 #endif /* ifndef OUTPUT */
 
 #ifndef FPR
@@ -28,11 +31,11 @@ int get_attr(struct ibv_device* device, int port)
 	char* GUID="xxxx:xxxx:xxxx:xxxx";
 	uint64_t guid_temp = ibv_get_device_guid(device);
 	uint16_t guid[4];
-	for(unsigned int i = 0; i < sizeof(__be64); ++i)
+	for(unsigned int i = 0; i < 4; ++i)
 	{
-		memcpy()
+		memcpy((uint8_t*)&guid[3-i] + 1,(uint8_t*)&guid_temp + i * 2, 1);
 	}
-	sprintf(GUID, "%4X:%4X:%4X:%4X", guid)
+	sprintf(GUID, "%4X:%4X:%4X:%4X", guid[0],guid[1],guid[2],guid[3]);
 	FPRT(GUID, GUID, s, 30s);
 	
 	struct ibv_context* context = ibv_open_device(device);
