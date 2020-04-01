@@ -12,17 +12,16 @@
 #endif /* ifndef OUTPUT */
 
 #ifndef FPR
-	#define __FPR(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define FPR(a, b, f) __FPR(f%s\n ,b, a)
+	#define _FPR(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define FPR(a, b, c) _FPR(%-c:%s\n ,b, a)
 	
-	#define ___FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define _FPRT(g,e,a, b, c) ___FPRT(g##e##a, b, c)
-	#define FPRT(a, b, z) _FPRT(\t%-50,z,: %-s\n ,b, a)
+	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define FPRT(a, b, c) _FPRT(\t%-c : %-s\n,b, a)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 int get_attr(struct ibv_device* device, int port)
 {
-	/*FPR(device->name, kernel name:, s);*/
+	FPR(device->name, kernel name:, s);
 	FPRT(device->dev_name, uverb name:, s);
 	/*FPR(device->dev_path, infiniband verbs in sysfs,  %-50s);*/
 	/*FPR(device->ibdev_path, infiniband in sysfs: %-50s);*/
