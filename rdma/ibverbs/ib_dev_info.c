@@ -12,29 +12,23 @@
 #endif /* ifndef OUTPUT */
 
 #ifndef FPR
-#define __FPR(a,b) fprintf(OUTPUT, #a, b)
-#define FPR(b,a) __FPR(a\n ,b)
-
-#define __FPRT(a,b) fprintf(OUTPUT, #a, b)
-#define FPRT(b,a) __FPRT(\t a\n ,b)
-
-#define __FPRT2(a,b) fprintf(OUTPUT, #a, b)
-#define FPRT2(b,a) __FPRT2(\t a\n ,b)
-
-#define __FPRT3(a,b) fprintf(OUTPUT, #a, b)
-#define FPRT3(b,a) __FPRT3(\t\t a\n ,b)
+	#define __FPR(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define FPR(a, b, f) __FPR(f%s\n ,b, a)
+	
+	#define __FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define FPRT(a, b, f) __FPRT(\t%-f: %-s\n ,b, a)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 int get_attr(struct ibv_device* device, int port)
 {
-	FPR(device->name,kernel name: %-50s);
-	FPRT(device->dev_name, uverb name: %-50s);
-	FPRT(device->dev_path, infiniband verbs in sysfs: %-50s);
-	FPRT(device->ibdev_path, infiniband in sysfs: %-50s);
-	FPRT(device->node_type, node type: %d);
-	FPRT(device->transport_type, transporttype: %d);
-	FPRT(ibv_get_device_name(device), ibv_get_device_name: %s);
-	FPRT(ibv_get_device_guid(device), GUID: %llX);
+	FPR(device->name, kernel name:, %-50s);
+	FPR(device->dev_name, uverb name:, %-50s);
+	FPR(device->dev_path, infiniband verbs in sysfs,  %-50s);
+	FPR(device->ibdev_path, infiniband in sysfs: %-50s);
+	FPR(device->node_type, node type: %d);
+	FPR(device->transport_type, transporttype: %d);
+	FPR(ibv_get_device_name(device), ibv_get_device_name: %s);
+	FPR(ibv_get_device_guid(device), GUID: %llX);
 	return 0;
 }
 
@@ -67,7 +61,7 @@ int main(int argc , char* argv[])
 	}
 	else if (num == 0)
 	{
-		FPR("no rdma device was found", %s);
+		FPR("no rdma device was found", "", %s);
 		goto err;
 	}
 
