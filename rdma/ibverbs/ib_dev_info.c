@@ -3,7 +3,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
-
+#include<getopt.h>
+#include<unistd.h>
 int get_attr(struct ibv_device* device)
 {
 
@@ -21,7 +22,8 @@ int main(void)
 {
 	char devname[512] = {0};
 	int  port = 1;
-	
+	while(getopt(argc, argv, "d:p:"))
+
 	ibv_fork_init();
 	int num = 0;
 	struct ibv_device** dev_list = ibv_get_device_list(&num);
