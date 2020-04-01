@@ -27,9 +27,12 @@
 
 int get_attr(struct ibv_device* device, int port)
 {
-	FPR(device->name, %s);
-	FPRT(device->dev_path, device_path : %s);
-	FPRT(device->ibdev_path, ib device pata : %s);
+	FPR(device->name,kernel name: %-50s);
+	FPRT(device->dev_name, uverb name: %-50s);
+	FPRT(device->dev_path, infiniband verbs in sysfs: %-50s);
+	FPRT(device->ibdev_path, infiniband in sysfs: %-50s);
+	FPRT(device->node_type, node type: %d);
+	FPRT(device->transport_type, transporttype: %d);
 	return 0;
 }
 
