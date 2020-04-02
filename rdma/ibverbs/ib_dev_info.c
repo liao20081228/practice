@@ -40,13 +40,14 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(device->transport_type, transport type, d, 30s);
 	FPRT(ibv_get_device_name(device), ibv_get_device_name, s, 30s);
 	char GUID[] ="xxxx:xxxx:xxxx:xxxx";
-	FPRT(be64tolestr(ibv_get_device_guid(device), GUID), GUID, s, 30s);
+	FPRT(be64tolestr(ibv_get_device_guid(device), GUID), ibv_get_device_guid GUID, s, 30s);
 	struct ibv_context* context = ibv_open_device(device);
 	if (!context)
 	{
 		perror("ibv_open_device failed");
 		return 1;
 	}
+
 	struct ibv_device_attr_ex dev_attr_ex;
 	memset(&dev_attr_ex, 0, sizeof(struct ibv_device_attr_ex));
 	if(ibv_query_device_ex(context, NULL, &dev_attr_ex))
@@ -54,9 +55,10 @@ int get_attr(struct ibv_device* device, int port)
 		perror("ibv_query_device_ex failed");
 		goto close_device;
 	}
-	fprintf(OUTPUT,"\t%-30s\n", "device attr:");
-	FPRT(dev_attr_ex.orig_attr.fw_ver, firmware version, s, 30s);
-	
+	fprintf(OUTPUT,"\n\n\t%-30s\n", "device attr:");
+	FPRT(dev_attr_ex.orig_attr.fw_ver, fir_ver, s, 30s);
+	FPRT(be64tolestr(dev_attr_ex.orig_attr.node_guid, GUID), node_guid, s, 30s);
+	FPRT(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s, 30s);
 
 	return 0;
 close_device:
