@@ -30,9 +30,11 @@
 void print_device_cap_flags(unsigned int device_cap_flags)
 {
 #ifndef FPRT3DF
-#define FPRT3DF(a) if (device_cap_flags & a) FPRT3("", a,s)
+	#define FPRT3DF(a) if (device_cap_flags & a) FPRT3("", a,s)
 #endif /* ifndef macro */
 	FPRT3DF(IBV_DEVICE_RESIZE_MAX_WR);
+	FPRT3DF(IBV_DEVICE_);
+
 
 }
 
