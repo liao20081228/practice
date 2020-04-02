@@ -28,6 +28,11 @@
 	#define __FPRTDF(a, b, c, d) ___FPRTDF(\t\t\t%-d%-c\n,b, a)
 	#define _FPRTDF(a, b, c) __FPRTDF(a, b, c, 32s)
 	#define FPRTDF(a) if (device_cap_flags & a) {_FPRTDF("", \t\t\t\x20\x20 a, s); device_cap_flags &= (~a);}
+	
+	#define ___FPRTDF(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define __FPRTDF(a, b, c, d) ___FPRTDF(\t\t\t%-d%-c\n,b, a)
+	#define _FPRTDF(a, b, c) __FPRTDF(a, b, c, 32s)
+	#define FPRTOF(a) if (device_cap_flags & a) {_FPRTDF("", \t\t\t\x20\x20 a, s); device_cap_flags &= (~a);}
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 void print_atomic_cap(enum ibv_atomic_cap atomic_cap)
@@ -142,11 +147,16 @@ int print_device_attr_ex(struct ibv_device_attr_ex* dev_attr_ex)
 	fprintf(OUTPUT,"\n\n\t%-30s\n", "device attr ex");
 	FPRT2(dev_attr_ex->comp_mask, comp_mask, u);
 	FPRT2("",general_odp_caps, s);
-	if (dev_attr_ex->odp_caps.general_caps & IBV_ODP_SUPPORT)
-		FPRT3("IBV_ODP_SUPPORT",,s);
-	if(dev_attr_ex->odp_caps.general_caps & IBV_ODP_SUPPORT_IMPLICIT)
-		FPRT3("IBV_ODP_SUPPORT_IMPLICIT",,s);
-	return 0;
+	if (dev_attr_ex->odp_caps.general_caps == 0)
+		FPRT2("NO SUPPORT",,s);
+	else
+	{
+		if (dev_attr_ex->odp_caps.general_caps & IBV_ODP_SUPPORT)
+			FPRT2("IBV_ODP_SUPPORT",,s);
+		if(dev_attr_ex->odp_caps.general_caps & IBV_ODP_SUPPORT_IMPLICIT)
+			FPRT2("IBV_ODP_SUPPORT_IMPLICIT",,s);
+	}
+		return 0;
 }
 
 int get_attr(struct ibv_device* device, int port)
