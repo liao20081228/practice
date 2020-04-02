@@ -146,8 +146,31 @@ int print_device_attr_ex(struct ibv_device_attr_ex* dev_attr_ex)
 	FPRT2(dev_attr_ex->odp_caps.general_caps , general_odp_caps, lX);
 	FPRTOF(IBV_ODP_SUPPORT, dev_attr_ex->odp_caps.general_caps);
 	FPRTOF(IBV_ODP_SUPPORT_IMPLICIT, dev_attr_ex->odp_caps.general_caps);
+
 	FPRT2(dev_attr_ex->odp_caps.per_transport_caps.rc_odp_caps, rc_odp_caps, X);
 	FPRTOF(IBV_ODP_SUPPORT_SEND, dev_attr_ex->odp_caps.per_transport_caps.rc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_RECV, dev_attr_ex->odp_caps.per_transport_caps.rc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_WRITE, dev_attr_ex->odp_caps.per_transport_caps.rc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_READ, dev_attr_ex->odp_caps.per_transport_caps.rc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_ATOMIC, dev_attr_ex->odp_caps.per_transport_caps.rc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_SRQ_RECV, dev_attr_ex->odp_caps.per_transport_caps.rc_odp_caps);
+	FPRT2(dev_attr_ex->odp_caps.per_transport_caps.uc_odp_caps, uc_odp_caps, X);
+	FPRTOF(IBV_ODP_SUPPORT_SEND, dev_attr_ex->odp_caps.per_transport_caps.uc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_RECV, dev_attr_ex->odp_caps.per_transport_caps.uc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_WRITE, dev_attr_ex->odp_caps.per_transport_caps.uc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_READ, dev_attr_ex->odp_caps.per_transport_caps.uc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_ATOMIC, dev_attr_ex->odp_caps.per_transport_caps.uc_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_SRQ_RECV, dev_attr_ex->odp_caps.per_transport_caps.uc_odp_caps);
+	FPRT2(dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps, ud_odp_caps, X);
+	FPRTOF(IBV_ODP_SUPPORT_SEND, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_RECV, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_WRITE, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_READ, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_ATOMIC, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
+	FPRTOF(IBV_ODP_SUPPORT_SRQ_RECV, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
+	FPRT2(dev_attr_ex->completion_timestamp_mask, completion_timestamp_mask, lX);
+	FPRT2(dev_attr_ex->hca_core_clock, hca_core_clock, ld);
+	FPRT2(dev_attr_ex->device_cap_flags_ex, device_cap_flags_ex, lX);
 
 	return 0;
 }
