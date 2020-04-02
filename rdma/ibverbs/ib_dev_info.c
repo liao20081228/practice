@@ -168,9 +168,9 @@ int print_device_attr_ex(struct ibv_device_attr_ex* dev_attr_ex)
 	FPRTOF(IBV_ODP_SUPPORT_READ, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
 	FPRTOF(IBV_ODP_SUPPORT_ATOMIC, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
 	FPRTOF(IBV_ODP_SUPPORT_SRQ_RECV, dev_attr_ex->odp_caps.per_transport_caps.ud_odp_caps);
-	FPRT2(dev_attr_ex->completion_timestamp_mask, completion_timestamp_mask, lX);
-	FPRT2(dev_attr_ex->hca_core_clock, hca_core_clock, ld);
-	FPRT2(dev_attr_ex->device_cap_flags_ex, device_cap_flags_ex, lX);
+	FPRT2(dev_attr_ex->completion_timestamp_mask, completion_timestamp_mask, #lX);
+	FPRT2(dev_attr_ex->hca_core_clock, hca_core_clock(kHz), ld);
+	FPRT2(dev_attr_ex->device_cap_flags_ex, device_cap_flags_ex, #lX);
 
 	return 0;
 }
