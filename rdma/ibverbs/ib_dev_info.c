@@ -38,9 +38,9 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(device->ibdev_path, infiniband in sysfs, s, 30s);
 	FPRT(device->node_type, node type, d, 30s);
 	FPRT(device->transport_type, transport type, d, 30s);
-	FPRT(ibv_get_device_name(device), ibv_get_device_name, s, 30s);
+	FPRT(ibv_get_device_name(device), ibv_get_device_name(), s, 30s);
 	char GUID[] ="xxxx:xxxx:xxxx:xxxx";
-	FPRT(be64tolestr(ibv_get_device_guid(device), GUID), ibv_get_device_guid GUID, s, 30s);
+	FPRT(be64tolestr(ibv_get_device_guid(device), GUID), ibv_get_device_guid(), s, 30s);
 	struct ibv_context* context = ibv_open_device(device);
 	if (!context)
 	{
@@ -56,10 +56,12 @@ int get_attr(struct ibv_device* device, int port)
 		goto close_device;
 	}
 	fprintf(OUTPUT,"\n\n\t%-30s\n", "device attr:");
-	FPRT(dev_attr_ex.orig_attr.fw_ver, fir_ver, s, 30s);
-	FPRT(be64tolestr(dev_attr_ex.orig_attr.node_guid, GUID), node_guid, s, 30s);
-	FPRT(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s, 30s);
-
+	FPRT2(dev_attr_ex.orig_attr.fw_ver, fir_ver, s, 30s);
+	memset(GUID, 0, sizeof(GUID));
+	FPRT2(be64tolestr(dev_attr_ex.orig_attr.node_guid, GUID), node_guid, s, 30s);
+	memset(GUID, 0, sizeof(GUID));
+	FPRT2(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s, 30s);
+	FPRT2(dev_attr_ex.orig_attr.max_mr_size, max_mr_size, lu, 30s);
 	return 0;
 close_device:
 	ibv_close_device(context);
