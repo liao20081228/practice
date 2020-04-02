@@ -14,10 +14,11 @@
 #ifndef FPR
 	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define ___FPRT(a, b, c, d) _FPRT(\t%-d : %-c\n,b, a)
-	#define FPRT(a, b, c) ___FPRT(\t%-d : %-c\n,b, 30s)
+	#define FPRT(a, b, c) ___FPRT(a, b, c, 30s)
 
-#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
+	#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define __FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
+	#define FPRT2(a, b, c) __FPRT2(a, b, c, 30s)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 char* be64tolestr(int64_t bigend, char* buf)
@@ -35,14 +36,14 @@ char* be64tolestr(int64_t bigend, char* buf)
 int get_attr(struct ibv_device* device, int port)
 {
 	fprintf(OUTPUT, "name : %-s\n", device->name);
-	FPRT(device->dev_name, uverb name, s, 30s);
-	FPRT(device->dev_path, infiniband verbs in sysfs, s, 30s);
-	FPRT(device->ibdev_path, infiniband in sysfs, s, 30s);
-	FPRT(device->node_type, node type, d, 30s);
-	FPRT(device->transport_type, transport type, d, 30s);
-	FPRT(ibv_get_device_name(device), ibv_get_device_name(), s, 30s);
+	FPRT(device->dev_name, uverb name, s);
+	FPRT(device->dev_path, infiniband verbs in sysfs, s);
+	FPRT(device->ibdev_path, infiniband in sysfs, s);
+	FPRT(device->node_type, node type, d);
+	FPRT(device->transport_type, transport type, d);
+	FPRT(ibv_get_device_name(device), ibv_get_device_name(), s);
 	char GUID[] ="xxxx:xxxx:xxxx:xxxx";
-	FPRT(be64tolestr(ibv_get_device_guid(device), GUID), ibv_get_device_guid(), s, 30s);
+	FPRT(be64tolestr(ibv_get_device_guid(device), GUID), ibv_get_device_guid(), s);
 	struct ibv_context* context = ibv_open_device(device);
 	if (!context)
 	{
@@ -58,14 +59,14 @@ int get_attr(struct ibv_device* device, int port)
 		goto close_device;
 	}
 	fprintf(OUTPUT,"\n\n\t%-30s\n", "device attr:");
-	FPRT2(dev_attr_ex.orig_attr.fw_ver, fir_ver, s, 30s);
+	FPRT2(dev_attr_ex.orig_attr.fw_ver, fir_ver, s);
 	memset(GUID, 0, sizeof(GUID));
-	FPRT2(be64tolestr(dev_attr_ex.orig_attr.node_guid, GUID), node_guid, s, 30s);
+	FPRT2(be64tolestr(dev_attr_ex.orig_attr.node_guid, GUID), node_guid, s);
 	memset(GUID, 0, sizeof(GUID));
-	FPRT2(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s, 30s);
-	FPRT2(dev_attr_ex.orig_attr.max_mr_size, max_mr_size, lu, 30s);
-	FPRT2(dev_attr_ex.orig_attr.page_size_cap, page_size_cap, lu, 30s);
-	FPRT2(dev_attr_ex.orig_attr.vendor_id, vendor_id, X, 30s);
+	FPRT2(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s);
+	FPRT2(dev_attr_ex.orig_attr.max_mr_size, max_mr_size, lu);
+	FPRT2(dev_attr_ex.orig_attr.page_size_cap, page_size_cap, lu);
+	FPRT2(dev_attr_ex.orig_attr.vendor_id, vendor_id,#X);
 	return 0;
 close_device:
 	ibv_close_device(context);
