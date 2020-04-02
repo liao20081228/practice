@@ -23,15 +23,17 @@
 	#define _FPRT3(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define __FPRT3(a, b, c, d) _FPRT3(\t\t\t%-d : %-c\n,b, a)
 	#define FPRT3(a, b, c) __FPRT3(a, b, c, 32s)
+
+	#define ___FPRT3DF(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define __FPRT3DF(a, b, c, d) ___FPRT3DF(\t\t\t%-d%-c\n,b, a)
+	#define _FPRT3DF(a, b, c) __FPRT3DF(a, b, c, 32s)
+	#define FPRT3DF(a) if (device_cap_flags & a) _FPRT3DF("", \t \t \t a, s)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 
 
 void print_device_cap_flags(unsigned int device_cap_flags)
 {
-#ifndef FPRT3DF
-	#define FPRT3DF(a) if (device_cap_flags & a) FPRT3("", \t\t\t a, s)
-#endif /* ifndef macro */
 	FPRT3DF(IBV_DEVICE_RESIZE_MAX_WR);
 	FPRT3DF(IBV_DEVICE_BAD_PKEY_CNTR);
 	FPRT3DF(IBV_DEVICE_BAD_QKEY_CNTR);
