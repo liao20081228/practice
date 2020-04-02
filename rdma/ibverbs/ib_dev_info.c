@@ -24,49 +24,49 @@
 	#define __FPRT3(a, b, c, d) _FPRT3(\t\t\t%-d : %-c\n,b, a)
 	#define FPRT3(a, b, c) __FPRT3(a, b, c, 32s)
 
-	#define ___FPRT3DF(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define __FPRT3DF(a, b, c, d) ___FPRT3DF(\t\t\t%-d%-c\n,b, a)
-	#define _FPRT3DF(a, b, c) __FPRT3DF(a, b, c, 32s)
-	#define FPRT3DF(a) if (device_cap_flags & a) {_FPRT3DF("", \t\t\t\x20\x20 a, s); device_cap_flags &= (~a);}
+	#define ___FPRTDF(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define __FPRTDF(a, b, c, d) ___FPRTDF(\t\t\t%-d%-c\n,b, a)
+	#define _FPRTDF(a, b, c) __FPRTDF(a, b, c, 32s)
+	#define FPRTDF(a) if (device_cap_flags & a) {_FPRTDF("", \t\t\x20\x20 a, s); device_cap_flags &= (~a);}
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 void print_atomic_cap(enum ibv_atomic_cap atomic_cap)
 {
 	if (atomic_cap == IBV_ATOMIC_NONE)
-		
+		;
 	if (atomic_cap == IBV_ATOMIC_HCA)
-
+;
 	if (atomic_cap == IBV_ATOMIC_GLOB)
-
+;
 }
 
 void print_device_cap_flags(unsigned int device_cap_flags)
 {
-	FPRT3DF(IBV_DEVICE_RESIZE_MAX_WR);
-	FPRT3DF(IBV_DEVICE_BAD_PKEY_CNTR);
-	FPRT3DF(IBV_DEVICE_BAD_QKEY_CNTR);
-	FPRT3DF(IBV_DEVICE_RAW_MULTI);
-	FPRT3DF(IBV_DEVICE_AUTO_PATH_MIG);
-	FPRT3DF(IBV_DEVICE_CHANGE_PHY_PORT);
-	FPRT3DF(IBV_DEVICE_UD_AV_PORT_ENFORCE);
-	FPRT3DF(IBV_DEVICE_CURR_QP_STATE_MOD);
-	FPRT3DF(IBV_DEVICE_SHUTDOWN_PORT);
-	FPRT3DF(IBV_DEVICE_INIT_TYPE);
-	FPRT3DF(IBV_DEVICE_PORT_ACTIVE_EVENT);
-	FPRT3DF(IBV_DEVICE_SYS_IMAGE_GUID);
-	FPRT3DF(IBV_DEVICE_RC_RNR_NAK_GEN);
-	FPRT3DF(IBV_DEVICE_SRQ_RESIZE);
-	FPRT3DF(IBV_DEVICE_N_NOTIFY_CQ);
-	FPRT3DF(IBV_DEVICE_MEM_WINDOW);
-	FPRT3DF(IBV_DEVICE_UD_IP_CSUM);
-	FPRT3DF(IBV_DEVICE_XRC);
-	FPRT3DF(IBV_DEVICE_MEM_MGT_EXTENSIONS);
-	FPRT3DF(IBV_DEVICE_MEM_WINDOW_TYPE_2A);
-	FPRT3DF(IBV_DEVICE_MEM_WINDOW_TYPE_2B);
-	FPRT3DF(IBV_DEVICE_RC_IP_CSUM);
-	FPRT3DF(IBV_DEVICE_RAW_IP_CSUM);
-	FPRT3DF(IBV_DEVICE_MANAGED_FLOW_STEERING);
-	FPRT3(device_cap_flags, \t\t\t\x20\x20 unkown flags, #X);
+	FPRTDF(IBV_DEVICE_RESIZE_MAX_WR);
+	FPRTDF(IBV_DEVICE_BAD_PKEY_CNTR);
+	FPRTDF(IBV_DEVICE_BAD_QKEY_CNTR);
+	FPRTDF(IBV_DEVICE_RAW_MULTI);
+	FPRTDF(IBV_DEVICE_AUTO_PATH_MIG);
+	FPRTDF(IBV_DEVICE_CHANGE_PHY_PORT);
+	FPRTDF(IBV_DEVICE_UD_AV_PORT_ENFORCE);
+	FPRTDF(IBV_DEVICE_CURR_QP_STATE_MOD);
+	FPRTDF(IBV_DEVICE_SHUTDOWN_PORT);
+	FPRTDF(IBV_DEVICE_INIT_TYPE);
+	FPRTDF(IBV_DEVICE_PORT_ACTIVE_EVENT);
+	FPRTDF(IBV_DEVICE_SYS_IMAGE_GUID);
+	FPRTDF(IBV_DEVICE_RC_RNR_NAK_GEN);
+	FPRTDF(IBV_DEVICE_SRQ_RESIZE);
+	FPRTDF(IBV_DEVICE_N_NOTIFY_CQ);
+	FPRTDF(IBV_DEVICE_MEM_WINDOW);
+	FPRTDF(IBV_DEVICE_UD_IP_CSUM);
+	FPRTDF(IBV_DEVICE_XRC);
+	FPRTDF(IBV_DEVICE_MEM_MGT_EXTENSIONS);
+	FPRTDF(IBV_DEVICE_MEM_WINDOW_TYPE_2A);
+	FPRTDF(IBV_DEVICE_MEM_WINDOW_TYPE_2B);
+	FPRTDF(IBV_DEVICE_RC_IP_CSUM);
+	FPRTDF(IBV_DEVICE_RAW_IP_CSUM);
+	FPRTDF(IBV_DEVICE_MANAGED_FLOW_STEERING);
+	FPRT(device_cap_flags, \t\t\t\t\x20\x20 unkown flags, #X);
 }
 
 char* be64tolestr(int64_t bigend, char* buf)
@@ -106,33 +106,32 @@ int get_attr(struct ibv_device* device, int port)
 		perror("ibv_query_device_ex failed");
 		goto close_device;
 	}
-	fprintf(OUTPUT,"\n\n\t%-30s\n", "device attr:");
-	FPRT2(dev_attr_ex.orig_attr.fw_ver, fir_ver, s);
+	fprintf(OUTPUT,"\n\n\t%-30s\n", "");
+	FPRT(dev_attr_ex.orig_attr.fw_ver, fir_ver, s);
 	memset(GUID, 0, sizeof(GUID));
-	FPRT2(be64tolestr(dev_attr_ex.orig_attr.node_guid, GUID), node_guid, s);
+	FPRT(be64tolestr(dev_attr_ex.orig_attr.node_guid, GUID), node_guid, s);
 	memset(GUID, 0, sizeof(GUID));
-	FPRT2(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s);
-	FPRT2(dev_attr_ex.orig_attr.max_mr_size, max_mr_size, lu);
-	FPRT2(dev_attr_ex.orig_attr.page_size_cap, page_size_cap, lu);
-	FPRT2(dev_attr_ex.orig_attr.vendor_id, vendor_id,#X);
-	FPRT2(dev_attr_ex.orig_attr.vendor_part_id, vendor_part_id,u);
-	FPRT2(dev_attr_ex.orig_attr.hw_ver, hw_ver,u);
-	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
-	FPRT2(dev_attr_ex.orig_attr.max_qp_wr, max_qp_wr,d);
-	FPRT2(dev_attr_ex.orig_attr.device_cap_flags, device_cap_flags,#X);
+	FPRT(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s);
+	FPRT(dev_attr_ex.orig_attr.max_mr_size, max_mr_size, lu);
+	FPRT(dev_attr_ex.orig_attr.page_size_cap, page_size_cap, lu);
+	FPRT(dev_attr_ex.orig_attr.vendor_id, vendor_id,#X);
+	FPRT(dev_attr_ex.orig_attr.vendor_part_id, vendor_part_id,u);
+	FPRT(dev_attr_ex.orig_attr.hw_ver, hw_ver,u);
+	FPRT(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	FPRT(dev_attr_ex.orig_attr.max_qp_wr, max_qp_wr,d);
+	FPRT(dev_attr_ex.orig_attr.device_cap_flags, device_cap_flags,#X);
 	print_device_cap_flags(dev_attr_ex.orig_attr.device_cap_flags);
-	
-	FPRT2(dev_attr_ex.orig_attr.max_sge, max_sge, d);
-	FPRT2(dev_attr_ex.orig_attr.max_sge_rd, max_sge_rd, d);
-	FPRT2(dev_attr_ex.orig_attr.max_cq, max_cq, d);
-	FPRT2(dev_attr_ex.orig_attr.max_cqe, max_cqe, d);
-	FPRT2(dev_attr_ex.orig_attr.max_mr, max_mr, d);
-	FPRT2(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT2(dev_attr_ex.orig_attr.max_qp_rd_atom, max_qp_rd_atom, d);
-	FPRT2(dev_attr_ex.orig_attr.max_ee_rd_atom, max_ee_rd_atom, d);
-	FPRT2(dev_attr_ex.orig_attr.max_res_rd_atom, max_res_rd_atom, d);
-	FPRT2(dev_attr_ex.orig_attr.max_qp_init_rd_atom, max_qp_init_rd_atom, d);
-	FPRT2(dev_attr_ex.orig_attr.max_ee_init_rd_atom, max_ee_init_rd_atom, d);
+	FPRT(dev_attr_ex.orig_attr.max_sge, max_sge, d);
+	FPRT(dev_attr_ex.orig_attr.max_sge_rd, max_sge_rd, d);
+	FPRT(dev_attr_ex.orig_attr.max_cq, max_cq, d);
+	FPRT(dev_attr_ex.orig_attr.max_cqe, max_cqe, d);
+	FPRT(dev_attr_ex.orig_attr.max_mr, max_mr, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_qp_rd_atom, max_qp_rd_atom, d);
+	FPRT(dev_attr_ex.orig_attr.max_ee_rd_atom, max_ee_rd_atom, d);
+	FPRT(dev_attr_ex.orig_attr.max_res_rd_atom, max_res_rd_atom, d);
+	FPRT(dev_attr_ex.orig_attr.max_qp_init_rd_atom, max_qp_init_rd_atom, d);
+	FPRT(dev_attr_ex.orig_attr.max_ee_init_rd_atom, max_ee_init_rd_atom, d);
 	
 	
 	
