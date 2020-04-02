@@ -25,6 +25,18 @@
 	#define FPRT3(a, b, c) __FPRT3(a, b, c, 30s)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
+
+
+void print_device_cap_flags(unsigned int device_cap_flags)
+{
+	if (device_cap_flags & IBV_DEVICE_RESIZE_MAX_WR)
+		FPRT3("",IBV_DEVICE_RESIZE_MAX_WR,s);
+	if (device_cap_flags & IBV_DEVICE_BAD_PKEY_CNTR)
+		FPRT3("",IBV_DEVICE_BAD_PKEY_CNTR,s);
+
+}
+
+
 char* be64tolestr(int64_t bigend, char* buf)
 {
 	uint16_t guid[4]= {0,0,0,0};
@@ -75,8 +87,8 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT2(dev_attr_ex.orig_attr.hw_ver, hw_ver,u);
 	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
 	FPRT2(dev_attr_ex.orig_attr.max_qp_wr, max_qp_wr,d);
-	FPRT2(dev_attr_ex.orig_attr.device_cap_flags, device_cap_flags,u);
-	
+	FPRT2(dev_attr_ex.orig_attr.device_cap_flags, device_cap_flags,#X);
+	print_device_cap_flags(dev_attr_ex.orig_attr.device_cap_flags);
 
 	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
 	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
