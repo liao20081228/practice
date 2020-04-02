@@ -33,8 +33,11 @@
 void print_atomic_cap(enum ibv_atomic_cap atomic_cap)
 {
 	if (atomic_cap == IBV_ATOMIC_NONE)
-		;
+		FPRT("IBV_ATOMIC_NONE", atomic_cap, s);
 	if (atomic_cap == IBV_ATOMIC_HCA)
+		FPRT("IBV_ATOMIC_HCA", atomic_cap, s);
+	if (atomic_cap == IBV_ATOMIC_GLOB)
+		FPRT("IBV_ATOMIC_GLOB", atomic_cap, s);
 ;
 	if (atomic_cap == IBV_ATOMIC_GLOB)
 ;
@@ -132,6 +135,21 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(dev_attr_ex.orig_attr.max_res_rd_atom, max_res_rd_atom, d);
 	FPRT(dev_attr_ex.orig_attr.max_qp_init_rd_atom, max_qp_init_rd_atom, d);
 	FPRT(dev_attr_ex.orig_attr.max_ee_init_rd_atom, max_ee_init_rd_atom, d);
+	print_atomic_cap(dev_attr_ex.orig_attr.atomic_cap);
+	FPRT(dev_attr_ex.orig_attr.max_ee, max_ee, d);
+	FPRT(dev_attr_ex.orig_attr.max_rdd, max_rdd, d);
+	FPRT(dev_attr_ex.orig_attr.max_mw, max_mw, d);
+	FPRT(dev_attr_ex.orig_attr.max_raw_ipv6_qp, max_raw_ipv6_qp, d);
+	FPRT(dev_attr_ex.orig_attr.max_raw_ethy_qp, max_raw_ethy_qp, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
 	
 	
 	
