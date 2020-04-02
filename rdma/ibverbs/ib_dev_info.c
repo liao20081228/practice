@@ -27,7 +27,7 @@
 	#define ___FPRT3DF(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define __FPRT3DF(a, b, c, d) ___FPRT3DF(\t\t\t%-d%-c\n,b, a)
 	#define _FPRT3DF(a, b, c) __FPRT3DF(a, b, c, 32s)
-	#define FPRT3DF(a) if (device_cap_flags & a) _FPRT3DF("", \t \t \t a, s)
+	#define FPRT3DF(a) if (device_cap_flags & a) _FPRT3DF("", \t\t\t\x20\x20 a, s)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 
