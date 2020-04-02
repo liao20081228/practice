@@ -19,6 +19,10 @@
 	#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define __FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
 	#define FPRT2(a, b, c) __FPRT2(a, b, c, 30s)
+
+	#define _FPRT3(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define __FPRT3(a, b, c, d) _FPRT3(\t\t\t%-d : %-c\n,b, a)
+	#define FPRT3(a, b, c) __FPRT3(a, b, c, 30s)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 char* be64tolestr(int64_t bigend, char* buf)
@@ -67,6 +71,27 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT2(dev_attr_ex.orig_attr.max_mr_size, max_mr_size, lu);
 	FPRT2(dev_attr_ex.orig_attr.page_size_cap, page_size_cap, lu);
 	FPRT2(dev_attr_ex.orig_attr.vendor_id, vendor_id,#X);
+	FPRT2(dev_attr_ex.orig_attr.vendor_part_id, vendor_part_id,u);
+	FPRT2(dev_attr_ex.orig_attr.hw_ver, hw_ver,u);
+	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	FPRT2(dev_attr_ex.orig_attr.max_qp_wr, max_qp_wr,d);
+	FPRT2(dev_attr_ex.orig_attr.device_cap_flags, device_cap_flags,u);
+	
+
+	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	
+	
+	
+	
+	
+	
+	
+	
 	return 0;
 close_device:
 	ibv_close_device(context);
