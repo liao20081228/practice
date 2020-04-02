@@ -69,7 +69,7 @@ void print_device_cap_flags(unsigned int device_cap_flags)
 	FPRTDF(IBV_DEVICE_RC_IP_CSUM);
 	FPRTDF(IBV_DEVICE_RAW_IP_CSUM);
 	FPRTDF(IBV_DEVICE_MANAGED_FLOW_STEERING);
-	FPRT(device_cap_flags, \t\t\t\t\x20\x20 unkown flags, #X);
+	FPRT(device_cap_flags, \t\t\t\t\t\x20\x20 unkown flags, #X);
 }
 
 char* be64tolestr(int64_t bigend, char* buf)
@@ -138,6 +138,9 @@ int print_device_attr(struct ibv_device_attr* device_attr)
 int print_device_attr_ex(struct ibv_device_attr_ex* dev_attr_ex)
 {
 
+	fprintf(OUTPUT,"\n\n\t%-30s\n", "device attr ex");
+	FPRT2(dev_attr_ex->comp_mask, comp_mask, u);
+
 	return 0;
 }
 
@@ -160,6 +163,7 @@ int get_attr(struct ibv_device* device, int port)
 	}
 
 	struct ibv_device_attr_ex dev_attr_ex;
+	struct ibv_query_device_ex_input dev_attr_ex_input = {};
 	memset(&dev_attr_ex, 0, sizeof(struct ibv_device_attr_ex));
 	if(ibv_query_device_ex(context, NULL, &dev_attr_ex))
 	{
