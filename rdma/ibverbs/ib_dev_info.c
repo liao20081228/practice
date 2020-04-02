@@ -135,12 +135,14 @@ int print_device_attr(struct ibv_device_attr* device_attr)
 	return 0;
 }
 
+
 int print_device_attr_ex(struct ibv_device_attr_ex* dev_attr_ex)
 {
 
 	fprintf(OUTPUT,"\n\n\t%-30s\n", "device attr ex");
 	FPRT2(dev_attr_ex->comp_mask, comp_mask, u);
-
+	if (dev_attr_ex->odp_caps.general_caps == IBV_ODP_SUPPORT)
+		FPRT2()
 	return 0;
 }
 
