@@ -13,8 +13,10 @@
 
 #ifndef FPR
 	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define FPRT(a, b, c, d) _FPRT(\t%-d : %-c\n,b, a)
-	#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define ___FPRT(a, b, c, d) _FPRT(\t%-d : %-c\n,b, a)
+	#define FPRT(a, b, c) ___FPRT(\t%-d : %-c\n,b, 30s)
+
+#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
@@ -62,6 +64,8 @@ int get_attr(struct ibv_device* device, int port)
 	memset(GUID, 0, sizeof(GUID));
 	FPRT2(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s, 30s);
 	FPRT2(dev_attr_ex.orig_attr.max_mr_size, max_mr_size, lu, 30s);
+	FPRT2(dev_attr_ex.orig_attr.page_size_cap, page_size_cap, lu, 30s);
+	FPRT2(dev_attr_ex.orig_attr.vendor_id, vendor_id, X, 30s);
 	return 0;
 close_device:
 	ibv_close_device(context);
