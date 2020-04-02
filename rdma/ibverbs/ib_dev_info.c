@@ -84,6 +84,57 @@ char* be64tolestr(int64_t bigend, char* buf)
 	return buf;
 }
 
+int print_device_attr(struct ibv_device_attr* device_attr)
+{
+
+	char GUID[] ="xxxx:xxxx:xxxx:xxxx";
+	fprintf(OUTPUT,"\n\n\t%-30s\n", "");
+	FPRT(device_attr->fw_ver, fir_ver, s);
+	memset(GUID, 0, sizeof(GUID));
+	FPRT(be64tolestr(device_attr->node_guid, GUID), node_guid, s);
+	memset(GUID, 0, sizeof(GUID));
+	FPRT(be64tolestr(device_attr->sys_image_guid, GUID), sys_image_guid, s);
+	FPRT(device_attr->max_mr_size, max_mr_size, lu);
+	FPRT(device_attr->page_size_cap, page_size_cap, lu);
+	FPRT(device_attr->vendor_id, vendor_id,#X);
+	FPRT(device_attr->vendor_part_id, vendor_part_id,u);
+	FPRT(device_attr->hw_ver, hw_ver,u);
+	FPRT(device_attr->max_qp, max_qp,d);
+	FPRT(device_attr->max_qp_wr, max_qp_wr,d);
+	FPRT(device_attr->device_cap_flags, device_cap_flags,#X);
+	print_device_cap_flags(device_attr->device_cap_flags);
+	FPRT(device_attr->max_sge, max_sge, d);
+	FPRT(device_attr->max_sge_rd, max_sge_rd, d);
+	FPRT(device_attr->max_cq, max_cq, d);
+	FPRT(device_attr->max_cqe, max_cqe, d);
+	FPRT(device_attr->max_mr, max_mr, d);
+	FPRT(device_attr->max_pd, max_pd, d);
+	FPRT(device_attr->max_qp_rd_atom, max_qp_rd_atom, d);
+	FPRT(device_attr->max_ee_rd_atom, max_ee_rd_atom, d);
+	FPRT(device_attr->max_res_rd_atom, max_res_rd_atom, d);
+	FPRT(device_attr->max_qp_init_rd_atom, max_qp_init_rd_atom, d);
+	FPRT(device_attr->max_ee_init_rd_atom, max_ee_init_rd_atom, d);
+	print_atomic_cap(device_attr->atomic_cap);
+	FPRT(device_attr->max_ee, max_ee, d);
+	FPRT(device_attr->max_rdd, max_rdd, d);
+	FPRT(device_attr->max_mw, max_mw, d);
+	FPRT(device_attr->max_raw_ipv6_qp, max_raw_ipv6_qp, d);
+	FPRT(device_attr->max_raw_ethy_qp, max_raw_ethy_qp, d);
+	FPRT(device_attr->max_mcast_grp, max_mcast_grp, d);
+	FPRT(device_attr->max_mcast_qp_attach, max_mcast_qp_attach, d);
+	FPRT(device_attr->max_total_mcast_qp_attach, max_total_mcast_qp_attach, d);
+	FPRT(device_attr->max_ah, max_ah, d);
+	FPRT(device_attr->max_fmr, max_fmr, d);
+	FPRT(device_attr->max_map_per_fmr, max_map_per_fmr, d);
+	FPRT(device_attr->max_srq, max_srq, d);
+	FPRT(device_attr->max_srq_wr, max_srq_wr, d);
+	FPRT(device_attr->max_srq_sge, max_srq_sge, d);
+	FPRT(device_attr->max_pkeys, max_pkeys, hu);
+	FPRT(device_attr->local_ca_ack_delay, local_ca_ack_delay, hhu);
+	FPRT(device_attr->phys_port_cnt, phys_port_cnt, hhu);
+	return 0;
+}
+
 int get_attr(struct ibv_device* device, int port)
 {
 	fprintf(OUTPUT, "name : %-s\n", device->name);
@@ -109,50 +160,9 @@ int get_attr(struct ibv_device* device, int port)
 		perror("ibv_query_device_ex failed");
 		goto close_device;
 	}
-	fprintf(OUTPUT,"\n\n\t%-30s\n", "");
-	FPRT(dev_attr_ex.orig_attr.fw_ver, fir_ver, s);
-	memset(GUID, 0, sizeof(GUID));
-	FPRT(be64tolestr(dev_attr_ex.orig_attr.node_guid, GUID), node_guid, s);
-	memset(GUID, 0, sizeof(GUID));
-	FPRT(be64tolestr(dev_attr_ex.orig_attr.sys_image_guid, GUID), sys_image_guid, s);
-	FPRT(dev_attr_ex.orig_attr.max_mr_size, max_mr_size, lu);
-	FPRT(dev_attr_ex.orig_attr.page_size_cap, page_size_cap, lu);
-	FPRT(dev_attr_ex.orig_attr.vendor_id, vendor_id,#X);
-	FPRT(dev_attr_ex.orig_attr.vendor_part_id, vendor_part_id,u);
-	FPRT(dev_attr_ex.orig_attr.hw_ver, hw_ver,u);
-	FPRT(dev_attr_ex.orig_attr.max_qp, max_qp,d);
-	FPRT(dev_attr_ex.orig_attr.max_qp_wr, max_qp_wr,d);
-	FPRT(dev_attr_ex.orig_attr.device_cap_flags, device_cap_flags,#X);
-	print_device_cap_flags(dev_attr_ex.orig_attr.device_cap_flags);
-	FPRT(dev_attr_ex.orig_attr.max_sge, max_sge, d);
-	FPRT(dev_attr_ex.orig_attr.max_sge_rd, max_sge_rd, d);
-	FPRT(dev_attr_ex.orig_attr.max_cq, max_cq, d);
-	FPRT(dev_attr_ex.orig_attr.max_cqe, max_cqe, d);
-	FPRT(dev_attr_ex.orig_attr.max_mr, max_mr, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_qp_rd_atom, max_qp_rd_atom, d);
-	FPRT(dev_attr_ex.orig_attr.max_ee_rd_atom, max_ee_rd_atom, d);
-	FPRT(dev_attr_ex.orig_attr.max_res_rd_atom, max_res_rd_atom, d);
-	FPRT(dev_attr_ex.orig_attr.max_qp_init_rd_atom, max_qp_init_rd_atom, d);
-	FPRT(dev_attr_ex.orig_attr.max_ee_init_rd_atom, max_ee_init_rd_atom, d);
-	print_atomic_cap(dev_attr_ex.orig_attr.atomic_cap);
-	FPRT(dev_attr_ex.orig_attr.max_ee, max_ee, d);
-	FPRT(dev_attr_ex.orig_attr.max_rdd, max_rdd, d);
-	FPRT(dev_attr_ex.orig_attr.max_mw, max_mw, d);
-	FPRT(dev_attr_ex.orig_attr.max_raw_ipv6_qp, max_raw_ipv6_qp, d);
-	FPRT(dev_attr_ex.orig_attr.max_raw_ethy_qp, max_raw_ethy_qp, d);
-	FPRT(dev_attr_ex.orig_attr.max_mcast_grp, max_mcast_grp, d);
-	FPRT(dev_attr_ex.orig_attr.max_mcast_qp_attach, max_mcast_qp_attach, d);
-	FPRT(dev_attr_ex.orig_attr.max_total_mcast_qp_attach, max_total_mcast_qp_attach, d);
-	FPRT(dev_attr_ex.orig_attr.max_ah, max_ah, d);
-	FPRT(dev_attr_ex.orig_attr.max_fmr, max_fmr, d);
-	FPRT(dev_attr_ex.orig_attr.max_map_per_fmr, max_map_per_fmr, d);
-	FPRT(dev_attr_ex.orig_attr.max_srq, max_srq, d);
-	FPRT(dev_attr_ex.orig_attr.max_srq_wr, max_srq_wr, d);
-	FPRT(dev_attr_ex.orig_attr.max_srq_sge, max_srq_sge, d);
-	FPRT(dev_attr_ex.orig_attr.max_pkeys, max_pkeys, hu);
-	FPRT(dev_attr_ex.orig_attr.local_ca_ack_delay, local_ca_ack_delay, hhu);
-	FPRT(dev_attr_ex.orig_attr.phys_port_cnt, phys_port_cnt, hhu);
+	
+	print_device_attr(&dev_attr_ex.orig_attr);
+	
 	return 0;
 close_device:
 	ibv_close_device(context);
