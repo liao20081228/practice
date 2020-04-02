@@ -14,15 +14,15 @@
 #ifndef FPR
 	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define ___FPRT(a, b, c, d) _FPRT(\t%-d : %-c\n,b, a)
-	#define FPRT(a, b, c) ___FPRT(a, b, c, 30s)
+	#define FPRT(a, b, c) ___FPRT(a, b, c, 32s)
 
 	#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define __FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
-	#define FPRT2(a, b, c) __FPRT2(a, b, c, 30s)
+	#define FPRT2(a, b, c) __FPRT2(a, b, c, 32s)
 
 	#define _FPRT3(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define __FPRT3(a, b, c, d) _FPRT3(\t\t\t%-d : %-c\n,b, a)
-	#define FPRT3(a, b, c) __FPRT3(a, b, c, 30s)
+	#define FPRT3(a, b, c) __FPRT3(a, b, c, 32s)
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 
@@ -30,12 +30,32 @@
 void print_device_cap_flags(unsigned int device_cap_flags)
 {
 #ifndef FPRT3DF
-	#define FPRT3DF(a) if (device_cap_flags & a) FPRT3("", a,s)
+	#define FPRT3DF(a) if (device_cap_flags & a) FPRT3("", \t\t\t a, s)
 #endif /* ifndef macro */
 	FPRT3DF(IBV_DEVICE_RESIZE_MAX_WR);
-	FPRT3DF(IBV_DEVICE_);
-
-
+	FPRT3DF(IBV_DEVICE_BAD_PKEY_CNTR);
+	FPRT3DF(IBV_DEVICE_BAD_QKEY_CNTR);
+	FPRT3DF(IBV_DEVICE_RAW_MULTI);
+	FPRT3DF(IBV_DEVICE_AUTO_PATH_MIG);
+	FPRT3DF(IBV_DEVICE_CHANGE_PHY_PORT);
+	FPRT3DF(IBV_DEVICE_UD_AV_PORT_ENFORCE);
+	FPRT3DF(IBV_DEVICE_CURR_QP_STATE_MOD);
+	FPRT3DF(IBV_DEVICE_SHUTDOWN_PORT);
+	FPRT3DF(IBV_DEVICE_INIT_TYPE);
+	FPRT3DF(IBV_DEVICE_PORT_ACTIVE_EVENT);
+	FPRT3DF(IBV_DEVICE_SYS_IMAGE_GUID);
+	FPRT3DF(IBV_DEVICE_RC_RNR_NAK_GEN);
+	FPRT3DF(IBV_DEVICE_SRQ_RESIZE);
+	FPRT3DF(IBV_DEVICE_N_NOTIFY_CQ);
+	FPRT3DF(IBV_DEVICE_MEM_WINDOW);
+	FPRT3DF(IBV_DEVICE_UD_IP_CSUM);
+	FPRT3DF(IBV_DEVICE_XRC);
+	FPRT3DF(IBV_DEVICE_MEM_MGT_EXTENSIONS);
+	FPRT3DF(IBV_DEVICE_MEM_WINDOW_TYPE_2A);
+	FPRT3DF(IBV_DEVICE_MEM_WINDOW_TYPE_2B);
+	FPRT3DF(IBV_DEVICE_RC_IP_CSUM);
+	FPRT3DF(IBV_DEVICE_RAW_IP_CSUM);
+	FPRT3DF(IBV_DEVICE_MANAGED_FLOW_STEERING);
 }
 
 
