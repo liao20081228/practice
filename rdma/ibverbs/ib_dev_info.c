@@ -141,23 +141,18 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(dev_attr_ex.orig_attr.max_mw, max_mw, d);
 	FPRT(dev_attr_ex.orig_attr.max_raw_ipv6_qp, max_raw_ipv6_qp, d);
 	FPRT(dev_attr_ex.orig_attr.max_raw_ethy_qp, max_raw_ethy_qp, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	FPRT(dev_attr_ex.orig_attr.max_pd, max_pd, d);
-	
-	
-	
-	
-	
-	
-	
-	
+	FPRT(dev_attr_ex.orig_attr.max_mcast_grp, max_mcast_grp, d);
+	FPRT(dev_attr_ex.orig_attr.max_mcast_qp_attach, max_mcast_qp_attach, d);
+	FPRT(dev_attr_ex.orig_attr.max_total_mcast_qp_attach, max_total_mcast_qp_attach, d);
+	FPRT(dev_attr_ex.orig_attr.max_ah, max_ah, d);
+	FPRT(dev_attr_ex.orig_attr.max_fmr, max_fmr, d);
+	FPRT(dev_attr_ex.orig_attr.max_map_per_fmr, max_map_per_fmr, d);
+	FPRT(dev_attr_ex.orig_attr.max_srq, max_srq, d);
+	FPRT(dev_attr_ex.orig_attr.max_srq_wr, max_srq_wr, d);
+	FPRT(dev_attr_ex.orig_attr.max_srq_sge, max_srq_sge, d);
+	FPRT(dev_attr_ex.orig_attr.max_pkeys, max_pkeys, hu);
+	FPRT(dev_attr_ex.orig_attr.local_ca_ack_delay, local_ca_ack_delay, hhu);
+	FPRT(dev_attr_ex.orig_attr.phys_port_cnt, phys_port_cnt, hhu);
 	return 0;
 close_device:
 	ibv_close_device(context);
