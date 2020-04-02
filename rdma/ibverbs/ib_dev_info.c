@@ -30,7 +30,15 @@
 	#define FPRT3DF(a) if (device_cap_flags & a) {_FPRT3DF("", \t\t\t\x20\x20 a, s); device_cap_flags &= (~a);}
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
+void print_atomic_cap(enum ibv_atomic_cap atomic_cap)
+{
+	if (atomic_cap == IBV_ATOMIC_NONE)
+		
+	if (atomic_cap == IBV_ATOMIC_HCA)
 
+	if (atomic_cap == IBV_ATOMIC_GLOB)
+
+}
 
 void print_device_cap_flags(unsigned int device_cap_flags)
 {
@@ -114,12 +122,17 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT2(dev_attr_ex.orig_attr.device_cap_flags, device_cap_flags,#X);
 	print_device_cap_flags(dev_attr_ex.orig_attr.device_cap_flags);
 	
-	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
-	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
-	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
-	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
-	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
-	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
+	FPRT2(dev_attr_ex.orig_attr.max_sge, max_sge, d);
+	FPRT2(dev_attr_ex.orig_attr.max_sge_rd, max_sge_rd, d);
+	FPRT2(dev_attr_ex.orig_attr.max_cq, max_cq, d);
+	FPRT2(dev_attr_ex.orig_attr.max_cqe, max_cqe, d);
+	FPRT2(dev_attr_ex.orig_attr.max_mr, max_mr, d);
+	FPRT2(dev_attr_ex.orig_attr.max_pd, max_pd, d);
+	FPRT2(dev_attr_ex.orig_attr.max_qp_rd_atom, max_qp_rd_atom, d);
+	FPRT2(dev_attr_ex.orig_attr.max_ee_rd_atom, max_ee_rd_atom, d);
+	FPRT2(dev_attr_ex.orig_attr.max_res_rd_atom, max_res_rd_atom, d);
+	FPRT2(dev_attr_ex.orig_attr.max_qp_init_rd_atom, max_qp_init_rd_atom, d);
+	FPRT2(dev_attr_ex.orig_attr.max_ee_init_rd_atom, max_ee_init_rd_atom, d);
 	
 	
 	
