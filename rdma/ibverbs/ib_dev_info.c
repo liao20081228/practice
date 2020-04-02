@@ -27,7 +27,7 @@
 	#define ___FPRT3DF(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define __FPRT3DF(a, b, c, d) ___FPRT3DF(\t\t\t%-d%-c\n,b, a)
 	#define _FPRT3DF(a, b, c) __FPRT3DF(a, b, c, 32s)
-	#define FPRT3DF(a) if (device_cap_flags & a) _FPRT3DF("", \t\t\t\x20\x20 a, s)
+	#define FPRT3DF(a) if (device_cap_flags & a) {_FPRT3DF("", \t\t\t\x20\x20 a, s); device_cap_flags &= (~a);}
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
 
 
@@ -58,8 +58,8 @@ void print_device_cap_flags(unsigned int device_cap_flags)
 	FPRT3DF(IBV_DEVICE_RC_IP_CSUM);
 	FPRT3DF(IBV_DEVICE_RAW_IP_CSUM);
 	FPRT3DF(IBV_DEVICE_MANAGED_FLOW_STEERING);
+	FPRT3(device_cap_flags, \t\t\t\x20\x20 unkown flags, #X);
 }
-
 
 char* be64tolestr(int64_t bigend, char* buf)
 {
@@ -113,7 +113,7 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT2(dev_attr_ex.orig_attr.max_qp_wr, max_qp_wr,d);
 	FPRT2(dev_attr_ex.orig_attr.device_cap_flags, device_cap_flags,#X);
 	print_device_cap_flags(dev_attr_ex.orig_attr.device_cap_flags);
-
+	
 	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
 	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
 	FPRT2(dev_attr_ex.orig_attr.max_qp, max_qp,d);
