@@ -162,20 +162,23 @@ int get_attr(struct ibv_device* device, int port)
 		return 1;
 	}
 
-	struct ibv_device_attr_ex dev_attr_ex;
-	struct ibv_query_device_ex_input dev_attr_ex_input = {};
-	memset(&dev_attr_ex, 0, sizeof(struct ibv_device_attr_ex));
-	if(ibv_query_device_ex(context, NULL, &dev_attr_ex))
+	struct ibv_device_attr_ex* dev_attr_ex = (struct ibv_device_attr_ex*)malloc(sizeof(struct ibv_device_attr_ex));
+	struct ibv_query_device_ex_input dev_attr_ex_input = {0};
+	memset(dev_attr_ex, 0, sizeof(struct ibv_device_attr_ex));
+	if(ibv_query_device_ex(context, &dev_attr_ex_input, dev_attr_ex))
 	{
 		perror("ibv_query_device_ex failed");
 		goto close_device;
 	}
 	
-	print_device_attr(&dev_attr_ex.orig_attr);
-	print_device_attr_ex(&dev_attr_ex);
+	print_device_attr(&dev_attr_ex->orig_attr);
+	print_device_attr_ex(dev_attr_ex);
 	
+	free(dev_attr_ex);
+	ibv_close_device(context);
 	return 0;
 close_device:
+	free(dev_attr_ex);
 	ibv_close_device(context);
 	return 1;
 }
