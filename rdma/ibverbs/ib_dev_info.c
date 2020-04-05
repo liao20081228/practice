@@ -13,18 +13,12 @@
 
 #ifndef FPR
 	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define FPRT(a, b, c) _FPRT(\t%-32s : %-c\n, b, a)
+	#define FPRT(a, b, c) _FPRT(\t%-32s : %c\n, b, a)
+	
+	#define FPRT2(a, b, c) _FPRT(\t\t%-32s : %c\n, b, a)
+	#define FPRT3(a, b, c) _FPRT(\t\t\t%-32s : %c\n, b, a)
 
-	#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define __FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
-	#define FPRT2(a, b, c) __FPRT2(a, b, c, 32s)
-
-	#define _FPRT3(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define __FPRT3(a, b, c, d) _FPRT3(\t\t\t%-d : %-c\n,b, a)
-	#define FPRT3(a, b, c) __FPRT3(a, b, c, 32s)
-
-	#define ___FPRTDF(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define __FPRTDF(a, b, c, d) ___FPRTDF(\t\t\t%-d%-c\n,b, a)
+	#define __FPRTDF(a, b, c) ___FPRTDF(\t\t\t%-32s   %c\n, b, a)
 	#define _FPRTDF(a, b, c) __FPRTDF(a, b, c, 32s)
 	#define FPRTDF(a) if (device_cap_flags & a) {_FPRTDF("", \t\t\t\x20\x20 a, s); device_cap_flags &= (~a);}
 	
