@@ -11,14 +11,14 @@ int main(void)
 	if (!dev_list)
 	{
 		perror("ibv_get_device_list failed()");
-		return EXIT_SU
-
+		return EXIT_FAILURE;
 	}
+	if (!dev_num)
+		fprintf(stdout, "no RDMA device is found\n");
 	for(int i = 0; i < dev_num ; ++i)
 	{
-		printf("%s, %lx", ibv_get_device_name(dev_list[i]), be64toh(ibv_get_device_guid(dev_list[i])));
+		const char *name = ibv_get_device_name;
 	}
-
 
 	ibv_free_device_list(dev_list);
 	return 0;	
