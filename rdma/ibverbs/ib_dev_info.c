@@ -12,9 +12,8 @@
 #endif /* ifndef OUTPUT */
 
 #ifndef FPR
-	#define __FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define _FPRT(a, b, c, d) __FPRT(\t%-d : %-c\n,b, a)
-	#define FPRT(a, b, c) _FPRT(a, b, c, 32s)
+	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define FPRT(a, b, c) _FPRT(\t%-32s : %-c\n, b, a)
 
 	#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define __FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
