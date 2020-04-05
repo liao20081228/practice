@@ -20,6 +20,7 @@ int main(void)
 	
 	for(int i = 0; i < dev_num ; ++i)
 	{
+		fprintf(stdout, "%s:\n", ibv_get_device_name(dev_list[i]));
 	}
 
 	ibv_free_device_list(dev_list);
