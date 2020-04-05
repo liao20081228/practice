@@ -12,9 +12,9 @@
 #endif /* ifndef OUTPUT */
 
 #ifndef FPR
-	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define ___FPRT(a, b, c, d) _FPRT(\t%-d : %-c\n,b, a)
-	#define FPRT(a, b, c) ___FPRT(a, b, c, 32s)
+	#define __FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
+	#define _FPRT(a, b, c, d) __FPRT(\t%-d : %-c\n,b, a)
+	#define FPRT(a, b, c) _FPRT(a, b, c, 32s)
 
 	#define _FPRT2(a, b, c) fprintf(OUTPUT, #a, #b, c)
 	#define __FPRT2(a, b, c, d) _FPRT2(\t\t%-d : %-c\n,b, a)
@@ -31,7 +31,6 @@
 	
 	#define FPRTOF(a,b) if (b & a) {_FPRTDF("", \t\t\t\x20\x20 a, s); b &= (~a);}
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
-
 void print_atomic_cap(enum ibv_atomic_cap atomic_cap)
 {
 	if (atomic_cap == IBV_ATOMIC_NONE)
