@@ -18,9 +18,8 @@
 	#define FPRT2(a, b, c) _FPRT(\t\t%-32s : %c\n, b, a)
 	#define FPRT3(a, b, c) _FPRT(\t\t\t%-32s : %c\n, b, a)
 
-	#define __FPRTDF(a, b, c) ___FPRTDF(\t\t\t%-32s   %c\n, b, a)
-	#define _FPRTDF(a, b, c) __FPRTDF(a, b, c, 32s)
-	#define FPRTDF(a) if (device_cap_flags & a) {_FPRTDF("", \t\t\t\x20\x20 a, s); device_cap_flags &= (~a);}
+	#define _FPRT3DF(a, b, c) _FPRT(\t\t\t%-32s   %c\n, b, a)
+	#define FPRT3DF(a) if (device_cap_flags & a) {_FPRTDF("a","", s); device_cap_flags &= (~a);}
 	
 	#define FPRTOF(a,b) if (b & a) {_FPRTDF("", \t\t\t\x20\x20 a, s); b &= (~a);}
 #endif /* ifndef FPRINTF(a,b) __FPRINTF(#a,b) */
@@ -178,6 +177,7 @@ int get_attr(struct ibv_device* device, int port)
 	FPRT(ibv_get_device_name(device), ibv_get_device_name(), s);
 	char GUID[] ="xxxx:xxxx:xxxx:xxxx";
 	FPRT(be64tolestr(ibv_get_device_guid(device), GUID), ibv_get_device_guid(), s);
+	
 	struct ibv_context* context = ibv_open_device(device);
 	if (!context)
 	{
