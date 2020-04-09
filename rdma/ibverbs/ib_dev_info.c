@@ -13,8 +13,8 @@
 
 #ifndef FPR
 	#define _FPRT(a, b, c) fprintf(OUTPUT, #a, #b, c)
-	#define FPRT(a, b, c) _FPRT(\t%-32s : %c\n, b, a)
-	
+
+	#define FPRT(a, b, c) _FPRT(\t%-32s : %c\n, b, a) //a要输出的目标，b是说明，c为输出的格式
 	#define FPRT2(a, b, c) _FPRT(\t\t%-32s : %c\n, b, a)
 	#define FPRT3(a, b, c) _FPRT(\t\t\t%-32s : %c\n, b, a)
 
