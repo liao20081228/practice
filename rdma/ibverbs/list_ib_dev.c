@@ -18,11 +18,12 @@ int main(void)
 	if (!dev_num)
 		fprintf(stdout, "no RDMA device is found\n");
 	
-	fprintf(stdout, "")
+	fprintf(stdout, "");
 	for(int i = 0; i < dev_num ; ++i)
 	{
 		fprintf(stdout, "%s:\n", ibv_get_device_name(dev_list[i]));
 	}
+	fprintf(stdout, "");
 
 	ibv_free_device_list(dev_list);
 	return 0;	
