@@ -244,46 +244,6 @@ int rdma_resolve_addr(struct rdma_cm_id *id, struct sockaddr *src_addr,
  */
 int rdma_resolve_route(struct rdma_cm_id *id, int timeout_ms);
 
-/**
- * rdma_create_qp - Allocate a QP.
- * @id: RDMA identifier.
- * @pd: Optional protection domain for the QP.
- * @qp_init_attr: initial QP attributes.
- * Description:
- *  Allocate a QP associated with the specified rdma_cm_id and transition it
- *  for sending and receiving.
- * Notes:
- *   The rdma_cm_id must be bound to a local RDMA device before calling this
- *   function, and the protection domain must be for that same device.
- *   QPs allocated to an rdma_cm_id are automatically transitioned by the
- *   librdmacm through their states.  After being allocated, the QP will be
- *   ready to handle posting of receives.  If the QP is unconnected, it will
- *   be ready to post sends.
- *   If pd is NULL, then the QP will be allocated using a default protection
- *   domain associated with the underlying RDMA device.
- * See also:
- *   rdma_bind_addr, rdma_resolve_addr, rdma_destroy_qp, ibv_create_qp,
- *   ibv_modify_qp
- */
-int rdma_create_qp(struct rdma_cm_id *id, struct ibv_pd *pd,
-		   struct ibv_qp_init_attr *qp_init_attr);
-int rdma_create_qp_ex(struct rdma_cm_id *id,
-		      struct ibv_qp_init_attr_ex *qp_init_attr);
-int rdma_create_qp_exp(struct rdma_cm_id *id,
-		       struct ibv_exp_qp_init_attr *qp_init_attr);
-
-/**
- * rdma_destroy_qp - Deallocate a QP.
- * @id: RDMA identifier.
- * Description:
- *   Destroy a QP allocated on the rdma_cm_id.
- * Notes:
- *   Users must destroy any QP associated with an rdma_cm_id before
- *   destroying the ID.
- * See also:
- *   rdma_create_qp, rdma_destroy_id, ibv_destroy_qp
- */
-void rdma_destroy_qp(struct rdma_cm_id *id);
 
 /**
  * rdma_connect - Initiate an active connection request.
