@@ -196,18 +196,7 @@ int rdma_get_cm_event(struct rdma_event_channel *channel,
  */
 int rdma_ack_cm_event(struct rdma_cm_event *event);
 
-uint16_t rdma_get_src_port(struct rdma_cm_id *id);
-uint16_t rdma_get_dst_port(struct rdma_cm_id *id);
 
-static inline struct sockaddr *rdma_get_local_addr(struct rdma_cm_id *id)
-{
-	return &id->route.addr.src_addr;
-}
-
-static inline struct sockaddr *rdma_get_peer_addr(struct rdma_cm_id *id)
-{
-	return &id->route.addr.dst_addr;
-}
 
 /**
  * rdma_lib_reset - Free and restart library resources
