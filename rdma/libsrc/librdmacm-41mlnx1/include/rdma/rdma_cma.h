@@ -209,30 +209,6 @@ int rdma_ack_cm_event(struct rdma_cm_event *event);
  */
 int rdma_lib_reset(void);
 
-/**
- * rdma_get_devices - Get list of RDMA devices currently available.
- * @num_devices: If non-NULL, set to the number of devices returned.
- * Description:
- *   Return a NULL-terminated array of opened RDMA devices.  Callers can use
- *   this routine to allocate resources on specific RDMA devices that will be
- *   shared across multiple rdma_cm_id's.
- * Notes:
- *   The returned array must be released by calling rdma_free_devices.  Devices
- *   remain opened while the librdmacm is loaded.
- * See also:
- *   rdma_free_devices
- */
-struct ibv_context **rdma_get_devices(int *num_devices);
-
-/**
- * rdma_free_devices - Frees the list of devices returned by rdma_get_devices.
- * @list: List of devices returned from rdma_get_devices.
- * Description:
- *   Frees the device array returned by rdma_get_devices.
- * See also:
- *   rdma_get_devices
- */
-void rdma_free_devices(struct ibv_context **list);
 
 /**
  * rdma_event_str - Returns a string representation of an rdma cm event.
