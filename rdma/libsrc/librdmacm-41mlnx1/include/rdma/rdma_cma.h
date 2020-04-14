@@ -68,7 +68,7 @@ enum rdma_cm_event_type {
 
 
 #define RDMA_IB_IP_PS_MASK   0xFFFFFFFFFFFF0000ULL
-#define RDMA_IB_IP_PORT_MASK 0x000000000000FFFFULL
+#define RDMA_IB_IP_PORT_MASK 0x0000000000010000ULL
 #define RDMA_IB_IP_PS_TCP    0x0000000001060000ULL
 #define RDMA_IB_IP_PS_UDP    0x0000000001110000ULL
 #define RDMA_IB_PS_IB        0x00000000013F0000ULL
@@ -88,18 +88,6 @@ enum {
 	RDMA_MAX_INIT_DEPTH = 0xFF
 };
 
-struct rdma_conn_param {
-	const void *private_data;
-	uint8_t private_data_len;
-	uint8_t responder_resources;
-	uint8_t initiator_depth;
-	uint8_t flow_control;
-	uint8_t retry_count;		/* ignored when accepting */
-	uint8_t rnr_retry_count;
-	/* Fields below ignored if a QP is created on the rdma_cm_id. */
-	uint8_t srq;
-	uint32_t qp_num;
-};
 
 struct rdma_ud_param {
 	const void *private_data;
