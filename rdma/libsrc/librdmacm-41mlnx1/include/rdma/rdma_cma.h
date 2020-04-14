@@ -79,10 +79,6 @@ enum rdma_cm_event_type {
  */
 #define RDMA_UDP_QKEY 0x01234567
 
-
-
-
-
 enum {
 	RDMA_MAX_RESP_RES = 0xFF,
 	RDMA_MAX_INIT_DEPTH = 0xFF
@@ -109,24 +105,6 @@ struct rdma_cm_event {
 };
 
 
-/**
- * rdma_reject - Called to reject a connection request.
- * @id: Connection identifier associated with the request.
- * @private_data: Optional private data to send with the reject message.
- * @private_data_len: Size of the private_data to send, in bytes.
- * Description:
- *   Called from the listening side to reject a connection or datagram
- *   service lookup request.
- * Notes:
- *   After receiving a connection request event, a user may call rdma_reject
- *   to reject the request.  If the underlying RDMA transport supports
- *   private data in the reject message, the specified data will be passed to
- *   the remote side.
- * See also:
- *   rdma_listen, rdma_accept, rdma_get_cm_event
- */
-int rdma_reject(struct rdma_cm_id *id, const void *private_data,
-		uint8_t private_data_len);
 
 /**
  * rdma_notify - Notifies the librdmacm of an asynchronous event.
@@ -149,18 +127,6 @@ int rdma_reject(struct rdma_cm_id *id, const void *private_data,
  *   rdma_connect, rdma_accept, rdma_listen
  */
 int rdma_notify(struct rdma_cm_id *id, enum ibv_event_type event);
-
-/**
- * rdma_disconnect - This function disconnects a connection.
- * @id: RDMA identifier.
- * Description:
- *   Disconnects a connection and transitions any associated QP to the
- *   error state.
- * See also:
- *   rdma_connect, rdma_listen, rdma_accept
- */
-int rdma_disconnect(struct rdma_cm_id *id);
-
 /**
  * rdma_join_multicast - Joins a multicast group.
  * @id: Communication identifier associated with the request.
