@@ -202,31 +202,6 @@ void rdma_destroy_ep(struct rdma_cm_id *id);
  */
 int rdma_bind_addr(struct rdma_cm_id *id, struct sockaddr *addr);
 
-/**
- * rdma_resolve_addr - Resolve destination and optional source addresses.
- * @id: RDMA identifier.
- * @src_addr: Source address information.  This parameter may be NULL.
- * @dst_addr: Destination address information.
- * @timeout_ms: Time to wait for resolution to complete.
- * Description:
- *   Resolve destination and optional source addresses from IP addresses
- *   to an RDMA address.  If successful, the specified rdma_cm_id will
- *   be bound to a local device.
- * Notes:
- *   This call is used to map a given destination IP address to a usable RDMA
- *   address.  If a source address is given, the rdma_cm_id is bound to that
- *   address, the same as if rdma_bind_addr were called.  If no source
- *   address is given, and the rdma_cm_id has not yet been bound to a device,
- *   then the rdma_cm_id will be bound to a source address based on the
- *   local routing tables.  After this call, the rdma_cm_id will be bound to
- *   an RDMA device.  This call is typically made from the active side of a
- *   connection before calling rdma_resolve_route and rdma_connect.
- * See also:
- *   rdma_create_id, rdma_resolve_route, rdma_connect, rdma_create_qp,
- *   rdma_get_cm_event, rdma_bind_addr
- */
-int rdma_resolve_addr(struct rdma_cm_id *id, struct sockaddr *src_addr,
-		      struct sockaddr *dst_addr, int timeout_ms);
 
 /**
  * rdma_resolve_route - Resolve the route information needed to establish a connection.
@@ -535,16 +510,6 @@ int rdma_getaddrinfo(char *node, char *service,
 
 void rdma_freeaddrinfo(struct rdma_addrinfo *res);
 
-/**
- * rdma_init_qp_attr - Returns QP attributes.
- * @id: Communication identifier.
- * @qp_attr: A reference to a QP attributes struct containing
- * response information.
- * @qp_attr_mask: A reference to a QP attributes mask containing
- * response information.
- */
-int rdma_init_qp_attr(struct rdma_cm_id *id, struct ibv_qp_attr *qp_attr,
-		      int *qp_attr_mask);
 #ifdef __cplusplus
 }
 #endif
