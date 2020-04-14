@@ -124,27 +124,6 @@ struct rdma_cm_event {
 
 
 
-
-
-
-/**
- * rdma_connect - Initiate an active connection request.
- * @id: RDMA identifier.
- * @conn_param: optional connection parameters.
- * Description:
- *   For a connected rdma_cm_id, this call initiates a connection request
- *   to a remote destination.  For an unconnected rdma_cm_id, it initiates
- *   a lookup of the remote QP providing the datagram service.
- * Notes:
- *   Users must have resolved a route to the destination address
- *   by having called rdma_resolve_route before calling this routine.
- *   A user may override the default connection parameters and exchange
- *   private data as part of the connection by using the conn_param parameter.
- * See also:
- *   rdma_resolve_route, rdma_disconnect, rdma_listen, rdma_get_cm_event
- */
-int rdma_connect(struct rdma_cm_id *id, struct rdma_conn_param *conn_param);
-
 /**
  * rdma_establish - Complete an active connection request.
  * @id: RDMA identifier.
@@ -163,25 +142,6 @@ int rdma_connect(struct rdma_cm_id *id, struct rdma_conn_param *conn_param);
  */
 int rdma_establish(struct rdma_cm_id *id);
 
-/**
- * rdma_listen - Listen for incoming connection requests.
- * @id: RDMA identifier.
- * @backlog: backlog of incoming connection requests.
- * Description:
- *   Initiates a listen for incoming connection requests or datagram service
- *   lookup.  The listen will be restricted to the locally bound source
- *   address.
- * Notes:
- *   Users must have bound the rdma_cm_id to a local address by calling
- *   rdma_bind_addr before calling this routine.  If the rdma_cm_id is
- *   bound to a specific IP address, the listen will be restricted to that
- *   address and the associated RDMA device.  If the rdma_cm_id is bound
- *   to an RDMA port number only, the listen will occur across all RDMA
- *   devices.
- * See also:
- *   rdma_bind_addr, rdma_connect, rdma_accept, rdma_reject, rdma_get_cm_event
- */
-int rdma_listen(struct rdma_cm_id *id, int backlog);
 
 /**
  * rdma_get_request
