@@ -124,24 +124,6 @@ struct rdma_cm_event {
 
 
 
-/**
- * rdma_establish - Complete an active connection request.
- * @id: RDMA identifier.
- * Description:
- *   Acknowledge an incoming connection response event and complete the
- *   connection establishment.
- * Notes:
- *   If a QP has not been created on the rdma_cm_id, this function should be
- *   called by the active side to complete the connection, after getting connect
- *   response event. This will trigger a connection established event on the
- *   passive side.
- *   This function should not be used on an rdma_cm_id on which a QP has been
- *   created.
- * See also:
- *   rdma_connect, rdma_disconnect, rdma_get_cm_event
- */
-int rdma_establish(struct rdma_cm_id *id);
-
 
 /**
  * rdma_get_request
