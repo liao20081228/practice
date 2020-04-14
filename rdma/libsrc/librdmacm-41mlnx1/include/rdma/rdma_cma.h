@@ -181,22 +181,11 @@ int rdma_create_ep(struct rdma_cm_id **id, struct rdma_addrinfo *res,
  */
 void rdma_destroy_ep(struct rdma_cm_id *id);
 
-/**
- * rdma_destroy_id - Release a communication identifier.
- * @id: The communication identifier to destroy.
- * Description:
- *   Destroys the specified rdma_cm_id and cancels any outstanding
- *   asynchronous operation.
- * Notes:
- *   Users must free any associated QP with the rdma_cm_id before
- *   calling this routine and ack an related events.
- * See also:
- *   rdma_create_id, rdma_destroy_qp, rdma_ack_cm_event
- */
-int rdma_destroy_id(struct rdma_cm_id *id);
 
 /**
  * rdma_bind_addr - Bind an RDMA identifier to a source address.
+ * <
+ * <
  * @id: RDMA identifier.
  * @addr: Local address information.  Wildcard values are permitted.
  * Description:
@@ -576,23 +565,6 @@ enum {
 	RDMA_OPTION_IB_PATH	 = 1	/* struct ibv_path_data[] */
 };
 
-/**
- * rdma_set_option - Set options for an rdma_cm_id.
- * @id: Communication identifier to set option for.
- * @level: Protocol level of the option to set.
- * @optname: Name of the option to set.
- * @optval: Reference to the option data.
- * @optlen: The size of the %optval buffer.
- */
-int rdma_set_option(struct rdma_cm_id *id, int level, int optname,
-		    void *optval, size_t optlen);
-
-/**
- * rdma_migrate_id - Move an rdma_cm_id to a new event channel.
- * @id: Communication identifier to migrate.
- * @channel: New event channel for rdma_cm_id events.
- */
-int rdma_migrate_id(struct rdma_cm_id *id, struct rdma_event_channel *channel);
 
 /**
  * rdma_getaddrinfo - RDMA address and route resolution service.
