@@ -79,29 +79,6 @@ enum rdma_cm_event_type {
  */
 #define RDMA_UDP_QKEY 0x01234567
 
-struct rdma_ib_addr {
-	union ibv_gid	sgid;
-	union ibv_gid	dgid;
-	uint16_t	pkey;
-};
-
-struct rdma_addr {
-	union {
-		struct sockaddr		src_addr;
-		struct sockaddr_in	src_sin;
-		struct sockaddr_in6	src_sin6;
-		struct sockaddr_storage src_storage;
-	};
-	union {
-		struct sockaddr		dst_addr;
-		struct sockaddr_in	dst_sin;
-		struct sockaddr_in6	dst_sin6;
-		struct sockaddr_storage dst_storage;
-	};
-	union {
-		struct rdma_ib_addr	ibaddr;
-	} addr;
-};
 
 
 
