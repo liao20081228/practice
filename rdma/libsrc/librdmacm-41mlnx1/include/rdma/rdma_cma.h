@@ -121,36 +121,6 @@ struct rdma_cm_event {
 };
 
 
-
-
-
-
-/**
- * rdma_get_request
- */
-int rdma_get_request(struct rdma_cm_id *listen, struct rdma_cm_id **id);
-
-/**
- * rdma_accept - Called to accept a connection request.
- * @id: Connection identifier associated with the request.
- * @conn_param: Optional information needed to establish the connection.
- * Description:
- *   Called from the listening side to accept a connection or datagram
- *   service lookup request.
- * Notes:
- *   Unlike the socket accept routine, rdma_accept is not called on a
- *   listening rdma_cm_id.  Instead, after calling rdma_listen, the user
- *   waits for a connection request event to occur.  Connection request
- *   events give the user a newly created rdma_cm_id, similar to a new
- *   socket, but the rdma_cm_id is bound to a specific RDMA device.
- *   rdma_accept is called on the new rdma_cm_id.
- *   A user may override the default connection parameters and exchange
- *   private data as part of the connection by using the conn_param parameter.
- * See also:
- *   rdma_listen, rdma_reject, rdma_get_cm_event
- */
-int rdma_accept(struct rdma_cm_id *id, struct rdma_conn_param *conn_param);
-
 /**
  * rdma_reject - Called to reject a connection request.
  * @id: Connection identifier associated with the request.
