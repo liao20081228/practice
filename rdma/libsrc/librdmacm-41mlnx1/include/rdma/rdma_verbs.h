@@ -51,14 +51,6 @@ static inline int rdma_seterrno(int ret)
 	return ret;
 }
 
-/*
- * Shared receive queues.
- */
-int rdma_create_srq(struct rdma_cm_id *id, struct ibv_pd *pd,
-		    struct ibv_srq_init_attr *attr);
-int rdma_create_srq_ex(struct rdma_cm_id *id, struct ibv_srq_init_attr_ex *attr);
-
-void rdma_destroy_srq(struct rdma_cm_id *id);
 
 
 /*

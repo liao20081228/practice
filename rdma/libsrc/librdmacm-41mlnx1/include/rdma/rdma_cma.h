@@ -127,60 +127,6 @@ struct rdma_cm_event {
  *   rdma_connect, rdma_accept, rdma_listen
  */
 int rdma_notify(struct rdma_cm_id *id, enum ibv_event_type event);
-/**
- * rdma_join_multicast - Joins a multicast group.
- * @id: Communication identifier associated with the request.
- * @addr: Multicast address identifying the group to join.
- * @context: User-defined context associated with the join request.
- * Description:
- *   Joins a multicast group and attaches an associated QP to the group.
- * Notes:
- *   Before joining a multicast group, the rdma_cm_id must be bound to
- *   an RDMA device by calling rdma_bind_addr or rdma_resolve_addr.  Use of
- *   rdma_resolve_addr requires the local routing tables to resolve the
- *   multicast address to an RDMA device.  The user must call
- *   rdma_leave_multicast to leave the multicast group and release any
- *   multicast resources.  The context is returned to the user through
- *   the private_data field in the rdma_cm_event.
- * See also:
- *   rdma_leave_multicast, rdma_bind_addr, rdma_resolve_addr, rdma_create_qp
- */
-int rdma_join_multicast(struct rdma_cm_id *id, struct sockaddr *addr,
-			void *context);
-
-/**
- * rdma_leave_multicast - Leaves a multicast group.
- * @id: Communication identifier associated with the request.
- * @addr: Multicast address identifying the group to leave.
- * Description:
- *   Leaves a multicast group and detaches an associated QP from the group.
- * Notes:
- *   Calling this function before a group has been fully joined results in
- *   canceling the join operation.  Users should be aware that messages
- *   received from the multicast group may stilled be queued for
- *   completion processing immediately after leaving a multicast group.
- *   Destroying an rdma_cm_id will automatically leave all multicast groups.
- * See also:
- *   rdma_join_multicast, rdma_destroy_qp
- */
-int rdma_leave_multicast(struct rdma_cm_id *id, struct sockaddr *addr);
-
-/**
- * rdma_get_cm_event - Retrieves the next pending communication event.
- * @channel: Event channel to check for events.
- * @event: Allocated information about the next communication event.
- * Description:
- *   Retrieves a communication event.  If no events are pending, by default,
- *   the call will block until an event is received.
- * Notes:
- *   The default synchronous behavior of this routine can be changed by
- *   modifying the file descriptor associated with the given channel.  All
- *   events that are reported must be acknowledged by calling rdma_ack_cm_event.
- *   Destruction of an rdma_cm_id will block until related events have been
- *   acknowledged.
- * See also:
- *   rdma_ack_cm_event, rdma_create_event_channel, rdma_event_str
- */
 int rdma_get_cm_event(struct rdma_event_channel *channel,
 		      struct rdma_cm_event **event);
 
