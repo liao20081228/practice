@@ -66,12 +66,6 @@ enum rdma_cm_event_type {
 	RDMA_CM_EVENT_TIMEWAIT_EXIT
 };
 
-enum rdma_port_space {
-	RDMA_PS_IPOIB = 0x0002,
-	RDMA_PS_TCP   = 0x0106,
-	RDMA_PS_UDP   = 0x0111,
-	RDMA_PS_IB    = 0x013F,
-};
 
 #define RDMA_IB_IP_PS_MASK   0xFFFFFFFFFFFF0000ULL
 #define RDMA_IB_IP_PORT_MASK 0x000000000000FFFFULL
@@ -109,33 +103,8 @@ struct rdma_addr {
 	} addr;
 };
 
-struct rdma_route {
-	struct rdma_addr	 addr;
-	struct ibv_sa_path_rec	*path_rec;
-	int			 num_paths;
-};
 
-struct rdma_event_channel {
-	int			fd;
-};
 
-struct rdma_cm_id {
-	struct ibv_context	*verbs;
-	struct rdma_event_channel *channel;
-	void			*context;
-	struct ibv_qp		*qp;
-	struct rdma_route	 route;
-	enum rdma_port_space	 ps;
-	uint8_t			 port_num;
-	struct rdma_cm_event	*event;
-	struct ibv_comp_channel *send_cq_channel;
-	struct ibv_cq		*send_cq;
-	struct ibv_comp_channel *recv_cq_channel;
-	struct ibv_cq		*recv_cq;
-	struct ibv_srq		*srq;
-	struct ibv_pd		*pd;
-	enum ibv_qp_type	qp_type;
-};
 
 enum {
 	RDMA_MAX_RESP_RES = 0xFF,
@@ -197,58 +166,6 @@ struct rdma_addrinfo {
 	struct rdma_addrinfo	*ai_next;
 };
 
-/**
- * rdma_create_event_channel - Open a channel used to report communication events.
- * Description:
- *   Asynchronous events are reported to users through event channels.  Each
- *   event channel maps to a file descriptor.
- * Notes:
- *   All created event channels must be destroyed by calling
- *   rdma_destroy_event_channel.  Users should call rdma_get_cm_event to
- *   retrieve events on an event channel.
- * See also:
- *   rdma_get_cm_event, rdma_destroy_event_channel
- */
-struct rdma_event_channel *rdma_create_event_channel(void);
-
-/**
- * rdma_destroy_event_channel - Close an event communication channel.
- * @channel: The communication channel to destroy.
- * Description:
- *   Release all resources associated with an event channel and closes the
- *   associated file descriptor.
- * Notes:
- *   All rdma_cm_id's associated with the event channel must be destroyed,
- *   and all returned events must be acked before calling this function.
- * See also:
- *  rdma_create_event_channel, rdma_get_cm_event, rdma_ack_cm_event
- */
-void rdma_destroy_event_channel(struct rdma_event_channel *channel);
-
-/**
- * rdma_create_id - Allocate a communication identifier.
- * @channel: The communication channel that events associated with the
- *   allocated rdma_cm_id will be reported on.
- * @id: A reference where the allocated communication identifier will be
- *   returned.
- * @context: User specified context associated with the rdma_cm_id.
- * @ps: RDMA port space.
- * Description:
- *   Creates an identifier that is used to track communication information.
- * Notes:
- *   Rdma_cm_id's are conceptually equivalent to a socket for RDMA
- *   communication.  The difference is that RDMA communication requires
- *   explicitly binding to a specified RDMA device before communication
- *   can occur, and most operations are asynchronous in nature.  Communication
- *   events on an rdma_cm_id are reported through the associated event
- *   channel.  Users must release the rdma_cm_id by calling rdma_destroy_id.
- * See also:
- *   rdma_create_event_channel, rdma_destroy_id, rdma_get_devices,
- *   rdma_bind_addr, rdma_resolve_addr, rdma_connect, rdma_listen,
- */
-int rdma_create_id(struct rdma_event_channel *channel,
-		   struct rdma_cm_id **id, void *context,
-		   enum rdma_port_space ps);
 
 /**
  * rdma_create_ep - Allocate a communication identifier and qp.
