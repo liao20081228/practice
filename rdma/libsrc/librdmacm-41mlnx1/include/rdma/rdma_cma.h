@@ -125,23 +125,6 @@ struct rdma_cm_event {
 #define RAI_NOROUTE		0x00000004
 #define RAI_FAMILY		0x00000008
 
-struct rdma_addrinfo {
-	int			ai_flags;
-	int			ai_family;
-	int			ai_qp_type;
-	int			ai_port_space;
-	socklen_t		ai_src_len;
-	socklen_t		ai_dst_len;
-	struct sockaddr		*ai_src_addr;
-	struct sockaddr		*ai_dst_addr;
-	char			*ai_src_canonname;
-	char			*ai_dst_canonname;
-	size_t			ai_route_len;
-	void			*ai_route;
-	size_t			ai_connect_len;
-	void			*ai_connect;
-	struct rdma_addrinfo	*ai_next;
-};
 
 
 /**
@@ -166,8 +149,6 @@ struct rdma_addrinfo {
  * See also:
  *   rdma_create_id, rdma_create_qp, rdma_migrate_id, rdma_connect,
  *   rdma_listen
- */
-int rdma_create_ep(struct rdma_cm_id **id, struct rdma_addrinfo *res,
 		   struct ibv_pd *pd, struct ibv_qp_init_attr *qp_init_attr);
 
 /**
@@ -182,42 +163,6 @@ int rdma_create_ep(struct rdma_cm_id **id, struct rdma_addrinfo *res,
 void rdma_destroy_ep(struct rdma_cm_id *id);
 
 
-/**
- * rdma_bind_addr - Bind an RDMA identifier to a source address.
- * <
- * <
- * @id: RDMA identifier.
- * @addr: Local address information.  Wildcard values are permitted.
- * Description:
- *   Associates a source address with an rdma_cm_id.  The address may be
- *   wildcarded.  If binding to a specific local address, the rdma_cm_id
- *   will also be bound to a local RDMA device.
- * Notes:
- *   Typically, this routine is called before calling rdma_listen to bind
- *   to a specific port number, but it may also be called on the active side
- *   of a connection before calling rdma_resolve_addr to bind to a specific
- *   address.
- * See also:
- *   rdma_create_id, rdma_listen, rdma_resolve_addr, rdma_create_qp
- */
-int rdma_bind_addr(struct rdma_cm_id *id, struct sockaddr *addr);
-
-
-/**
- * rdma_resolve_route - Resolve the route information needed to establish a connection.
- * @id: RDMA identifier.
- * @timeout_ms: Time to wait for resolution to complete.
- * Description:
- *   Resolves an RDMA route to the destination address in order to establish
- *   a connection.  The destination address must have already been resolved
- *   by calling rdma_resolve_addr.
- * Notes:
- *   This is called on the client side of a connection after calling
- *   rdma_resolve_addr, but before calling rdma_connect.
- * See also:
- *   rdma_resolve_addr, rdma_connect, rdma_get_cm_event
- */
-int rdma_resolve_route(struct rdma_cm_id *id, int timeout_ms);
 
 
 /**
@@ -500,15 +445,6 @@ enum {
 	RDMA_OPTION_IB_PATH	 = 1	/* struct ibv_path_data[] */
 };
 
-
-/**
- * rdma_getaddrinfo - RDMA address and route resolution service.
- */
-int rdma_getaddrinfo(char *node, char *service,
-		     struct rdma_addrinfo *hints,
-		     struct rdma_addrinfo **res);
-
-void rdma_freeaddrinfo(struct rdma_addrinfo *res);
 
 #ifdef __cplusplus
 }
