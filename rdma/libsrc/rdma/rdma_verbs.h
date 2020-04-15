@@ -51,44 +51,7 @@ static inline int rdma_seterrno(int ret)
 	return ret;
 }
 
-/*
- * Shared receive queues.
- */
-int rdma_create_srq(struct rdma_cm_id *id, struct ibv_pd *pd,
-		    struct ibv_srq_init_attr *attr);
-int rdma_create_srq_ex(struct rdma_cm_id *id, struct ibv_srq_init_attr_ex *attr);
 
-void rdma_destroy_srq(struct rdma_cm_id *id);
-
-
-/*
- * Memory registration helpers.
- */
-static inline struct ibv_mr *
-rdma_reg_msgs(struct rdma_cm_id *id, void *addr, size_t length)
-{
-	return ibv_reg_mr(id->pd, addr, length, IBV_ACCESS_LOCAL_WRITE);
-}
-
-static inline struct ibv_mr *
-rdma_reg_read(struct rdma_cm_id *id, void *addr, size_t length)
-{
-	return ibv_reg_mr(id->pd, addr, length, IBV_ACCESS_LOCAL_WRITE |
-						IBV_ACCESS_REMOTE_READ);
-}
-
-static inline struct ibv_mr *
-rdma_reg_write(struct rdma_cm_id *id, void *addr, size_t length)
-{
-	return ibv_reg_mr(id->pd, addr, length, IBV_ACCESS_LOCAL_WRITE |
-						IBV_ACCESS_REMOTE_WRITE);
-}
-
-static inline int
-rdma_dereg_mr(struct ibv_mr *mr)
-{
-	return rdma_seterrno(ibv_dereg_mr(mr));
-}
 
 
 /*
