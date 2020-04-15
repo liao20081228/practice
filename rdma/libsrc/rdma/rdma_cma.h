@@ -55,49 +55,6 @@ enum {
 	RDMA_MAX_INIT_DEPTH = 0xFF
 };
 
-
-struct rdma_ud_param {
-	const void *private_data;
-	uint8_t private_data_len;
-	struct ibv_ah_attr ah_attr;
-	uint32_t qp_num;
-	uint32_t qkey;
-};
-
-
-/**
- * rdma_get_cm_event - Retrieves the next pending communication event.
- * @channel: Event channel to check for events.
- * @event: Allocated information about the next communication event.
- * Description:
- *   Retrieves a communication event.  If no events are pending, by default,
- *   the call will block until an event is received.
- * Notes:
- *   The default synchronous behavior of this routine can be changed by
- *   modifying the file descriptor associated with the given channel.  All
- *   events that are reported must be acknowledged by calling rdma_ack_cm_event.
- *   Destruction of an rdma_cm_id will block until related events have been
- *   acknowledged.
- * See also:
- *   rdma_ack_cm_event, rdma_create_event_channel, rdma_event_str
- */
-int rdma_get_cm_event(struct rdma_event_channel *channel,
-		      struct rdma_cm_event **event);
-
-/**
- * rdma_ack_cm_event - Free a communication event.
- * @event: Event to be released.
- * Description:
- *   All events which are allocated by rdma_get_cm_event must be released,
- *   there should be a one-to-one correspondence between successful gets
- *   and acks.
- * See also:
- *   rdma_get_cm_event, rdma_destroy_id
- */
-int rdma_ack_cm_event(struct rdma_cm_event *event);
-
-const char *rdma_event_str(enum rdma_cm_event_type event);
-
 #ifdef __cplusplus
 }
 #endif
