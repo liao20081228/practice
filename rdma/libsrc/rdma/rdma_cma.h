@@ -64,18 +64,6 @@ struct rdma_ud_param {
 	uint32_t qkey;
 };
 
-struct rdma_cm_event {
-	struct rdma_cm_id	*id;
-	struct rdma_cm_id	*listen_id;
-	enum rdma_cm_event_type	 event;
-	int			 status;
-	union {
-		struct rdma_conn_param conn;
-		struct rdma_ud_param   ud;
-	} param;
-};
-
-
 
 /**
  * rdma_get_cm_event - Retrieves the next pending communication event.
