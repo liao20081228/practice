@@ -1,35 +1,3 @@
-/*
- * Copyright (c) 2005 Voltaire Inc.  All rights reserved.
- * Copyright (c) 2005-2014 Intel Corporation.  All rights reserved.
- *
- * This software is available to you under a choice of one of two
- * licenses.  You may choose to be licensed under the terms of the GNU
- * General Public License (GPL) Version 2, available from the file
- * COPYING in the main directory of this source tree, or the
- * OpenIB.org BSD license below:
- *
- *     Redistribution and use in source and binary forms, with or
- *     without modification, are permitted provided that the following
- *     conditions are met:
- *
- *      - Redistributions of source code must retain the above
- *        copyright notice, this list of conditions and the following
- *        disclaimer.
- *
- *      - Redistributions in binary form must reproduce the above
- *        copyright notice, this list of conditions and the following
- *        disclaimer in the documentation and/or other materials
- *        provided with the distribution.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 
 #if !defined(RDMA_CMA_H)
 #define RDMA_CMA_H
@@ -107,29 +75,6 @@ struct rdma_cm_event {
 	} param;
 };
 
-
-
-/**
- * rdma_notify - Notifies the librdmacm of an asynchronous event.
- * @id: RDMA identifier.
- * @event: Asynchronous event.
- * Description:
- *   Used to notify the librdmacm of asynchronous events that have occurred
- *   on a QP associated with the rdma_cm_id.
- * Notes:
- *   Asynchronous events that occur on a QP are reported through the user's
- *   device event handler.  This routine is used to notify the librdmacm of
- *   communication events.  In most cases, use of this routine is not
- *   necessary, however if connection establishment is done out of band
- *   (such as done through Infiniband), it's possible to receive data on a
- *   QP that is not yet considered connected.  This routine forces the
- *   connection into an established state in this case in order to handle
- *   the rare situation where the connection never forms on its own.
- *   Events that should be reported to the CM are: IB_EVENT_COMM_EST.
- * See also:
- *   rdma_connect, rdma_accept, rdma_listen
- */
-int rdma_notify(struct rdma_cm_id *id, enum ibv_event_type event);
 
 
 /**
