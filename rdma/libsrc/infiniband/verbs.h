@@ -76,6 +76,8 @@ union ibv_gid {
 #define __VERBS_ABI_IS_EXTENDED ((void *)UINTPTR_MAX)
 #endif
 
+
+
 /*
  * Can't extended above ibv_device_cap_flags enum as in some systems/compilers
  * enum range is limited to 4 bytes.
@@ -83,11 +85,6 @@ union ibv_gid {
 #define IBV_DEVICE_RAW_SCATTER_FCS (1ULL << 34)
 #define IBV_DEVICE_PCI_WRITE_END_PADDING (1ULL << 36)
 
-enum ibv_atomic_cap {
-	IBV_ATOMIC_NONE,
-	IBV_ATOMIC_HCA,
-	IBV_ATOMIC_GLOB
-};
 
 struct ibv_alloc_dm_attr {
 	size_t length;
