@@ -76,25 +76,6 @@ union ibv_gid {
 #define __VERBS_ABI_IS_EXTENDED ((void *)UINTPTR_MAX)
 #endif
 
-enum ibv_node_type {
-	IBV_NODE_UNKNOWN	= -1,
-	IBV_NODE_CA 		= 1,
-	IBV_NODE_SWITCH,
-	IBV_NODE_ROUTER,
-	IBV_NODE_RNIC,
-	IBV_NODE_USNIC,
-	IBV_NODE_USNIC_UDP,
-	IBV_NODE_UNSPECIFIED,
-};
-
-enum ibv_transport_type {
-	IBV_TRANSPORT_UNKNOWN	= -1,
-	IBV_TRANSPORT_IB	= 0,
-	IBV_TRANSPORT_IWARP,
-	IBV_TRANSPORT_USNIC,
-	IBV_TRANSPORT_USNIC_UDP,
-	IBV_TRANSPORT_UNSPECIFIED,
-};
 
 enum ibv_device_cap_flags {
 	IBV_DEVICE_RESIZE_MAX_WR	= 1,
@@ -1866,30 +1847,7 @@ struct ibv_flow_action_esp_attr {
 struct ibv_device;
 struct ibv_context;
 
-/* Obsolete, never used, do not touch */
-struct _ibv_device_ops {
-	struct ibv_context *	(*_dummy1)(struct ibv_device *device, int cmd_fd);
-	void			(*_dummy2)(struct ibv_context *context);
-};
 
-enum {
-	IBV_SYSFS_NAME_MAX	= 64,
-	IBV_SYSFS_PATH_MAX	= 256
-};
-
-struct ibv_device {
-	struct _ibv_device_ops	_ops;
-	enum ibv_node_type	node_type;
-	enum ibv_transport_type	transport_type;
-	/* Name of underlying kernel IB device, eg "mthca0" */
-	char			name[IBV_SYSFS_NAME_MAX];
-	/* Name of uverbs device, eg "uverbs0" */
-	char			dev_name[IBV_SYSFS_NAME_MAX];
-	/* Path to infiniband_verbs class device in sysfs */
-	char			dev_path[IBV_SYSFS_PATH_MAX];
-	/* Path to infiniband class device in sysfs */
-	char			ibdev_path[IBV_SYSFS_PATH_MAX];
-};
 
 struct _compat_ibv_port_attr;
 struct ibv_context_ops {
