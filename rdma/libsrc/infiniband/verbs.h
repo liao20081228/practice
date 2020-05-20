@@ -2082,25 +2082,6 @@ static inline struct verbs_context *verbs_get_ctx(struct ibv_context *ctx)
 	 !__vctx->op) ? NULL : __vctx; })
 
 
-/**
- * ibv_get_device_name - Return kernel device name
- */
-const char *ibv_get_device_name(struct ibv_device *device);
-
-/**
- * ibv_get_device_guid - Return device's node GUID
- */
-__be64 ibv_get_device_guid(struct ibv_device *device);
-
-/**
- * ibv_open_device - Initialize device for use
- */
-struct ibv_context *ibv_open_device(struct ibv_device *device);
-
-/**
- * ibv_close_device - Release device
- */
-int ibv_close_device(struct ibv_context *context);
 
 /**
  * ibv_get_async_event - Get next async event
