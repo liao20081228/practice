@@ -76,34 +76,6 @@ union ibv_gid {
 #define __VERBS_ABI_IS_EXTENDED ((void *)UINTPTR_MAX)
 #endif
 
-
-enum ibv_device_cap_flags {
-	IBV_DEVICE_RESIZE_MAX_WR	= 1,
-	IBV_DEVICE_BAD_PKEY_CNTR	= 1 <<  1,
-	IBV_DEVICE_BAD_QKEY_CNTR	= 1 <<  2,
-	IBV_DEVICE_RAW_MULTI		= 1 <<  3,
-	IBV_DEVICE_AUTO_PATH_MIG	= 1 <<  4,
-	IBV_DEVICE_CHANGE_PHY_PORT	= 1 <<  5,
-	IBV_DEVICE_UD_AV_PORT_ENFORCE	= 1 <<  6,
-	IBV_DEVICE_CURR_QP_STATE_MOD	= 1 <<  7,
-	IBV_DEVICE_SHUTDOWN_PORT	= 1 <<  8,
-	IBV_DEVICE_INIT_TYPE		= 1 <<  9,
-	IBV_DEVICE_PORT_ACTIVE_EVENT	= 1 << 10,
-	IBV_DEVICE_SYS_IMAGE_GUID	= 1 << 11,
-	IBV_DEVICE_RC_RNR_NAK_GEN	= 1 << 12,
-	IBV_DEVICE_SRQ_RESIZE		= 1 << 13,
-	IBV_DEVICE_N_NOTIFY_CQ		= 1 << 14,
-	IBV_DEVICE_MEM_WINDOW           = 1 << 17,
-	IBV_DEVICE_UD_IP_CSUM		= 1 << 18,
-	IBV_DEVICE_XRC			= 1 << 20,
-	IBV_DEVICE_MEM_MGT_EXTENSIONS	= 1 << 21,
-	IBV_DEVICE_MEM_WINDOW_TYPE_2A	= 1 << 23,
-	IBV_DEVICE_MEM_WINDOW_TYPE_2B	= 1 << 24,
-	IBV_DEVICE_RC_IP_CSUM		= 1 << 25,
-	IBV_DEVICE_RAW_IP_CSUM		= 1 << 26,
-	IBV_DEVICE_MANAGED_FLOW_STEERING = 1 << 29
-};
-
 /*
  * Can't extended above ibv_device_cap_flags enum as in some systems/compilers
  * enum range is limited to 4 bytes.
