@@ -3239,13 +3239,6 @@ int ibv_attach_mcast(struct ibv_qp *qp, const union ibv_gid *gid, uint16_t lid);
  */
 int ibv_detach_mcast(struct ibv_qp *qp, const union ibv_gid *gid, uint16_t lid);
 
-/**
- * ibv_fork_init - Prepare data structures so that fork() may be used
- * safely.  If this function is not called or returns a non-zero
- * status, then libibverbs data structures are not fork()-safe and the
- * effect of an application calling fork() is undefined.
- */
-int ibv_fork_init(void);
 
 /**
  * ibv_node_type_str - Return string describing node_type enum value
