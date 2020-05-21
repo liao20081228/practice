@@ -102,11 +102,6 @@ struct ibv_dm {
 };
 
 
-/* An extensible input struct for possible future extensions of the
- * ibv_query_device_ex verb. */
-struct ibv_query_device_ex_input {
-	uint32_t		comp_mask;
-};
 
 enum ibv_odp_transport_cap_bits {
 	IBV_ODP_SUPPORT_SEND     = 1 << 0,
@@ -117,24 +112,8 @@ enum ibv_odp_transport_cap_bits {
 	IBV_ODP_SUPPORT_SRQ_RECV = 1 << 5,
 };
 
-struct ibv_odp_caps {
-	uint64_t general_caps;
-	struct {
-		uint32_t rc_odp_caps;
-		uint32_t uc_odp_caps;
-		uint32_t ud_odp_caps;
-	} per_transport_caps;
-};
 
-enum ibv_odp_general_caps {
-	IBV_ODP_SUPPORT = 1 << 0,
-	IBV_ODP_SUPPORT_IMPLICIT = 1 << 1,
-};
 
-struct ibv_tso_caps {
-	uint32_t max_tso;
-	uint32_t supported_qpts;
-};
 
 /* RX Hash function flags */
 enum ibv_rx_hash_function_flags {
@@ -162,54 +141,9 @@ enum ibv_rx_hash_fields {
 	IBV_RX_HASH_INNER		= (1UL << 31),
 };
 
-struct ibv_rss_caps {
-	uint32_t supported_qpts;
-	uint32_t max_rwq_indirection_tables;
-	uint32_t max_rwq_indirection_table_size;
-	uint64_t rx_hash_fields_mask; /* enum ibv_rx_hash_fields */
-	uint8_t  rx_hash_function; /* enum ibv_rx_hash_function_flags */
-};
 
-struct ibv_packet_pacing_caps {
-	uint32_t qp_rate_limit_min;
-	uint32_t qp_rate_limit_max; /* In kbps */
-	uint32_t supported_qpts;
-};
 
-enum ibv_raw_packet_caps {
-	IBV_RAW_PACKET_CAP_CVLAN_STRIPPING	= 1 << 0,
-	IBV_RAW_PACKET_CAP_SCATTER_FCS		= 1 << 1,
-	IBV_RAW_PACKET_CAP_IP_CSUM		= 1 << 2,
-	IBV_RAW_PACKET_CAP_DELAY_DROP		= 1 << 3,
-};
 
-enum ibv_tm_cap_flags {
-	IBV_TM_CAP_RC		    = 1 << 0,
-};
-
-struct ibv_tm_caps {
-	/* Max size of rendezvous request header */
-	uint32_t max_rndv_hdr_size;
-	/* Max number of tagged buffers in a TM-SRQ matching list */
-	uint32_t max_num_tags;
-	/* From enum ibv_tm_cap_flags */
-	uint32_t flags;
-	/* Max number of outstanding list operations */
-	uint32_t max_ops;
-	/* Max number of SGEs in a tagged buffer */
-	uint32_t max_sge;
-};
-
-struct ibv_cq_moderation_caps {
-	uint16_t max_cq_count;
-	uint16_t max_cq_period; /* in micro seconds */
-};
-
-enum ibv_pci_atomic_op_size {
-	IBV_PCI_ATOMIC_OPERATION_4_BYTE_SIZE_SUP = 1 << 0,
-	IBV_PCI_ATOMIC_OPERATION_8_BYTE_SIZE_SUP = 1 << 1,
-	IBV_PCI_ATOMIC_OPERATION_16_BYTE_SIZE_SUP = 1 << 2,
-};
 
 /*
  * Bitmask for supported operation sizes
@@ -221,24 +155,6 @@ struct ibv_pci_atomic_caps {
 	uint16_t compare_swap;
 };
 
-struct ibv_device_attr_ex {
-	struct ibv_device_attr	orig_attr;
-	uint32_t		comp_mask;
-	struct ibv_odp_caps	odp_caps;
-	uint64_t		completion_timestamp_mask;
-	uint64_t		hca_core_clock;
-	uint64_t		device_cap_flags_ex;
-	struct ibv_tso_caps	tso_caps;
-	struct ibv_rss_caps     rss_caps;
-	uint32_t		max_wq_type_rq;
-	struct ibv_packet_pacing_caps packet_pacing_caps;
-	uint32_t		raw_packet_caps; /* Use ibv_raw_packet_caps */
-	struct ibv_tm_caps	tm_caps;
-	struct ibv_cq_moderation_caps  cq_mod_caps;
-	uint64_t max_dm_size;
-	struct ibv_pci_atomic_caps pci_atomic_caps;
-	uint32_t xrc_odp_caps;
-};
 
 enum ibv_mtu {
 	IBV_MTU_256  = 1,
