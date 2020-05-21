@@ -2611,33 +2611,6 @@ ibv_query_rt_values_ex(struct ibv_context *context,
 	return vctx->query_rt_values(context, values);
 }
 
-/**
- * ibv_query_device_ex - Get extended device properties
- */
-static inline int
-ibv_query_device_ex(struct ibv_context *context,
-		    const struct ibv_query_device_ex_input *input,
-		    struct ibv_device_attr_ex *attr)
-{
-	struct verbs_context *vctx;
-	int ret;
-
-	vctx = verbs_get_ctx_op(context, query_device_ex);
-	if (!vctx)
-		goto legacy;
-
-	ret = vctx->query_device_ex(context, input, attr, sizeof(*attr));
-	if (ret == EOPNOTSUPP)
-		goto legacy;
-
-	return ret;
-
-legacy:
-	memset(attr, 0, sizeof(*attr));
-	ret = ibv_query_device(context, &attr->orig_attr);
-
-	return ret;
-}
 
 /**
  * ibv_open_qp - Open a shareable queue pair.
