@@ -83,7 +83,6 @@ union ibv_gid {
  * enum range is limited to 4 bytes.
  */
 #define IBV_DEVICE_RAW_SCATTER_FCS (1ULL << 34)
-#define IBV_DEVICE_PCI_WRITE_END_PADDING (1ULL << 36)
 
 
 struct ibv_alloc_dm_attr {
@@ -145,15 +144,6 @@ enum ibv_rx_hash_fields {
 
 
 
-/*
- * Bitmask for supported operation sizes
- * Use enum ibv_pci_atomic_op_size
- */
-struct ibv_pci_atomic_caps {
-	uint16_t fetch_add;
-	uint16_t swap;
-	uint16_t compare_swap;
-};
 
 
 enum ibv_mtu {
@@ -1897,52 +1887,6 @@ int ibv_get_async_event(struct ibv_context *context,
  */
 void ibv_ack_async_event(struct ibv_async_event *event);
 
-/**
- * ibv_query_device - Get device properties
- */
-int ibv_query_device(struct ibv_context *context,
-		     struct ibv_device_attr *device_attr);
-
-/**
- * ibv_query_port - Get port properties
- */
-int ibv_query_port(struct ibv_context *context, uint8_t port_num,
-		   struct _compat_ibv_port_attr *port_attr);
-
-static inline int ___ibv_query_port(struct ibv_context *context,
-				    uint8_t port_num,
-				    struct ibv_port_attr *port_attr)
-{
-	struct verbs_context *vctx = verbs_get_ctx_op(context, query_port);
-
-	if (!vctx) {
-		int rc;
-
-		memset(port_attr, 0, sizeof(*port_attr));
-
-		rc = ibv_query_port(context, port_num,
-				    (struct _compat_ibv_port_attr *)port_attr);
-		return rc;
-	}
-
-	return vctx->query_port(context, port_num, port_attr,
-				sizeof(*port_attr));
-}
-
-#define ibv_query_port(context, port_num, port_attr) \
-	___ibv_query_port(context, port_num, port_attr)
-
-/**
- * ibv_query_gid - Get a GID table entry
- */
-int ibv_query_gid(struct ibv_context *context, uint8_t port_num,
-		  int index, union ibv_gid *gid);
-
-/**
- * ibv_query_pkey - Get a P_Key table entry
- */
-int ibv_query_pkey(struct ibv_context *context, uint8_t port_num,
-		   int index, __be16 *pkey);
 
 /**
  * ibv_get_pkey_index - Translate a P_Key into a P_Key index
