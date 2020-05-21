@@ -60,13 +60,6 @@ extern "C" {
 #endif
 
 
-union ibv_gid {
-	uint8_t			raw[16];
-	struct {
-		__be64	subnet_prefix;
-		__be64	interface_id;
-	} global;
-};
 
 #define vext_field_avail(type, fld, sz) (offsetof(type, fld) < (sz))
 
