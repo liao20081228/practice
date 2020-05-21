@@ -138,40 +138,6 @@ enum ibv_rx_hash_fields {
 
 
 
-enum ibv_event_type {
-	IBV_EVENT_CQ_ERR,
-	IBV_EVENT_QP_FATAL,
-	IBV_EVENT_QP_REQ_ERR,
-	IBV_EVENT_QP_ACCESS_ERR,
-	IBV_EVENT_COMM_EST,
-	IBV_EVENT_SQ_DRAINED,
-	IBV_EVENT_PATH_MIG,
-	IBV_EVENT_PATH_MIG_ERR,
-	IBV_EVENT_DEVICE_FATAL,
-	IBV_EVENT_PORT_ACTIVE,
-	IBV_EVENT_PORT_ERR,
-	IBV_EVENT_LID_CHANGE,
-	IBV_EVENT_PKEY_CHANGE,
-	IBV_EVENT_SM_CHANGE,
-	IBV_EVENT_SRQ_ERR,
-	IBV_EVENT_SRQ_LIMIT_REACHED,
-	IBV_EVENT_QP_LAST_WQE_REACHED,
-	IBV_EVENT_CLIENT_REREGISTER,
-	IBV_EVENT_GID_CHANGE,
-	IBV_EVENT_WQ_FATAL,
-};
-
-struct ibv_async_event {
-	union {
-		struct ibv_cq  *cq;
-		struct ibv_qp  *qp;
-		struct ibv_srq *srq;
-		struct ibv_wq  *wq;
-		int		port_num;
-	} element;
-	enum ibv_event_type	event_type;
-};
-
 enum ibv_wc_status {
 	IBV_WC_SUCCESS,
 	IBV_WC_LOC_LEN_ERR,
@@ -1773,34 +1739,6 @@ static inline struct verbs_context *verbs_get_ctx(struct ibv_context *ctx)
 
 
 
-/**
- * ibv_get_async_event - Get next async event
- * @event: Pointer to use to return async event
- *
- * All async events returned by ibv_get_async_event() must eventually
- * be acknowledged with ibv_ack_async_event().
- */
-int ibv_get_async_event(struct ibv_context *context,
-			struct ibv_async_event *event);
-
-/**
- * ibv_ack_async_event - Acknowledge an async event
- * @event: Event to be acknowledged.
- *
- * All async events which are returned by ibv_get_async_event() must
- * be acknowledged.  To avoid races, destroying an object (CQ, SRQ or
- * QP) will wait for all affiliated events to be acknowledged, so
- * there should be a one-to-one correspondence between acks and
- * successful gets.
- */
-void ibv_ack_async_event(struct ibv_async_event *event);
-
-
-/**
- * ibv_get_pkey_index - Translate a P_Key into a P_Key index
- */
-int ibv_get_pkey_index(struct ibv_context *context, uint8_t port_num,
-		       __be16 pkey);
 
 /**
  * ibv_alloc_pd - Allocate a protection domain
