@@ -297,13 +297,6 @@ struct ibv_mw {
 	enum ibv_mw_type	type;
 };
 
-struct ibv_global_route {
-	union ibv_gid		dgid;
-	uint32_t		flow_label;
-	uint8_t			sgid_index;
-	uint8_t			hop_limit;
-	uint8_t			traffic_class;
-};
 
 struct ibv_grh {
 	__be32			version_tclass_flow;
@@ -366,15 +359,6 @@ int __attribute_const ibv_rate_to_mbps(enum ibv_rate rate);
  */
 enum ibv_rate __attribute_const mbps_to_ibv_rate(int mbps) __attribute_const;
 
-struct ibv_ah_attr {
-	struct ibv_global_route	grh;
-	uint16_t		dlid;
-	uint8_t			sl;
-	uint8_t			src_path_bits;
-	uint8_t			static_rate;
-	uint8_t			is_global;
-	uint8_t			port_num;
-};
 
 enum ibv_srq_attr_mask {
 	IBV_SRQ_MAX_WR	= 1 << 0,
@@ -1240,11 +1224,6 @@ static inline int ibv_post_wq_recv(struct ibv_wq *wq,
 	return wq->post_recv(wq, recv_wr, bad_recv_wr);
 }
 
-struct ibv_ah {
-	struct ibv_context     *context;
-	struct ibv_pd	       *pd;
-	uint32_t		handle;
-};
 
 enum ibv_flow_flags {
 	IBV_FLOW_ATTR_FLAGS_ALLOW_LOOP_BACK = 1 << 0,
