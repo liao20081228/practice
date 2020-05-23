@@ -1023,11 +1023,6 @@ static inline void ibv_wr_abort(struct ibv_qp_ex *qp)
 	qp->wr_abort(qp);
 }
 
-struct ibv_comp_channel {
-	struct ibv_context     *context;
-	int			fd;
-	int			refcnt;
-};
 
 struct ibv_cq {
 	struct ibv_context     *context;
@@ -1855,15 +1850,6 @@ static inline int ibv_bind_mw(struct ibv_qp *qp, struct ibv_mw *mw,
 	return mw->context->ops.bind_mw(qp, mw, mw_bind);
 }
 
-/**
- * ibv_create_comp_channel - Create a completion event channel
- */
-struct ibv_comp_channel *ibv_create_comp_channel(struct ibv_context *context);
-
-/**
- * ibv_destroy_comp_channel - Destroy a completion event channel
- */
-int ibv_destroy_comp_channel(struct ibv_comp_channel *channel);
 
 /**
  * ibv_advise_mr - Gives advice about an address range in MRs
