@@ -118,39 +118,7 @@ enum ibv_rx_hash_fields {
 
 
 
-enum ibv_event_type {
-	IBV_EVENT_CQ_ERR,
-	IBV_EVENT_QP_FATAL,
-	IBV_EVENT_QP_REQ_ERR,
-	IBV_EVENT_QP_ACCESS_ERR,
-	IBV_EVENT_COMM_EST,
-	IBV_EVENT_SQ_DRAINED,
-	IBV_EVENT_PATH_MIG,
-	IBV_EVENT_PATH_MIG_ERR,
-	IBV_EVENT_DEVICE_FATAL,
-	IBV_EVENT_PORT_ACTIVE,
-	IBV_EVENT_PORT_ERR,
-	IBV_EVENT_LID_CHANGE,
-	IBV_EVENT_PKEY_CHANGE,
-	IBV_EVENT_SM_CHANGE,
-	IBV_EVENT_SRQ_ERR,
-	IBV_EVENT_SRQ_LIMIT_REACHED,
-	IBV_EVENT_QP_LAST_WQE_REACHED,
-	IBV_EVENT_CLIENT_REREGISTER,
-	IBV_EVENT_GID_CHANGE,
-	IBV_EVENT_WQ_FATAL,
-};
 
-struct ibv_async_event {
-	union {
-		struct ibv_cq  *cq;
-		struct ibv_qp  *qp;
-		struct ibv_srq *srq;
-		struct ibv_wq  *wq;
-		int		port_num;
-	} element;
-	enum ibv_event_type	event_type;
-};
 
 enum ibv_wc_status {
 	IBV_WC_SUCCESS,
@@ -293,10 +261,6 @@ struct ibv_mw_bind_info {
 	unsigned int	 mw_access_flags; /* use ibv_access_flags */
 };
 
-struct ibv_pd {
-	struct ibv_context     *context;
-	uint32_t		handle;
-};
 
 struct ibv_td_init_attr {
 	uint32_t comp_mask;
