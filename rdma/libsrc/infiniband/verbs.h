@@ -298,14 +298,6 @@ struct ibv_mw {
 };
 
 
-struct ibv_grh {
-	__be32			version_tclass_flow;
-	__be16			paylen;
-	uint8_t			next_hdr;
-	uint8_t			hop_limit;
-	union ibv_gid		sgid;
-	union ibv_gid		dgid;
-};
 
 enum ibv_rate {
 	IBV_RATE_MAX      = 0,
