@@ -242,17 +242,6 @@ struct ibv_wc {
 	uint8_t			dlid_path_bits;
 };
 
-enum ibv_access_flags {
-	IBV_ACCESS_LOCAL_WRITE		= 1,
-	IBV_ACCESS_REMOTE_WRITE		= (1<<1),
-	IBV_ACCESS_REMOTE_READ		= (1<<2),
-	IBV_ACCESS_REMOTE_ATOMIC	= (1<<3),
-	IBV_ACCESS_MW_BIND		= (1<<4),
-	IBV_ACCESS_ZERO_BASED		= (1<<5),
-	IBV_ACCESS_ON_DEMAND		= (1<<6),
-	IBV_ACCESS_HUGETLB		= (1<<7),
-	IBV_ACCESS_RELAXED_ORDERING	= IBV_ACCESS_OPTIONAL_FIRST,
-};
 
 struct ibv_mw_bind_info {
 	struct ibv_mr	*mr;
@@ -1813,27 +1802,6 @@ static inline int ibv_close_xrcd(struct ibv_xrcd *xrcd)
 struct ibv_mr *ibv_reg_mr_iova2(struct ibv_pd *pd, void *addr, size_t length,
 				uint64_t iova, unsigned int access);
 
-/**
- * ibv_reg_mr - Register a memory region
- */
-struct ibv_mr *ibv_reg_mr(struct ibv_pd *pd, void *addr, size_t length,
-			  int access);
-/* use new ibv_reg_mr version only if access flags that require it are used */
-__attribute__((__always_inline__)) static inline struct ibv_mr *
-__ibv_reg_mr(struct ibv_pd *pd, void *addr, size_t length, unsigned int access,
-	     int is_access_const)
-{
-	if (is_access_const && (access & IBV_ACCESS_OPTIONAL_RANGE) == 0)
-		return ibv_reg_mr(pd, addr, length, access);
-	else
-		return ibv_reg_mr_iova2(pd, addr, length, (uintptr_t)addr,
-					access);
-}
-
-#define ibv_reg_mr(pd, addr, length, access)                                   \
-	__ibv_reg_mr(pd, addr, length, access,                                 \
-		     __builtin_constant_p(				       \
-			     ((access) & IBV_ACCESS_OPTIONAL_RANGE) == 0))
 
 /**
  * ibv_reg_mr_iova - Register a memory region with a virtual offset
@@ -1876,10 +1844,6 @@ enum ibv_rereg_mr_err_code {
 int ibv_rereg_mr(struct ibv_mr *mr, int flags,
 		 struct ibv_pd *pd, void *addr,
 		 size_t length, int access);
-/**
- * ibv_dereg_mr - Deregister a memory region
- */
-int ibv_dereg_mr(struct ibv_mr *mr);
 
 /**
  * ibv_alloc_mw - Allocate a memory window
