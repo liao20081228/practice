@@ -283,15 +283,6 @@ enum ibv_rereg_mr_flags {
 	IBV_REREG_MR_FLAGS_SUPPORTED	= ((IBV_REREG_MR_KEEP_VALID << 1) - 1)
 };
 
-struct ibv_mr {
-	struct ibv_context     *context;
-	struct ibv_pd	       *pd;
-	void		       *addr;
-	size_t			length;
-	uint32_t		handle;
-	uint32_t		lkey;
-	uint32_t		rkey;
-};
 
 enum ibv_mw_type {
 	IBV_MW_TYPE_1			= 1,
