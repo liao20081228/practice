@@ -77,32 +77,6 @@ union ibv_gid {
 #endif
 
 
-enum ibv_device_cap_flags {
-	IBV_DEVICE_RESIZE_MAX_WR	= 1,
-	IBV_DEVICE_BAD_PKEY_CNTR	= 1 <<  1,
-	IBV_DEVICE_BAD_QKEY_CNTR	= 1 <<  2,
-	IBV_DEVICE_RAW_MULTI		= 1 <<  3,
-	IBV_DEVICE_AUTO_PATH_MIG	= 1 <<  4,
-	IBV_DEVICE_CHANGE_PHY_PORT	= 1 <<  5,
-	IBV_DEVICE_UD_AV_PORT_ENFORCE	= 1 <<  6,
-	IBV_DEVICE_CURR_QP_STATE_MOD	= 1 <<  7,
-	IBV_DEVICE_SHUTDOWN_PORT	= 1 <<  8,
-	IBV_DEVICE_INIT_TYPE		= 1 <<  9,
-	IBV_DEVICE_PORT_ACTIVE_EVENT	= 1 << 10,
-	IBV_DEVICE_SYS_IMAGE_GUID	= 1 << 11,
-	IBV_DEVICE_RC_RNR_NAK_GEN	= 1 << 12,
-	IBV_DEVICE_SRQ_RESIZE		= 1 << 13,
-	IBV_DEVICE_N_NOTIFY_CQ		= 1 << 14,
-	IBV_DEVICE_MEM_WINDOW           = 1 << 17,
-	IBV_DEVICE_UD_IP_CSUM		= 1 << 18,
-	IBV_DEVICE_XRC			= 1 << 20,
-	IBV_DEVICE_MEM_MGT_EXTENSIONS	= 1 << 21,
-	IBV_DEVICE_MEM_WINDOW_TYPE_2A	= 1 << 23,
-	IBV_DEVICE_MEM_WINDOW_TYPE_2B	= 1 << 24,
-	IBV_DEVICE_RC_IP_CSUM		= 1 << 25,
-	IBV_DEVICE_RAW_IP_CSUM		= 1 << 26,
-	IBV_DEVICE_MANAGED_FLOW_STEERING = 1 << 29
-};
 
 /*
  * Can't extended above ibv_device_cap_flags enum as in some systems/compilers
@@ -111,11 +85,6 @@ enum ibv_device_cap_flags {
 #define IBV_DEVICE_RAW_SCATTER_FCS (1ULL << 34)
 #define IBV_DEVICE_PCI_WRITE_END_PADDING (1ULL << 36)
 
-enum ibv_atomic_cap {
-	IBV_ATOMIC_NONE,
-	IBV_ATOMIC_HCA,
-	IBV_ATOMIC_GLOB
-};
 
 struct ibv_alloc_dm_attr {
 	size_t length;
@@ -132,82 +101,9 @@ struct ibv_dm {
 	uint32_t comp_mask;
 };
 
-struct ibv_device_attr {
-	char			fw_ver[64];
-	__be64			node_guid;
-	__be64			sys_image_guid;
-	uint64_t		max_mr_size;
-	uint64_t		page_size_cap;
-	uint32_t		vendor_id;
-	uint32_t		vendor_part_id;
-	uint32_t		hw_ver;
-	int			max_qp;
-	int			max_qp_wr;
-	unsigned int		device_cap_flags;
-	int			max_sge;
-	int			max_sge_rd;
-	int			max_cq;
-	int			max_cqe;
-	int			max_mr;
-	int			max_pd;
-	int			max_qp_rd_atom;
-	int			max_ee_rd_atom;
-	int			max_res_rd_atom;
-	int			max_qp_init_rd_atom;
-	int			max_ee_init_rd_atom;
-	enum ibv_atomic_cap	atomic_cap;
-	int			max_ee;
-	int			max_rdd;
-	int			max_mw;
-	int			max_raw_ipv6_qp;
-	int			max_raw_ethy_qp;
-	int			max_mcast_grp;
-	int			max_mcast_qp_attach;
-	int			max_total_mcast_qp_attach;
-	int			max_ah;
-	int			max_fmr;
-	int			max_map_per_fmr;
-	int			max_srq;
-	int			max_srq_wr;
-	int			max_srq_sge;
-	uint16_t		max_pkeys;
-	uint8_t			local_ca_ack_delay;
-	uint8_t			phys_port_cnt;
-};
 
-/* An extensible input struct for possible future extensions of the
- * ibv_query_device_ex verb. */
-struct ibv_query_device_ex_input {
-	uint32_t		comp_mask;
-};
 
-enum ibv_odp_transport_cap_bits {
-	IBV_ODP_SUPPORT_SEND     = 1 << 0,
-	IBV_ODP_SUPPORT_RECV     = 1 << 1,
-	IBV_ODP_SUPPORT_WRITE    = 1 << 2,
-	IBV_ODP_SUPPORT_READ     = 1 << 3,
-	IBV_ODP_SUPPORT_ATOMIC   = 1 << 4,
-	IBV_ODP_SUPPORT_SRQ_RECV = 1 << 5,
-};
 
-struct ibv_odp_caps {
-	uint64_t general_caps;
-	struct {
-		uint32_t rc_odp_caps;
-		uint32_t uc_odp_caps;
-		uint32_t ud_odp_caps;
-	} per_transport_caps;
-};
-
-enum ibv_odp_general_caps {
-	IBV_ODP_SUPPORT = 1 << 0,
-	IBV_ODP_SUPPORT_IMPLICIT = 1 << 1,
-};
-
-struct ibv_tso_caps {
-	uint32_t max_tso;
-	uint32_t supported_qpts;
-};
 
 /* RX Hash function flags */
 enum ibv_rx_hash_function_flags {
@@ -294,24 +190,6 @@ struct ibv_pci_atomic_caps {
 	uint16_t compare_swap;
 };
 
-struct ibv_device_attr_ex {
-	struct ibv_device_attr	orig_attr;
-	uint32_t		comp_mask;
-	struct ibv_odp_caps	odp_caps;
-	uint64_t		completion_timestamp_mask;
-	uint64_t		hca_core_clock;
-	uint64_t		device_cap_flags_ex;
-	struct ibv_tso_caps	tso_caps;
-	struct ibv_rss_caps     rss_caps;
-	uint32_t		max_wq_type_rq;
-	struct ibv_packet_pacing_caps packet_pacing_caps;
-	uint32_t		raw_packet_caps; /* Use ibv_raw_packet_caps */
-	struct ibv_tm_caps	tm_caps;
-	struct ibv_cq_moderation_caps  cq_mod_caps;
-	uint64_t max_dm_size;
-	struct ibv_pci_atomic_caps pci_atomic_caps;
-	uint32_t xrc_odp_caps;
-};
 
 enum ibv_mtu {
 	IBV_MTU_256  = 1,
@@ -2054,58 +1932,6 @@ int ibv_get_async_event(struct ibv_context *context,
  */
 void ibv_ack_async_event(struct ibv_async_event *event);
 
-/**
- * ibv_query_device - Get device properties
- */
-int ibv_query_device(struct ibv_context *context,
-		     struct ibv_device_attr *device_attr);
-
-/**
- * ibv_query_port - Get port properties
- */
-int ibv_query_port(struct ibv_context *context, uint8_t port_num,
-		   struct _compat_ibv_port_attr *port_attr);
-
-static inline int ___ibv_query_port(struct ibv_context *context,
-				    uint8_t port_num,
-				    struct ibv_port_attr *port_attr)
-{
-	struct verbs_context *vctx = verbs_get_ctx_op(context, query_port);
-
-	if (!vctx) {
-		int rc;
-
-		memset(port_attr, 0, sizeof(*port_attr));
-
-		rc = ibv_query_port(context, port_num,
-				    (struct _compat_ibv_port_attr *)port_attr);
-		return rc;
-	}
-
-	return vctx->query_port(context, port_num, port_attr,
-				sizeof(*port_attr));
-}
-
-#define ibv_query_port(context, port_num, port_attr) \
-	___ibv_query_port(context, port_num, port_attr)
-
-/**
- * ibv_query_gid - Get a GID table entry
- */
-int ibv_query_gid(struct ibv_context *context, uint8_t port_num,
-		  int index, union ibv_gid *gid);
-
-/**
- * ibv_query_pkey - Get a P_Key table entry
- */
-int ibv_query_pkey(struct ibv_context *context, uint8_t port_num,
-		   int index, __be16 *pkey);
-
-/**
- * ibv_get_pkey_index - Translate a P_Key into a P_Key index
- */
-int ibv_get_pkey_index(struct ibv_context *context, uint8_t port_num,
-		       __be16 pkey);
 
 /**
  * ibv_alloc_pd - Allocate a protection domain
@@ -2768,33 +2594,6 @@ ibv_query_rt_values_ex(struct ibv_context *context,
 	return vctx->query_rt_values(context, values);
 }
 
-/**
- * ibv_query_device_ex - Get extended device properties
- */
-static inline int
-ibv_query_device_ex(struct ibv_context *context,
-		    const struct ibv_query_device_ex_input *input,
-		    struct ibv_device_attr_ex *attr)
-{
-	struct verbs_context *vctx;
-	int ret;
-
-	vctx = verbs_get_ctx_op(context, query_device_ex);
-	if (!vctx)
-		goto legacy;
-
-	ret = vctx->query_device_ex(context, input, attr, sizeof(*attr));
-	if (ret == EOPNOTSUPP)
-		goto legacy;
-
-	return ret;
-
-legacy:
-	memset(attr, 0, sizeof(*attr));
-	ret = ibv_query_device(context, &attr->orig_attr);
-
-	return ret;
-}
 
 /**
  * ibv_open_qp - Open a shareable queue pair.
